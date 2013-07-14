@@ -325,7 +325,7 @@ char **argv;
 {   
   char   outfile[2048], **infile;
   char   prefix[2048], suffix[2048], suffix_ascii[2048];
-  char *halofile,*partfile;
+  char halofile[2048],partfile[2048];
   int    i, slen, ftype, nfiles;
 
   fprintf(stderr,"======================================================================\n");
