@@ -345,9 +345,9 @@ void load_halo_catalogue_binary(char *halofile, char *partfile )
   
   fphalo = fopen(halofile,"rb");
   fppart = fopen(partfile,"rb");
-  fclose(fphalo);
-  read_AHF_binary(FILE *fphalo, FILE *fppart)
+  read_AHF_binary(fphalo, fppart);
   fclose(fppart);
+  fclose(fphalo);
 }
 /*=================================================================================================
  * convert_halos()
@@ -361,6 +361,7 @@ void  read_AHF_binary(FILE *fphalo, FILE *fppart)
   int32_t  one;
   int      swap=0;
   halo_t   halo;
+  ptid_t ipart,id,npart;
 #ifdef SUSSEXBIGRUN
   double_t         energy;
 #endif
@@ -487,14 +488,14 @@ void  read_AHF_binary(FILE *fphalo, FILE *fppart)
     printf("%ld\n",(long unsigned)npart);
     for(ipart=0; ipart<npart; ipart++) {
       ReadULong(fppart, &id, swap);
-      fprintf(fpout,"%ld ",(long unsigned)id);
+      printf("%ld ",(long unsigned)id);
       if(numColumns>1) {
 #ifdef SUSSEXBIGRUN
 	ReadFloat(fppart, &energy, swap);
-	fprintf(fpout, "%g", (float)energy);
+	printf("%g", (float)energy);
 #else
         ReadInt(fppart, &ptype, swap);
-        fprintf(fpout,"%d",(int)ptype);
+        printf("%d",(int)ptype);
 #endif
       }
       printf("\n");
