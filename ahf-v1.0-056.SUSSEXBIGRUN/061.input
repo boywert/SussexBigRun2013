@@ -1,0 +1,18 @@
+[AHF]
+ic_filename	  = /export/virgo/Boyd/Millgas/62.5_AHF_test/snapdir_015/62.5_dm_015.
+ic_filetype	  = 61
+outfile_prefix    = /export/virgo/Boyd/Millgas/62.5_AHF_test/62.5_dm_
+LgridDomain	  = 128
+LgridMax          = 16777216
+NperDomCell	  = 5.0
+NperRefCell	  = 5.0
+VescTune          = 1.5
+NminPerHalo	  = 20
+RhoVir            = 0
+Dvir              = 500
+MaxGatherRad	  = 3.0
+LevelDomainDecomp = 6
+NcpuReading	  = 1
+[GADGET]
+GADGET_LUNIT	  = 1.
+GADGET_MUNIT	  = 1e10
