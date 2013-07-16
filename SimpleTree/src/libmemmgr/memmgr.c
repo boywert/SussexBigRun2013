@@ -1,0 +1,139 @@
+#include "memmgr.h"
+
+struct memmgr_obj_wrapper memngr_central;
+
+void init_memmgr()
+{
+  memngr_central.n_obj = 0;
+  memngr_central.sum_memmgr_obj_size = 0;
+  memngr_central.memmgr_obj = malloc(0);
+}
+
+void memmgr_printdetails()
+{
+  int i;
+  size_t sizeout;
+  char outbuff[1024];
+  printf("\n###############################################################\n");
+  printf("Name \t Memory\n");
+  printf("###############################################################\n");
+  for(i=0;i<memngr_central.n_obj;i++)
+    {
+      printf("%s \t %s\n",memngr_central.memmgr_obj[i].name,memmgr_printsize(memngr_central.memmgr_obj[i].size));
+    }
+  printf("###############################################################\n\n");
+  printf("Total memory used: %s\n\n",memmgr_printsize(memngr_central.sum_memmgr_obj_size));
+}
+
+char *memmgr_printsize(uint64_t size)
+{
+  char *out;
+  out = malloc(1024*sizeof(char));
+  if(size < 1024)
+    sprintf(out,"%f B",(float) size);
+  else if(size >= 1024 && size < 1024*1024)
+    sprintf(out,"%f kB",(float)size/1024);
+  else if(size >= 1024*1024 && size < 1024*1024*1024)
+    sprintf(out,"%f MB",(float) size/1024/1024);
+  else
+    sprintf(out,"%f GB",(float) size/1024/1024/1024);  
+  return out;
+}
+void *memmgr_malloc(size_t n, char name[memmgr_max_str] )
+{
+  void *p;
+  int i,item,sflag;
+  sflag = 0;
+  for(i=0;i<memngr_central.n_obj;i++)
+    {
+      if(strcmp(name,memngr_central.memmgr_obj[i].name) == 0)
+	{
+	  sflag = 1;
+	  break;
+	}
+    }
+  if(sflag ==1)
+    {
+      item = i;
+    }
+  else
+    {
+      memngr_central.n_obj += 1;
+      memngr_central.memmgr_obj = realloc(memngr_central.memmgr_obj,memngr_central.n_obj*sizeof(struct memmgr_obj_struct));
+      item = memngr_central.n_obj-1;
+      sprintf(memngr_central.memmgr_obj[i].name,"%s",name);
+    }
+  if(!(p = malloc(n)))
+    {
+      if(n)
+	{
+	  printf("Failed to allocate memory for %u bytes.\n", (int) n);
+	  exit(2);
+	}
+    }
+  //printf("trying to allocate %s: %d\n",name,n);
+  memngr_central.memmgr_obj[i].size += n;
+  memngr_central.sum_memmgr_obj_size += n;
+  return p;
+}
+
+void *memmgr_realloc(void *ptr, size_t new, size_t old,char name[memmgr_max_str] )
+{
+  int i,item,sflag;
+  void *p;
+  p = ptr;
+  sflag = 0;
+  for(i=0;i<memngr_central.n_obj;i++)
+    {
+      if(strcmp(name,memngr_central.memmgr_obj[i].name) == 0)
+	{
+	  sflag = 1;
+	  break;
+	}
+    }
+  if(sflag ==1)
+    {
+      item = i;
+    }
+  else
+    {
+      printf("Not found: trying to reallocate %s: %d\n",name,new);
+      exit(2);
+    }
+  printf("trying to reallocate %s: %d\n",name,new);
+  p = realloc(p,new);
+  memngr_central.memmgr_obj[i].size += new-old;
+  memngr_central.sum_memmgr_obj_size += new-old;
+  return p;
+
+}
+
+
+
+void memmgr_free(void *ptr, size_t n, char name[memmgr_max_str] )
+{
+  int i,item,sflag;
+  sflag = 0;
+  for(i=0;i<memngr_central.n_obj;i++)
+    {
+      if(strcmp(name,memngr_central.memmgr_obj[i].name) == 0)
+	{
+	  sflag = 1;
+	  break;
+	}
+    }
+  if(sflag ==1)
+    {
+      item = i;
+    }
+  else
+    {
+      printf("Not found: trying to free %s: %d\n",name,n);
+      exit(2);
+    }
+
+  free(ptr);
+  memngr_central.memmgr_obj[i].size -= n;
+  memngr_central.sum_memmgr_obj_size -= n;
+}
+

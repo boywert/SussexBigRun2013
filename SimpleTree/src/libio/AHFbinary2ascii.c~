@@ -228,9 +228,31 @@ void  read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo_t *mhalo)
   int      swap=0;
   halo_t   halo;
   ptid_t ipart,id,npart;
+#ifdef SUSSEXBIGRUN
   double_t         energy;
-
+#endif
+  // figure out swap status
+  /* fread(&one, sizeof(int32_t), 1, fphalo); */
+  /* if(one == 1)    */
+  /*   swap = 0; */
+  /* else */
+  /*   swap = 1; */
+  /* printf("halo: one = %d\n",one); */
+  /* // figure out swap status */
+  /* fread(&one, sizeof(int32_t), 1, fppart); */
+  /* if(one == 1)    */
+  /*    swap = 0; */
+  /* else  */
+  /*   swap = 1; */
+  /* printf("part: one = %d\n",one); */
   swap = 0;
+  /* ReadULong(fppart, &numHaloFromPartFile,   swap); */
+  /* ReadUInt (fppart, &numColumns, swap); */
+  /* printf("particlefile: nhalo = %llu\n",numHaloFromPartFile); */
+  /* ReadULong(fphalo, &numHalos,   swap); */
+  /* ReadUInt (fphalo, &numColumns, swap);  */
+  /* printf("halofile: nhalo = %llu\n",numHalos); */
+  /* exit(0); */
 
 
   // find the size of the file to calculate the total number of halos
