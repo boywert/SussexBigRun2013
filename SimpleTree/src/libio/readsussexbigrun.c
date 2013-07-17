@@ -1,12 +1,12 @@
 #include "readsussexbigrun.h"
-#include "../treeformat.h"
+
 
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain )
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
-  uint64_t one;
-  uint32_t onep;
+  //uint64_t one;
+  //uint32_t onep;
   m_halo_wrapper_t mhalo;
   int i;
   mhalo.nHalos = 0;
@@ -17,7 +17,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
       sprintf(partfile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_pids.dat_bin",folder,redshift,i);
       fphalo = fopen(halofile,"rb");
       fppart = fopen(partfile,"rb");
-      mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, mhalo);
+      mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
       fclose(fphalo);
       fclose(fppart);
 
@@ -30,15 +30,17 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 
 
 
-m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo_wrapper_t mhalo)
+m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
-  uint64_t numHalos,counthalo,numHaloFromPartFile;
-  uint32_t numColumns;
+  uint64_t numHalos,counthalo;
+  //uint64_t numHaloFromPartFile;
+  //uint32_t numColumns;
   uint64_t i,size;
-  int32_t  one;
+  //int32_t  one;
   int      swap=0;
   halo_t   halo;
-  ptid_t ipart,id,npart;
+  ptid_t ipart,npart;
+  //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
 #ifdef SUSSEXBIGRUN
@@ -74,7 +76,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo
   fseek(fphalo, 0L, SEEK_SET);
   numHalos = size/halo_t_size;
   //printf("size = %f; sizestruct %f; totalhalo %f\n",(float)size,(float)halo_t_size, (float)size/halo_t_size);
-  printf("halo in domain = %d \n",numHalos);
+  printf("halo in domain = %ld \n",numHalos);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = mhalo.nHalos;
@@ -82,9 +84,9 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo
   new = old + numHalos*sizeof(m_halo_t);
   mhalo.nHalos += numHalos;
   new = mhalo.nHalos*sizeof(m_halo_t);
-  printf("old:%ld new:%ld totalN:%ld",old,new,mhalo.nHalos);
+  //printf("old:%ld new:%ld totalN:%ld",old,new,mhalo.nHalos);
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
-  printf("finish realloc\n");
+  //printf("finish realloc\n");
   // read in halo properties
   //counthalo = 0;
   for(i=0; i<numHalos; i++) 
@@ -141,6 +143,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo
       //
       //printf("ID = %ld\n",halo.ID);
       mhalo.mhalos[counthalo].ID = halo.ID;
+      mhalo.mhalos[counthalo].domainID = halo.ID;
       ReadULong(fppart, &(npart), swap);
       //memmgr_printdetails();
       //printf("read npart %ld:%ld\n",counthalo,npart);
@@ -148,7 +151,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo
       //memmgr_printdetails();
       if(mhalo.mhalos[counthalo].npart != halo.npart)
 	{
-	  printf("npart mismatch p:%ld, h:%ld\nExit()\n",mhalo.mhalos[counthalo].npart,halo.npart);
+	  printf("npart mismatch p:%d, h:%d\nExit()\n",mhalo.mhalos[counthalo].npart,halo.npart);
 	  exit(1);
 	}
       //memmgr_printdetails();
@@ -166,6 +169,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo
       counthalo++;
       //memmgr_printdetails();
     } // for(numHalos)
-  memmgr_printdetails();
+  
   return mhalo;
 }

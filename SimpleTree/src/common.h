@@ -4,13 +4,14 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 #include <stdint.h>
-#include "treeformat.h"
-#include "libmemmgr/memmgr.h"
-#include "libio/readsussexbigrun.h"
+
 
 #define MAXSTRING 1024
+
+extern const double speed_of_light;
+extern const uint64_t NULLPOINT;
+extern const uint64_t MAXUSEABLE;
 
 #endif

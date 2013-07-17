@@ -1,0 +1,21 @@
+#ifndef INC_COSMOLOGY_H
+#define INC_COSMOLOGY_H
+
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <math.h>
+#include "common.h"
+
+/* Assume WMAP7 */
+const double h_hubble = 0.70;
+const double Omega_0 = 0.73;
+const double Ometa_m = 0.27;
+
+const double Hubble_const = 100.*h_hubble; // 100 h m/s/kpc
+
+extern double get_delta_t_in_hubble_unit(double low_redshift, double high_redshitf);
+
+#endif

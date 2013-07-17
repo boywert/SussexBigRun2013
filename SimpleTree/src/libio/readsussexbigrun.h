@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdint.h>
+#include "common_io.h"
 #include "../libmemmgr/memmgr.h"
 #include "../treeformat.h"
 #include "../common.h"
@@ -109,8 +110,8 @@ typedef struct halo_profile {
 
 /* extern void     alloc_profile                     (uint64_t, halo_profile_t *); */
 /* extern void     free_profile                      (halo_profile_t *); */
-extern void sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain );
-extern m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, m_halo_wrapper_t mhalo);
+extern m_halo_wrapper_t  sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain );
+extern m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 
 
 #endif

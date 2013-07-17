@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include <stdarg.h>
 #include <stdint.h>
-
+#include "libmemmgr/memmgr.h"
 typedef uint64_t ptid_t;
 typedef uint64_t hid_t;
 
@@ -56,4 +56,5 @@ typedef struct m_halo_wrapper
   m_halo_t *mhalos;
 } m_halo_wrapper_t;
 
+extern void free_m_halo_wrapper(m_halo_wrapper_t* ptr);
 #endif
