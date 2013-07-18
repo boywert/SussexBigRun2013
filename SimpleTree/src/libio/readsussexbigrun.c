@@ -9,7 +9,9 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   //uint32_t onep;
   m_halo_wrapper_t mhalo;
   int i;
+  hid_t ihalo;
   mhalo.nHalos = 0;
+  mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
   for (i=0;i<tot_domain;i++)
     {
@@ -20,32 +22,40 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
       mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
       fclose(fphalo);
       fclose(fppart);
-
     }
+  /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
+  /*   { */
+  /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
+  /*   } */
   return mhalo;
 }
-/*=================================================================================================
- * convert_halos()
- *=================================================================================================*/
+
+/* incomplete */
+void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo)
+{
+  ptid_t ip;
+  hid_t ih;
+  ip = 1;
+  ih = 1;
+}
 
 
 
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
-  uint64_t numHalos,counthalo;
+  uint64_t numHalos,counthalo,counthalo_local;
   //uint64_t numHaloFromPartFile;
   //uint32_t numColumns;
   uint64_t i,size;
   //int32_t  one;
-  int      swap=0;
+  int      swap=0,flag;
   halo_t   halo;
   ptid_t ipart,npart;
   //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
-#ifdef SUSSEXBIGRUN
-  float      energy;
-#endif
+  struct particle_buffer *pid_buff;;
+
   // figure out swap status
   /* fread(&one, sizeof(int32_t), 1, fphalo); */
   /* if(one == 1)    */
@@ -76,10 +86,11 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   fseek(fphalo, 0L, SEEK_SET);
   numHalos = size/halo_t_size;
   //printf("size = %f; sizestruct %f; totalhalo %f\n",(float)size,(float)halo_t_size, (float)size/halo_t_size);
-  printf("halo in domain = %ld \n",numHalos);
+  printf("halo in domain %d :%ld \n",domain,numHalos);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = mhalo.nHalos;
+  counthalo_local = 0;
   old = mhalo.nHalos*sizeof(m_halo_t);
   new = old + numHalos*sizeof(m_halo_t);
   mhalo.nHalos += numHalos;
@@ -89,6 +100,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   //printf("finish realloc\n");
   // read in halo properties
   //counthalo = 0;
+  flag = 0;
   for(i=0; i<numHalos; i++) 
     {
       ReadULong(fphalo, &halo.ID,           swap);    // ID(1)
@@ -143,30 +155,63 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       //
       //printf("ID = %ld\n",halo.ID);
       mhalo.mhalos[counthalo].ID = halo.ID;
-      mhalo.mhalos[counthalo].domainID = halo.ID;
+      mhalo.mhalos[counthalo].domainID = domain;
+      mhalo.mhalos[counthalo].Mvir = halo.Mvir;
+      mhalo.mhalos[counthalo].Rvir = halo.Rvir;
+      mhalo.mhalos[counthalo].Xc = halo.Xc;
+      mhalo.mhalos[counthalo].Yc = halo.Yc;
+      mhalo.mhalos[counthalo].Zc = halo.Zc;
+      mhalo.mhalos[counthalo].VXc = halo.VXc;
+      mhalo.mhalos[counthalo].VYc = halo.VYc;
+      mhalo.mhalos[counthalo].VZc = halo.VZc;
+      if(halo.hostHalo == 0)
+	mhalo.mhalos[counthalo].host_halo = NULLPOINT;
+      else
+	mhalo.mhalos[counthalo].host_halo = halo.hostHalo;
+
       ReadULong(fppart, &(npart), swap);
       //memmgr_printdetails();
       //printf("read npart %ld:%ld\n",counthalo,npart);
       mhalo.mhalos[counthalo].npart = npart;
       //memmgr_printdetails();
+      //     printf("checking hid:%ld npart:%ld\n",halo.ID,npart);
       if(mhalo.mhalos[counthalo].npart != halo.npart)
 	{
-	  printf("npart mismatch p:%d, h:%d\nExit()\n",mhalo.mhalos[counthalo].npart,halo.npart);
-	  exit(1);
+	  printf("domain %d\n",domain);
+	  printf("haloid:%llu no:%ld local:%ld\n",halo.ID, counthalo, counthalo_local);
+	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,halo.npart);
+	  printf("Xc:%f, Yc:%f, Zc:%f\n",halo.Xc,halo.Yc,halo.Zc);
+	  printf("use part from halos\n");
+	  mhalo.mhalos[counthalo].npart = halo.npart;
+	  flag = 1;
+	  return mhalo;
+	  //exit(1);
 	}
       //memmgr_printdetails();
       //printf("counthalo: %ld\n",counthalo);
       sprintf(memmgr_buff,"Particle: Halo Array");
-      mhalo.mhalos[counthalo].Particles = memmgr_malloc(halo.npart*sizeof(particlelist_t),memmgr_buff);
+      mhalo.mhalos[counthalo].Particles = memmgr_malloc(mhalo.mhalos[counthalo].npart*sizeof(particlelist_t),memmgr_buff);
+      sprintf(memmgr_buff,"Particle: Buffer");
+      pid_buff = memmgr_malloc(mhalo.mhalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
       //memmgr_printdetails();
       //printf("%ld\n",(long unsigned)npart);
-      for(ipart=0; ipart<halo.npart; ipart++) 
+      for(ipart=0; ipart<mhalo.mhalos[counthalo].npart; ipart++) 
 	{
-	  ReadULong(fppart, &(mhalo.mhalos[counthalo].Particles[ipart].ID), swap);
-	  ReadFloat(fppart, &energy, swap);
-
+	  ReadULong(fppart, &(pid_buff[ipart].ID), swap);
+	  ReadFloat(fppart, &(pid_buff[ipart].energy), swap);
+	  if(flag == 3)
+	    {
+	      printf("p: %llu \t %f\n",pid_buff[ipart].ID,pid_buff[ipart].energy);
+	    }
 	}
+      /* Do something to sort particles by energy */
+      for(ipart=0; ipart<mhalo.mhalos[counthalo].npart; ipart++) 
+	{
+	  mhalo.mhalos[counthalo].Particles[ipart].ID = pid_buff[ipart].ID;
+	}
+      memmgr_free(pid_buff,mhalo.mhalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
       counthalo++;
+      counthalo_local++;
       //memmgr_printdetails();
     } // for(numHalos)
   

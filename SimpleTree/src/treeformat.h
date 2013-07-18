@@ -5,7 +5,6 @@
 #include <string.h>
 #include <math.h>
 #include <stddef.h>
-#include <stdarg.h>
 #include <stdint.h>
 #include "libmemmgr/memmgr.h"
 typedef uint64_t ptid_t;
@@ -18,10 +17,14 @@ typedef struct m_particle
   hid_t haloID;
 } m_particle_t;
 
+
 typedef struct particlelist
 {
   ptid_t ID;
+  //float energy;
 } particlelist_t;
+
+
 
 typedef struct m_halo 
 {
@@ -29,7 +32,6 @@ typedef struct m_halo
 #ifdef CUBEP3M
   uint32_t domainID;
 #endif
-  uint32_t snapID;
   uint32_t npart;
   float Mvir;
   float Rvir;
@@ -53,6 +55,7 @@ typedef struct m_halo
 typedef struct m_halo_wrapper
 {
   hid_t nHalos;
+  float redshift;
   m_halo_t *mhalos;
 } m_halo_wrapper_t;
 

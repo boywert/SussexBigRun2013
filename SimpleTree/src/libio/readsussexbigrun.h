@@ -104,6 +104,11 @@ typedef struct halo_profile {
   float        *Z_star_sh;
 } halo_profile_t;
 
+struct particle_buffer
+{
+  uint64_t ID;
+  float energy;
+};
 //===================================================================
 // PROTOTYPES
 //===================================================================
@@ -113,5 +118,5 @@ typedef struct halo_profile {
 extern m_halo_wrapper_t  sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain );
 extern m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 
-
+extern void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo);
 #endif

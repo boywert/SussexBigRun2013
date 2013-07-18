@@ -13,5 +13,6 @@
 extern const double speed_of_light;
 extern const uint64_t NULLPOINT;
 extern const uint64_t MAXUSEABLE;
+extern const double max_part_speed_in_c;
 
 #endif

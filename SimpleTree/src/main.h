@@ -9,6 +9,8 @@
 #include "libmemmgr/memmgr.h"
 #include "libio/readsussexbigrun.h"
 #include "libio/common_io.h"
+#include "cosmology.h"
+#include "MPI_distribute.h"
 #include <math.h>
 
 #define INC_MAIN_H

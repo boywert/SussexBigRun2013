@@ -6,5 +6,7 @@
 #include <stdint.h>
     
 #include "libio/readsussexbigrun.h"
+#include "common.h"
 #include "treeformat.h"
+#include "cosmology.h"
 #endif
