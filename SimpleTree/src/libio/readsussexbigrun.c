@@ -28,7 +28,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
   /*   } */
-  mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
+  //mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
   return mhalo;
 }
 
@@ -44,7 +44,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
-      printf("ihalo = %llu host =%llu\n",ihalo,mhalo.mhalos[ihalo].host_halo);
+      //printf("ihalo = %llu host =%llu\n",ihalo,mhalo.mhalos[ihalo].host_halo);
       if(mhalo.mhalos[ihalo].host_halo == NULLPOINT)
 	break;
       else
