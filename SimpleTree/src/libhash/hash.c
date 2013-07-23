@@ -50,7 +50,7 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
       target = low;
     }
   list->npart++;
-  list->mparticle = memmgr_realloc(list->mparticle,sizeof(m_particle_t)*list.npart,sizeof(m_particle_t)*(list.npart-1),memmgr_buff);
+  list->mparticle = memmgr_realloc(list->mparticle,sizeof(m_particle_t)*list->npart,sizeof(m_particle_t)*(list->npart-1),memmgr_buff);
   for(ipart=list->npart-1;ipart > target; ipart--)
     {
       list->mparticle[ipart].ID = list->mparticle[ipart-1].ID;
