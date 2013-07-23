@@ -2,17 +2,17 @@
 
 ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrapper_t* list, m_particle_t add_element)
 {
-  ptid_t middle,low,high,target;
+  ptid_t middle,low,high,target,ipart;
   char memmgr_buff[memmgr_max_str];
   
   low = 0;
   high = list->npart-1;
 
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  if(list.npart == 0)
+  if(list->npart == 0)
     {
       list->npart++;
-      list->mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
+      list->mparticle = memmgr_realloc(list->mparticle,sizeof(m_particle_t),0,memmgr_buff);
       list->mparticle[0].ID = add_element.ID;
       list->mparticle[0].haloID = add_element.haloID;
       return list->npart;
@@ -30,7 +30,7 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
 	{
 	  list->mparticle[middle].ID = add_element.ID;
 	  list->mparticle[middle].haloID = add_element.haloID;
-	  return list.npart;
+	  return list->npart;
 	}
       else if ( add_element.ID < list->mparticle[middle].ID )
 	{
