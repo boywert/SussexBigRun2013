@@ -10,7 +10,6 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   m_halo_wrapper_t mhalo;
   int i;
   hid_t ihalo;
-  tot_domain = 10;
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
