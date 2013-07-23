@@ -44,6 +44,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
+      printf("ihalo = %llu\n",ihalo);
       if(mhalo.mhalos[ihalo].host_halo == NULLPOINT)
 	break;
       else
