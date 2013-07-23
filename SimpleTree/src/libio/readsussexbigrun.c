@@ -39,6 +39,8 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   hid_t ihalo,tot_halos;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
+  m_particle_wrapper_t *tmp;
+  m_particle_t insert;
   tot_halos = 0;  
   printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
@@ -60,11 +62,19 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
-  /* filter halo */
-  /* for(ihalo=0;ihalo < mhalo->nHalos; ihalo++) */
-  /*   { */
-  /*     if(mhalo->mhalos[ihalo].host_halo == NULLP) */
-  /*   } */
+  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  tmp = memmgr_malloc(tmp,sizeof(m_particle_wrapper_t),memmgr_buff);
+  tmp.npart = 0;
+  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_Mvir_inverse);
+  for(ihalo=0;ihalo < mhalo.nHalos; ihalo++)
+    {
+      insert.haloID = mhalo.mhalos[ihalo].ID;
+      for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
+	{
+	  insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
+	  m_particle_binary_search_and_insert_element_replace_exist(&(temp[0]), insert);
+	}
+    }
   return mhalo;
 }
 /* incomplete */
