@@ -28,7 +28,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
   /*   } */
-  //mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
+  mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
   return mhalo;
 }
 

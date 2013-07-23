@@ -103,8 +103,8 @@ void *memmgr_realloc(void *ptr, size_t new, size_t old,char* name )
     }
   //printf("trying to reallocate %s: %lld\n",name,(long long)new);
   p = realloc(p,new);
-  memngr_central.memmgr_obj[i].size += new-old;
-  memngr_central.sum_memmgr_obj_size += new-old;
+  memngr_central.memmgr_obj[i].size += (int64_t)new-(int64_t)old;
+  memngr_central.sum_memmgr_obj_size += (int64_t)new-(int64_t)old;
   return p;
 
 }
