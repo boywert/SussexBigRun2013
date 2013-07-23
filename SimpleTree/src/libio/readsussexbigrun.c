@@ -73,7 +73,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
 	{
 	  insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  printf("pid = %llu:%llu\n",insert.ID,insert.haloID);
+	  printf("pid = %llu:%llu\n",ipart,ihalo);
 	  m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
     }
