@@ -30,6 +30,7 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
 	{
 	  list->mparticle[middle].ID = add_element.ID;
 	  list->mparticle[middle].haloID = add_element.haloID;
+	  printf("Duplicate: change\n");
 	  return list->npart;
 	}
       else if ( add_element.ID < list->mparticle[middle].ID )
