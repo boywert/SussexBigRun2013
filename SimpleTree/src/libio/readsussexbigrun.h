@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "common_io.h"
+#include "../libhash/hash.h"
 #include "../libmemmgr/memmgr.h"
 #include "../treeformat.h"
 #include "../common.h"
