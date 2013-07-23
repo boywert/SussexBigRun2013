@@ -63,7 +63,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  tmp = memmgr_malloc(tmp,sizeof(m_particle_wrapper_t),memmgr_buff);
+  tmp = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
   tmp.npart = 0;
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_Mvir_inverse);
   for(ihalo=0;ihalo < mhalo.nHalos; ihalo++)
@@ -72,7 +72,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
 	{
 	  insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  m_particle_binary_search_and_insert_element_replace_exist(&(temp[0]), insert);
+	  m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
     }
   return mhalo;
