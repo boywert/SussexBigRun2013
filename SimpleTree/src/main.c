@@ -18,7 +18,7 @@ int main(int argc,char **argv)
 
   halocatA[0] = sussexbigrun_load_halo_catalogue_binary(folder,6.354,6*6*6);
   // halocatB[0] = sussexbigrun_load_halo_catalogue_binary(folder,6.418,6);
-  memmgr_printdetails();
+  /* memmgr_printdetails(); */
   //free_m_halo_wrapper(halocatA);
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
