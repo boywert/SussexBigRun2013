@@ -39,8 +39,8 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   hid_t ihalo,tot_halos;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
-  tot_halos = 0;
-  sprintf(memmgr_buff,"Halo Array");
+  tot_halos = 0;  
+  printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
@@ -57,7 +57,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
     }
   old = mhalo.nHalos*sizeof(m_halo_t);
   new = tot_halos*sizeof(m_halo_t);
-  printf("Filter halos and particles\n");
+  sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
   /* filter halo */
