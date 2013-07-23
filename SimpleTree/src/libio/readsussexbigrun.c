@@ -13,6 +13,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
+  tot_domain = 10;
   for (i=0;i<tot_domain;i++)
     {
       sprintf(halofile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,i);
@@ -72,7 +73,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
 	{
 	  insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  printf("pid = %llu\n",insert.ID);
+	  printf("pid = %llu:%llu\n",insert.ID,insert.haloID);
 	  m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
     }
