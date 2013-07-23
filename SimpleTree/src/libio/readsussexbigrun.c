@@ -36,6 +36,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
   ptid_t ipart;
   hid_t ihalo;
+  printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo);
   /* filter halo */
   /* for(ihalo=0;ihalo < mhalo->nHalos; ihalo++) */
