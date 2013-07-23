@@ -6,33 +6,33 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
   char memmgr_buff[memmgr_max_str];
   
   low = 0;
-  high = list.npart-1;
+  high = list->npart-1;
 
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
   if(list.npart == 0)
     {
-      list.npart++;
-      list.mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
-      list.mparticle[0].ID = add_element.ID;
-      list.mparticle[0].haloID = add_element.haloID;
-      return 0;
+      list->npart++;
+      list->mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
+      list->mparticle[0].ID = add_element.ID;
+      list->mparticle[0].haloID = add_element.haloID;
+      return list->npart;
     }
   else
     {
-      high = list.npart-1;
+      high = list->npart-1;
     }  
 
   while ( low <= high && high < NULLPOINT && low < NULLPOINT)
     {
       middle = ( low + high ) / 2;
  
-      if ( add_element.ID == list.mparticle[middle].ID )
+      if ( add_element.ID == list->mparticle[middle].ID )
 	{
-	  list.mparticle[middle].ID = add_element.ID;
-	  list.mparticle[middle].haloID = add_element.haloID;
+	  list->mparticle[middle].ID = add_element.ID;
+	  list->mparticle[middle].haloID = add_element.haloID;
 	  return list.npart;
 	}
-      else if ( add_element.ID < list.mparticle[middle].ID )
+      else if ( add_element.ID < list->mparticle[middle].ID )
 	{
 	  high = middle - 1;
 	}
@@ -49,16 +49,16 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
     {
       target = low;
     }
-  list.npart++;
-  list.mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
-  for(ipart=list.npart-1;ipart > target; ipart--)
+  list->npart++;
+  list->mparticle = memmgr_realloc(list->mparticle,sizeof(m_particle_t),0,memmgr_buff);
+  for(ipart=list->npart-1;ipart > target; ipart--)
     {
-      list.mparticle[ipart].ID = list.mparticle[ipart-1].ID;
-      list.mparticle[ipart].haloID  =  list.mparticle[ipart-1].haloID;
+      list->mparticle[ipart].ID = list->mparticle[ipart-1].ID;
+      list->mparticle[ipart].haloID  =  list->mparticle[ipart-1].haloID;
     }
-  list.mparticle[target].ID = add_element.ID;
-  list.mparticle[target].haloID = add_element.haloID;
-  return list.npart;
+  list->mparticle[target].ID = add_element.ID;
+  list->mparticle[target].haloID = add_element.haloID;
+  return list->npart;
 }
 
 int compare_m_halo_t_by_Mvir(const void *v1, const void *v2)
