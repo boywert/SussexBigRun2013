@@ -35,9 +35,24 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
   ptid_t ipart;
-  hid_t ihalo;
+  hid_t ihalo,tot_halos;
+  uint64_t old,new;
+  char memmgr_buff[memmgr_max_str]
+  tot_halos = 0;
   printf("Filter halos and particles\n");
+  sprintf(memmgr_buff,"Halo Array");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo);
+  for(ihalo=0;ihalo<mhalo.nHalos;i++)
+    {
+      if(mhalo.mhalos[ihalo].host_halo == NULLPOINT)
+	break;
+      else
+	tot_halos++;
+    }
+  old = mhalo.nHalos*sizeof(m_halo_t);
+  new = tot_halos*sizeof(m_halo_t);
+  mhalo.mhalos = memmgr_realloc(tot_halos,new,old, memmgr_buff);
+  mhalo.nHalos = tot_halos;
   /* filter halo */
   /* for(ihalo=0;ihalo < mhalo->nHalos; ihalo++) */
   /*   { */
