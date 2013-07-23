@@ -10,6 +10,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   m_halo_wrapper_t mhalo;
   int i;
   hid_t ihalo;
+  tot_domain = 10;
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
@@ -30,6 +31,17 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   return mhalo;
 }
 
+void sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t* mhalo)
+{
+  ptid_t ipart;
+  hid_t ihalo;
+  /* filter halo */
+  /* for(ihalo=0;ihalo < mhalo->nHalos; ihalo++) */
+  /*   { */
+  /*     if(mhalo->mhalos[ihalo].host_halo == NULLP) */
+  /*   } */
+  
+}
 /* incomplete */
 void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo)
 {
