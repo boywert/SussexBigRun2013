@@ -41,11 +41,11 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   char memmgr_buff[memmgr_max_str];
   tot_halos = 0;
   sprintf(memmgr_buff,"Halo Array");
-  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo);
+  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
       //printf("ihalo = %llu host =%llu\n",ihalo,mhalo.mhalos[ihalo].host_halo);
-      if(mhalo.mhalos[ihalo].host_halo == NULLPOINT)
+      if(mhalo.mhalos[ihalo].host_halo < NULLPOINT)
 	break;
       else
 	tot_halos++;

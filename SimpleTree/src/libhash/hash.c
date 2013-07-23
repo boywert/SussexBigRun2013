@@ -75,7 +75,19 @@ int compare_m_halo_t_by_host_halo(const void *v1, const void *v2)
       ret = 0;
     return ret;
 }
-
+int compare_m_halo_t_by_host_halo_reverse(const void *v1, const void *v2)
+{
+    const m_halo_t *u1 = v1;
+    const m_halo_t *u2 = v2;
+    int ret;
+    if(u1->host_halo < u2->host_halo)
+      ret =  1;
+    else if(u1->host_halo > u2->host_halo)
+      ret = -1;
+    else if(u1->host_halo == u2->host_halo)
+      ret = 0;
+    return ret;
+}
 int compare_m_halo_t_by_Mvir(const void *v1, const void *v2)
 {
     const m_halo_t *u1 = v1;
