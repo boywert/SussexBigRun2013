@@ -37,7 +37,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   ptid_t ipart;
   hid_t ihalo,tot_halos;
   uint64_t old,new;
-  char memmgr_buff[memmgr_max_str]
+  char memmgr_buff[memmgr_max_str];
   tot_halos = 0;
   printf("Filter halos and particles\n");
   sprintf(memmgr_buff,"Halo Array");
