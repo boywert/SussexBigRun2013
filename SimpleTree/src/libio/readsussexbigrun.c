@@ -63,10 +63,13 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
-  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  sprintf(memmgr_buff,"Particle Wrapper: Hash");
   tmp = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
   tmp[0].npart = 0;
+  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  tmp[0].mparticle = memmgr_malloc(0,memmgr_buff);
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir_reverse);
+
   for(ihalo=0;ihalo < mhalo.nHalos; ihalo++)
     {
       insert.haloID = mhalo.mhalos[ihalo].ID;
