@@ -92,12 +92,15 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
     }
   qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   ref = tmp[0].mparticle[0].ID;
+  countpart = 0;
   for(ipart=1;ipart<tmp[0].npart;ipart++)
     {
       if(tmp[0].mparticle[ipart].ID == ref)
-	printf("dupplicate pid\n");
+	countpart++;
+	//printf("dupplicate pid\n");
       ref = tmp[0].mparticle[ipart].ID;
     }
+  printf("total duplicate : %llu\n",countpart);
   return mhalo;
 }
 /* incomplete */
