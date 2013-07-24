@@ -40,8 +40,8 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   hid_t ihalo,tot_halos,h_target;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
-  m_particle_wrapper_t *tmp;
-  key_sort_t *key_for_sort;
+  // m_particle_wrapper_t *tmp;
+  //key_sort_t *key_for_sort;
   tot_halos = 0;  
   printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
