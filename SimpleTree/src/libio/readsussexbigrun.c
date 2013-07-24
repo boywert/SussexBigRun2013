@@ -36,7 +36,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
-  ptid_t ipart,countpart,ref,p_target;
+  ptid_t ipart,countpart,ref,p_target,jpart;
   hid_t ihalo,tot_halos,h_target;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
@@ -103,7 +103,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 	{
 	  ihalo = tmp[0].mparticle[ipart].haloID;
 	  h_target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos);
-	  printf("search = %llu\n",target);
+	  printf("search = %llu\n",h_target);
 	  key_for_sort = memmgr_malloc(mhalo.mhalos[h_target].npart*sizeof(key_sort_t),memmgr_buff);
 	  for(jpart=0;jpart<mhalo.mhalos[h_target].npart;jpart++)
 	    {
