@@ -13,7 +13,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
-  tot_domain = 10;
+  //tot_domain = 10;
   for (i=0;i<tot_domain;i++)
     {
       sprintf(halofile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,i);
