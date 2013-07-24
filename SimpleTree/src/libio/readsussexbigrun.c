@@ -36,12 +36,12 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
-  ptid_t ipart,countpart,ref;
-  hid_t ihalo,tot_halos,target;
+  ptid_t ipart,countpart,ref,p_target;
+  hid_t ihalo,tot_halos,h_target;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
   m_particle_wrapper_t *tmp;
-  m_particle_t insert;
+  key_t *key_for_sort;
   tot_halos = 0;  
   printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
@@ -96,14 +96,24 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   ref = tmp[0].mparticle[0].ID;
   countpart = 0;
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_ID);
+  sprintf(memmgr_buff,"TMP particles: Hash");
   for(ipart=1;ipart<tmp[0].npart;ipart++)
     {
       if(tmp[0].mparticle[ipart].ID == ref)
 	{
-	  tmp[0].mparticle[ipart].ID = NULLPOINT;
 	  ihalo = tmp[0].mparticle[ipart].haloID;
-	  target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos);
+	  h_target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos);
 	  printf("search = %llu\n",target);
+	  key_for_sort = memmgr_malloc(mhalo.mhalos[h_target].npart*sizeof(key_t),memmgr_buff);
+	  for(jpart=0;jpart<mhalo.mhalos[h_target].npart;jpart++)
+	    {
+	      key_for_sort[jpart].ID = mhalo.mhalos[h_target].Particles[jpart].ID;
+	      key_for_sort[jpart].order = jpart;
+	    }
+	  qsort(key_for_sort,mhalo.mhalos[h_target].npart, sizeof(key),compare_m_halo_t_by_ID);
+	  memmgr_free(key_for_sort,mhalo.mhalos[h_target].npart*sizeof(key_t),memmgr_buff);
+	  //p_target = search_particlelist_t_for_ID();
+	  //tmp[0].mparticle[ipart].ID = NULLPOINT;
 	}
       else
 	{

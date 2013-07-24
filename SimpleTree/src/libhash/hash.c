@@ -116,6 +116,19 @@ int compare_m_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
       ret = 0;
     return ret;
 }
+int compare_key_t_by_ID(const void *v1, const void *v2)
+{
+    const key_t *u1 = v1;
+    const key_t *u2 = v2;
+    int ret;
+    if(u1->ID < u2->ID)
+      ret =  -1;
+    else if(u1->ID > u2->ID)
+      ret = 1;
+    else if(u1->ID == u2->ID)
+      ret = 0;
+    return ret;
+}
 
 int compare_m_halo_t_by_ID(const void *v1, const void *v2)
 {
@@ -197,6 +210,45 @@ uint64_t search_uint64_t_array( uint64_t searchKey, uint64_t n_array ,const void
 
 
 uint64_t search_m_halo_t_array_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array )
+{
+  uint64_t middle,low,high;
+  m_halo_t *pool = (m_halo_t *) Array;
+  //printf("start search\n");
+  /*
+    for(i =0; i< n_array; i++)
+    {
+    printf("%llu\n",pool[i]);
+    }
+  */
+  low = 0;
+  high = n_array-1;
+
+  /* if(searchID < pool[0] || searchID > pool[n_array-1]) */
+  /*   { */
+  /*     return NULLPOINT; */
+  /*   } */
+  while ( low <= high && high < NULLPOINT) 
+    {
+      middle = ( low + high ) / 2;
+ 
+      if ( searchID == pool[ middle ].ID )
+	{
+	  return middle;
+	}
+      else if ( searchID < pool[ middle ].ID )
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  return NULLPOINT;
+}
+
+
+uint64_t search_particlelist_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array )
 {
   uint64_t middle,low,high;
   m_halo_t *pool = (m_halo_t *) Array;

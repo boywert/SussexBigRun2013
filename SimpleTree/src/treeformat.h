@@ -10,6 +10,11 @@
 typedef uint64_t ptid_t;
 typedef uint64_t hid_t;
 
+typedef struct key_sort
+{
+  ptid_t ID;
+  ptid_t order;
+} key_t;
 
 typedef struct m_particle
 {
