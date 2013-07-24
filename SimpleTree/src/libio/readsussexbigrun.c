@@ -72,10 +72,10 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   countpart = 0;
   for(ihalo=0;ihalo < mhalo.nHalos; ihalo++)
     {
-      printf("ihalo: %llu\n",ihalo);
+      //printf("ihalo: %llu\n",ihalo);
 
       tmp[0].npart += mhalo.mhalos[ihalo].npart;
-      printf("tot npart:%llu\n",tmp[0].npart);
+      //printf("tot npart:%llu\n",tmp[0].npart);
       tmp[0].mparticle = memmgr_realloc(tmp[0].mparticle,sizeof(m_particle_t)*tmp[0].npart,sizeof(m_particle_t)*(tmp[0].npart-mhalo.mhalos[ihalo].npart),memmgr_buff);
       for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
 	{
