@@ -14,7 +14,7 @@ typedef struct key_sort
 {
   ptid_t ID;
   ptid_t order;
-} key_t;
+} key_sort_t;
 
 typedef struct m_particle
 {

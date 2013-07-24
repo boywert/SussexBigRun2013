@@ -116,7 +116,7 @@ int compare_m_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
       ret = 0;
     return ret;
 }
-int compare_key_t_by_ID(const void *v1, const void *v2)
+int compare_key_sort_t_by_ID(const void *v1, const void *v2)
 {
     const key_t *u1 = v1;
     const key_t *u2 = v2;

@@ -18,7 +18,7 @@ extern int compare_m_halo_t_by_Mvir(const void *v1, const void *v2);
 extern int compare_m_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
 extern int compare_m_halo_t_by_host_halo(const void *v1, const void *v2);
 extern int compare_m_halo_t_by_host_halo_reverse(const void *v1, const void *v2);
-extern int compare_key_t_by_ID(const void *v1, const void *v2);
+extern int compare_key_sort_t_by_ID(const void *v1, const void *v2);
 extern int compare_m_halo_t_by_ID(const void *v1, const void *v2);
 extern int compare_m_particle_t_by_ID(const void *v1, const void *v2);
 extern int compare_uint64_t(const void *v1, const void *v2);
