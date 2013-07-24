@@ -96,9 +96,14 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   for(ipart=1;ipart<tmp[0].npart;ipart++)
     {
       if(tmp[0].mparticle[ipart].ID == ref)
-	countpart++;
+	{
+	  tmp[0].mparticle[ipart].ID = NULLPOINT;
+	}
+      else
+	{
+	  ref = tmp[0].mparticle[ipart].ID;
+	}
 	//printf("dupplicate pid\n");
-      ref = tmp[0].mparticle[ipart].ID;
     }
   printf("total duplicate : %llu\n",countpart);
   return mhalo;
