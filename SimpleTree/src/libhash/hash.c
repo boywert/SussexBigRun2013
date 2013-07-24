@@ -118,8 +118,8 @@ int compare_m_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
 }
 int compare_key_sort_t_by_ID(const void *v1, const void *v2)
 {
-    const key_t *u1 = v1;
-    const key_t *u2 = v2;
+    const key_sort_t *u1 = v1;
+    const key_sort_t *u2 = v2;
     int ret;
     if(u1->ID < u2->ID)
       ret =  -1;
