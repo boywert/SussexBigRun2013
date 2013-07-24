@@ -36,7 +36,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
-  ptid_t ipart,countpart;
+  ptid_t ipart,countpart,ref;
   hid_t ihalo,tot_halos;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
@@ -89,6 +89,14 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 	  //m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
       //memmgr_printdetails();
+    }
+  qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  ref = tmp[0].mparticle[0].ID;
+  for(ipart=1;ipart<tmp[0].npart;ipart++)
+    {
+      if(tmp[0].mparticle[ipart].ID == ref)
+	printf("dupplicate pid\n");
+      ref = tmp[0].mparticle[ipart].ID;
     }
   return mhalo;
 }
