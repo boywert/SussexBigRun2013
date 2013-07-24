@@ -65,66 +65,67 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
-  sprintf(memmgr_buff,"Particle Wrapper: Hash");
-  tmp = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
-  tmp[0].npart = 0;
-  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  tmp[0].mparticle = memmgr_malloc(0,memmgr_buff);
-  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir_reverse);
-  countpart = 0;
-  for(ihalo=0;ihalo < mhalo.nHalos; ihalo++)
-    {
-      //printf("ihalo: %llu\n",ihalo);
 
-      tmp[0].npart += mhalo.mhalos[ihalo].npart;
-      //printf("tot npart:%llu\n",tmp[0].npart);
-      tmp[0].mparticle = memmgr_realloc(tmp[0].mparticle,sizeof(m_particle_t)*tmp[0].npart,sizeof(m_particle_t)*(tmp[0].npart-mhalo.mhalos[ihalo].npart),memmgr_buff);
-      for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++)
-	{
-	  //printf("ihalo: %llu ipart:%llu\n",ihalo,ipart);
-	  //printf("ipart = %llu, ihalo = %llu\n",ipart,ihalo);
-	  tmp[0].mparticle[countpart].ID =  mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  tmp[0].mparticle[countpart].haloID =  mhalo.mhalos[ihalo].ID;
-	  countpart++;
-	  //insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  //printf("pid = %llu/%llu :%llu\n",ipart,mhalo.mhalos[ihalo].npart,ihalo);
-	  //m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
-	}
-      //memmgr_printdetails();
-    }
-  qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
-  ref = tmp[0].mparticle[0].ID;
-  countpart = 0;
-  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_ID);
-  sprintf(memmgr_buff,"TMP particles: Hash");
-  for(ipart=1;ipart<tmp[0].npart;ipart++)
-    {
-      if(tmp[0].mparticle[ipart].ID == ref)
-	{
-	  /* ihalo = tmp[0].mparticle[ipart].haloID; */
-	  /* h_target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos); */
-	  /* //printf("search = %llu\n",h_target); */
-	  /* key_for_sort = memmgr_malloc(mhalo.mhalos[h_target].npart*sizeof(key_sort_t),memmgr_buff); */
-	  /* for(jpart=0;jpart<mhalo.mhalos[h_target].npart;jpart++) */
-	  /*   { */
-	  /*     key_for_sort[jpart].ID = mhalo.mhalos[h_target].Particles[jpart].ID; */
-	  /*     key_for_sort[jpart].order = jpart; */
-	  /*   } */
-	  /* qsort(key_for_sort,mhalo.mhalos[h_target].npart, sizeof(key_sort_t),compare_m_halo_t_by_ID); */
-	  /* p_target = search_key_sort_t_for_ID( tmp[0].mparticle[ipart].ID, mhalo.mhalos[h_target].npart , key_for_sort); */
-	  /* p_target = key_for_sort[p_target].order; */
-	  /* memmgr_free(key_for_sort,mhalo.mhalos[h_target].npart*sizeof(key_sort_t),memmgr_buff); */
-	  /* //p_target = search_particlelist_t_for_ID(); */
-	  tmp[0].mparticle[ipart].ID = NULLPOINT;
-	}
-      else
-	{
-	  ref = tmp[0].mparticle[ipart].ID;
-	}
-	//printf("dupplicate pid\n");
-    }
-  //qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
-  printf("total duplicate : %llu\n",countpart);
+  /* sprintf(memmgr_buff,"Particle Wrapper: Hash"); */
+  /* tmp = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff); */
+  /* tmp[0].npart = 0; */
+  /* sprintf(memmgr_buff,"Particle inside wrapper: Hash"); */
+  /* tmp[0].mparticle = memmgr_malloc(0,memmgr_buff); */
+  /* qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir_reverse); */
+  /* countpart = 0; */
+  /* for(ihalo=0;ihalo < mhalo.nHalos; ihalo++) */
+  /*   { */
+  /*     //printf("ihalo: %llu\n",ihalo); */
+
+  /*     tmp[0].npart += mhalo.mhalos[ihalo].npart; */
+  /*     //printf("tot npart:%llu\n",tmp[0].npart); */
+  /*     tmp[0].mparticle = memmgr_realloc(tmp[0].mparticle,sizeof(m_particle_t)*tmp[0].npart,sizeof(m_particle_t)*(tmp[0].npart-mhalo.mhalos[ihalo].npart),memmgr_buff); */
+  /*     for(ipart=0;ipart<mhalo.mhalos[ihalo].npart;ipart++) */
+  /* 	{ */
+  /* 	  //printf("ihalo: %llu ipart:%llu\n",ihalo,ipart); */
+  /* 	  //printf("ipart = %llu, ihalo = %llu\n",ipart,ihalo); */
+  /* 	  tmp[0].mparticle[countpart].ID =  mhalo.mhalos[ihalo].Particles[ipart].ID; */
+  /* 	  tmp[0].mparticle[countpart].haloID =  mhalo.mhalos[ihalo].ID; */
+  /* 	  countpart++; */
+  /* 	  //insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID; */
+  /* 	  //printf("pid = %llu/%llu :%llu\n",ipart,mhalo.mhalos[ihalo].npart,ihalo); */
+  /* 	  //m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert); */
+  /* 	} */
+  /*     //memmgr_printdetails(); */
+  /*   } */
+  /* qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID); */
+  /* ref = tmp[0].mparticle[0].ID; */
+  /* countpart = 0; */
+  /* qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_ID); */
+  /* sprintf(memmgr_buff,"TMP particles: Hash"); */
+  /* for(ipart=1;ipart<tmp[0].npart;ipart++) */
+  /*   { */
+  /*     if(tmp[0].mparticle[ipart].ID == ref) */
+  /* 	{ */
+  /* 	  /\* ihalo = tmp[0].mparticle[ipart].haloID; *\/ */
+  /* 	  /\* h_target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos); *\/ */
+  /* 	  /\* //printf("search = %llu\n",h_target); *\/ */
+  /* 	  /\* key_for_sort = memmgr_malloc(mhalo.mhalos[h_target].npart*sizeof(key_sort_t),memmgr_buff); *\/ */
+  /* 	  /\* for(jpart=0;jpart<mhalo.mhalos[h_target].npart;jpart++) *\/ */
+  /* 	  /\*   { *\/ */
+  /* 	  /\*     key_for_sort[jpart].ID = mhalo.mhalos[h_target].Particles[jpart].ID; *\/ */
+  /* 	  /\*     key_for_sort[jpart].order = jpart; *\/ */
+  /* 	  /\*   } *\/ */
+  /* 	  /\* qsort(key_for_sort,mhalo.mhalos[h_target].npart, sizeof(key_sort_t),compare_m_halo_t_by_ID); *\/ */
+  /* 	  /\* p_target = search_key_sort_t_for_ID( tmp[0].mparticle[ipart].ID, mhalo.mhalos[h_target].npart , key_for_sort); *\/ */
+  /* 	  /\* p_target = key_for_sort[p_target].order; *\/ */
+  /* 	  /\* memmgr_free(key_for_sort,mhalo.mhalos[h_target].npart*sizeof(key_sort_t),memmgr_buff); *\/ */
+  /* 	  /\* //p_target = search_particlelist_t_for_ID(); *\/ */
+  /* 	  tmp[0].mparticle[ipart].ID = NULLPOINT; */
+  /* 	} */
+  /*     else */
+  /* 	{ */
+  /* 	  ref = tmp[0].mparticle[ipart].ID; */
+  /* 	} */
+  /* 	//printf("dupplicate pid\n"); */
+  /*   } */
+  /* //qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID); */
+  /* printf("total duplicate : %llu\n",countpart); */
   return mhalo;
 }
 /* incomplete */
