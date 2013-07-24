@@ -85,6 +85,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 	  //printf("pid = %llu/%llu :%llu\n",ipart,mhalo.mhalos[ihalo].npart,ihalo);
 	  //m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
+      memmgr_printdetails();
     }
   return mhalo;
 }
