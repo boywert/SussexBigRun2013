@@ -77,16 +77,16 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       tmp[0].npart += mhalo.mhalos[ihalo].npart;
       printf("tot npart:%llu\n",tmp[0].npart);
       tmp[0].mparticle = memmgr_realloc(tmp[0].mparticle,sizeof(m_particle_t)*tmp[0].npart,sizeof(m_particle_t)*(tmp[0].npart-mhalo.mhalos[ihalo].npart),memmgr_buff);
-      for(ipart=tmp[0].npart-mhalo.mhalos[ihalo].npart-1;ipart<tmp[0].npart;ipart++)
+      for(ipart=tmp[0].npart-mhalo.mhalos[ihalo].npart;ipart<tmp[0].npart;ipart++)
 	{
 	  //printf("ihalo: %llu ipart:%llu\n",ihalo,ipart);
-	  //tmp[0].mparticle[ipart].ID =  mhalo.mhalos[ihalo].Particles[ipart].ID;
-	  //tmp[0].mparticle[ipart].haloID =  mhalo.mhalos[ihalo].ID;
+	  tmp[0].mparticle[ipart].ID =  mhalo.mhalos[ihalo].Particles[ipart].ID;
+	  tmp[0].mparticle[ipart].haloID =  mhalo.mhalos[ihalo].ID;
 	  //insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
 	  //printf("pid = %llu/%llu :%llu\n",ipart,mhalo.mhalos[ihalo].npart,ihalo);
 	  //m_particle_binary_search_and_insert_element_replace_exist(&(tmp[0]), insert);
 	}
-      memmgr_printdetails();
+      //memmgr_printdetails();
     }
   return mhalo;
 }
