@@ -37,7 +37,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
   ptid_t ipart,countpart,ref;
-  hid_t ihalo,tot_halos;
+  hid_t ihalo,tot_halos,target;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
   m_particle_wrapper_t *tmp;
@@ -51,7 +51,9 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       if(mhalo.mhalos[ihalo].host_halo < NULLPOINT)
 	break;
       else
-	tot_halos++;
+	{
+	  tot_halos++;
+	}
     }
   sprintf(memmgr_buff,"Particle: Halo Array");
   for(ihalo=tot_halos; ihalo<mhalo.nHalos; ihalo++)
@@ -93,11 +95,15 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   ref = tmp[0].mparticle[0].ID;
   countpart = 0;
+  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_ID);
   for(ipart=1;ipart<tmp[0].npart;ipart++)
     {
       if(tmp[0].mparticle[ipart].ID == ref)
 	{
 	  tmp[0].mparticle[ipart].ID = NULLPOINT;
+	  ihalo = tmp[0].mparticle[ipart].haloID;
+	  target = search_m_halo_t_array_for_ID( ihalo, mhalo.nHalos , mhalo.mhalos);
+	  printf("search = %llu\n",target);
 	}
       else
 	{
@@ -105,6 +111,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 	}
 	//printf("dupplicate pid\n");
     }
+  qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   printf("total duplicate : %llu\n",countpart);
   return mhalo;
 }
