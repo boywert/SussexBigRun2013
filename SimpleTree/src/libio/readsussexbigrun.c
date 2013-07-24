@@ -80,6 +80,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       for(ipart=tmp[0].npart-mhalo.mhalos[ihalo].npart;ipart<tmp[0].npart;ipart++)
 	{
 	  //printf("ihalo: %llu ipart:%llu\n",ihalo,ipart);
+	  printf("ipart = %llu, ihalo = %llu\n",ipart,ihalo)
 	  tmp[0].mparticle[ipart].ID =  mhalo.mhalos[ihalo].Particles[ipart].ID;
 	  tmp[0].mparticle[ipart].haloID =  mhalo.mhalos[ihalo].ID;
 	  //insert.ID = mhalo.mhalos[ihalo].Particles[ipart].ID;
