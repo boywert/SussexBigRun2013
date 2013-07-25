@@ -13,7 +13,6 @@ int main(int argc,char **argv)
   MPI_Comm_size ( MPI_COMM_WORLD, &nodes_return );
   MPI_Comm_rank ( MPI_COMM_WORLD, &rank );
 
-  Process 0 prints an introductory message.
   init_memmgr();
   //sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130329_10_4000_244Mpc_ext2_test/results");
   sprintf(memmgr_buff,"Halo wrapper");
