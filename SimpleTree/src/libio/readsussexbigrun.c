@@ -34,7 +34,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   return mhalo;
 }
 
-m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, double buffer_width, int position, m_halo_wrapper_t mhalo)
+m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -63,7 +63,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   block_z = (int) (domain/(domain_per_dim*domain_per_dim));
   block_y = (int)((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
-  NumBlock = k*GridLines**2 + j*GridLines + i;
+  
   min_x = block_x*domain_width+buffer_width;
   max_x = (block_x+1)*domain_width-buffer_width;
   min_y = block_y*domain_width+buffer_width;
