@@ -34,6 +34,103 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   return mhalo;
 }
 
+m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, double buffer_width, int position, m_halo_wrapper_t mhalo)
+{
+  FILE *fphalo,*fppart;
+  char halofile[MAXSTRING],partfile[MAXSTRING];
+  //uint64_t one;
+  //uint32_t onep;
+  int i,block_x,block_y,block_z;
+  hid_t ihalo,tot_halos;
+  double min_x,max_x,min_y,max_y,min_z,max_z;
+  //tot_domain = 10;
+  i = domain;
+  sprintf(halofile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,i);
+  sprintf(partfile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_pids.dat_bin",folder,redshift,i);
+  fphalo = fopen(halofile,"rb");
+  fppart = fopen(partfile,"rb");
+  mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
+  fclose(fphalo);
+  fclose(fppart);
+ 
+  /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
+  /*   { */
+  /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
+  /*   } */
+  //memmgr_printdetails();
+  mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
+  //memmgr_printdetails();
+  block_z = (int) (domain/(domain_per_dim*domain_per_dim));
+  block_y = (int)((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
+  block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
+  NumBlock = k*GridLines**2 + j*GridLines + i;
+  min_x = block_x*domain_width+buffer_width;
+  max_x = (block_x+1)*domain_width-buffer_width;
+  min_y = block_y*domain_width+buffer_width;
+  max_y = (block_y+1)*domain_width-buffer_width;
+  min_z = block_z*domain_width+buffer_width;
+  max_z = (block_z+1)*domain_width-buffer_width;
+
+  for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++ )
+    {
+      if(position == 1) //-x
+	{
+	  if(mhalo.mhalos[ihalo].Xc > min_x)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+      else if(position == 2) //+x
+	{
+	  if(mhalo.mhalos[ihalo].Xc < max_x)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+      else if(position == 3) //-y
+	{
+	  if(mhalo.mhalos[ihalo].Yc > min_y)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+      else if(position == 4) //+y
+	{
+	  if(mhalo.mhalos[ihalo].Yc < max_y)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+      else if(position == 5) //-z
+	{
+	  if(mhalo.mhalos[ihalo].Zc > min_z)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+      else if(position == 6) //+z
+	{
+	  if(mhalo.mhalos[ihalo].Zc > max_z)
+	    mhalo.mhalos[ihalo].ID = NULLPOINT;
+	}
+    }
+  qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_ID);
+  tot_halos = 0;
+  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
+    {
+      //printf("ihalo = %llu host =%llu\n",ihalo,mhalo.mhalos[ihalo].host_halo);
+      if(mhalo.mhalos[ihalo].ID == NULLPOINT)
+	break;
+      else
+	{
+	  tot_halos++;
+	}
+    }
+  sprintf(memmgr_buff,"Particle: Halo Array");
+  for(ihalo=tot_halos; ihalo<mhalo.nHalos; ihalo++)
+    {
+      memmgr_free(mhalo.mhalos[ihalo].Particles, mhalo.mhalos[ihalo].npart*sizeof(particlelist_t), memmgr_buff);
+    }
+  old = mhalo.nHalos*sizeof(m_halo_t);
+  new = tot_halos*sizeof(m_halo_t);
+  sprintf(memmgr_buff,"Halo Array");
+  mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
+  mhalo.nHalos = tot_halos;
+  return mhalo;
+}
+
+
+
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain )
 {
   FILE *fphalo,*fppart;

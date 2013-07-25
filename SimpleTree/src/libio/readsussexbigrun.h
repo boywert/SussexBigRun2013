@@ -118,6 +118,7 @@ struct particle_buffer
 /* extern void     free_profile                      (halo_profile_t *); */
 extern m_halo_wrapper_t  sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain );
 extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain );
+extern m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, double buffer_width, int position, m_halo_wrapper_t mhalo);
 extern m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 extern m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo);
