@@ -34,6 +34,39 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   return mhalo;
 }
 
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain )
+{
+  FILE *fphalo,*fppart;
+  char halofile[MAXSTRING],partfile[MAXSTRING];
+  //uint64_t one;
+  //uint32_t onep;
+  m_halo_wrapper_t mhalo;
+  int i;
+  hid_t ihalo;
+  mhalo.nHalos = 0;
+  mhalo.redshift = redshift;
+  mhalo.mhalos= memmgr_malloc(0,"Halo Array");
+  //tot_domain = 10;
+  i = domain;
+  sprintf(halofile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,i);
+  sprintf(partfile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_pids.dat_bin",folder,redshift,i);
+  fphalo = fopen(halofile,"rb");
+  fppart = fopen(partfile,"rb");
+  mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
+  fclose(fphalo);
+  fclose(fppart);
+ 
+  /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
+  /*   { */
+  /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
+  /*   } */
+  memmgr_printdetails();
+  mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
+  memmgr_printdetails();
+  return mhalo;
+}
+
+
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 {
   ptid_t ipart,countpart,ref,p_target,jpart;

@@ -12,6 +12,7 @@
 #include "cosmology.h"
 #include "MPI_distribute.h"
 #include <math.h>
+#include "mpi.h"
 
 #define INC_MAIN_H
 #endif
