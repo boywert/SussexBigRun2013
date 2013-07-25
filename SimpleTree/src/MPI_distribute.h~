@@ -23,6 +23,6 @@
 #include "libhash/hash.h"
 #include "common.h"
 
-//extern void MPI_distribute_remove_duplicate_with_structure_level(m_halo_wrapper_t* mhalo,int level);
+extern void MPI_distribute_remove_duplicate_with_structure_level(m_halo_wrapper_t* mhalo,int level);
 
 #endif
