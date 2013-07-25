@@ -43,6 +43,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   int i,block_x,block_y,block_z;
   hid_t ihalo,tot_halos;
   double min_x,max_x,min_y,max_y,min_z,max_z;
+  char memmgr_buff[memmgr_max_str];
   //tot_domain = 10;
   i = domain;
   sprintf(halofile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,i);
