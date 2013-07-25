@@ -14,9 +14,9 @@ int main(int argc,char **argv)
   MPI_Comm_rank ( MPI_COMM_WORLD, &rank );
 
   init_memmgr();
-  //sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130329_10_4000_244Mpc_ext2_test/results");
+  sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
   sprintf(memmgr_buff,"Halo wrapper");
-  sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
+  //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
   //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
   halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   //halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
