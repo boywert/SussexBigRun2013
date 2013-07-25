@@ -19,11 +19,15 @@ int main(int argc,char **argv)
   //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
   //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
   halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
-  //halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
+  halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   for(i=0;i<6*6*6;i++)
     {
       if(rank==i)
-	halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,6.354,i);
+	{
+	  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,6.354,i);
+	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,6.354,i);
+	  
+	}
     }
   // halocatB[0] = sussexbigrun_load_halo_catalogue_binary(folder,6.418,6);
   /* memmgr_printdetails(); */
