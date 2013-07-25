@@ -28,11 +28,12 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
   /*   } */
-  memmgr_printdetails();
+  //memmgr_printdetails();
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
-  memmgr_printdetails();
+  //memmgr_printdetails();
   return mhalo;
 }
+
 
 m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo)
 {
@@ -131,6 +132,60 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
 }
 
 
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(char *folder, float redshift, int domain, int domain_per_dim, double domain_width, double dx)
+{
+  FILE *fphalo,*fppart;
+  char halofile[MAXSTRING],partfile[MAXSTRING];
+  //uint64_t one;
+  //uint32_t onep;
+  m_halo_wrapper_t mhalo;
+  int i,block_x,block_y,block_z;
+  hid_t ihalo;
+  double fixed_buffer = 400.0; //400 kpc/h buffer
+  
+  block_z = (int) (domain/(domain_per_dim*domain_per_dim));
+  block_y = (int)((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
+  block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
+  
+  mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshift,domain);
+  for(i=-1;i<=1;i++)
+    {
+      for(j=-1;j<=1;j++)
+	{
+	  for(k=-1;k<=1;k++)
+	    {
+	      x = block_x + i;
+	      y = block_y + j;
+	      z = block_z + k;
+	      if(i != 0 && j != 0 && k != 0)
+		{
+		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
+		  if(i==1)
+		    position = 1;
+		  if(i==-1)
+		    position = 2;
+		  if(j==1)
+		    position = 3;
+		  if(j==-1)
+		    position = 4;
+		  if(k==1)
+		    position = 5;
+		  if(k==-1)
+		    position = 6;
+		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+		}
+	    }
+	}
+    }
+  /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
+  /*   { */
+  /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
+  /*   } */
+  //memmgr_printdetails();
+  mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
+  //memmgr_printdetails();
+  return mhalo;
+}
 
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain )
 {
@@ -158,11 +213,12 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
   /*   } */
-  memmgr_printdetails();
+  //  memmgr_printdetails();
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
-  memmgr_printdetails();
+  //memmgr_printdetails();
   return mhalo;
 }
+
 
 
 m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
