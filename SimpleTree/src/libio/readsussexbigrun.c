@@ -230,7 +230,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   // m_particle_wrapper_t *tmp;
   //key_sort_t *key_for_sort;
   tot_halos = 0;  
-  printf("Filter halos and particles\n");
+  //printf("Filter halos and particles\n");
   qsort(mhalo.mhalos,mhalo.nHalos, sizeof(m_halo_t), compare_m_halo_t_by_host_halo_reverse);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
@@ -371,7 +371,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   fseek(fphalo, 0L, SEEK_SET);
   numHalos = size/halo_t_size;
   //printf("size = %f; sizestruct %f; totalhalo %f\n",(float)size,(float)halo_t_size, (float)size/halo_t_size);
-  printf("halo in domain %d :%ld \n",domain,numHalos);
+  //printf("halo in domain %d :%ld \n",domain,numHalos);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = mhalo.nHalos;
