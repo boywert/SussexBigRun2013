@@ -26,13 +26,14 @@ int main(int argc,char **argv)
       if(rank==l)
 	{
 	  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,6.418,l);
-	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, 6.354, l,6, 47.0/6, speed_of_light*dt);
+	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, 6.354, l, 6, 47.0/6, speed_of_light*dt*max_part_speed_in_c);
 	  //halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,6.354,l);
 	}
     }
   // halocatB[0] = sussexbigrun_load_halo_catalogue_binary(folder,6.418,6);
   /* memmgr_printdetails(); */
-  //free_m_halo_wrapper(halocatA);
+  free_m_halo_wrapper(halocatA);
+  free_m_halo_wrapper(halocatB);
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
   /*   { */
@@ -40,7 +41,7 @@ int main(int argc,char **argv)
   /*   } */
   /* exit(0); */
 
-  printf(" delta t = %lf, ligt = %lf\n", dt,dt*speed_of_light*max_part_speed_in_c);
+  /* printf(" delta t = %lf, ligt = %lf\n", dt,dt*speed_of_light*max_part_speed_in_c); */
   //(void) MPI_distribute_remove_duplicate_with_structure_level(halocatA,0);
   MPI_Finalize();
   return 0;
