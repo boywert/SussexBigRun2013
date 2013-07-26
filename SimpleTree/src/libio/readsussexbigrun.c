@@ -139,7 +139,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   //uint64_t one;
   //uint32_t onep;
   m_halo_wrapper_t mhalo;
-  int i,block_x,block_y,block_z;
+  int i,j,k,x,y,z,block,block_x,block_y,block_z;
   hid_t ihalo;
   double fixed_buffer = 400.0; //400 kpc/h buffer
   
