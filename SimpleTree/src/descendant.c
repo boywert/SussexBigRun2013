@@ -54,10 +54,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
-      for(ipart=0; ipart<haloA->mhalos[ihalo].npart; ipart++)
+      for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
-	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
-	  ihid =  search_particlelist_t_for_ID(curpart,tmppart[0].npart,tmppart[0].mparticle );
+	  //curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
+	  //ihid =  search_particlelist_t_for_ID(curpart,tmppart[0].npart,tmppart[0].mparticle );
 	}
     }
 }
