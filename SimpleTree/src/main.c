@@ -14,7 +14,7 @@ int main(int argc,char **argv)
   MPI_Comm_rank ( MPI_COMM_WORLD, &rank );
 
   init_memmgr();
-  //sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
+  sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
   snap1 = 6.418;
   snap2 = 6.354;
   sprintf(memmgr_buff,"Halo wrapper");
@@ -31,7 +31,7 @@ int main(int argc,char **argv)
 	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47.0/6, speed_of_light*dt*max_part_speed_in_c);
 	}
     }
-  exit(0);
+  //exit(0);
   make_link_AB(&(halocatA[0]),&(halocatB[0]));
   
   free_m_halo_wrapper(halocatA);
