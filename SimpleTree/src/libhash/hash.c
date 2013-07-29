@@ -252,6 +252,7 @@ uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const 
 {
   uint64_t middle,low,high;
   m_particle_t *pool = (m_particle_t *) Array;
+  printf("start searching for %llu in %llu element array\n",searchID,n_array);
   //printf("start search\n");
   /*
     for(i =0; i< n_array; i++)
