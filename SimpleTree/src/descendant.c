@@ -33,7 +33,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   ref = NULLPOINT;
   countpart = 0;
   sprintf(memmgr_buff,"TMP particles: Hash");
-  //printf("loop to remove dup\n");
+  printf("loop to remove dup\n");
   for(ipart=0;ipart<tmppart[0].npart;ipart++)
     {
       if(tmppart[0].mparticle[ipart].ID == ref)
