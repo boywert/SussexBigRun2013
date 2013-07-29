@@ -31,7 +31,7 @@ int main(int argc,char **argv)
 	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47.0/6, speed_of_light*dt*max_part_speed_in_c);
 	}
     }
- 
+  exit(0);
   make_link_AB(&(halocatA[0]),&(halocatB[0]));
   
   free_m_halo_wrapper(halocatA);
