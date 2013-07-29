@@ -28,7 +28,7 @@ int main(int argc,char **argv)
       if(rank==l)
 	{
 	  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap1,l);
-	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47.0/6, speed_of_light*dt*max_part_speed_in_c);
+	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47000.0/6, speed_of_light*dt*max_part_speed_in_c);
 	}
     }
   //exit(0);
