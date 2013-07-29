@@ -9,4 +9,7 @@
 #include "common.h"
 #include "treeformat.h"
 #include "cosmology.h"
+#include "libhash/hash.h"
+extern void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB);
+
 #endif
