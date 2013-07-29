@@ -291,7 +291,7 @@ uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const 
 uint64_t search_particlelist_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array )
 {
   uint64_t middle,low,high;
-  m_particlelist_t *pool = (m_particlelist_t *) Array;
+  particlelist_t *pool = (particlelist_t *) Array;
   //printf("start search\n");
   /*
     for(i =0; i< n_array; i++)
