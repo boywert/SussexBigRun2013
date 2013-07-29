@@ -1,5 +1,56 @@
 #include "descendant.h"
 
+
+void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
+{
+  m_particle_wrapper_t *tmppart;
+  ptid_t ipart,countpart,ref;
+  hid_t ihalo;
+  char memmgr_buff[memmgr_max_str];
+  sprintf(memmgr_buff,"Particle Wrapper: Hash");
+  tmppart = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
+  tmppart[0].npart = 0;
+  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  tmppart[0].mparticle = memmgr_malloc(0,memmgr_buff);
+  qsort(haloB.mhalos,haloB.nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
+  countpart = 0;
+  for(ihalo=0;ihalo < haloB.nHalos; ihalo++)
+    {
+      tmppart[0].npart += haloB.mhalos[ihalo].npart;
+      tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,sizeof(m_particle_t)*tmppart[0].npart,sizeof(m_particle_t)*(tmppart[0].npart-mhalo.mhalos[ihalo].npart),memmgr_buff);
+      for(ipart=0;ipart<haloB.mhalos[ihalo].npart;ipart++)
+  	{
+    	  tmp[0].mparticle[countpart].ID =  haloB.mhalos[ihalo].Particles[ipart].ID;
+  	  tmp[0].mparticle[countpart].haloID = haloB.mhalos[ihalo].ID;
+  	  countpart++;
+    	}
+  
+    }
+  qsort(tmppart[0].mparticle,tmppart[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  ref = NULLPOINT;
+  countpart = 0;
+  sprintf(memmgr_buff,"TMP particles: Hash");
+  for(ipart=0;ipart<tmppart[0].npart;ipart++)
+    {
+      if(tmppart[0].mparticle[ipart].ID == ref)
+  	{
+  	  tmppart[0].mparticle[ipart].ID = NULLPOINT;
+  	}
+      else
+  	{
+	  countpart++;
+  	  ref = tmp[0].mparticle[ipart].ID;
+  	}
+   
+    }
+  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  old = tmppart[0].npart*sizeof(m_particle_t);
+  new = countpart*sizeof(m_particle_t);
+  tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
+}
+
+
 /* m_particle_wrapper_t* build_m_particle_t_for_search(m_halo_t* mhalo, int allow_dup) */
 /* { */
 /*   m_particle_wrapper_t* partlist; */
