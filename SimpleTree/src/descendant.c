@@ -4,11 +4,11 @@
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 {
   m_particle_wrapper_t *tmppart;
-  ptid_t ipart,countpart,ref;
-  hid_t ihalo;
+  ptid_t ipart,countpart,ref,curpart;
+  hid_t ihalo,ihid;
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
-  printf("make link AB\n");
+  //printf("make link AB\n");
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
   tmppart = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
   tmppart[0].npart = 0;
@@ -16,7 +16,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   tmppart[0].mparticle = memmgr_malloc(0,memmgr_buff);
   qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
   countpart = 0;
-  printf("Start loop for haloB\n");
+  //printf("Start loop for haloB\n");
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
       tmppart[0].npart += haloB->mhalos[ihalo].npart;
@@ -33,7 +33,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   ref = NULLPOINT;
   countpart = 0;
   sprintf(memmgr_buff,"TMP particles: Hash");
-  printf("loop to remove dup\n");
+  //printf("loop to remove dup\n");
   for(ipart=0;ipart<tmppart[0].npart;ipart++)
     {
       if(tmppart[0].mparticle[ipart].ID == ref)
@@ -52,6 +52,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   old = tmppart[0].npart*sizeof(m_particle_t);
   new = countpart*sizeof(m_particle_t);
   tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
+  for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
+    {
+      for(ipart=0; ipart<haloA->npart; ipart++)
+	{
+	  curpart = haloA->Particles[ipart].ID;
+	  ihid =  search_particlelist_t_for_ID(curpart,tmppart[0]->npart,tmppart[0].mparticle );
+	}
+    }
 }
 
 
