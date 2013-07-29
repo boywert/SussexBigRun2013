@@ -21,8 +21,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
       tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,sizeof(m_particle_t)*tmppart[0].npart,sizeof(m_particle_t)*(tmppart[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
       for(ipart=0;ipart<haloB->mhalos[ihalo].npart;ipart++)
   	{
-    	  tmp[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
-  	  tmp[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
+    	  tmppart[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
+  	  tmppart[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
   	  countpart++;
     	}
   
@@ -45,7 +45,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
    
     }
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  qsort(tmp[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  qsort(tmppart[0].mparticle,tmp[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   old = tmppart[0].npart*sizeof(m_particle_t);
   new = countpart*sizeof(m_particle_t);
   tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
