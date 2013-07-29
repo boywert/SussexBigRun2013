@@ -57,8 +57,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
-	  printf("outside: search for %llu\n",curpart);
-	  //ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,tmppart[0].mparticle );
+	  //printf("outside: search for %llu\n",curpart);
+	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle) );
 	}
     }
 }
