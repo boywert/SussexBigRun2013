@@ -13,6 +13,6 @@
 #include "MPI_distribute.h"
 #include <math.h>
 #include "mpi.h"
-
+#include "descendant.h"
 #define INC_MAIN_H
 #endif
