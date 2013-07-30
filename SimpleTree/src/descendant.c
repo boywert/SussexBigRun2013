@@ -118,17 +118,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	    }
 	}
     }
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-    {
-      if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
-	{
-	  printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
-	}
-      else
-	{
-	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
-	}
-    }
+  /* for(ihalo=0; ihalo < haloB->nHalos; ihalo++) */
+  /*   { */
+  /*     if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT) */
+  /* 	{ */
+  /* 	  printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir); */
+  /* 	} */
+  /*     else */
+  /* 	{ */
+  /* 	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir); */
+  /* 	} */
+  /*   } */
 }
 
 
