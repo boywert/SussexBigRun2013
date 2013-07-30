@@ -122,11 +122,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
     {
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
 	{
-	  printf("halo %llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloA->mhalos[ihalo].main_progenitor].Mvir);
+	  printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
 	}
       else
 	{
-	  printf("halo %llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].Mvir);
+	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
 	}
     }
 }
