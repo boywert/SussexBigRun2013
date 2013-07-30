@@ -5,7 +5,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 {
   m_particle_wrapper_t *tmppart;
   ptid_t ipart,countpart,ref,curpart;
-  hid_t ihalo,ihid;
+  hid_t ihalo,jhalo,ihid;
   uint64_t old,new;
   merit_t *merit;
   char memmgr_buff[memmgr_max_str];
@@ -60,22 +60,27 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   /*     printf("ipart: %llu => %llu\n",ipart,tmppart[0].mparticle[ipart].ID); */
   /*   } */
   /* exit(0); */
+  merit = malloc(haloB->nHalos*sizeof(merit_t));
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
-      merit = calloc(haloB->nHalos,sizeof(merit_t));
+      for(jhalo=0;jhalo<haloB->nHalos;jhalo++)
+	{
+	  merit[jhalo].ID = jhalo;
+	  merit[jhalo].merit = 0.;
+	}
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
 	  //printf("outside: search for %llu\n",curpart);
 	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
-	    merit[ihid] += pow((double)ipart,-2./3);
+	    merit[ihid].merit += pow((double)ipart,-2./3);
 	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
-      haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1];
-      free(merit);
+      haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].ID;
       printf("descendant => %llu\n",haloA->mhalos[ihalo].descendant);
     }
+  free(merit);
 }
 
 
