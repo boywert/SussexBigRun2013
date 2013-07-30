@@ -65,7 +65,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
     {
       for(jhalo=0;jhalo<haloB->nHalos;jhalo++)
 	{
-	  merit[jhalo].ID = jhalo;
+	  merit[jhalo].haloID = jhalo;
 	  merit[jhalo].merit = 0.;
 	}
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
