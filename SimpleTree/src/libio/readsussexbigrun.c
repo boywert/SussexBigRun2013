@@ -1,7 +1,7 @@
 #include "readsussexbigrun.h"
 #define npart_box 5159780352
 
-void dm_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
+void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 {
   hid_t ihalo;
 
