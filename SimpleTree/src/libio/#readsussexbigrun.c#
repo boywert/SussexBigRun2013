@@ -17,7 +17,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
     {
       if(mpi_rank==l)
 	{
-	  printf("using node: %d writing to file %s\n",mpi_rank,filename);
+
 	  fp = fopen(filename, "a+");
 	  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	    {
@@ -169,10 +169,6 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
-  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
-    {
-      mhalo.mhalos[ihalo].used = 0;
-    }
   old =  mhalo_ori.nHalos*sizeof(m_halo_t);
   tot_halos = mhalo_ori.nHalos+mhalo.nHalos;
   new =  tot_halos*sizeof(m_halo_t);
@@ -208,9 +204,9 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   	{
   	  for(k=-1;k<=1;k++)
   	    {
-  	      x = (block_x + i)%domain_per_dim;
-  	      y = (block_y + j)%domain_per_dim;
-  	      z = (block_z + k)%domain_per_dim;
+  	      x = block_x + i;
+  	      y = block_y + j;
+  	      z = block_z + k;
   	      if(i != 0 && j != 0 && k != 0)
   		{
   		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
@@ -270,11 +266,6 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
   //  memmgr_printdetails();
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
   //memmgr_printdetails();
-  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
-    {
-      mhalo.mhalos[ihalo].used = 1;
-    }
-    // memmgr_printdetails();
   return mhalo;
 }
 
