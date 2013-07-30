@@ -61,6 +61,9 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
   /*   } */
   //memmgr_printdetails();
+  mhalo.nHalos = 0;
+  mhalo.redshift = redshift;
+  mhalo.mhalos= memmgr_malloc(0,"Halo Array");
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
   //memmgr_printdetails();
   block_z = (int) (domain/(domain_per_dim*domain_per_dim));
