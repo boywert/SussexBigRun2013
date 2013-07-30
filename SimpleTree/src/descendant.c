@@ -77,7 +77,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	    merit[ihid].merit += pow((double)ipart,-2./3);
 	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
-      if(merit[haloB->nHalos-1].merit > 3.0)
+      if(merit[haloB->nHalos-1].merit > 3.2)
 	haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
       else
 	haloA->mhalos[ihalo].descendant = NULLPOINT;
