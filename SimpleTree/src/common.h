@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-
+#include "mpi.h"
 
 #define MAXSTRING 1024
 
@@ -15,4 +15,9 @@ extern const uint64_t NULLPOINT;
 extern const uint64_t MAXUSEABLE;
 extern const double max_part_speed_in_c;
 
+extern int mpi_rank;
+extern int mpi_nodes;
+
+extern void initialise_MPI(int argc,char **argv);
+extern void finalise_MPI();
 #endif

@@ -8,10 +8,9 @@ int main(int argc,char **argv)
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snap2;
   hid_t ihalo;
-  int i,j,k,l,nodes_return,rank;
-  MPI_Init ( &argc, &argv );
-  MPI_Comm_size ( MPI_COMM_WORLD, &nodes_return );
-  MPI_Comm_rank ( MPI_COMM_WORLD, &rank );
+  int i,j,k,l;
+
+  initialise_MPI(&argc, &argv);
 
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
@@ -25,7 +24,7 @@ int main(int argc,char **argv)
   dt = get_delta_t_in_hubble_unit(snap2,snap1);
   for(l=0;l<6*6*6;l++)
     {
-      if(rank==l)
+      if(mpi_rank==l)
 	{
 	  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap1,l);
 	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47000.0/6, speed_of_light*dt*max_part_speed_in_c);
@@ -47,7 +46,7 @@ int main(int argc,char **argv)
 
   /* printf(" delta t = %lf, ligt = %lf\n", dt,dt*speed_of_light*max_part_speed_in_c); */
   //(void) MPI_distribute_remove_duplicate_with_structure_level(halocatA,0);
-  MPI_Finalize();
+  finalise_MPI();
   return 0;
 }
   
