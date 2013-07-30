@@ -7,7 +7,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB)
 
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      printf("%lf\n",haloB->mhalos[ihalo].dm_dt);
+      printf("%g\n",haloB->mhalos[ihalo].dm_dt);
     }
 }
 
