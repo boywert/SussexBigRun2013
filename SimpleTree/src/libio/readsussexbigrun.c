@@ -4,13 +4,16 @@
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB)
 {
   hid_t ihalo;
-
+  FILE *fp;
+  
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      printf("%g %g %g %g %llu %d\n",
+      printf("%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
 	     haloB->mhalos[ihalo].Xc,
 	     haloB->mhalos[ihalo].Yc,
 	     haloB->mhalos[ihalo].Zc,
+	     haloB->mhalos[ihalo].Mvir,
+	     haloB->mhalos[ihalo].Rvir,
 	     haloB->mhalos[ihalo].dm_dt,
 	     haloB->mhalos[ihalo].oriID,
 	     haloB->mhalos[ihalo].domainID);
