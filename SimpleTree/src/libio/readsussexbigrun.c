@@ -21,15 +21,18 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
 	  fp = fopen(filename, "a");
 	  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	    {
-	      fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
-		      haloB->mhalos[ihalo].Xc,
-		      haloB->mhalos[ihalo].Yc,
-		      haloB->mhalos[ihalo].Zc,
-		      haloB->mhalos[ihalo].Mvir,
-		      haloB->mhalos[ihalo].Rvir,
-		      haloB->mhalos[ihalo].dm_dt,
-		      haloB->mhalos[ihalo].oriID,
-		      haloB->mhalos[ihalo].domainID);
+	      if(haloB->mhalos[ihalo].used == 1)
+		{
+		  fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
+			  haloB->mhalos[ihalo].Xc,
+			  haloB->mhalos[ihalo].Yc,
+			  haloB->mhalos[ihalo].Zc,
+			  haloB->mhalos[ihalo].Mvir,
+			  haloB->mhalos[ihalo].Rvir,
+			  haloB->mhalos[ihalo].dm_dt,
+			  haloB->mhalos[ihalo].oriID,
+			  haloB->mhalos[ihalo].domainID);
+		}
 	    }
 	  fclose(fp);
 	}
