@@ -77,7 +77,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	    merit[ihid].merit += pow((double)ipart,-2./3);
 	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
-      haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].ID;
+      haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
       printf("descendant => %llu\n",haloA->mhalos[ihalo].descendant);
     }
   free(merit);
