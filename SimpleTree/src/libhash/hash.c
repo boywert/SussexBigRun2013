@@ -158,6 +158,18 @@ int compare_m_particle_t_by_ID(const void *v1, const void *v2)
     return ret;
 }
 
+int compare_double(const void *v1, const void *v2)
+{
+  int ret;
+  if (*(double*)v1 < *(double *)v2)
+    ret = -1;
+  else if (*(double *)v1 > *(double *)v2)
+    ret = 1;
+  else if (*(double *)v1 == *(double *)v2)
+    ret = 0;
+  return ret;
+}
+
 int compare_uint64_t(const void *v1, const void *v2)
 {
   int ret;
