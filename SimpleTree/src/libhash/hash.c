@@ -275,7 +275,7 @@ uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const 
   while ( low <= high && high < NULLPOINT) 
     {
       middle = ( low + high ) / 2;
-      printf("%llu : %llu < %llu : %llu < %llu : %llu\n",low,pool[low].ID,middle,pool[middle].ID,high,pool[high].ID);
+      //      printf("%llu : %llu < %llu : %llu < %llu : %llu\n",low,pool[low].ID,middle,pool[middle].ID,high,pool[high].ID);
       if ( searchID == pool[ middle ].ID )
 	{
 	  return pool[middle].haloID;
