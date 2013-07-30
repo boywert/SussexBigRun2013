@@ -22,6 +22,12 @@ typedef struct m_particle
   hid_t haloID;
 } m_particle_t;
 
+typedef struct m_merit
+{
+  hid_t haloID;
+  double merit;
+} merit_t;
+
 typedef struct m_particle_wrapper
 {
   ptid_t npart;

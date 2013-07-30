@@ -7,7 +7,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,ihid;
   uint64_t old,new;
-  double *merit;
+  merit_t *merit;
   char memmgr_buff[memmgr_max_str];
   //printf("make link AB\n");
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
@@ -62,7 +62,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   /* exit(0); */
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
-      merit = calloc(haloB->nHalos,sizeof(double));
+      merit = calloc(haloB->nHalos,sizeof(merit_t));
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
@@ -71,7 +71,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	  if(ihid < NULLPOINT) 
 	    merit[ihid] += pow((double)ipart,-2./3);
 	}
-      qsort(merit,haloB->nHalos,sizeof(double),compare_double);
+      qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
       haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1];
       free(merit);
       printf("descendant => %llu\n",haloA->mhalos[ihalo].descendant);
