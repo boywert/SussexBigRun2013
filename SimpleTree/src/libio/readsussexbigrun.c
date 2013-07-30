@@ -13,6 +13,8 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
   sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
   sprintf(command,"rm -f %s",filename);
   system(command);
+  sprintf(command,"touch %s",filename);
+  system(command);
   for(l=0;l<mpi_nodes;l++)
     {
       if(mpi_rank==l)
