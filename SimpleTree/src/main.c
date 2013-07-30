@@ -14,7 +14,7 @@ int main(int argc,char **argv)
 
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
-  sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch")
+  sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
   snap1 = 6.418;
   snap2 = 6.354;
   sprintf(memmgr_buff,"Halo wrapper");
