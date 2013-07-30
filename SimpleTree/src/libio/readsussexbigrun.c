@@ -40,7 +40,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
   uint64_t old,new;
-  m_halo_wrapper mhalo;
+  m_halo_wrapper_t mhalo;
   //uint32_t onep;
   int i,block_x,block_y,block_z;
   hid_t ihalo,tot_halos;
