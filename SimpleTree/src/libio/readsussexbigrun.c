@@ -13,7 +13,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB)
 	     haloB->mhalos[ihalo].Zc,
 	     haloB->mhalos[ihalo].dm_dt,
 	     haloB->mhalos[ihalo].oriID,
-	     haloB->mhalos[ihalo].domain);
+	     haloB->mhalos[ihalo].domainID);
     }
 }
 
