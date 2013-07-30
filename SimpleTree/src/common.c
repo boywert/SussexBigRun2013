@@ -14,4 +14,5 @@ void initialise_MPI(int argc,char **argv)
 
 void finalise_MPI()
 {
+  MPI_Finalize();
 }
