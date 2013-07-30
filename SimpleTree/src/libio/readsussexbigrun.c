@@ -35,11 +35,12 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float red
 }
 
 
-m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo)
+m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo_ori)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
   uint64_t old,new;
+  m_halo_wrapper mhalo;
   //uint32_t onep;
   int i,block_x,block_y,block_z;
   hid_t ihalo,tot_halos;
@@ -128,7 +129,16 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
   mhalo.nHalos = tot_halos;
-  return mhalo;
+  old =  mhalo_ori.nHalos*sizeof(m_halo_t);
+  tot_halos = mhalo_ori.nHalos+mhalo.nHalos;
+  new =  tot_halos*sizeof(m_halo_t);
+  mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
+  for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
+    {
+      mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
+    }
+  mhalo.mhalos = memmgr_realloc(mhalo.mhalos,0,mhalo.nHalos*sizeof(m_halo_t), memmgr_buff);
+  return mhalo_ori;
 }
 
 
@@ -148,35 +158,35 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshift,domain);
-  /* for(i=-1;i<=1;i++) */
-  /*   { */
-  /*     for(j=-1;j<=1;j++) */
-  /* 	{ */
-  /* 	  for(k=-1;k<=1;k++) */
-  /* 	    { */
-  /* 	      x = block_x + i; */
-  /* 	      y = block_y + j; */
-  /* 	      z = block_z + k; */
-  /* 	      if(i != 0 && j != 0 && k != 0) */
-  /* 		{ */
-  /* 		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x; */
-  /* 		  if(i==1) */
-  /* 		    position = 1; */
-  /* 		  if(i==-1) */
-  /* 		    position = 2; */
-  /* 		  if(j==1) */
-  /* 		    position = 3; */
-  /* 		  if(j==-1) */
-  /* 		    position = 4; */
-  /* 		  if(k==1) */
-  /* 		    position = 5; */
-  /* 		  if(k==-1) */
-  /* 		    position = 6; */
-  /* 		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo); */
-  /* 		} */
-  /* 	    } */
-  /* 	} */
-  /*   } */
+  for(i=-1;i<=1;i++)
+    {
+      for(j=-1;j<=1;j++)
+  	{
+  	  for(k=-1;k<=1;k++)
+  	    {
+  	      x = block_x + i;
+  	      y = block_y + j;
+  	      z = block_z + k;
+  	      if(i != 0 && j != 0 && k != 0)
+  		{
+  		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
+  		  if(i==1)
+  		    position = 1;
+  		  if(i==-1)
+  		    position = 2;
+  		  if(j==1)
+  		    position = 3;
+  		  if(j==-1)
+  		    position = 4;
+  		  if(k==1)
+  		    position = 5;
+  		  if(k==-1)
+  		    position = 6;
+  		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+  		}
+  	    }
+  	}
+    }
   /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
