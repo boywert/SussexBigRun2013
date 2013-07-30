@@ -14,6 +14,7 @@ int main(int argc,char **argv)
 
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
+  
   snap1 = 6.418;
   snap2 = 6.354;
   sprintf(memmgr_buff,"Halo wrapper");
@@ -31,11 +32,13 @@ int main(int argc,char **argv)
 	}
     }
   //exit(0);
-  make_link_AB(&(halocatA[0]),&(halocatB[0]));
+  make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+  MPI_Barrier(MPI_COMM_WORLD);
 
-  sussexbigrun_dm_outputs(&(halocatA[0]),&(halocatB[0]));
-  
   free_m_halo_wrapper(halocatA);
+
+  sussexbigrun_dm_outputs(&(halocatB[0]));
+  
   free_m_halo_wrapper(halocatB);
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */

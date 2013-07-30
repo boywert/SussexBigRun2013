@@ -68,6 +68,8 @@ typedef struct m_halo
   hid_t main_subhalo;
   hid_t next_subhalo;
   hid_t host_halo;
+  /* ####################### */
+  double dm_dt;
 } m_halo_t;
 
 typedef struct m_halo_wrapper

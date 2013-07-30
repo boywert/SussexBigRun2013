@@ -123,5 +123,5 @@ extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_in
 extern m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 extern m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo);
-extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB);
+extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloB);
 #endif

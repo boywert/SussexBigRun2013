@@ -1,20 +1,13 @@
 #include "readsussexbigrun.h"
 #define npart_box 5159780352
 
-void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
+void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB)
 {
   hid_t ihalo;
 
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
-  	{
-  	  printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
-  	}
-      else
-  	{
-  	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
-  	}
+      printf("%lf\n",haloB->mhalos[ihalo].dm_dt);
     }
 }
 
