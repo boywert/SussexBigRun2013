@@ -252,7 +252,7 @@ uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const 
 {
   uint64_t middle,low,high,ipart;
   m_particle_t *pool = (m_particle_t *) Array;
-  for(ipart=0; ipart<n_array.npart; ipart++ )
+  for(ipart=0; ipart<n_array; ipart++ )
     {
       printf("ipart: %llu => %llu\n",ipart,pool[ipart].ID);
     }
