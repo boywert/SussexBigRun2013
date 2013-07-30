@@ -66,7 +66,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
-	  printf("outside: search for %llu\n",curpart);
+	  //printf("outside: search for %llu\n",curpart);
 	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
 	    merit[ihid] += pow((double)ipart,-2./3);
@@ -74,6 +74,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
       qsort(merit,haloB->nHalos,sizeof(double),compare_double);
       haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1];
       free(merit);
+      printf("descendant => %llu\n",haloA->mhalos[ihalo].descendant);
     }
 }
 
