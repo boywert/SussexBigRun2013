@@ -10,7 +10,7 @@ int main(int argc,char **argv)
   hid_t ihalo;
   int i,j,k,l;
 
-  initialise_MPI();
+  initialise_MPI(&argc, &argv);
 
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");

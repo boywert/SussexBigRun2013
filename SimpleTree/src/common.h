@@ -18,6 +18,6 @@ extern const double max_part_speed_in_c;
 extern int mpi_rank;
 extern int mpi_nodes;
 
-extern void initialise_MPI();
+extern void initialise_MPI(int* argc, char ***argv);
 extern void finalise_MPI();
 #endif
