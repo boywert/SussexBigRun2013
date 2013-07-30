@@ -5,7 +5,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 {
   m_particle_wrapper_t *tmppart;
   ptid_t ipart,countpart,ref,curpart;
-  hid_t ihalo,jhalo,ihid;
+  hid_t ihalo,jhalo,ihid,max_id;
+  double max_Mvir;
   uint64_t old,new;
   merit_t *merit;
   char memmgr_buff[memmgr_max_str];
@@ -99,7 +100,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	break;
       if(haloA->mhalos[ihalo].descendant == ihid)
 	{
-	  if(mhalos[ihalo].Mvir > max_Mvir)
+	  if(haloA->mhalos[ihalo].Mvir > max_Mvir)
 	    {
 	      //max_Mvir = MAX(mhalos[ihalo].Mvir,max_Mvir);
 	      max_id = ihalo;
@@ -112,7 +113,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	  if(ihalo > 0)
 	    {
 	      haloB->mhalos[haloA->mhalos[ihalo-1].descendant].main_progenitor = ihalo;
-	      max_Mvir = haloA->mhalos[ihal].Mvir;
+	      max_Mvir = haloA->mhalos[ihalo].Mvir;
 	    }
 	}
     }
