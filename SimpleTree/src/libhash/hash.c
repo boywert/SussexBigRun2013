@@ -273,7 +273,7 @@ uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const 
  
       if ( searchID == pool[ middle ].ID )
 	{
-	  return middle;
+	  return pool[middle].haloID;
 	}
       else if ( searchID < pool[ middle ].ID )
 	{
