@@ -23,6 +23,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
 	    {
 	      if(haloB->mhalos[ihalo].used == 1)
 		{
+		  
 		  fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
 			  haloB->mhalos[ihalo].Xc,
 			  haloB->mhalos[ihalo].Yc,

@@ -12,7 +12,7 @@
 #include "../libmemmgr/memmgr.h"
 #include "../treeformat.h"
 #include "../common.h"
-
+#include "mpi.h"
 #define SUSSEXBIGRUN
 
 
