@@ -21,6 +21,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
       haloB->mhalos[ihalo].ID = ihalo;
+      haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
       tmppart[0].npart += haloB->mhalos[ihalo].npart;
       tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,sizeof(m_particle_t)*tmppart[0].npart,sizeof(m_particle_t)*(tmppart[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
       for(ipart=0;ipart<haloB->mhalos[ihalo].npart;ipart++)
@@ -77,13 +78,44 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	    merit[ihid].merit += pow((double)ipart,-2./3);
 	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
-      if(merit[haloB->nHalos-1].merit > 3.2)
+      if(merit[haloB->nHalos-1].merit > 2.5)
 	haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
       else
 	haloA->mhalos[ihalo].descendant = NULLPOINT;
-      printf("descendant => %llu\n",haloA->mhalos[ihalo].descendant);
+      //printf("descendant => %llu: delta M \n",haloA->mhalos[ihalo].descendant, haloA->mhalos[ihalo].Mvir-haloB->mhalos[]);
     }
   free(merit);
+  for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
+    {
+      haloA->mhalos[ihalo].ID = ihalo;
+    }
+  qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
+  ihid = NULLPOINT;
+  max_id = NULLPOINT;
+  max_Mvir = 0.;
+  for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
+    {
+      if(haloA->mhalos[ihalo].descendant == NULLPOINT)
+	break;
+      if(haloA->mhalos[ihalo].descendant == ihid)
+	{
+	  if(mhalos[ihalo].Mvir > max_Mvir)
+	    {
+	      //max_Mvir = MAX(mhalos[ihalo].Mvir,max_Mvir);
+	      max_id = ihalo;
+	      max_Mvir = haloA->mhalos[ihalo].Mvir;
+	    }
+	}
+      else
+	{
+	  ihid = haloA->mhalos[ihalo].descendant;
+	  if(ihalo > 0)
+	    {
+	      haloB->mhalos[haloA->mhalos[ihalo-1].descendant].main_progenitor = ihalo;
+	      max_Mvir = haloA->mhalos[ihal].Mvir;
+	    }
+	}
+    }
 }
 
 
