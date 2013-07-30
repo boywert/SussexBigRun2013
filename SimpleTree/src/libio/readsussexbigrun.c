@@ -148,35 +148,35 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshift,domain);
-  for(i=-1;i<=1;i++)
-    {
-      for(j=-1;j<=1;j++)
-	{
-	  for(k=-1;k<=1;k++)
-	    {
-	      x = block_x + i;
-	      y = block_y + j;
-	      z = block_z + k;
-	      if(i != 0 && j != 0 && k != 0)
-		{
-		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
-		  if(i==1)
-		    position = 1;
-		  if(i==-1)
-		    position = 2;
-		  if(j==1)
-		    position = 3;
-		  if(j==-1)
-		    position = 4;
-		  if(k==1)
-		    position = 5;
-		  if(k==-1)
-		    position = 6;
-		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
-		}
-	    }
-	}
-    }
+  /* for(i=-1;i<=1;i++) */
+  /*   { */
+  /*     for(j=-1;j<=1;j++) */
+  /* 	{ */
+  /* 	  for(k=-1;k<=1;k++) */
+  /* 	    { */
+  /* 	      x = block_x + i; */
+  /* 	      y = block_y + j; */
+  /* 	      z = block_z + k; */
+  /* 	      if(i != 0 && j != 0 && k != 0) */
+  /* 		{ */
+  /* 		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x; */
+  /* 		  if(i==1) */
+  /* 		    position = 1; */
+  /* 		  if(i==-1) */
+  /* 		    position = 2; */
+  /* 		  if(j==1) */
+  /* 		    position = 3; */
+  /* 		  if(j==-1) */
+  /* 		    position = 4; */
+  /* 		  if(k==1) */
+  /* 		    position = 5; */
+  /* 		  if(k==-1) */
+  /* 		    position = 6; */
+  /* 		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo); */
+  /* 		} */
+  /* 	    } */
+  /* 	} */
+  /*   } */
   /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
