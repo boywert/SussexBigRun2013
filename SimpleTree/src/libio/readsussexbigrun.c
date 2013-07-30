@@ -7,21 +7,32 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
   FILE *fp;
   char filename[1024];
   char command[1024];
+  int l;
   sprintf(command,"mkdir -p %s",outputfolder);
   system(command);
   sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
-  fp = fopen(filename)
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+  sprintf(command,"rm -f %s",filename);
+  system(command);
+  for(l=0;l<mpi_nodes;l++)
     {
-      printf("%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
-	     haloB->mhalos[ihalo].Xc,
-	     haloB->mhalos[ihalo].Yc,
-	     haloB->mhalos[ihalo].Zc,
-	     haloB->mhalos[ihalo].Mvir,
-	     haloB->mhalos[ihalo].Rvir,
-	     haloB->mhalos[ihalo].dm_dt,
-	     haloB->mhalos[ihalo].oriID,
-	     haloB->mhalos[ihalo].domainID);
+      if(mpi_rank==l)
+	{
+	  fp = fopen(filename, "a+")
+	    for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+	      {
+		fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
+			haloB->mhalos[ihalo].Xc,
+			haloB->mhalos[ihalo].Yc,
+			haloB->mhalos[ihalo].Zc,
+			haloB->mhalos[ihalo].Mvir,
+			haloB->mhalos[ihalo].Rvir,
+			haloB->mhalos[ihalo].dm_dt,
+			haloB->mhalos[ihalo].oriID,
+			haloB->mhalos[ihalo].domainID);
+	      }
+	  fclose(fp);
+	}
+      MPI_Barrier(MPI_COMM_WORLD);
     }
 }
 
