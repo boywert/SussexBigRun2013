@@ -1,11 +1,16 @@
 #include "readsussexbigrun.h"
 #define npart_box 5159780352
 
-void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB)
+void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
 {
   hid_t ihalo;
   FILE *fp;
-  
+  char filename[1024];
+  char command[1024];
+  sprintf(command,"mkdir -p %s",outputfolder);
+  system(command);
+  sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
+  fp = fopen(filename)
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       printf("%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",

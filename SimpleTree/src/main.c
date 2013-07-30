@@ -3,7 +3,7 @@
 int main(int argc,char **argv)
 
 {   
-  char folder[1024];
+  char folder[1024],outputfolder[1024];
   m_halo_wrapper_t *halocatA,*halocatB;
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snap2;
@@ -14,7 +14,7 @@ int main(int argc,char **argv)
 
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
-  
+  sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch")
   snap1 = 6.418;
   snap2 = 6.354;
   sprintf(memmgr_buff,"Halo wrapper");
@@ -37,7 +37,7 @@ int main(int argc,char **argv)
 
   free_m_halo_wrapper(halocatA);
 
-  sussexbigrun_dm_outputs(&(halocatB[0]));
+  sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
   
   free_m_halo_wrapper(halocatB);
   //memmgr_printdetails();
