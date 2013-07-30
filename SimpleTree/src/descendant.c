@@ -86,11 +86,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
       //printf("descendant => %llu: delta M \n",haloA->mhalos[ihalo].descendant, haloA->mhalos[ihalo].Mvir-haloB->mhalos[]);
     }
   free(merit);
+
+  qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
     }
-  qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
   ihid = NULLPOINT;
   max_id = NULLPOINT;
   max_Mvir = 0.;
@@ -115,6 +116,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB)
 	      haloB->mhalos[haloA->mhalos[ihalo-1].descendant].main_progenitor = ihalo;
 	      max_Mvir = haloA->mhalos[ihalo].Mvir;
 	    }
+	}
+    }
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+    {
+      if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
+	{
+	  printf("halo %llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloA->mhalos[ihalo].main_progenitor].Mvir);
+	}
+      else
+	{
+	  printf("halo %llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].Mvir);
 	}
     }
 }
