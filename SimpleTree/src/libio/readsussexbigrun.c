@@ -15,8 +15,6 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
       sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
       sprintf(command,"rm -f %s",filename);
       system(command);
-      sprintf(command,"touch %s",filename);
-      system(command);
     }
   MPI_Barrier(MPI_COMM_WORLD);
   for(l=0;l<mpi_nodes;l++)
@@ -24,7 +22,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
       if(mpi_rank==l)
 	{
 	  printf("using node: %d writing to file %s\n",mpi_rank,filename);
-	  fp = fopen(filename, "a");
+	  fp = fopen(filename, "a+");
 	  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	    {
 	      if(haloB->mhalos[ihalo].used == 1)
