@@ -33,6 +33,8 @@ int main(int argc,char **argv)
     }
   //exit(0);
   make_link_AB(&(halocatA[0]),&(halocatB[0]));
+
+  dm_output(&(halocatA[0]),&(halocatB[0]));
   
   free_m_halo_wrapper(halocatA);
   free_m_halo_wrapper(halocatB);
