@@ -3,20 +3,35 @@
 int main(int argc,char **argv)
 
 {   
-  char folder[1024],outputfolder[1024];
+  char folder[1024],outputfolder[1024],snaplistFile[1024];
   m_halo_wrapper_t *halocatA,*halocatB;
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snap2;
   hid_t ihalo;
   int i,j,k,l;
-
+  int domain_per_dim;
+  double boxsize;
+  double snaplist[1024];
+  FILE *fp;
+  
   initialise_MPI(&argc, &argv);
-
+  
   init_memmgr();
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
   sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
-  snap1 = 6.418;
-  snap2 = 6.354;
+  sprintf(snaplistFile,"halofinds");
+  fp = fopen(snaplistFile,"r");
+  for(i=0;i<1024;i++)
+    {
+      snaplist[i] = -1.;
+    }
+  for(i=0;i<1024;i++)
+    {
+      fscanf(fp,"%g",snaplist[i]);
+    }
+  fclose(fp);
+  snap1 = snaplist[20];
+  snap2 = snaplost[21];
   sprintf(memmgr_buff,"Halo wrapper");
   //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
   //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
