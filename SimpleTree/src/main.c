@@ -20,6 +20,8 @@ int main(int argc,char **argv)
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
   sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
   sprintf(snaplistFile,"halofinds");
+  domain_per_dim = 6;
+  boxsize = 47000.0
   if(mpi_rank==0)
     {
       fp = fopen(snaplistFile,"r");
@@ -50,23 +52,23 @@ int main(int argc,char **argv)
   halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   dt = get_delta_t_in_hubble_unit(snap2,snap1);
-  if(mpi_rank==0) printf("Read halo catalogue\n");
-  for(l=0;l<6*6*6;l++)
+  if(mpi_rank==0) printf("Read halo catalogue: %3.3f,$3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
+  for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
     {
       if(mpi_rank==l)
 	{
 	  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap1,l);
-	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, 6, 47000.0/6, speed_of_light*dt*max_part_speed_in_c);
+	  halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap2, l, domain_per_dim, boxsize/domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	}
     }
   //exit(0);
-  if(mpi_rank==0) printf("Making link AB\n");
+  if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
   make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
   MPI_Barrier(MPI_COMM_WORLD);
 
   free_m_halo_wrapper(halocatA);
 
-  if(mpi_rank==0) printf("Saving ASCII outputs\n");
+  if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
   sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
   
   free_m_halo_wrapper(halocatB);
