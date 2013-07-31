@@ -11,7 +11,7 @@ int main(int argc,char **argv)
   int i,j,k,l;
   int domain_per_dim;
   double boxsize;
-  double snaplist[1024];
+  float snaplist[1024];
   FILE *fp;
   
   initialise_MPI(&argc, &argv);
