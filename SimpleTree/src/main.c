@@ -32,7 +32,7 @@ int main(int argc,char **argv)
 	  snaplist[i] = -1.;
 	}
       i=0;
-      while(fscanf(fp,"%g",&(snaplist[i])) > 0)
+      while(fscanf(fp,"%g",&(snaplist[i])) != EOF)
 	{
 	  printf("snap:%d  %f\n",i,snaplist[i]);
 	  i++;
