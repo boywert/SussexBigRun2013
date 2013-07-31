@@ -8,11 +8,11 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
   char filename[1024];
   char command[1024];
   int l;
+  sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
   if(mpi_rank == 0)
     {
       sprintf(command,"mkdir -p %s",outputfolder);
       system(command);
-      sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
       sprintf(command,"rm -f %s",filename);
       system(command);
     }
@@ -27,7 +27,6 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
 	    {
 	      if(haloB->mhalos[ihalo].used == 1)
 		{
-		  
 		  fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
 			  haloB->mhalos[ihalo].Xc,
 			  haloB->mhalos[ihalo].Yc,
