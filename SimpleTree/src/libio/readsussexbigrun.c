@@ -21,7 +21,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
     {
       if(mpi_rank==l)
 	{
-	  printf("using node: %d writing to file %s\n",mpi_rank,filename);
+	  if(mpi_rank==0)  printf(" writing to file %s\n",filename);
 	  fp = fopen(filename, "a+");
 	  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	    {
