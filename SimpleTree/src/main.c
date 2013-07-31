@@ -29,9 +29,11 @@ int main(int argc,char **argv)
     {
       snaplist[i] = -1.;
     }
-  for(i=0;i<1024;i++)
+  i=0;
+  while(fscanf(fp,"%g",&(snaplist[i])) > 0)
     {
-      fscanf(fp,"%g",&(snaplist[i]));
+      printf("snap:%d  %f\n",i,snaplist[i]);
+      i++;
     }
   fclose(fp);
   snap1 = snaplist[20];
