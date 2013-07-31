@@ -44,8 +44,8 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(snaplist, 1024, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
-  snap1 = snaplist[87];
-  snap2 = snaplist[88];
+  snap1 = snaplist[7];
+  snap2 = snaplist[8];
   sprintf(memmgr_buff,"Halo wrapper");
   //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
   //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
