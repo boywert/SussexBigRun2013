@@ -87,7 +87,7 @@ int main(int argc,char **argv)
 	  printf("Aborting:  %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
 	  free_m_halo_wrapper(halocatA);
 	  free_m_halo_wrapper(halocatB);
-	  break;
+	  exit(1);
 	}
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
       make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
