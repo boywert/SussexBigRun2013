@@ -47,7 +47,7 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&tot_Snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
-  for(i=1;i<=tot_Snap;i++)
+  for(i=37;i<=tot_Snap;i++)
     {
       MPI_Barrier(MPI_COMM_WORLD);
       global_error = 0;
@@ -68,27 +68,27 @@ int main(int argc,char **argv)
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap1, l, domain_per_dim, boxsize/domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	    }
 	}
-      MPI_Barrier(MPI_COMM_WORLD);
-      for(l=0;l<mpi_nodes;l++)
-	{
-	  if(mpi_rank==l)
-	    {
-	      if(global_error>0)
-		{
-		  MPI_Bcast(&global_error, 1, MPI_INT, l, MPI_COMM_WORLD);
-		}
-	    }
-	  MPI_Barrier(MPI_COMM_WORLD);	
-	}
-      //exit(0);
-      if(global_error > 0)
-	{
+      /* MPI_Barrier(MPI_COMM_WORLD); */
+      /* for(l=0;l<mpi_nodes;l++) */
+      /* 	{ */
+      /* 	  if(mpi_rank==l) */
+      /* 	    { */
+      /* 	      if(global_error>0) */
+      /* 		{ */
+      /* 		  MPI_Bcast(&global_error, 1, MPI_INT, l, MPI_COMM_WORLD); */
+      /* 		} */
+      /* 	    } */
+      /* 	  MPI_Barrier(MPI_COMM_WORLD);	 */
+      /* 	} */
+      /* //exit(0); */
+      /* if(global_error > 0) */
+      /* 	{ */
 
-	  printf("Aborting:  %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
-	  free_m_halo_wrapper(halocatA);
-	  free_m_halo_wrapper(halocatB);
-	  exit(1);
-	}
+      /* 	  printf("Aborting:  %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift); */
+      /* 	  free_m_halo_wrapper(halocatA); */
+      /* 	  free_m_halo_wrapper(halocatB); */
+      /* 	  exit(1); */
+      /* 	} */
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
       make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
       MPI_Barrier(MPI_COMM_WORLD);

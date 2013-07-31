@@ -544,7 +544,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	  //return mhalo;
 	  global_error = 1;
 	  exit(1);
-	  return mhalo;
+	  // return mhalo;
 	}
       //memmgr_printdetails();
       //printf("counthalo: %ld\n",counthalo);
