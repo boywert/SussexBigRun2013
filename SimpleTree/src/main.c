@@ -21,7 +21,7 @@ int main(int argc,char **argv)
   sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
   sprintf(snaplistFile,"halofinds");
   domain_per_dim = 6;
-  boxsize = 47000.0
+  boxsize = 47000.0;
   if(mpi_rank==0)
     {
       fp = fopen(snaplistFile,"r");
@@ -52,7 +52,7 @@ int main(int argc,char **argv)
   halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   dt = get_delta_t_in_hubble_unit(snap2,snap1);
-  if(mpi_rank==0) printf("Read halo catalogue: %3.3f,$3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
+  if(mpi_rank==0) printf("Read halo catalogue: %3.3f,%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
   for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
     {
       if(mpi_rank==l)
