@@ -49,6 +49,7 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   for(i=1;i<=tot_Snap;i++)
     {
+      global_error = 0;
       snap1 = snaplist[i-1];
       snap2 = snaplist[i];
       sprintf(memmgr_buff,"Halo wrapper");
@@ -67,6 +68,11 @@ int main(int argc,char **argv)
 	    }
 	}
       //exit(0);
+      if(global_error > 0)
+	{
+	  printf("Aborting:  %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
+	  break;
+	}
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
       make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
       MPI_Barrier(MPI_COMM_WORLD);

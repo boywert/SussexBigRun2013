@@ -17,7 +17,7 @@ extern const double max_part_speed_in_c;
 extern const double kpc2m;
 extern int mpi_rank;
 extern int mpi_nodes;
-extern int global_error;
+
 extern void initialise_MPI(int* argc, char ***argv);
 extern void finalise_MPI();
 #endif

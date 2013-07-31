@@ -533,6 +533,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       //     printf("checking hid:%ld npart:%ld\n",halo.ID,npart);
       if(mhalo.mhalos[counthalo].npart != halo.npart)
 	{
+	  printf("redshift: %3.3f\n",mhalo.redshift);
 	  printf("domain %d\n",domain);
 	  printf("haloid:%llu no:%ld local:%ld\n",halo.ID, counthalo, counthalo_local);
 	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,halo.npart);
@@ -541,7 +542,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	  mhalo.mhalos[counthalo].npart = halo.npart;
 	  flag = 1;
 	  //return mhalo;
-	  exit(1);
+	  global_error = 1;
+	  return mhalo;
 	}
       //memmgr_printdetails();
       //printf("counthalo: %ld\n",counthalo);
