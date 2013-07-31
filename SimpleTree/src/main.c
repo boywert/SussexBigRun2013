@@ -20,22 +20,28 @@ int main(int argc,char **argv)
   sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
   sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
   sprintf(snaplistFile,"halofinds");
-  fp = fopen(snaplistFile,"r");
-  if(fp == NULL) 
+  if(mpi_rank==0)
     {
-      printf("Cannot open %s\n Exiting...\n",snaplistFile);
+      fp = fopen(snaplistFile,"r");
+      if(fp == NULL) 
+	{
+	  printf("Cannot open %s\n Exiting...\n",snaplistFile);
+	}
+      for(i=0;i<1024;i++)
+	{
+	  snaplist[i] = -1.;
+	}
+      i=0;
+      while(fscanf(fp,"%g",&(snaplist[i])) > 0)
+	{
+	  printf("snap:%d  %f\n",i,snaplist[i]);
+	  i++;
+	}
+      fclose(fp);
     }
-  for(i=0;i<1024;i++)
-    {
-      snaplist[i] = -1.;
-    }
-  i=0;
-  while(fscanf(fp,"%g",&(snaplist[i])) > 0)
-    {
-      printf("snap:%d  %f\n",i,snaplist[i]);
-      i++;
-    }
-  fclose(fp);
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(snaplist, 1024, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
   snap1 = snaplist[20];
   snap2 = snaplist[21];
   sprintf(memmgr_buff,"Halo wrapper");
