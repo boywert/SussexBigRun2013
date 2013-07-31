@@ -1,5 +1,5 @@
-CC =  gcc  -I/opt/mpi/bullxmpi/1.1.16.5/include -pthread -L/opt/mpi/bullxmpi/1.1.16.5/lib -lmpi -ldl -Wl,--export-dynamic -lnsl -lutil -lm -ldl
-CFLAGS = -g -lm -Wall -fopenmp
+CC =  mpicc
+CFLAGS = -g -Wall -openmp
 
 SRCDIR = src
 
