@@ -543,6 +543,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	  flag = 1;
 	  //return mhalo;
 	  global_error = 1;
+	  exit(1);
 	  return mhalo;
 	}
       //memmgr_printdetails();
