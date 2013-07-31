@@ -31,7 +31,7 @@ int main(int argc,char **argv)
     }
   fclose(fp);
   snap1 = snaplist[20];
-  snap2 = snaplost[21];
+  snap2 = snaplist[21];
   sprintf(memmgr_buff,"Halo wrapper");
   //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
   //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
