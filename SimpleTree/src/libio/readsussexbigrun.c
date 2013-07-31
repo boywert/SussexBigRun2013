@@ -98,11 +98,12 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   sprintf(partfile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_pids.dat_bin",folder,redshift,i);
   fphalo = fopen(halofile,"rb");
   fppart = fopen(partfile,"rb");
-  if(fppart != NULL && fphalo != NULL)
-    mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
-  fclose(fphalo);
-  fclose(fppart);
- 
+  if(fppart && fphalo)
+    {
+      mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
+      fclose(fphalo);
+      fclose(fppart);
+    }
   /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
@@ -267,11 +268,12 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
   sprintf(partfile,"%s/%2.3f_AHF_halos_cubepm_domain_%d_pids.dat_bin",folder,redshift,i);
   fphalo = fopen(halofile,"rb");
   fppart = fopen(partfile,"rb");
-  if(fppart != NULL && fphalo != NULL)
-    mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
-  fclose(fphalo);
-  fclose(fppart);
- 
+  if(fphalo && fphalo)
+    {
+      mhalo = sussexbigrun_read_AHF_binary(fphalo, fppart, i, mhalo);
+      fclose(fphalo);
+      fclose(fppart);
+    }
   /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
