@@ -50,6 +50,7 @@ int main(int argc,char **argv)
   halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
   dt = get_delta_t_in_hubble_unit(snap2,snap1);
+  if(mpi_rank==0) printf("Read halo catalogue\n");
   for(l=0;l<6*6*6;l++)
     {
       if(mpi_rank==l)
@@ -59,11 +60,13 @@ int main(int argc,char **argv)
 	}
     }
   //exit(0);
+  if(mpi_rank==0) printf("Making link AB\n");
   make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
   MPI_Barrier(MPI_COMM_WORLD);
 
   free_m_halo_wrapper(halocatA);
 
+  if(mpi_rank==0) printf("Saving ASCII outputs\n");
   sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
   
   free_m_halo_wrapper(halocatB);
