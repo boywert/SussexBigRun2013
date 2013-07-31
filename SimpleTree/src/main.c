@@ -45,7 +45,7 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(snaplist, 1024, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Bcast(tot_Snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&tot_Snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
   for(i=1;i<=tot_Snap;i++)
     {
