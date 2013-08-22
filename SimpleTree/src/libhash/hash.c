@@ -2,9 +2,9 @@
 
 ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrapper_t* list, m_particle_t add_element)
 {
-  ptid_t middle,low,high;
+  ptid_t middle,low,high,target;
   char memmgr_buff[memmgr_max_str];
-  m_particle_t tmp;
+  
   low = 0;
   high = list.npart-1;
 
