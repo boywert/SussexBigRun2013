@@ -1,5 +1,65 @@
 #include "hash.h"
 
+ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrapper_t* list, m_particle_t add_element)
+{
+  ptid_t middle,low,high;
+  char memmgr_buff[memmgr_max_str];
+  m_particle_t tmp;
+  low = 0;
+  high = list.npart-1;
+
+  sprintf(memmgr_buff,"Particle inside wrapper: Hash");
+  if(list.npart == 0)
+    {
+      list.npart++;
+      list.mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
+      list.mparticle[0].ID = add_element.ID;
+      list.mparticle[0].haloID = add_element.haloID;
+      return 0;
+    }
+  else
+    {
+      high = list.npart-1;
+    }  
+
+  while ( low <= high && high < NULLPOINT && low < NULLPOINT)
+    {
+      middle = ( low + high ) / 2;
+ 
+      if ( add_element.ID == list.mparticle[middle].ID )
+	{
+	  list.mparticle[middle].ID = add_element.ID;
+	  list.mparticle[middle].haloID = add_element.haloID;
+	  return list.npart;
+	}
+      else if ( add_element.ID < list.mparticle[middle].ID )
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  if(high == NULLPOINT)
+    {
+      target = 0;
+    }
+  else
+    {
+      target = low;
+    }
+  list.npart++;
+  list.mparticle = memmgr_realloc(list.mparticle,sizeof(m_particle_t),0,memmgr_buff);
+  for(ipart=list.npart-1;ipart > target; ipart--)
+    {
+      list.mparticle[ipart].ID = list.mparticle[ipart-1].ID;
+      list.mparticle[ipart].haloID  =  list.mparticle[ipart-1].haloID;
+    }
+  list.mparticle[target].ID = add_element.ID;
+  list.mparticle[target].haloID = add_element.haloID;
+  return list.npart;
+}
 
 int compare_m_halo_t_by_Mvir(const void *v1, const void *v2)
 {
@@ -83,11 +143,11 @@ uint64_t search_uint64_t_array( uint64_t searchKey, uint64_t n_array ,const void
   low = 0;
   high = n_array-1;
 
-  if(searchKey < pool[0] || searchKey > pool[n_array-1])
-    {
-      return NULLPOINT;
-    }
-  while ( low <= high) 
+  /* if(searchKey < pool[0] || searchKey > pool[n_array-1]) */
+  /*   { */
+  /*     return NULLPOINT; */
+  /*   } */
+  while ( low <= high && high < NULLPOINT) 
     {
       middle = ( low + high ) / 2;
  

@@ -17,6 +17,12 @@ typedef struct m_particle
   hid_t haloID;
 } m_particle_t;
 
+typedef struct m_particle_wrapper
+{
+  ptid_t npart;
+  m_particle_t *mparticle;
+} m_particle_wrapper_t;
+
 
 typedef struct particlelist
 {
@@ -29,6 +35,7 @@ typedef struct particlelist
 typedef struct m_halo 
 {
   ptid_t ID;
+  ptid_t oriID;
 #ifdef CUBEP3M
   uint32_t domainID;
 #endif

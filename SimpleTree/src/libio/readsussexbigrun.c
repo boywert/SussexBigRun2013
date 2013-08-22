@@ -1,5 +1,5 @@
 #include "readsussexbigrun.h"
-
+#define npart_box 5159780352
 
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain )
 {
@@ -154,7 +154,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 
       //
       //printf("ID = %ld\n",halo.ID);
-      mhalo.mhalos[counthalo].ID = halo.ID;
+      mhalo.mhalos[counthalo].ID = pow(10,12)+domain*pow(10,7)+counthalo;
+      mhalo.mhalos[counthalo].oriID = halo.ID;
       mhalo.mhalos[counthalo].domainID = domain;
       mhalo.mhalos[counthalo].Mvir = halo.Mvir;
       mhalo.mhalos[counthalo].Rvir = halo.Rvir;
@@ -184,8 +185,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	  printf("use part from halos\n");
 	  mhalo.mhalos[counthalo].npart = halo.npart;
 	  flag = 1;
-	  return mhalo;
-	  //exit(1);
+	  //return mhalo;
+	  exit(1);
 	}
       //memmgr_printdetails();
       //printf("counthalo: %ld\n",counthalo);
