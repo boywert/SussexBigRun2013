@@ -394,85 +394,85 @@ void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo)
   ih = 1;
 }
 
-m_halo_wrapper_t  sussexbigrun_read_AHF_ascii(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
-{
-  hid_t ihalo,nhalos;
-  halo_t halo;
-  ptid_t ipart;
-  fgets(buffer,MAXSTRING,fp);
-  for(iHalo=0;iHalo<SnapNhalos[iFile];iHalo++)
-    {
-	  fscanf(fp,"%llu %lld %lld %g %llu %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
-		 &(HaloTable[currentHalo].ID),
-		 &(templong1),
-		 &(templong2),
-		 //&(HaloTable[currentHalo].hostHalo),
-		 //&(HaloTable[currentHalo].numSubStruct),
-		 &(HaloTable[currentHalo].Mvir),
-		 &(HaloTable[currentHalo].npart),
-		 &(HaloTable[currentHalo].Xc),
-		 &(HaloTable[currentHalo].Yc),
-		 &(HaloTable[currentHalo].Zc),
-		 &(HaloTable[currentHalo].VXc),
-		 &(HaloTable[currentHalo].VYc),
-		 &(HaloTable[currentHalo].VZc),
-		 &(HaloTable[currentHalo].Rvir),
-		 &(HaloTable[currentHalo].Rmax),
-		 &(HaloTable[currentHalo].r2),
-		 &(HaloTable[currentHalo].mbp_offset),
-		 &(HaloTable[currentHalo].com_offset),
-		 &(HaloTable[currentHalo].Vmax),
-		 &(HaloTable[currentHalo].v_esc),
-		 &(HaloTable[currentHalo].sigV),
-		 &(HaloTable[currentHalo].lambda),
-		 &(HaloTable[currentHalo].lambdaE),
-		 &(HaloTable[currentHalo].Lx),
-		 &(HaloTable[currentHalo].Ly),
-		 &(HaloTable[currentHalo].Lz),
-		 &(HaloTable[currentHalo].b),
-		 &(HaloTable[currentHalo].c),
-		 &(HaloTable[currentHalo].Eax),
-		 &(HaloTable[currentHalo].Eay),
-		 &(HaloTable[currentHalo].Eaz),
-		 &(HaloTable[currentHalo].Ebx),
-		 &(HaloTable[currentHalo].Eby),
-		 &(HaloTable[currentHalo].Ebz),
-		 &(HaloTable[currentHalo].Ecx),
-		 &(HaloTable[currentHalo].Ecy),
-		 &(HaloTable[currentHalo].Ecz),
-		 &(HaloTable[currentHalo].ovdens),
-		 &(HaloTable[currentHalo].nbins),
-		 &(HaloTable[currentHalo].fMhires),
-		 &(HaloTable[currentHalo].Ekin),
-		 &(HaloTable[currentHalo].Epot),
-		 &(HaloTable[currentHalo].SurfP),
-		 &(HaloTable[currentHalo].Phi0),
-		 &(HaloTable[currentHalo].cNFW)
-		 );
-	  if(templong1 < 0)
-	    HaloTable[currentHalo].hostHalo = 0;
-	  else
-	    HaloTable[currentHalo].hostHalo = (MyIDtype) templong1;
-	  if(templong2 < 1)
-	    HaloTable[currentHalo].numSubStruct = 0;
-	  else
-	    HaloTable[currentHalo].numSubStruct = (MyIDtype) templong2;
+/* m_halo_wrapper_t  sussexbigrun_read_AHF_ascii(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo) */
+/* { */
+/*   hid_t ihalo,nhalos; */
+/*   halo_t halo; */
+/*   ptid_t ipart; */
+/*   fgets(buffer,MAXSTRING,fp); */
+/*   for(iHalo=0;iHalo<SnapNhalos[iFile];iHalo++) */
+/*     { */
+/* 	  fscanf(fp,"%llu %lld %lld %g %llu %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g", */
+/* 		 &(HaloTable[currentHalo].ID), */
+/* 		 &(templong1), */
+/* 		 &(templong2), */
+/* 		 //&(HaloTable[currentHalo].hostHalo), */
+/* 		 //&(HaloTable[currentHalo].numSubStruct), */
+/* 		 &(HaloTable[currentHalo].Mvir), */
+/* 		 &(HaloTable[currentHalo].npart), */
+/* 		 &(HaloTable[currentHalo].Xc), */
+/* 		 &(HaloTable[currentHalo].Yc), */
+/* 		 &(HaloTable[currentHalo].Zc), */
+/* 		 &(HaloTable[currentHalo].VXc), */
+/* 		 &(HaloTable[currentHalo].VYc), */
+/* 		 &(HaloTable[currentHalo].VZc), */
+/* 		 &(HaloTable[currentHalo].Rvir), */
+/* 		 &(HaloTable[currentHalo].Rmax), */
+/* 		 &(HaloTable[currentHalo].r2), */
+/* 		 &(HaloTable[currentHalo].mbp_offset), */
+/* 		 &(HaloTable[currentHalo].com_offset), */
+/* 		 &(HaloTable[currentHalo].Vmax), */
+/* 		 &(HaloTable[currentHalo].v_esc), */
+/* 		 &(HaloTable[currentHalo].sigV), */
+/* 		 &(HaloTable[currentHalo].lambda), */
+/* 		 &(HaloTable[currentHalo].lambdaE), */
+/* 		 &(HaloTable[currentHalo].Lx), */
+/* 		 &(HaloTable[currentHalo].Ly), */
+/* 		 &(HaloTable[currentHalo].Lz), */
+/* 		 &(HaloTable[currentHalo].b), */
+/* 		 &(HaloTable[currentHalo].c), */
+/* 		 &(HaloTable[currentHalo].Eax), */
+/* 		 &(HaloTable[currentHalo].Eay), */
+/* 		 &(HaloTable[currentHalo].Eaz), */
+/* 		 &(HaloTable[currentHalo].Ebx), */
+/* 		 &(HaloTable[currentHalo].Eby), */
+/* 		 &(HaloTable[currentHalo].Ebz), */
+/* 		 &(HaloTable[currentHalo].Ecx), */
+/* 		 &(HaloTable[currentHalo].Ecy), */
+/* 		 &(HaloTable[currentHalo].Ecz), */
+/* 		 &(HaloTable[currentHalo].ovdens), */
+/* 		 &(HaloTable[currentHalo].nbins), */
+/* 		 &(HaloTable[currentHalo].fMhires), */
+/* 		 &(HaloTable[currentHalo].Ekin), */
+/* 		 &(HaloTable[currentHalo].Epot), */
+/* 		 &(HaloTable[currentHalo].SurfP), */
+/* 		 &(HaloTable[currentHalo].Phi0), */
+/* 		 &(HaloTable[currentHalo].cNFW) */
+/* 		 ); */
+/* 	  if(templong1 < 0) */
+/* 	    HaloTable[currentHalo].hostHalo = 0; */
+/* 	  else */
+/* 	    HaloTable[currentHalo].hostHalo = (MyIDtype) templong1; */
+/* 	  if(templong2 < 1) */
+/* 	    HaloTable[currentHalo].numSubStruct = 0; */
+/* 	  else */
+/* 	    HaloTable[currentHalo].numSubStruct = (MyIDtype) templong2; */
 
-	  IDmap[currentHalo] = HaloTable[currentHalo].ID;
-	  HaloTable[currentHalo].AHFID = HaloTable[currentHalo].ID;
-	  HaloTable[currentHalo].SnapID = iFile;
-	  HaloTable[currentHalo].nAvatars = 1;
-	  HaloTable[currentHalo].AvatarList = calloc(HaloTable[currentHalo].nAvatars,sizeof(MyIDtype));
-	  HaloTable[currentHalo].AvatarList[0] = currentHalo;
-	  Avatar[currentHalo] = currentHalo;
-	  HaloTable[currentHalo].ProgAvatarFlag = 0;
-	  HaloTable[currentHalo].TroubleFlag = 0;
+/* 	  IDmap[currentHalo] = HaloTable[currentHalo].ID; */
+/* 	  HaloTable[currentHalo].AHFID = HaloTable[currentHalo].ID; */
+/* 	  HaloTable[currentHalo].SnapID = iFile; */
+/* 	  HaloTable[currentHalo].nAvatars = 1; */
+/* 	  HaloTable[currentHalo].AvatarList = calloc(HaloTable[currentHalo].nAvatars,sizeof(MyIDtype)); */
+/* 	  HaloTable[currentHalo].AvatarList[0] = currentHalo; */
+/* 	  Avatar[currentHalo] = currentHalo; */
+/* 	  HaloTable[currentHalo].ProgAvatarFlag = 0; */
+/* 	  HaloTable[currentHalo].TroubleFlag = 0; */
 
-	  //printf("%llu : %llu\n", currentHalo,IDmap[currentHalo]);
-	  currentHalo++;
-	}
+/* 	  //printf("%llu : %llu\n", currentHalo,IDmap[currentHalo]); */
+/* 	  currentHalo++; */
+/* 	} */
 
-}
+/* } */
 
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
