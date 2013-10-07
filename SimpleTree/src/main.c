@@ -17,7 +17,7 @@ int main(int argc,char **argv)
   initialise_MPI(&argc, &argv);
   
   init_memmgr();
-  sprintf(folder,"/ccc/cont005/home/ra1089/schneida/scratch/AHF_haloes/cubepm_130315_6_1728_47Mpc_ext2/results");
+  sprintf(folder,"/ccc/cont005/home/ra1089/srisawac/scratch/AHF/cubepm_130315_6_1728_47Mpc_ext2/results");
   sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
   sprintf(snaplistFile,"halofinds");
   domain_per_dim = 6;
