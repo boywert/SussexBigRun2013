@@ -1,0 +1,200 @@
+tput: No value for $TERM and no -T specified
+intel_comp/2012.0.032(43):ERROR:150: Module 'intel_comp/2012.0.032' conflicts with the currently loaded module(s) 'intel_comp/11.1'
+intel_comp/2012.0.032(43):ERROR:102: Tcl command execution failed: conflict intel_comp
+
+intel_comp/2012.0.032(43):ERROR:150: Module 'intel_comp/2012.0.032' conflicts with the currently loaded module(s) 'intel_comp/11.1'
+intel_comp/2012.0.032(43):ERROR:102: Tcl command execution failed: conflict intel_comp
+
+intel_comp/2012.0.032(43):ERROR:150: Module 'intel_comp/2012.0.032' conflicts with the currently loaded module(s) 'intel_comp/11.1'
+intel_comp/2012.0.032(43):ERROR:102: Tcl command execution failed: conflict intel_comp
+
+
+reading parameter file:
+
+                          FirstFile	       104
+                           LastFile	       104
+                         MaxMemSize	      1500
+                   FileNameGalaxies	        SA
+            FileWithOutputRedshifts	./input/desired_output_redshifts.txt
+                            PhotDir	../PhotTables_2.0/
+                         PhotPrefix	M05_Chabrier
+                FileWithFilterNames	./input/Filter_Sloan.txt
+                             McFile	./input/Mc.txt
+                   CoolFunctionsDir	../CoolFunctions/
+                          OutputDir	 ./output/
+                      SimulationDir	/gpfs/data/Millgas/data/dm/500
+                      FileWithZList	./input/zlist_MR7.txt
+         FileWithZList_OriginalCosm	./input/zlist_MR7.txt
+             LastDarkMatterSnapShot	        61
+                           ScalePos	        1.
+                          ScaleMass	        1.
+                           PartMass	0.093639456
+                              Omega	     0.272
+                        OmegaLambda	     0.728
+                         BaryonFrac	     0.167
+                           Hubble_h	     0.704
+                            BoxSize	      500.
+              PartMass_OriginalCosm	0.093639456
+                 Omega_OriginalCosm	     0.272
+           OmegaLambda_OriginalCosm	     0.728
+              Hubble_h_OriginalCosm	     0.704
+               BoxSize_OriginalCosm	      500.
+                           Hashbits	         8
+                        AGNrecipeOn	         1
+     BulgeFormationInMinorMergersOn	         1
+                    BlackHoleGrowth	         0
+                   DiskRadiusMethod	         2
+                     EjectionRecipe	         1
+                     FeedbackRecipe	         0
+                  MetallicityOption	         1
+              ReIncorporationRecipe	         1
+                     ReionizationOn	         2
+                    SatelliteRecipe	         1
+                    StarBurstRecipe	         0
+                StarFormationRecipe	         0
+               TrackDiskInstability	         1
+                    Reionization_z0	       8.0
+                    Reionization_zr	       7.0
+                              Yield	      0.03
+                    RecycleFraction	      0.43
+                      SfrEfficiency	     0.173
+                SfrLawPivotVelocity	    1000.0
+                        SfrLawSlope	       0.0
+                  ThreshMajorMerger	       0.3
+                 SfrBurstEfficiency	      0.56
+                      SfrBurstSlope	       0.7
+                           EnergySN	    1.0e51
+                              EtaSN	    8.0e-3
+                         FracZtoHot	       0.0
+                  ReheatPreVelocity	      16.1
+                        ReheatSlope	       6.1
+           FeedbackReheatingEpsilon	       7.2
+                   EjectPreVelocity	      107.
+                         EjectSlope	       5.4
+         FeedbackEjectionEfficiency	      0.19
+                BlackHoleGrowthRate	     0.017
+                  BlackHoleSeedMass	      1e-7
+             BlackHoleAccretionRate	        3.
+            BlackHoleCutoffVelocity	      280.
+                      AgnEfficiency	    4.8e-4
+              ReIncorporationFactor	      1.58
+                        ReincZpower	       2.1
+                 ReincVelocitypower	       2.7
+                   UnitLength_in_cm	3.08568e+24
+                      UnitMass_in_g	 1.989e+43
+           UnitVelocity_in_cm_per_s	    100000
+
+EnergySNcode*EtaSNcode= 402212
+found 62 defined times in zlist.
+found 62 defined times in zlist.
+Max number of SFH bins used = 33
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magus_m0001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Maggs_m0001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magrs_m0001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magis_m0001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magzs_m0001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magus_m001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Maggs_m001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magrs_m001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magis_m001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magzs_m001.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magus_m002.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Maggs_m002.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magrs_m002.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magis_m002.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magzs_m002.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magus_m004.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Maggs_m004.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magrs_m004.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magis_m004.dat 
+reading file ../PhotTables_2.0//M05_Chabrier_Phot_Table_MR_Magzs_m004.dat 
+cooling functions read.
+
+
+At 'join_galaxies', join_galaxies_of_progenitors()/code/main.c/591: Allocation = 6.52687 Mbyte (on task=0)
+
+------------------------ Allocated Memory Blocks----------------------------------------
+Task   Nr F          Variable      MBytes   Cumulative         Function/File/Linenumber
+----------------------------------------------------------------------------------------
+   0    0 0     FileToProcess      0.0000       0.0000  main()/code/main.c/86
+   0    1 0     TaskToProcess      0.0000       0.0000  main()/code/main.c/87
+   0    2 0        TreeNHalos      0.1228       0.1228  load_tree_table()/code/io_tree.c/104
+   0    3 0     TreeFirstHalo      0.1228       0.2456  load_tree_table()/code/io_tree.c/105
+   0    4 0      TreeNgals[n]      0.9821       1.2277  load_tree_table()/code/io_tree.c/107
+   0    5 0              Halo      0.2951       1.5228  load_tree()/code/io_tree.c/210
+   0    6 0           HaloAux      0.1702       1.6930  load_tree()/code/io_tree.c/222
+   0    7 1           HaloGal      0.4233       2.1163  load_tree()/code/io_tree.c/239
+   0    8 1       HaloGalHeap      0.0007       2.1171  load_tree()/code/io_tree.c/240
+   0    9 1               Gal      4.4098       6.5269  load_tree()/code/io_tree.c/245
+----------------------------------------------------------------------------------------
+
+done tree file 104 in 1min and 11s
+
+
+------------------------------------------------------------
+Sender: LSF System <hpcadmin@m4140>
+Subject: Job 29831[105]: <L-Galaxies[49-128]> Done
+
+Job <L-Galaxies[49-128]> was submitted from host <cosma-d> by user <sorour> in cluster <cosma-p_cluster1>.
+Job was executed on host(s) <2*m4140>, in queue <cosma>, as user <sorour> in cluster <cosma-p_cluster1>.
+</cosma/home/sorour> was used as the home directory.
+</cosma/home/petert/Millgas/scratch/L-Galaxies/L-Galaxies_Sep12> was used as the working directory.
+Started at Fri Dec  7 16:33:11 2012
+Results reported at Fri Dec  7 16:34:26 2012
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/tcsh
+#
+#BSUB -J L-Galaxies[49-128]
+#BSUB -P durham
+##BSUB -P dp004
+##BSUB -q cordelia
+#BSUB -q cosma
+#BSUB -n 2
+#BSUB -oo logs/batch_500_%I.out
+limit stacksize unlimited
+limit descriptors unlimited
+newgrp millgas
+umask 002
+
+@ i = $LSB_JOBINDEX - 1
+@ ff = $i
+@ lf = $i
+
+# Load modules
+source /etc/profile.d/modules.csh
+module load intel_comp/2012.0.032
+module load platform_mpi/intel_2012.0.032/8.2.0
+module load fftw/intel_2012.0.032_platform_mpi_8.2.0/2.1.5
+module load gsl/gnu_4.4.6/1.15
+
+# Set working directory
+#cd $BSUB_O_WORKDIR
+
+# Create personalised input parameter files
+echo FirstFile $ff | cat >  input_batch/input.500_$i
+echo LastFile $lf | cat >>  input_batch/input.500_$i
+echo MaxMemSize 1500 >> input_batch/input.500_$i
+cat input/input.500 >> input_batch/input.500_$i
+
+# Run jobs
+./L-Galaxies input_batch/input.500_$i
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     23.70 sec.
+    Max Memory :        58 MB
+    Max Swap   :      1804 MB
+
+    Max Processes  :         4
+    Max Threads    :         5
+
+The output (if any) is above this job summary.
+

@@ -1,0 +1,24 @@
+#Name                          PropValue   PriorMin  PriorMax     Type      Sampling_Switch
+SfrEfficiency                     0.0       0.001     0.1        Physical         1
+SfrBurstEfficiency                0.0       0.1       1.0        Physical         0
+SfrBurstSlope                     0.0       0.1       2.0        Physical         0
+AgnEfficiency                     0.0       1.e-8     1.e-4      Physical         1
+BlackHoleGrowthRate               0.0       0.01      0.1        Physical         1
+FeedbackReheatingEpsilon          0.0       0.1       10.        Physical         1
+ReheatPreVelocity                 0.0       1.        1000.      Physical         1
+ReheatSlope                       0.0       0.1       5.         Physical         1
+FeedbackEjectionEfficiency        0.0       0.01      10.        Physical         1
+EjectPreVelocity                  0.0       1.        1000.      Physical         1
+EjectSlope                        0.0       0.1       5.0        Physical         1
+ReIncorporationFactor             0.0       1.e7      1.e15      Physical         1
+Yield                             0.0       0.01      0.1        Physical         1
+ReincZpower                       0.0       0.1       10.        Physical         1
+ReincVelocitypower                0.0       0.1       10.        Physical         1
+BlackHoleCutoffVelocity           0.0       1.        3000.      Physical         1
+ThreshMajorMerger                 0.0       0.1       0.5        Physical         0  
+Reionization_z0                   0.0       10.0      20.0       Physical         0  
+Reionization_zr                   0.0       6.0       10.0       Physical         0  
+Omega_m                           0.0       0.1       0.6      Cosmological       1
+Sigma_8                           0.0       0.5       1.       Cosmological       1
+#values for the parameters - writen separately just to be easy to change all, same order as above  
+0.011 0.56 0.7 7.0e-6 0.03   4.0 80. 3.2  0.15 90. 3.2   0.3 0.03 3.0 3.0 280. 7.0 8.0 0.27 0.81}

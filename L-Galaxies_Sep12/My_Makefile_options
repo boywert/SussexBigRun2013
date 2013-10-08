@@ -1,0 +1,23 @@
+OPT += -DDISRUPTION 
+OPT += -DMERGE01 
+
+OPT += -DNOUT=13
+OPT += -DOVERWRITE_OUTPUT
+OPT += -DCOMPUTE_OBS_MAGS
+OPT += -DOUTPUT_OBS_MAGS
+OPT += -DM05
+
+OPT += -DMRII                # run on MS-II
+
+#OPT += -DDEBUG
+#OPT += -DMASS_CHECKS
+
+OPT += -DSAVE_MEMORY
+#OPT += -DSTAR_FORMATION_HISTORY
+ifeq (STAR_FORMATION_HISTORY,$(findstring STAR_FORMATION_HISTORY,$(OPT)))
+OBJS  += ./code/star_formation_history.o
+#OPT += -DPOST_PROCESS_MAGS
+#ifeq (POST_PROCESS_MAGS,$(findstring POST_PROCESS_MAGS,$(OPT)))
+#OBJS  += ./code/post_process_mags.o
+#endif
+endif
