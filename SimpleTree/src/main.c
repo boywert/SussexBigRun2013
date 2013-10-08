@@ -56,49 +56,29 @@ int main(int argc,char **argv)
       sprintf(memmgr_buff,"Halo wrapper");
       //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
       //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
-      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
-      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
       dt = get_delta_t_in_hubble_unit(snap2,snap1);
       if(mpi_rank==0) printf("Read halo catalogue: \n");
+      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",snap1,snap2);
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
-	  if(mpi_rank==l)
+	  if(mpi_rank%mpi_nodes == l)
 	    {
+	      printf("Making link AB: %3.3f=>%3.3f\n",snap1,snap2);
+	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
+	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap2,l);
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap1, l, domain_per_dim, boxsize/domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
+	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+
+	      
+	      free_m_halo_wrapper(halocatA);
+
+	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
+	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
+  
+	      free_m_halo_wrapper(halocatB);
 	    }
 	}
-      /* MPI_Barrier(MPI_COMM_WORLD); */
-      /* for(l=0;l<mpi_nodes;l++) */
-      /* 	{ */
-      /* 	  if(mpi_rank==l) */
-      /* 	    { */
-      /* 	      if(global_error>0) */
-      /* 		{ */
-      /* 		  MPI_Bcast(&global_error, 1, MPI_INT, l, MPI_COMM_WORLD); */
-      /* 		} */
-      /* 	    } */
-      /* 	  MPI_Barrier(MPI_COMM_WORLD);	 */
-      /* 	} */
-      /* //exit(0); */
-      /* if(global_error > 0) */
-      /* 	{ */
-
-      /* 	  printf("Aborting:  %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift); */
-      /* 	  free_m_halo_wrapper(halocatA); */
-      /* 	  free_m_halo_wrapper(halocatB); */
-      /* 	  exit(1); */
-      /* 	} */
-      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",halocatA[0].redshift,halocatB[0].redshift);
-      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
-      MPI_Barrier(MPI_COMM_WORLD);
-
-      free_m_halo_wrapper(halocatA);
-
-      if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
-  
-      free_m_halo_wrapper(halocatB);
     }
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */

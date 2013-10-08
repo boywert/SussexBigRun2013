@@ -5,43 +5,34 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
 {
   hid_t ihalo;
   FILE *fp;
-  char filename[1024];
+  char filename[1024], foldername[1024];
   char command[1024];
   int l;
-  sprintf(filename,"%s/%3.3f_dmdt.dat",outputfolder,haloB->redshift);
-  if(mpi_rank == 0)
+  sprintf(foldername,"%s/%3.3f",outputfolder,haloB->redshift);
+  sprintf(command,"mkdir -p %s", foldername);
+  system(command);
+  sprintf(filename,"%s/%3.3f/dmdt_%d.dat",outputfolder,haloB->redshift,mpi_rank);
+  sprintf(command,"rm -f %s",filename);
+  system(command);
+ 
+  fp = fopen(filename, "a+");
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      sprintf(command,"mkdir -p %s",outputfolder);
-      system(command);
-      sprintf(command,"rm -f %s",filename);
-      system(command);
+      /* if(haloB->mhalos[ihalo].used == 1) */
+      /* 	{ */
+      fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
+	      haloB->mhalos[ihalo].Xc,
+	      haloB->mhalos[ihalo].Yc,
+	      haloB->mhalos[ihalo].Zc,
+	      haloB->mhalos[ihalo].Mvir,
+	      haloB->mhalos[ihalo].Rvir,
+	      haloB->mhalos[ihalo].dm_dt,
+	      haloB->mhalos[ihalo].oriID,
+	      haloB->mhalos[ihalo].domainID);
+      /* } */
     }
-  MPI_Barrier(MPI_COMM_WORLD);
-  for(l=0;l<mpi_nodes;l++)
-    {
-      if(mpi_rank==l)
-	{
-	  if(mpi_rank==0)  printf(" writing to file %s\n",filename);
-	  fp = fopen(filename, "a+");
-	  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-	    {
-	      /* if(haloB->mhalos[ihalo].used == 1) */
-	      /* 	{ */
-	      fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
-		      haloB->mhalos[ihalo].Xc,
-		      haloB->mhalos[ihalo].Yc,
-		      haloB->mhalos[ihalo].Zc,
-		      haloB->mhalos[ihalo].Mvir,
-		      haloB->mhalos[ihalo].Rvir,
-		      haloB->mhalos[ihalo].dm_dt,
-		      haloB->mhalos[ihalo].oriID,
-		      haloB->mhalos[ihalo].domainID);
-		/* } */
-	    }
-	  fclose(fp);
-	}
-      MPI_Barrier(MPI_COMM_WORLD);
-    }
+  fclose(fp);
+
 }
 
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain )
