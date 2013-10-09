@@ -4,12 +4,14 @@ int main(int argc,char **argv)
 
 {   
   char folder[1024],outputfolder[1024],snaplistFile[1024];
+  char command[1024],stringbuff[10];
   m_halo_wrapper_t *halocatA,*halocatB;
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snap2;
   hid_t ihalo;
   int i,j,k,l,tot_Snap;
   int domain_per_dim;
+  int start_snap;
   double boxsize;
   float snaplist[1024];
   FILE *fp;
@@ -47,7 +49,20 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&tot_Snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
-  for(i=1;i<=tot_Snap;i++)
+  if(mpi_rank==0)
+    {
+      fp = fopen("status",r);
+      if(fp == NULL)
+	start_snap = 1;
+      else
+	{
+	  if (fgets(stringbuff , 10 , fp) != NULL )
+	    sscanf(stringbuff,"%d",start_snap);
+	  fclose (pFile);
+	}
+      if(start_snap < 1) start_snap = 1;
+    }
+  for(i=start_snap;i<=tot_Snap;i++)
     {
       MPI_Barrier(MPI_COMM_WORLD);
       global_error = 0;
@@ -58,6 +73,11 @@ int main(int argc,char **argv)
       //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
       dt = get_delta_t_in_hubble_unit(snap2,snap1);
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",snap1,snap2,i);
+      if(mpi_rank==0)
+	{
+	  sprintf(command,"echo %d > status",i);
+	  system(command);
+	}
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
 	  if(l%mpi_nodes == mpi_rank)
@@ -74,11 +94,15 @@ int main(int argc,char **argv)
 
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
-  
 	      free_m_halo_wrapper(halocatB);
 	    }
 	}
       MPI_Barrier(MPI_COMM_WORLD);
+      if(mpi_rank==0)
+	{
+	  sprintf(command,"echo %d > status",i+1);
+	  system(command);
+	}
     }
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
