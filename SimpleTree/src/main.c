@@ -62,10 +62,11 @@ int main(int argc,char **argv)
 	}
       if(start_snap < 1) start_snap = 1;
     }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(&start_snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
   for(i=start_snap;i<=tot_Snap;i++)
     {
-      MPI_Barrier(MPI_COMM_WORLD);
-      global_error = 0;
       snap1 = snaplist[i-1];
       snap2 = snaplist[i];
       sprintf(memmgr_buff,"Halo wrapper");
@@ -103,6 +104,7 @@ int main(int argc,char **argv)
 	  sprintf(command,"echo %d > status",i+1);
 	  system(command);
 	}
+      MPI_Barrier(MPI_COMM_WORLD);
     }
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
