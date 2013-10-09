@@ -58,12 +58,12 @@ int main(int argc,char **argv)
       //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
       dt = get_delta_t_in_hubble_unit(snap2,snap1);
       if(mpi_rank==0) printf("Read halo catalogue: \n");
-      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",snap1,snap2);
+      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",snap1,snap2,i);
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
 	  if(l%mpi_nodes == mpi_rank)
 	    {
-	      printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
+	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
 	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap2,l);
