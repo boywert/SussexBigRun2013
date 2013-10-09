@@ -57,7 +57,6 @@ int main(int argc,char **argv)
       //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
       //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
       dt = get_delta_t_in_hubble_unit(snap2,snap1);
-      if(mpi_rank==0) printf("Read halo catalogue: \n");
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",snap1,snap2,i);
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
@@ -79,6 +78,7 @@ int main(int argc,char **argv)
 	      free_m_halo_wrapper(halocatB);
 	    }
 	}
+      MPI_Barrier(MPI_COMM_WORLD);
     }
   //memmgr_printdetails();
   /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
