@@ -1,7 +1,7 @@
 #include "readsussexbigrun.h"
 #define npart_box 5159780352
 
-void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
+void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
   FILE *fp;
@@ -11,7 +11,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder)
   sprintf(foldername,"%s/%3.3f",outputfolder,haloB->redshift);
   sprintf(command,"mkdir -p %s", foldername);
   system(command);
-  sprintf(filename,"%s/%3.3f/dmdt_%d.dat",outputfolder,haloB->redshift,mpi_rank);
+  sprintf(filename,"%s/%3.3f/dmdt_%d.dat",outputfolder,haloB->redshift,domainid);
   sprintf(command,"rm -f %s",filename);
   system(command);
  

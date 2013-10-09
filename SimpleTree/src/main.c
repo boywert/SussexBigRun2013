@@ -61,7 +61,7 @@ int main(int argc,char **argv)
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f\n",snap1,snap2);
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
-	  if(mpi_rank%mpi_nodes == l)
+	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      printf("Making link AB: %3.3f=>%3.3f\n",snap1,snap2);
 	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
@@ -74,7 +74,7 @@ int main(int argc,char **argv)
 	      free_m_halo_wrapper(halocatA);
 
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder);
+	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
   
 	      free_m_halo_wrapper(halocatB);
 	    }
