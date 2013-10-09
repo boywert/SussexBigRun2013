@@ -51,14 +51,14 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   if(mpi_rank==0)
     {
-      fp = fopen("status",r);
+      fp = fopen("status","r");
       if(fp == NULL)
 	start_snap = 1;
       else
 	{
 	  if (fgets(stringbuff , 10 , fp) != NULL )
 	    sscanf(stringbuff,"%d",start_snap);
-	  fclose (pFile);
+	  fclose (fp);
 	}
       if(start_snap < 1) start_snap = 1;
     }
