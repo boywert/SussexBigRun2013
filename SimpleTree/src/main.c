@@ -57,7 +57,7 @@ int main(int argc,char **argv)
       else
 	{
 	  if (fgets(stringbuff , 10 , fp) != NULL )
-	    sscanf(stringbuff,"%d",start_snap);
+	    sscanf(stringbuff,"%d",&start_snap);
 	  fclose (fp);
 	}
       if(start_snap < 1) start_snap = 1;
