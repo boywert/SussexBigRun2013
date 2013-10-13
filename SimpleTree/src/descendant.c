@@ -85,7 +85,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	haloA->mhalos[ihalo].descendant = NULLPOINT;
       //printf("descendant => %llu: delta M \n",haloA->mhalos[ihalo].descendant, haloA->mhalos[ihalo].Mvir-haloB->mhalos[]);
     }
-  free(merit)
+  free(merit);
 
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
