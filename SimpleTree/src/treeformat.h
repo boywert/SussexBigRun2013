@@ -25,8 +25,18 @@ typedef struct m_particle
 typedef struct m_merit
 {
   hid_t haloID;
-  double merit;
+  ptid_t NsharedPIDs;
+  double merit_delucia2007;
+  double merit_knollman2009;
+  double merit_NFW;
 } merit_t;
+
+typedef struct m_merit_embed
+{
+  double merit_delucia2007;
+  double merit_knollman2009;
+  double merit_NFW;
+} merit_embed_t;
 
 typedef struct m_particle_wrapper
 {
