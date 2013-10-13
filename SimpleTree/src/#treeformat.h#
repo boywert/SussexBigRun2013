@@ -10,12 +10,33 @@
 typedef uint64_t ptid_t;
 typedef uint64_t hid_t;
 
+typedef struct key_sort
+{
+  ptid_t ID;
+  ptid_t order;
+} key_sort_t;
 
 typedef struct m_particle
 {
   ptid_t ID;
   hid_t haloID;
 } m_particle_t;
+
+typedef struct m_merit
+{
+  hid_t haloID;
+  ptid_t NsharedPIDs;
+  double merit_delucia2007;
+  double merit_knollman2009;
+  double merit_NFW;
+} merit_t;
+
+typedef struct m_merit_embed
+{
+  double merit_delucia2007;
+  double merit_knollman2009;
+  double merit_NFW;
+} merit_embed_t;
 
 typedef struct m_particle_wrapper
 {
@@ -30,11 +51,7 @@ typedef struct particlelist
   //float energy;
 } particlelist_t;
 
-typedef struct key_order
-{
-  ptid_t ID;
-  ptid_t order;
-} key_t;
+
 
 typedef struct m_halo 
 {
@@ -61,6 +78,9 @@ typedef struct m_halo
   hid_t main_subhalo;
   hid_t next_subhalo;
   hid_t host_halo;
+  /* ####################### */
+  double dm_dt;
+  int used;
 } m_halo_t;
 
 typedef struct m_halo_wrapper

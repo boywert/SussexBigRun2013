@@ -8,7 +8,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   hid_t ihalo,jhalo,ihid,max_id;
   double max_Mvir;
   uint64_t old,new;
-  merit_t *merit;
+  merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
   //printf("make link AB\n");
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
@@ -68,7 +68,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       for(jhalo=0;jhalo<haloB->nHalos;jhalo++)
 	{
 	  merit[jhalo].haloID = jhalo;
-	  merit[jhalo].merit = 0.;
+	  merit[jhalo].merit_delucia2007 = 0.;
 	}
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
@@ -76,16 +76,16 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  //printf("outside: search for %llu\n",curpart);
 	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
-	    merit[ihid].merit += pow((double)ipart,-2./3);
+	    merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
 	}
-      qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit);
-      if(merit[haloB->nHalos-1].merit > 2.5)
+      qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit_delucia2007);
+      if(merit[haloB->nHalos-1].merit_delucia2007 > 2.5)
 	haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
       else
 	haloA->mhalos[ihalo].descendant = NULLPOINT;
       //printf("descendant => %llu: delta M \n",haloA->mhalos[ihalo].descendant, haloA->mhalos[ihalo].Mvir-haloB->mhalos[]);
     }
-  free(merit);
+  free(merit)
 
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)

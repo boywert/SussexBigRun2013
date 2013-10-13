@@ -97,7 +97,7 @@ int main(int argc,char **argv)
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 	      free_m_halo_wrapper(halocatB);
-	    }
+q	    }
 	}
       MPI_Barrier(MPI_COMM_WORLD);
       if(mpi_rank==0)

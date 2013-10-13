@@ -173,16 +173,16 @@ int compare_m_particle_t_by_ID(const void *v1, const void *v2)
     return ret;
 }
 
-int compare_merit_t_by_merit(const void *v1, const void *v2)
+int compare_merit_t_by_merit_delucia2007(const void *v1, const void *v2)
 {
     const merit_t *u1 = v1;
     const merit_t *u2 = v2;
     int ret;
-    if(u1->merit < u2->merit)
+    if(u1->merit_delucia2007 < u2->merit_delucia2007)
       ret =  -1;
-    else if(u1->merit > u2->merit)
+    else if(u1->merit_delucia2007 > u2->merit_delucia2007)
       ret = 1;
-    else if(u1->merit == u2->merit)
+    else if(u1->merit_delucia2007 == u2->merit_delucia2007)
       ret = 0;
     return ret;
 }

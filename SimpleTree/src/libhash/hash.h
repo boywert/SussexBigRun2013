@@ -24,7 +24,7 @@ extern int compare_m_halo_t_by_ID(const void *v1, const void *v2);
 extern int compare_m_particle_t_by_ID(const void *v1, const void *v2);
 extern int compare_uint64_t(const void *v1, const void *v2);
 extern int compare_double(const void *v1, const void *v2);
-extern int compare_merit_t_by_merit(const void *v1, const void *v2);
+extern int compare_merit_t_by_merit_delucia2007(const void *v1, const void *v2);
 
 extern uint64_t search_uint64_t_array( uint64_t searchKey, uint64_t n_array ,const void *Array );
 extern uint64_t search_m_halo_t_array_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array );
