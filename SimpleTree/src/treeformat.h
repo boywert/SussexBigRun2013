@@ -26,6 +26,7 @@ typedef struct m_merit
 {
   hid_t haloID;
   ptid_t NsharedPIDs;
+  float Mvir;
   double merit_delucia2007;
   double merit_knollman2009;
   double merit_NFW;
@@ -74,6 +75,7 @@ typedef struct m_halo
   hid_t main_progenitor; 
   hid_t next_progenitor;
   hid_t descendant;
+  merit_t merit_embed;
   /* ####################### */
   hid_t main_subhalo;
   hid_t next_subhalo;

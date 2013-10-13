@@ -69,6 +69,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	{
 	  merit[jhalo].haloID = jhalo;
 	  merit[jhalo].merit_delucia2007 = 0.;
+	  merit[jhalo].NsharedPIDs = 0;
 	}
       for(ipart=0; ipart < haloA->mhalos[ihalo].npart; ipart++)
 	{
@@ -76,11 +77,22 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  //printf("outside: search for %llu\n",curpart);
 	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
-	    merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
+	    {
+	      merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
+	      merit[ihid].NsharedPIDs += 1;
+	    }
+	}
+       for(jhalo=0;jhalo<haloB->nHalos;jhalo++)
+	{
+	  merit[jhalo].merit_knollman2009 = (double)merit[jhalo].NsharedPIDs*(double)merit[jhalo].NsharedPIDs/(double)haloA->mhalos[ihalo].npart/haloB->mhalos[jhalo].npart;
 	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit_delucia2007);
       if(merit[haloB->nHalos-1].merit_delucia2007 > 2.5)
-	haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
+	{
+	  haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
+	  haloA->mhalos[ihalo].merit_embed.merit_delucia2007 = merit[haloB->nHalos-1].merit_delucia2007;
+	  haloA->mhalos[ihalo].merit_embed.merit_knollman2009 = merit[haloB->nHalos-1].merit_knollman2009;
+	}
       else
 	haloA->mhalos[ihalo].descendant = NULLPOINT;
       //printf("descendant => %llu: delta M \n",haloA->mhalos[ihalo].descendant, haloA->mhalos[ihalo].Mvir-haloB->mhalos[]);
