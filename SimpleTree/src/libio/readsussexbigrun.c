@@ -321,7 +321,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
       if(mhalo.mhalos[ihalo].host_halo < NULLPOINT)
 	{
 	  hostid = search_m_halo_t_array_for_oriID( mhalo.mhalos[ihalo].host_halo,mhalo.nHalos,mhalo.mhalos);
-	  printf("hostid = %llu <= %llu\n",(hid_t)mhalo.mhalos[ihalo].host_halo, (hid_t)hostid);
+	  if(hostid == NULLPOINT) printf("hostid = %llu <= %llu\n",(hid_t)mhalo.mhalos[ihalo].host_halo, (hid_t)hostid);
 	}
     } 
 #endif //TOPLEVELONLY
