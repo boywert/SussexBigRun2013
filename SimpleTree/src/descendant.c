@@ -125,7 +125,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	{
 	  if(ihid < NULLPOINT)
 	    {
-	      /* qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir); */
+	      qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
 	      /* printf("qsort\n"); */
 	      /* haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID; */
 	      /* for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--) */
