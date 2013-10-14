@@ -517,7 +517,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       //printf("ID = %ld\n",halo.ID);
       mhalo.mhalos[counthalo].ID = pow(10,12)+domain*pow(10,7)+counthalo;
       mhalo.mhalos[counthalo].oriID = halo.ID;
-      mhalo.mhalos[counthalo].host_halo = halo.hostHalo;
       mhalo.mhalos[counthalo].domainID = domain;
       mhalo.mhalos[counthalo].Mvir = halo.Mvir;
       mhalo.mhalos[counthalo].Rvir = halo.Rvir;
