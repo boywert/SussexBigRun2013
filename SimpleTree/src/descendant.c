@@ -137,8 +137,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  haloB->mhalos[ihid].nprogs = 1;
 	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
 	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
-	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_delucia200 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
-	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_knollman2009 = haloA->mhalos[ihalo].merit_embed.merit_knollman2009;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_delucia200 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_knollman2009 = haloA->mhalos[ihalo].merit_embed.merit_knollman2009;
 	  merit_prog[haloB->mhalos[ihid].nprogs-1].Mvir = haloA->mhalos[ihalo].Mvir;
 	}
     }
