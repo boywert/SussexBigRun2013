@@ -58,6 +58,7 @@ typedef struct m_halo
 {
   ptid_t ID;
   ptid_t oriID;
+  hid_t host_halo;
 #ifdef CUBEP3M
   uint32_t domainID;
 #endif
