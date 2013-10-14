@@ -19,7 +19,7 @@ SRCS += $(SRCDIR)/MPI_distribute.h $(SRCDIR)/MPI_distribute.c
 
 OPT = 
 OPT += -DCUBEP3M #enable domains in cubep3m
-
+OPT += -DTOPLEVELONLY #use only toplevel halos
 CFLAGS += $(OPT)
 
 all: maketree

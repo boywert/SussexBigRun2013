@@ -302,6 +302,43 @@ uint64_t search_m_halo_t_array_for_ID( uint64_t searchID, uint64_t n_array ,cons
   return NULLPOINT;
 }
 
+uint64_t search_m_halo_t_array_for_oriID( uint64_t searchID, uint64_t n_array ,const void *Array )
+{
+  uint64_t middle,low,high;
+  m_halo_t *pool = (m_halo_t *) Array;
+  //printf("start search\n");
+  /*
+    for(i =0; i< n_array; i++)
+    {
+    printf("%llu\n",pool[i]);
+    }
+  */
+  low = 0;
+  high = n_array-1;
+
+  /* if(searchID < pool[0] || searchID > pool[n_array-1]) */
+  /*   { */
+  /*     return NULLPOINT; */
+  /*   } */
+  while ( low <= high && high < NULLPOINT) 
+    {
+      middle = ( low + high ) / 2;
+ 
+      if ( searchID == pool[ middle ].oriID )
+	{
+	  return middle;
+	}
+      else if ( searchID < pool[ middle ].oriID )
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  return NULLPOINT;
+}
 
 uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array )
 {
