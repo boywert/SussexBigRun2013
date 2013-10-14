@@ -159,6 +159,20 @@ int compare_m_halo_t_by_ID(const void *v1, const void *v2)
     return ret;
 }
 
+int compare_m_halo_t_by_oriID(const void *v1, const void *v2)
+{
+    const m_halo_t *u1 = v1;
+    const m_halo_t *u2 = v2;
+    int ret;
+    if(u1->oriID < u2->oriID)
+      ret =  -1;
+    else if(u1->oriID > u2->oriID)
+      ret = 1;
+    else if(u1->oriID == u2->oriID)
+      ret = 0;
+    return ret;
+}
+
 int compare_m_particle_t_by_ID(const void *v1, const void *v2)
 {
     const m_particle_t *u1 = v1;
