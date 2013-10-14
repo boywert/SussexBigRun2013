@@ -129,6 +129,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
 	      for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
 	      	{
+		  printf("iprog = %ld\n", (long)iprog);
 	      	  haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
 	      	}
 	      haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID;
