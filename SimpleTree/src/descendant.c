@@ -5,7 +5,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
   m_particle_wrapper_t *tmppart;
   ptid_t ipart,countpart,ref,curpart;
-  hid_t ihalo,jhalo,ihid,max_id;
+  hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog;
   double max_Mvir;
   uint64_t old,new;
   merit_t *merit,*merit_prog;
@@ -107,29 +107,42 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   ihid = NULLPOINT;
   max_id = NULLPOINT;
   max_Mvir = 0.;
+  merit_prog = malloc(0);
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
       if(haloA->mhalos[ihalo].descendant == NULLPOINT)
 	break;
       if(haloA->mhalos[ihalo].descendant == ihid)
 	{
-	  if(haloA->mhalos[ihalo].Mvir > max_Mvir)
-	    {
-	      //max_Mvir = MAX(mhalos[ihalo].Mvir,max_Mvir);
-	      max_id = ihalo;
-	      max_Mvir = haloA->mhalos[ihalo].Mvir;
-	    }
+	  haloB->mhalos[ihid].nprogs += 1;
+	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_delucia200 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_knollman2009 = haloA->mhalos[ihalo].merit_embed.merit_knollman2009;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].Mvir = haloA->mhalos[ihalo].Mvir;
 	}
       else
 	{
-	  ihid = haloA->mhalos[ihalo].descendant;
-	  if(ihalo > 0)
+	  if(ihid < NULLPOINT)
 	    {
-	      haloB->mhalos[haloA->mhalos[ihalo-1].descendant].main_progenitor = ihalo;
-	      max_Mvir = haloA->mhalos[ihalo].Mvir;
+	      qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
+	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
+	      for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
+		{
+		  haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
+		}
+	      haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
 	    }
+	  ihid = haloA->mhalos[ihalo].descendant;
+	  haloB->mhalos[ihid].nprogs = 1;
+	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_delucia200 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_embed.merit_knollman2009 = haloA->mhalos[ihalo].merit_embed.merit_knollman2009;
+	  merit_prog[haloB->mhalos[ihid].nprogs-1].Mvir = haloA->mhalos[ihalo].Mvir;
 	}
     }
+
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)

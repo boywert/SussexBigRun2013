@@ -187,6 +187,19 @@ int compare_merit_t_by_merit_delucia2007(const void *v1, const void *v2)
     return ret;
 }
 
+int compare_merit_t_by_Mvir(const void *v1, const void *v2)
+{
+    const merit_t *u1 = v1;
+    const merit_t *u2 = v2;
+    int ret;
+    if(u1->Mvir < u2->Mvir)
+      ret =  -1;
+    else if(u1->Mvir > u2->Mvir)
+      ret = 1;
+    else if(u1->Mvir == u2->Mvir)
+      ret = 0;
+    return ret;
+}
 
 int compare_double(const void *v1, const void *v2)
 {
