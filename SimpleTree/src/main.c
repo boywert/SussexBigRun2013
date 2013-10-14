@@ -19,8 +19,10 @@ int main(int argc,char **argv)
   initialise_MPI(&argc, &argv);
   
   init_memmgr();
-  sprintf(folder,"/ccc/cont005/home/ra1089/srisawac/scratch/AHF/cubepm_130315_6_1728_47Mpc_ext2/results");
-  sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
+  //sprintf(folder,"/ccc/cont005/home/ra1089/srisawac/scratch/AHF/cubepm_130315_6_1728_47Mpc_ext2/results");
+  //sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
+  sprintf(folder,"/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results");
+  sprintf(outputfolder,"/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/mergertree");
   sprintf(snaplistFile,"halofinds");
   domain_per_dim = 6;
   boxsize = 47000.0;
