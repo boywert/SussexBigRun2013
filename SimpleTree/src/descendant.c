@@ -127,10 +127,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	    {
 	      qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
 	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
-	      for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>=0; iprog--)
+	      for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
 	      	{
 	      	  haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
 	      	}
+	      haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID
 	      haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
 	    }
 	  ihid = haloA->mhalos[ihalo].descendant;
