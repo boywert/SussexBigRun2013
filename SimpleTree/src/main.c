@@ -84,6 +84,7 @@ int main(int argc,char **argv)
 	}
       for(l=0;l<domain_per_dim*domain_per_dim*domain_per_dim;l++)
 	{
+	  printf("\treading domain %d\n",l);
 	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
