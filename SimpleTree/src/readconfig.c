@@ -45,7 +45,7 @@ void readconfig()
   sprintf(config[nconf].IDENTIFIER,"NPARTS");
   nconf++;
 
-  config[nconf].type = 4;
+  config[nconf].type = 3;
   config[nconf].pointer = &boxsize;
   sprintf(config[nconf].IDENTIFIER,"BOXSIZE");
   nconf++;
