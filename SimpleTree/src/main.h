@@ -14,5 +14,6 @@
 #include <math.h>
 #include "mpi.h"
 #include "descendant.h"
+#include "common.h"
 #define INC_MAIN_H
 #endif

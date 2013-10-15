@@ -10,9 +10,9 @@ int main(int argc,char **argv)
   double dt,snap1,snap2;
   hid_t ihalo;
   int i,j,k,l,tot_Snap;
-  int domain_per_dim;
+  //int domain_per_dim;
   int start_snap;
-  double boxsize;
+  //double boxsize;
   float snaplist[1024];
   FILE *fp;
   
@@ -21,8 +21,8 @@ int main(int argc,char **argv)
   init_memmgr();
   //sprintf(folder,"/ccc/cont005/home/ra1089/srisawac/scratch/AHF/cubepm_130315_6_1728_47Mpc_ext2/results");
   //sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
-  sprintf(folder,"/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results");
-  sprintf(outputfolder,"/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/mergertree");
+  sprintf(folder, INPUTDIR);
+  sprintf(outputfolder,OUTPUTDIR);
   sprintf(snaplistFile,"halofinds");
   domain_per_dim = 6;
   boxsize = 47000.0;

@@ -10,7 +10,7 @@ LIBSRC += $(SRCDIR)/libio/readsussexbigrun.h $(SRCDIR)/libio/readsussexbigrun.c
 LIBSRC += $(SRCDIR)/libmemmgr/memmgr.h $(SRCDIR)/libmemmgr/memmgr.c
 LIBSRC += $(SRCDIR)/libhash/hash.h $(SRCDIR)/libhash/hash.c
 
-SRCS = $(SRCDIR)/main.c $(SRCDIR)/main.h
+SRCS = $(SRCDIR)/config.h $(SRCDIR)/main.c $(SRCDIR)/main.h 
 SRCS += $(SRCDIR)/common.c $(SRCDIR)/common.h
 SRCS += $(SRCDIR)/treeformat.c $(SRCDIR)/treeformat.h
 SRCS += $(SRCDIR)/cosmology.h $(SRCDIR)/cosmology.c

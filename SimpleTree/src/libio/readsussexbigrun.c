@@ -1,5 +1,4 @@
 #include "readsussexbigrun.h"
-#define npart_box 5159780352
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
