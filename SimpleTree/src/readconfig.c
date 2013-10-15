@@ -61,14 +61,14 @@ void readconfig()
   while(fgets(buffer, 1024 ,fp) != NULL)
     {
       count = 0;
-      pch = strtok (buffer," ");
+      pch = strtok (buffer," \t\n");
       while (pch != NULL)
 	{
 	  count++;
 	  printf("%s\n",pch);
 	  if(count == 1) sprintf(ident,"%s",pch);
 	  if(count == 2) sprintf(value, "%s", pch);
-	  pch = strtok (NULL, " ");
+	  pch = strtok (NULL, " \t\n");
 	}
       if(count > 1)
 	{
