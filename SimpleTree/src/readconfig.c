@@ -76,7 +76,7 @@ void readconfig()
 	    {
 	      if(strcmp(ident,config[i].IDENTIFIER) == 0)
 		{
-		  printf("found %s = %s",config[i].IDENTIFIER,value);
+		  printf("found %s = %s\n",config[i].IDENTIFIER,value);
 		  if(config[i].type == 1) //int
 		    {
 		      sscanf(value,"%d",config[i].pointer);
