@@ -40,7 +40,7 @@ int main(int argc,char **argv)
       i=0;
       while(fscanf(fp,"%g",&(snaplist[i])) != EOF)
 	{
-	  printf("snap:%d  %f\n",i,snaplist[i]);
+	  //	  printf("snap:%d  %f\n",i,snaplist[i]);
 	  i++;
 	}
       fclose(fp);
@@ -91,13 +91,13 @@ int main(int argc,char **argv)
 	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snap2,l);
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap1, l, domain_per_dim, boxsize/domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
-	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+	      //make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
 	      
 	      free_m_halo_wrapper(halocatA);
 
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
+	      //sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 	      free_m_halo_wrapper(halocatB);
 	    }
 	}
