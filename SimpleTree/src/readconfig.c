@@ -74,7 +74,7 @@ void readconfig()
 	{
 	  for(i=0;i<nconf;i++)
 	    {
-	      if(ident == config[i].IDENTIFIER)
+	      if(strcmp(ident,config[i].IDENTIFIER) == 0)
 		{
 		  printf("found %s = %s",config[i].IDENTIFIER,value);
 		  if(config[i].type == 1) //int
