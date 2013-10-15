@@ -65,7 +65,7 @@ void readconfig()
       while (pch != NULL)
 	{
 	  count++;
-	  printf("%s\n",pch);
+	  //printf("%s\n",pch);
 	  if(count == 1) sprintf(ident,"%s",pch);
 	  if(count == 2) sprintf(value, "%s", pch);
 	  pch = strtok (NULL, " \t\n");
@@ -76,7 +76,7 @@ void readconfig()
 	    {
 	      if(strcmp(ident,config[i].IDENTIFIER) == 0)
 		{
-		  printf("found %s = %s\n",config[i].IDENTIFIER,value);
+		  //printf("found %s = %s\n",config[i].IDENTIFIER,value);
 		  if(config[i].type == 1) //int
 		    {
 		      sscanf(value,"%d",config[i].pointer);
