@@ -65,6 +65,7 @@ void readconfig()
       while (pch != NULL)
 	{
 	  count++;
+	  printf("%s\n",pch);
 	  if(count == 1) sprintf(ident,"%s",pch);
 	  if(count == 2) sprintf(value, "%s", pch);
 	  pch = strtok (NULL, " ");
