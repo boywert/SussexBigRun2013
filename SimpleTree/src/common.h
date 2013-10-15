@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdint.h>
 #include "mpi.h"
-#include "config.h"
 #define MAXSTRING 1024
 
 extern const double speed_of_light;
