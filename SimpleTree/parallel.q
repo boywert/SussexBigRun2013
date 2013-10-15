@@ -1,7 +1,7 @@
 #!/bin/sh
 #$ -N boyd
 #$ -M cs390@sussex.ac.uk
-#$ -mbea
+#$ -m bea
 #$ -cwd
 #$ -pe openmpi 32 #eg12-36
 #$ -q mps_amd.q
