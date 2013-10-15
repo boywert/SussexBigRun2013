@@ -9,7 +9,6 @@
 #Use the serial.q
 #$ -q serial.q
 # If modules are needed, source modules environment:
-. /etc/profile.d/modules.sh
 # Add any modules you might require:
 module add sge
 module add gcc

@@ -1,12 +1,12 @@
 #!/bin/sh
 #$ -NJobName
-#$ -M user@sussex.ac.uk
+#$ -M cs390@sussex.ac.uk
 #$ -mbea
 #$ -cwd
-#$ -pe openmpi NUMBER_OF_CPUS #eg12-36
-#$ -q parallel.q
+#$ -pe openmpi 64 #eg12-36
+#$ -q mps_amd.q
 #$ -S /bin/bash
 # source modules environment:
-./etc/profile.d/modules.sh
-module add openmpi/intel/64/1.6.4
+module add sge
+
 mpirun -np $NSLOTS -machinefile $TMPDIR/machines /path/to/exec
