@@ -90,7 +90,7 @@ void readconfig()
 		    }
 		  else if(config[i].type == 4) //string
 		    {
-		      sprinf(config[i].pointer,"%s",value);
+		      sprintf(config[i].pointer,"%s",value);
 		    }
 		}
 	    }
