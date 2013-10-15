@@ -94,7 +94,13 @@ void readconfig()
 		}
 	    }
 	}
+      
     }
+  printf("npart_box = %llu\n",npart_box);
+  printf("boxsize = %lf\n",boxsize);
+  printf("domain_per_dim = %d\n",domain_per_dim);
+  printf("INPUTDIR = %s\n",INPUTDIR);
+  printf("OUTPUTDIR = %s\n",OUTPUTDIR);
   exit(0);
   fclose(fp);
 }
