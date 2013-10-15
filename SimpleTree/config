@@ -1,0 +1,5 @@
+NPARTS		5159780352	#number of particles
+BOXSIZE		47000.0		#kpc/h
+CUBEP3MDOMAINS	6
+INPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results
+OUTPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/mergertree
