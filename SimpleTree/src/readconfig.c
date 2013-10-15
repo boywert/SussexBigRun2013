@@ -103,6 +103,6 @@ void readconfig()
   printf("domain_per_dim = %d\n",domain_per_dim);
   printf("INPUTDIR = %s\n",INPUTDIR);
   printf("OUTPUTDIR = %s\n",OUTPUTDIR);
-  exit(0);
+
   fclose(fp);
 }
