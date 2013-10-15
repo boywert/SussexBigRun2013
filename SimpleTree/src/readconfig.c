@@ -76,24 +76,21 @@ void readconfig()
 	    {
 	      if(ident == config[i].IDENTIFIER)
 		{
+		  printf("found %s = %s",config[i].IDENTIFIER,value);
 		  if(config[i].type == 1) //int
 		    {
-		      printf("found %s = %s",config[i].IDENTIFIER,value);
 		      sscanf(value,"%d",config[i].pointer);
 		    }
 		  else if(config[i].type == 2) //long long unsigned
 		    {
-		      printf("found %s = %s",config[i].IDENTIFIER,value);
 		      sscanf(value,"%llu",config[i].pointer);
 		    }
 		  else if(config[i].type == 3) //double
 		    {
-		      printf("found %s = %s",config[i].IDENTIFIER,value);
 		      sscanf(value,"%lf",config[i].pointer);
 		    }
 		  else if(config[i].type == 4) //string
 		    {
-		      printf("found %s = %s",config[i].IDENTIFIER,value);
 		      sprintf(config[i].pointer,"%s",value);
 		    }
 		}
