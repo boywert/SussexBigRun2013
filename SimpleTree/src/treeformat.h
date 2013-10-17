@@ -51,13 +51,15 @@ typedef struct particlelist
   ptid_t ID;
   //float energy;
 } particlelist_t;
-
+X
 
 
 typedef struct m_halo 
 {
-  ptid_t ID;
-  ptid_t oriID;
+  hid_t ID;
+  hid_t oriID;
+  hid_t refID;
+  float redshift;
 #ifdef CUBEP3M
   uint32_t domainID;
 #endif
@@ -72,7 +74,7 @@ typedef struct m_halo
   float VZc;
   particlelist_t *Particles;
   /* ####################### */
-  hid_t main_progenitor; 
+  hid_t main_progenitor;
   hid_t next_progenitor;
   hid_t descendant;
   hid_t nprogs;

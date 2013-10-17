@@ -98,7 +98,9 @@ int main(int argc,char **argv)
 	      free_m_halo_wrapper(halocatA);
 
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-	      //sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
+#ifdef OUTPUTDMDT
+	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
+#endif
 	      free_m_halo_wrapper(halocatB);
 	    }
 	}
