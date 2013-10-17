@@ -8,7 +8,7 @@ int main()
   FILE *fp;
   firstsnap = 40;
   nhalopertree = 61-firstsnap+1;
-  ntrees = 1;
+  ntrees = 100000;
   nhalos = ntrees*nhalopertree;
   sample.Len = 1000;
   sample.M_Mean200 = 100.0;
