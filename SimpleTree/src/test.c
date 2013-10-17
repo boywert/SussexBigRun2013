@@ -38,7 +38,7 @@ int main()
     }
   for(j=0;j<ntrees+2;j++)
     {
-      fwrite (&nhalopertree,1, sizeof(int), fp);
+      fwrite (&j,1, sizeof(int), fp);
     }
   for(j=0;j<ntrees;j++)
     {
@@ -55,28 +55,28 @@ int main()
   	  sample.FileNr = 0;
   	  sample.SubhaloIndex = sample.FirstHaloInFOFgroup;
   	  sample.SubHalfMass = 0.1;
-	  fwrite(&(sample.Descendant),sizeof(int),1, fp);
-	  fwrite(&(sample.FirstProgenitor),sizeof(int),1, fp);
-	  fwrite(&(sample.NextProgenitor),sizeof(int),1, fp);
-	  fwrite(&(sample.FirstHaloInFOFgroup),sizeof(int),1, fp);
-	  fwrite(&(sample.NextHaloInFOFgroup),sizeof(int),1, fp);
-	  fwrite(&(sample.Len),sizeof(int),1, fp);
-	  fwrite(&(sample.M_Mean200),sizeof(float),1, fp);
-	  fwrite(&(sample.M_Crit200),sizeof(float),1, fp);
-	  fwrite(&(sample.M_TopHat),sizeof(float),1, fp);
-	  fwrite(&(sample.Pos[0]),sizeof(float),3, fp);
-	  fwrite(&(sample.Vel[0]),sizeof(float),3, fp);
-	  fwrite(&(sample.VelDisp),sizeof(float),1, fp);
-	  fwrite(&(sample.Vmax),sizeof(float),1, fp);
-	  fwrite(&(sample.Spin[0]),sizeof(float),3, fp);
-	  fwrite(&(sample.MostBoundID),sizeof(long long),1, fp);
-	  fwrite(&(sample.SnapNum),sizeof(int),1, fp);
-	  fwrite(&(sample.FileNr),sizeof(int),1, fp);
-	  fwrite(&(sample.SubhaloIndex),sizeof(int),1, fp);
-	  fwrite(&(sample.SubHalfMass),sizeof(float),1, fp);
+	  /* fwrite(&(sample.Descendant),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.FirstProgenitor),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.NextProgenitor),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.FirstHaloInFOFgroup),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.NextHaloInFOFgroup),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.Len),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.M_Mean200),sizeof(float),1, fp); */
+	  /* fwrite(&(sample.M_Crit200),sizeof(float),1, fp); */
+	  /* fwrite(&(sample.M_TopHat),sizeof(float),1, fp); */
+	  /* fwrite(&(sample.Pos[0]),sizeof(float),3, fp); */
+	  /* fwrite(&(sample.Vel[0]),sizeof(float),3, fp); */
+	  /* fwrite(&(sample.VelDisp),sizeof(float),1, fp); */
+	  /* fwrite(&(sample.Vmax),sizeof(float),1, fp); */
+	  /* fwrite(&(sample.Spin[0]),sizeof(float),3, fp); */
+	  /* fwrite(&(sample.MostBoundID),sizeof(long long),1, fp); */
+	  /* fwrite(&(sample.SnapNum),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.FileNr),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.SubhaloIndex),sizeof(int),1, fp); */
+	  /* fwrite(&(sample.SubHalfMass),sizeof(float),1, fp); */
   
 
-  	  //fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
+  	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
 	  printf("%d, %d, %d\n",i,sample.FirstProgenitor,sample.Descendant);
   	}
     }
