@@ -42,7 +42,7 @@ int main()
 	  sample.FileNr = 0;
 	  sample.SubhaloIndex = 0;
 	  sample.SubHalfMass = 0.1;
-	  fwrite(sample,sizeof(struct Lgalaxy_halo_data),1, fp);
+	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
 	}
     }
   fclose(fp);
