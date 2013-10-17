@@ -284,7 +284,7 @@ void construct_galaxies(int filenr, int treenr, int halonr)
 {
   static int halosdone = 0;
   int prog, fofhalo, ngal, cenngal, p;
-
+  printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,halonr);
   HaloAux[halonr].DoneFlag = 1;
   halosdone++;
 
