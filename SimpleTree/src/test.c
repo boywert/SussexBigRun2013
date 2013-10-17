@@ -44,11 +44,11 @@ int main()
       sample.Pos[0] = 1.0*j;
       for(i=61;i>=firstsnap;i--)
   	{
-  	  sample.Descendant = i-61-1+j*nhalopertree;
-  	  sample.FirstProgenitor = i-61+1+j*nhalopertree;
+  	  sample.Descendant = 61-i-1+j*nhalopertree;
+  	  sample.FirstProgenitor = 61-i+1+j*nhalopertree;
 	  printf("firstprog = %d\n",sample.FirstProgenitor);
   	  sample.NextProgenitor = -1;
-  	  sample.FirstHaloInFOFgroup = i-61+j*nhalopertree;
+  	  sample.FirstHaloInFOFgroup = 61-i+j*nhalopertree;
   	  sample.NextHaloInFOFgroup = -1;
   	  sample.SnapNum = i;
   	  sample.FileNr = 0;
