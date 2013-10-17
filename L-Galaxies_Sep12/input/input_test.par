@@ -20,7 +20,7 @@ LastFile              0
 %-------------------------------------------------
 
 OutputDir           ./
-SimulationDir       ../Simpletree/ 
+SimulationDir       ../SimpleTree/ 
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
 %----------- Unscaled MS-7 -----------------------
