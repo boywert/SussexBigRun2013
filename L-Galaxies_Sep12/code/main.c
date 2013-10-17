@@ -631,7 +631,7 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
 #ifdef STAR_FORMATION_HISTORY
   double age_in_years;
 #endif
-
+  printf("halonr = %d\n",halonr);
   // Eddington time in code units
   // Bizarrely, code units are UnitTime_in_s/Hubble_h
   t_Edd=1.42e16*Hubble_h/UnitTime_in_s;
