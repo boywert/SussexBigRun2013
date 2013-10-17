@@ -34,7 +34,7 @@ int main()
   for(j=0;j<ntrees;j++)
     {
       fwrite (&nhalopertree,1, sizeof(int), fp);
-      printf("Tree:%j Nhalos = %d\n",j,nhalopertree);
+      printf("Tree:%d Nhalos = %d\n",j,nhalopertree);
     }
   for(j=0;j<ntrees+2;j++)
     {
