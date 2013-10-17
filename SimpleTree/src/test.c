@@ -55,7 +55,7 @@ int main()
   	  sample.SubhaloIndex = 0;
   	  sample.SubHalfMass = 0.1;
   	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
-	  printf("firstprog = %d\n",sample.FirstProgenitor);
+	  printf("%d, %d, %d\n",i,sample.FirstProgenitor,sample.Descendant);
   	}
     }
   fclose(fp);
