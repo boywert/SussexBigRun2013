@@ -76,7 +76,7 @@ struct Lgalaxy_halo_data
   int FileNr;
   int SubhaloIndex;
   float SubHalfMass;
-}
+};
 
 typedef struct m_halo 
 {
