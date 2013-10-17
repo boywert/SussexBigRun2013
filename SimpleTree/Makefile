@@ -2,7 +2,7 @@ CC =  mpicc
 CFLAGS = -g -Wall -openmp
 
 SRCDIR = src
-
+BINDIR = bin
 HEADERS = 
 
 LIBSRC = $(SRCDIR)/libio/common_io.h $(SRCDIR)/libio/common_io.c
@@ -10,7 +10,9 @@ LIBSRC += $(SRCDIR)/libio/readsussexbigrun.h $(SRCDIR)/libio/readsussexbigrun.c
 LIBSRC += $(SRCDIR)/libmemmgr/memmgr.h $(SRCDIR)/libmemmgr/memmgr.c
 LIBSRC += $(SRCDIR)/libhash/hash.h $(SRCDIR)/libhash/hash.c
 
-SRCS = $(SRCDIR)/main.c $(SRCDIR)/main.h 
+MAINSRCS = $(SRCDIR)/main.c $(SRCDIR)/main.h 
+TESTSRCS = $(SRCDIR)/test.c
+SRCS = 
 SRCS += $(SRCDIR)/readconfig.c $(SRCDIR)/readconfig.h
 SRCS += $(SRCDIR)/common.c $(SRCDIR)/common.h
 SRCS += $(SRCDIR)/treeformat.c $(SRCDIR)/treeformat.h
@@ -18,6 +20,8 @@ SRCS += $(SRCDIR)/cosmology.h $(SRCDIR)/cosmology.c
 SRCS += $(SRCDIR)/descendant.h $(SRCDIR)/descendant.c
 SRCS += $(SRCDIR)/MPI_distribute.h $(SRCDIR)/MPI_distribute.c
 
+MAINSRCS += SRCS
+TESTSRCS += SRCS
 OPT = 
 OPT += -DCUBEP3M #enable domains in cubep3m
 #OPT += -DTOPLEVELONLY #use only toplevel halos
@@ -26,10 +30,14 @@ CFLAGS += $(OPT)
 
 
 
-all: maketree
+all: maketree test
 
-maketree: $(SRCS) $(HEADERS) $(LIBSRC)
-	$(CC) $(CFLAGS) $(SRCS) $(HEADERS) $(LIBSRC) -o maketree
+maketree: $(MAINSRCS) $(HEADERS) $(LIBSRC)
+	mkdir -p $(BINDIR)
+	$(CC) $(CFLAGS) $(MAINSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/maketree.bin
 
+test: $(TESTSRCS) $(HEADERS) $(LIBSRC)
+	mkdir -o $(BINDIR)
+	$(CC) $(CFLAGS) $(TESTSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/test
 clean:
-	rm -f maketree
+	rm -f $(BINDIR)/*
