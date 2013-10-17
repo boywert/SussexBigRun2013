@@ -39,11 +39,10 @@ int main()
     }
   for(j=0;j<ntrees+2;j++)
     {
-      fwrite (&j, 1, sizeof(int), fp);
+      //fwrite (&j, 1, sizeof(int), fp);
     }
   for(j=0;j<ntrees;j++)
     {
-      sample.Pos[0] = 1.0*j;
       for(i=61;i>=firstsnap;i--)
   	{
   	  sample.Descendant = 61-i-1+j*nhalopertree;
