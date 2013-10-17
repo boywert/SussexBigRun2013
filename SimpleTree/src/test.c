@@ -26,7 +26,7 @@ int main()
   sample.Spin[1] = 0.0;
   sample.Spin[1] = 0.0;
   sample.MostBoundID = 0;
-  fp = fopen("trees_061.0","wb+");
+  fp = fopen("treedata/trees_061.0","wb+");
   fwrite (&ntrees,1, sizeof(int), fp);
   printf("Ntrees = %d\n",ntrees);
   fwrite (&nhalos,1, sizeof(int), fp);
