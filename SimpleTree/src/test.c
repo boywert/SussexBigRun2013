@@ -29,22 +29,22 @@ int main()
   fp = fopen("test","wb+");
   fwrite (&(ntrees),1, sizeof(int), fp);
   fwrite (&(nhalos),1, sizeof(int), fp);
-  for(j=0;j<ntrees;j++)
-    {
-      for(i=61;i>=firstsnap;i--)
-	{
-	  sample.Descendant = i-61-1;
-	  sample.FirstProgenitor = i-61+1;
-	  sample.NextProgenitor = -1;
-	  sample.FirstHaloInFOFgroup = i-61;
-	  sample.NextHaloInFOFgroup = -1;
-	  sample.SnapNum = i;
-	  sample.FileNr = 0;
-	  sample.SubhaloIndex = 0;
-	  sample.SubHalfMass = 0.1;
-	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
-	}
-    }
+  /* for(j=0;j<ntrees;j++) */
+  /*   { */
+  /*     for(i=61;i>=firstsnap;i--) */
+  /* 	{ */
+  /* 	  sample.Descendant = i-61-1; */
+  /* 	  sample.FirstProgenitor = i-61+1; */
+  /* 	  sample.NextProgenitor = -1; */
+  /* 	  sample.FirstHaloInFOFgroup = i-61; */
+  /* 	  sample.NextHaloInFOFgroup = -1; */
+  /* 	  sample.SnapNum = i; */
+  /* 	  sample.FileNr = 0; */
+  /* 	  sample.SubhaloIndex = 0; */
+  /* 	  sample.SubHalfMass = 0.1; */
+  /* 	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp); */
+  /* 	} */
+  /*   } */
   fclose(fp);
   return 0;
 }
