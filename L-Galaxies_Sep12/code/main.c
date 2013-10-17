@@ -290,15 +290,15 @@ void construct_galaxies(int filenr, int treenr, int halonr)
 {
   static int halosdone = 0;
   int prog, fofhalo, ngal, cenngal, p;
-  printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,halonr);
+  //printf("boyd: Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,halonr);
   HaloAux[halonr].DoneFlag = 1;
   halosdone++;
 
   prog = Halo[halonr].FirstProgenitor;
-
+  printf("boyd: prog of %d => %d\n",halonr,prog);
   while(prog >= 0) //If halo has a progenitor
     {
-      //printf("Halo: %d Firstprog = %d Doneflag=%d\n",halonr,prog,HaloAux[prog].DoneFlag);
+      //printf("boyd: Halo: %d Firstprog = %d Doneflag=%d\n",halonr,prog,HaloAux[prog].DoneFlag);
       if(HaloAux[prog].DoneFlag == 0) //If progenitor hasn't been done yet
 	{
 	  printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,prog);
