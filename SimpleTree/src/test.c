@@ -46,6 +46,7 @@ int main()
   	{
   	  sample.Descendant = i-61-1+j*nhalopertree;
   	  sample.FirstProgenitor = i-61+1+j*nhalopertree;
+	  printf("firstprog = %d\n",sample.FirstProgenitor);
   	  sample.NextProgenitor = -1;
   	  sample.FirstHaloInFOFgroup = i-61+j*nhalopertree;
   	  sample.NextHaloInFOFgroup = -1;
