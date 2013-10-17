@@ -11,9 +11,9 @@ int main()
   ntrees = 1;
   nhalos = ntrees*nhalopertree;
   sample.Len = 1000;
-  sample.M_Mean200 = 0.0;
+  sample.M_Mean200 = 100.0;
   sample.M_Crit200 = 100.;
-  sample.M_TopHat = 0.0;
+  sample.M_TopHat = 100.0;
   sample.Pos[0] = 1.0;
   sample.Pos[1] = 1.0;
   sample.Pos[2] = 1.0;
