@@ -46,7 +46,6 @@ int main()
   	{
   	  sample.Descendant = 61-i-1+j*nhalopertree;
   	  sample.FirstProgenitor = 61-i+1+j*nhalopertree;
-	  printf("firstprog = %d\n",sample.FirstProgenitor);
   	  sample.NextProgenitor = -1;
   	  sample.FirstHaloInFOFgroup = 61-i+j*nhalopertree;
 	  if(i==firstsnap) sample.FirstProgenitor = -1;
@@ -56,6 +55,7 @@ int main()
   	  sample.SubhaloIndex = 0;
   	  sample.SubHalfMass = 0.1;
   	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
+	  printf("firstprog = %d\n",sample.FirstProgenitor);
   	}
     }
   fclose(fp);
