@@ -12,6 +12,7 @@ LIBSRC += $(SRCDIR)/libhash/hash.h $(SRCDIR)/libhash/hash.c
 
 MAINSRCS = $(SRCDIR)/main.c $(SRCDIR)/main.h 
 TESTSRCS = $(SRCDIR)/test.c
+
 SRCS = 
 SRCS += $(SRCDIR)/readconfig.c $(SRCDIR)/readconfig.h
 SRCS += $(SRCDIR)/common.c $(SRCDIR)/common.h
@@ -37,7 +38,7 @@ maketree: $(MAINSRCS) $(HEADERS) $(LIBSRC)
 	$(CC) $(CFLAGS) $(MAINSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/maketree.bin
 
 test: $(TESTSRCS) $(HEADERS) $(LIBSRC)
-	mkdir -o $(BINDIR)
+	mkdir -p $(BINDIR)
 	$(CC) $(CFLAGS) $(TESTSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/test
 clean:
 	rm -f $(BINDIR)/*
