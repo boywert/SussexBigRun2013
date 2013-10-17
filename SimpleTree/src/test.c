@@ -14,6 +14,7 @@ int main()
   sample.M_Mean200 = 0.0;
   sample.M_Crit200 = 100.;
   sample.M_TopHat = 0.0;
+  sample.Pos[0] = 1.0;
   sample.Pos[1] = 1.0;
   sample.Pos[2] = 1.0;
   sample.Vel[0] = 0.0;
@@ -38,7 +39,7 @@ int main()
     }
   for(j=0;j<ntrees+2;j++)
     {
-      fwrite (&j,1, sizeof(int), fp);
+      fwrite (&j, 1, sizeof(int), fp);
     }
   for(j=0;j<ntrees;j++)
     {
