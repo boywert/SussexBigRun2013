@@ -77,7 +77,7 @@ int main()
   
 
   	  fwrite(&(sample),sizeof(struct Lgalaxy_halo_data),1, fp);
-	  printf("%d, %d, %d\n",i,sample.FirstProgenitor,sample.Descendant);
+	  //printf("%d, %d, %d\n",i,sample.FirstProgenitor,sample.Descendant);
   	}
     }
   fclose(fp);
