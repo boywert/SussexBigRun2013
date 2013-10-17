@@ -294,7 +294,10 @@ void construct_galaxies(int filenr, int treenr, int halonr)
     {
       printf("Halo: %d Firstprog = %d\n",halonr,prog);
       if(HaloAux[prog].DoneFlag == 0) //If progenitor hasn't been done yet
-		construct_galaxies(filenr, treenr, prog);
+	{
+	  printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,prog);
+	  construct_galaxies(filenr, treenr, prog);
+	}
       prog = Halo[prog].NextProgenitor;	//Jump to next halo in progenitors FOF
     }
 
