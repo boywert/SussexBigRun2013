@@ -51,8 +51,32 @@ typedef struct particlelist
   ptid_t ID;
   //float energy;
 } particlelist_t;
-X
 
+struct Lgalaxy_halo_data
+{
+  /* merger tree pointers */
+  int Descendant;
+  int FirstProgenitor;
+  int NextProgenitor;
+  int FirstHaloInFOFgroup;
+  int NextHaloInFOFgroup;
+
+  /* properties of halo */
+  int Len;
+  float M_Mean200, M_Crit200, M_TopHat;
+  float Pos[3];
+  float Vel[3];
+  float VelDisp;
+  float Vmax;
+  float Spin[3];
+  long long MostBoundID;
+
+  /* original position in subfind output */
+  int SnapNum;
+  int FileNr;
+  int SubhaloIndex;
+  float SubHalfMass;
+}
 
 typedef struct m_halo 
 {
@@ -87,6 +111,8 @@ typedef struct m_halo
   double dm_dt;
   int used;
 } m_halo_t;
+
+
 
 typedef struct m_halo_wrapper
 {
