@@ -55,7 +55,7 @@
  *  (int). */
 void load_tree_table(int filenr)
 {
-  int i, n, totNHalos;
+  int i,j, n, totNHalos;
   char buf[1000];
 
 #ifdef LOADIDS
@@ -112,7 +112,13 @@ void load_tree_table(int filenr)
   myfread(TreeNHalos, Ntrees, sizeof(int), tree_file);
 
   if(Ntrees)
-    TreeFirstHalo[0] = 0;
+    {
+      TreeFirstHalo[0] = 0;
+      for(j=0;j<Ntrees;j++)
+	{
+	  printf("Tree:%d => %d halos\n",j,TreeNHalos);
+	}
+    }
   /*Define a variable containing the number you have to jump to
    * get from one firshalo to the next. */
   for(i = 1; i < Ntrees; i++)
