@@ -4,7 +4,7 @@
 int main()
 {
   struct Lgalaxy_halo_data sample;
-  int i,firstsnap,nhalopertree,ntrees,nhalos;
+  int i,j,firstsnap,nhalopertree,ntrees,nhalos;
   FILE *fp;
   firstnap = 0;
   nhalopertree = 61-firstsnap+1;
