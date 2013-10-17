@@ -27,15 +27,15 @@ int main()
   sample.Spin[1] = 0.0;
   sample.MostBoundID = 0;
   fp = fopen("testtree","wb+");
-  fwrite (&(ntrees),1, sizeof(int), fp);
-  fwrite (&(nhalos),1, sizeof(int), fp);
+  fwrite (&ntrees,1, sizeof(int), fp);
+  fwrite (&nhalos,1, sizeof(int), fp);
   for(j=0;j<ntrees;j++)
     {
-      fwrite (&(nhalopertree),1, sizeof(int), fp);
+      fwrite (&nhalopertree,1, sizeof(int), fp);
     }
   for(j=0;j<ntrees+2;j++)
     {
-      fwrite (&(nhalopertree),1, sizeof(int), fp);
+      fwrite (&nhalopertree,1, sizeof(int), fp);
     }
   for(j=0;j<ntrees;j++)
     {
