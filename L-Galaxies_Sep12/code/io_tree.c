@@ -131,7 +131,26 @@ void load_tree_table(int filenr)
   printf("struct's size = %d\n",sizeof(struct halo_data));
   for(j=0;j<totNHalos;j++)
     {
-      printf("%d : p:%d d:%d\n",j,Halo_Data[j].FirstProgenitor,Halo_Data[j].Descendant);
+      printf("ID:%d\n",j);
+      printf("\t Descendant:%d\n",Halo_Data[j].Descendant);
+      printf("\t FirstProgenitor:%d\n",Halo_Data[j].FirstProgenitor);
+      printf("\t NextProgenitor:%d\n",Halo_Data[j].NextProgenitor);
+      printf("\t FirstHaloInFOFgroup:%d\n",Halo_Data[j].FirstHaloInFOFgroup);
+      printf("\t NextHaloInFOFgroup:%d\n",Halo_Data[j].NextHaloInFOFgroup);
+      printf("\t Len:%d\n",Halo_Data[j].Len);
+      printf("\t M_Mean200:%f\n",Halo_Data[j].M_Mean200);
+      printf("\t M_Crit200:%f\n",Halo_Data[j].M_Crit200);
+      printf("\t M_TopHat:%f\n",Halo_Data[j].M_TopHat);
+      printf("\t Pos:%f,%f,%f\n",Halo_Data[j].Pos[0],Halo_Data[j].Pos[1],Halo_Data[j].Pos[2]);
+      printf("\t Vel:%f,%f,%f\n",Halo_Data[j].Vel[0],Halo_Data[j].Vel[1],Halo_Data[j].Vel[2]);
+      printf("\t VelDisp:%f\n",Halo_Data[j].VelDisp);
+      printf("\t Vmax:%f\n",Halo_Data[j].Vmax);
+      printf("\t Spin:%f,%f,%f\n",Halo_Data[j].Spin[0],Halo_Data[j].Spin[1],Halo_Data[j].Spin[2]);
+      printf("\t MostBoundID:%lld\n",Halo_Data[j].MostBoundID);
+      printf("\t SnapNum:%d\n",Halo_Data[j].SnapNum);
+      printf("\t Filenr:%d\n",Halo_Data[j].Filenr);
+      printf("\t SubhaloIndex:%d\n",Halo_Data[j].SubhaloIndex);
+      printf("\t SubHalfMass:%f\n",Halo_Data[j].SubHalfMass);
     }
 #ifdef PARALLEL
   printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
