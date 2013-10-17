@@ -116,7 +116,7 @@ void load_tree_table(int filenr)
       TreeFirstHalo[0] = 0;
       for(j=0;j<Ntrees;j++)
 	{
-	  printf("Tree:%d => %d halos\n",j,TreeNHalos);
+	  printf("Tree:%d => %d halos\n",j,TreeNHalos[j]);
 	}
     }
   /*Define a variable containing the number you have to jump to
