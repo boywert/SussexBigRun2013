@@ -211,6 +211,7 @@ void SAM(int filenr)
        * (as a means to reduce peak memory usage) */
       for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)    
         {
+	  printf("snapnum = %d\n",snapnum);
 #ifdef MCMC
     	  /* read the appropriate parameter list for current snapnum
     	   * into the parameter variables to be used in construct_galaxies */
@@ -221,8 +222,13 @@ void SAM(int filenr)
 #endif
 
     	  for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
+	    {
     		if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
-    			construct_galaxies(filenr, treenr, halonr);
+		  {
+		    printf("Construct galaxies %d, %d, %d\n",filenr,treenr,halonr);
+		    construct_galaxies(filenr, treenr, halonr);
+		  }
+	    }
         }
 
       /* output remaining galaxies as needed */
