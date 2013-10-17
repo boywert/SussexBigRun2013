@@ -8,13 +8,12 @@ int main()
   FILE *fp;
   firstsnap = 40;
   nhalopertree = 61-firstsnap+1;
-  ntrees = 1;
+  ntrees = 10;
   nhalos = ntrees*nhalopertree;
   sample.Len = 1000;
   sample.M_Mean200 = 0.0;
   sample.M_Crit200 = 100.;
   sample.M_TopHat = 0.0;
-  sample.Pos[0] = 1.0;
   sample.Pos[1] = 1.0;
   sample.Pos[2] = 1.0;
   sample.Vel[0] = 0.0;
@@ -42,6 +41,7 @@ int main()
     }
   for(j=0;j<ntrees;j++)
     {
+      sample.Pos[0] = 1.0*j;
       for(i=61;i>=firstsnap;i--)
   	{
   	  sample.Descendant = i-61-1;
