@@ -49,6 +49,7 @@ int main()
 	  printf("firstprog = %d\n",sample.FirstProgenitor);
   	  sample.NextProgenitor = -1;
   	  sample.FirstHaloInFOFgroup = 61-i+j*nhalopertree;
+	  if(i==firstsnap) sample.FirstProgenitor = -1
   	  sample.NextHaloInFOFgroup = -1;
   	  sample.SnapNum = i;
   	  sample.FileNr = 0;
