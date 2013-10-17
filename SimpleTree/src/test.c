@@ -31,6 +31,14 @@ int main()
   fwrite (&(nhalos),1, sizeof(int), fp);
   for(j=0;j<ntrees;j++)
     {
+      fwrite (&(nhalopertree),1, sizeof(int), fp);
+    }
+  for(j=0;j<ntrees+2;j++)
+    {
+      fwrite (&(nhalopertree),1, sizeof(int), fp);
+    }
+  for(j=0;j<ntrees;j++)
+    {
       for(i=61;i>=firstsnap;i--)
   	{
   	  sample.Descendant = i-61-1;
