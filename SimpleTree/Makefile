@@ -21,8 +21,8 @@ SRCS += $(SRCDIR)/cosmology.h $(SRCDIR)/cosmology.c
 SRCS += $(SRCDIR)/descendant.h $(SRCDIR)/descendant.c
 SRCS += $(SRCDIR)/MPI_distribute.h $(SRCDIR)/MPI_distribute.c
 
-MAINSRCS += SRCS
-TESTSRCS += SRCS
+MAINSRCS += $(SRCS)
+TESTSRCS += $(SRCS)
 OPT = 
 OPT += -DCUBEP3M #enable domains in cubep3m
 #OPT += -DTOPLEVELONLY #use only toplevel halos
