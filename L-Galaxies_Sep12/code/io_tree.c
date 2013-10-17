@@ -148,7 +148,7 @@ void load_tree_table(int filenr)
       printf("\t Spin:%f,%f,%f\n",Halo_Data[j].Spin[0],Halo_Data[j].Spin[1],Halo_Data[j].Spin[2]);
       printf("\t MostBoundID:%lld\n",Halo_Data[j].MostBoundID);
       printf("\t SnapNum:%d\n",Halo_Data[j].SnapNum);
-      printf("\t Filenr:%d\n",Halo_Data[j].Filenr);
+      printf("\t FileNr:%d\n",Halo_Data[j].FileNr);
       printf("\t SubhaloIndex:%d\n",Halo_Data[j].SubhaloIndex);
       printf("\t SubHalfMass:%f\n",Halo_Data[j].SubHalfMass);
     }
