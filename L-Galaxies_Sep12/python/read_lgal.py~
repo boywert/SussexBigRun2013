@@ -1,0 +1,176 @@
+import numpy
+
+struct GALAXY_OUTPUT
+{
+#ifdef NO_PROPS_OUTPUTS
+#ifdef GALAXYTREE
+  long long GalID;		// ID of galaxy, unique within simulation and SAM run.
+#endif
+#endif
+#ifndef NO_PROPS_OUTPUTS
+#ifdef GALAXYTREE
+  long long GalID; /** ID of galaxy, unique within simulation and SAM run.*/
+  long long HaloID; // Unique ID of MPA halo containing this galaxy
+#endif
+#ifdef MBPID
+  long long MostBoundID; // Most bound particle at centre of subhalo last associated with this galaxy.  Put here as want all 8-byte blocks together at top of output record.
+#endif
+#ifdef GALAXYTREE
+  long long FirstProgGal;	// Main progenitor of this galaxy. Also the first progenitor in a linked list representation of the merger tree.
+  long long NextProgGal;	// Next progenitor of this galaxy in linked list representation of merger tree
+  long long LastProgGal;	// Galaxies with id between this galaxyId and this lastProgenitorId form the merger tree rooted in this galaxy.
+  long long FOFCentralGal;	// TODO has been coded, but that code must be tested.
+  long long FileTreeNr;
+  long long DescendantGal;	// Pointer to the descendant of this galaxy in its merger tree; -1 if there is no descendant
+  long long MainLeafId;
+  long long TreeRootId;
+  long long SubID;
+  long long MMSubID; // fofId, the subhaloid of the subhalo at the center of the fof group
+  int   PeanoKey; // Peano-Hilbert key, (bits=8), for position in 500/h Mpc box
+  float Redshift; // redshift of the snapshot where this galaxy resides
+#endif
+  int   Type; // Galaxy type: 0 for central galaxies of a main halo, 1 for central galaxies in sub-halos, 2 for satellites without halo.
+#ifndef GALAXYTREE
+  int   HaloIndex;
+ // long long SubID;
+ // long long FirstHaloInFOFgroup;
+#endif
+#ifdef HALOPROPERTIES
+  float HaloM_Mean200, HaloM_Crit200, HaloM_TopHat;
+  float HaloPos[3];
+  float HaloVel[3];
+  float HaloVelDisp;
+  float HaloVmax;
+  float HaloSpin[3];
+#endif
+  int   SnapNum; // The snapshot number where this galaxy was identified.
+  float LookBackTimeToSnap; //The time from a given snapshot to z=0, in years
+  float CentralMvir; // 10^10/h Msun virial mass of background (FOF) halo containing this galaxy
+  /* properties of subhalo at the last time this galaxy was a central galaxy */
+  float Pos[3]; // 1/h Mpc - Galaxy Positions
+  float Vel[3]; // km/s - Galaxy Velocities
+  int   Len;   
+  float Mvir; // 10^10/h Msun - Virial mass of the subhalo the galaxy is/was the center of.
+  float Rvir; // Mpc/h - Virial radius of the subhalo the galaxy is/was the center of.
+  float Vvir; // km/s -	Virial velocity of the subhalo the galaxy is/was the center of.
+  float Vmax; // km/s - Maximum rotational velocity of the subhalo, or the last value for type 2's galaxies.
+  float GasSpin[3]; // Gas Spin
+  float StellarSpin[3]; // Stellar Spin
+  float InfallVmax; // km/s - Vmax at infall
+  int InfallSnap; // Snapnum at infall
+  float HotRadius; //Mpc/h - Radius of the hot gas
+  /*dynamical friction merger time*/
+  float OriMergTime;
+  float MergTime;
+  float DistanceToCentralGal[3];
+  /* baryonic reservoirs */
+  float ColdGas; // 10^10/h Msun - Mass in cold gas.
+  float BulgeMass; // 10^10/h Msun - Mass in the bulge
+  float DiskMass;
+  float HotGas; // 10^10/h Msun - Mass in hot gas
+  float EjectedMass; // 10^10/h Msun - Mass in ejected gas
+  float BlackHoleMass; // 10^10/h Msun - Mass in black hole
+  float BlackHoleGas; // 10^10/h Msun - Mass in BH accretion disk
+  /* ICL magnitude and mass*/
+  float ICM;            // mass in intra-cluster stars, for type 0,1
+#ifdef METALS
+  struct metals MetalsColdGas; // 10^10/h Msun -	Mass in metals in cold gas.
+  struct metals MetalsBulgeMass; // 10^10/h Msun -	Mass in metals in the bulge
+  struct metals MetalsDiskMass; // 10^10/h Msun -       Mass in metals in the disk
+  struct metals MetalsHotGas; // 10^10/h Msun -	Mass in metals in the hot gas
+  struct metals MetalsEjectedMass; // 10^10/h Msun -	Mass in metals in the ejected gas
+  struct metals MetalsICM;  // total mass in metals in intra-cluster stars, for type 0,1
+#ifdef METALS_SELF
+  struct metals MetalsHotGasSelf; // hot gas metals that come from self
+#endif
+#else
+  float MetalsColdGas; // 10^10/h Msun -	Mass in metals in cold gas.
+  float MetalsBulgeMass; // 10^10/h Msun -	Mass in metals in the bulge
+  float MetalsDiskMass; // 10^10/h Msun -       Mass in metals in the disk
+  float MetalsHotGas; // 10^10/h Msun -	Mass in metals in the hot gas
+  float MetalsEjectedMass; // 10^10/h Msun -	Mass in metals in the ejected gas
+  float MetalsICM;  // total mass in metals in intra-cluster stars, for type 0,1
+#ifdef METALS_SELF
+  float MetalsHotGasSelf; // hot gas metals that come from self
+#endif
+#endif
+  /* misc */
+  float Sfr;
+  float SfrBulge;
+  float XrayLum;
+  float BulgeSize;
+  float StellarDiskRadius;
+  float GasDiskRadius;
+  float CosInclination; // cos(angle) between galaxy spin and the z-axis
+  int   DisruptOn; // 0: galaxy merged onto merger center; 1: galaxy was disrupted before merging onto its descendant, matter went into ICM of merger center
+#ifdef MERGE01
+  int   MergeOn;   // 0: standard delucia-like merger behaviour for type 1 galaxy; 1: galaxy mass > halo mass, separate dynamical friction time calculated ....
+#endif  
+  float CoolingRadius;  // Q: store this ? (was stored in Delucia20006a)
+  float QuasarAccretionRate;
+  float RadioAccretionRate;
+#endif // NO_PROPS_OUTPUTS
+
+  /* magnitudes in various bands */
+#ifdef OUTPUT_REST_MAGS
+  float Mag[NMAG]; // rest-frame absolute mags
+  float MagBulge[NMAG]; // rest-frame absolute mags for the bulge
+  float MagDust[NMAG]; // dust corrected, rest-frame absolute mags
+  float MassWeightAge;
+#ifdef  POST_PROCESS_MAGS
+  float rbandWeightAge;
+#endif
+  #ifdef ICL
+  float MagICL[NMAG];          // rest-frame absolute mags of ICL
+#endif
+#endif
+
+#ifdef OUTPUT_OBS_MAGS
+  float ObsMag[NMAG]; // obs-frame absolute mags
+  float ObsMagBulge[NMAG]; // obs-frame absolute mags for the bulge
+  float ObsMagDust[NMAG]; // dust-corrected, obs-frame absolute mags
+#ifdef ICL
+  float ObsMagICL[NMAG];  // observer-frame absolute mags for intra-cluster light
+#endif
+#ifdef OUTPUT_MOMAF_INPUTS
+  float dObsMag[NMAG];
+  float dObsMagBulge[NMAG];
+  float dObsMagDust[NMAG];
+#ifdef ICL
+  float dObsMagICL[NMAG];       
+#endif	//
+#endif	//OUTPUT_MOMAF_INPUTS
+#endif	//OUTPUT_OBS_MAGS
+
+#ifdef STAR_FORMATION_HISTORY
+  int sfh_ibin; //Index of highest bin currently in use
+  float sfh_time[SFH_NBIN]; //time to present at the middle of bin in years.
+  float sfh_dt[SFH_NBIN]; //time width of bin in years.
+  float sfh_DiskMass[SFH_NBIN];
+  float sfh_BulgeMass[SFH_NBIN];
+  float sfh_ICM[SFH_NBIN];
+#ifdef METALS
+  struct metals sfh_MetalsDiskMass[SFH_NBIN]; // Metals locked up in stars in disk.
+  struct metals sfh_MetalsBulgeMass[SFH_NBIN]; // Metals locked up in stars in bulge.
+  struct metals sfh_MetalsICM[SFH_NBIN]; // Metals locked up in stars in ICM.
+#else
+  float sfh_MetalsDiskMass[SFH_NBIN]; // Metals locked up in stars in disk.
+  float sfh_MetalsBulgeMass[SFH_NBIN]; //Metals locked up in stars in bulge.
+  float sfh_MetalsICM[SFH_NBIN]; // Metals locked up in stars in ICM.
+#endif
+#endif //STAR_FORMATION_HISTORY
+
+#ifdef YIELDS
+  struct elements sfh_ElementsDiskMass[SFH_NBIN];
+  struct elements sfh_ElementsBulgeMass[SFH_NBIN];
+  struct elements sfh_ElementsICM[SFH_NBIN];
+
+  //float DiskMass_elements[ELEMENT_NUM];
+  struct elements DiskMass_elements;
+  struct elements BulgeMass_elements;
+  struct elements ColdGas_elements;
+  struct elements HotGas_elements;
+  struct elements ICM_elements;
+  struct elements EjectedMass_elements;
+#endif
+};
