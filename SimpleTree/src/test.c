@@ -45,11 +45,11 @@ int main()
     {
       for(i=61;i>=firstsnap;i--)
   	{
-  	  sample.Descendant = 61-i-1+j*nhalopertree;
+  	  sample.Descendant = 61-i-1;
 	  if(i==61) sample.Descendant = -1;
-  	  sample.FirstProgenitor = 61-i+1+j*nhalopertree;
+  	  sample.FirstProgenitor = 61-i+1+j;
   	  sample.NextProgenitor = -1;
-  	  sample.FirstHaloInFOFgroup = 61-i+j*nhalopertree;
+  	  sample.FirstHaloInFOFgroup = 61-i;
 	  if(i==firstsnap) sample.FirstProgenitor = -1;
   	  sample.NextHaloInFOFgroup = -1;
   	  sample.SnapNum = i;
