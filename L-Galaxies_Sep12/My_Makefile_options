@@ -7,7 +7,7 @@ OPT += -DCOMPUTE_OBS_MAGS
 OPT += -DOUTPUT_OBS_MAGS
 OPT += -DM05
 
-OPT += -DMRII                # run on MS-II
+#OPT += -DMRII                # run on MS-II
 
 #OPT += -DDEBUG
 #OPT += -DMASS_CHECKS
