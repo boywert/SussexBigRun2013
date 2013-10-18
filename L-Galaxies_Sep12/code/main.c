@@ -211,7 +211,7 @@ void SAM(int filenr)
        * (as a means to reduce peak memory usage) */
       for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)    
         {
-	  printf("snapnum = %d\n",snapnum);
+	  //printf("snapnum = %d\n",snapnum);
 #ifdef MCMC
     	  /* read the appropriate parameter list for current snapnum
     	   * into the parameter variables to be used in construct_galaxies */
