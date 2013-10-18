@@ -14,7 +14,6 @@ int main()
   sample.M_Mean200 = 100.0;
   sample.M_Crit200 = 100.;
   sample.M_TopHat = 100.0;
-  sample.Pos[0] = 1.0;
   sample.Pos[1] = 1.0;
   sample.Pos[2] = 1.0;
   sample.Vel[0] = 0.0;
@@ -43,6 +42,7 @@ int main()
     }
   for(j=0;j<ntrees;j++)
     {
+      sample.Pos[0] = 10.0*j;
       for(i=61;i>=firstsnap;i--)
   	{
   	  sample.Descendant = 61-i-1;
