@@ -16,7 +16,7 @@ def properround(number,digits):
             strout = strnum[0:(len(strnum)-1)]
     else:
         strfmt = "%."+str(digits)+"f"
-        strnum = strfmt % (number)
+        strout = strfmt % (number)
     return strout
 def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
