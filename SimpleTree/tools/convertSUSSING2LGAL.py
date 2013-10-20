@@ -45,7 +45,7 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
                 halocat[hid] = {}
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
                 halocat[hid]["Len"] = halo[4]
-                halocat[hid]["Pos"] = (halo[5],halo[6],halo[7])*kpc2Mpc
+                halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
@@ -53,7 +53,7 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
                 total_energy = (halo[38] + halo[39])*Msun2Gadget
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
-
+x
 def readSussingtree(SUSSINGtree):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
