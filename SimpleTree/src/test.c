@@ -4,7 +4,7 @@
 int main()
 {
   struct Lgalaxy_halo_data sample;
-  int i,j,firstsnap,nhalopertree,ntrees,nhalos;
+  int i,j,firstsnap,nhalopertree,ntrees,nhalos,number;
   FILE *fp;
   firstsnap = 40;
   nhalopertree = 61-firstsnap+1;
@@ -27,15 +27,19 @@ int main()
   sample.MostBoundID = 0;
   printf("struct's size = %d\n",sizeof(struct Lgalaxy_halo_data));
   fp = fopen("treedata/trees_061.0","wb+");
-  fwrite (&ntrees,1, sizeof(int), fp);
+  number = 1
+  fwrite (&number,1, sizeof(int), fp);
   printf("Ntrees = %d\n",ntrees);
-  fwrite (&nhalos,1, sizeof(int), fp);
+  number = 44;
+  fwrite (&number,1, sizeof(int), fp);
   printf("Nhalos = %d\n",nhalos);
   for(j=0;j<ntrees;j++)
     {
-      fwrite (&nhalopertree,1, sizeof(int), fp);
+      //fwrite (&nhalopertree,1, sizeof(int), fp);
       printf("Tree:%d Nhalos = %d\n",j,nhalopertree);
     }
+  number = nhalopertree*2;
+  fwrite (&number,1, sizeof(int), fp);
   for(j=0;j<ntrees+2;j++)
     {
       //fwrite (&j, 1, sizeof(int), fp);
