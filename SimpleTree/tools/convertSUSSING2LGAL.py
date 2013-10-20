@@ -7,6 +7,7 @@ SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
 global halocat
+
 def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
@@ -46,6 +47,8 @@ def readSussingtree(SUSSINGtree):
         if(i >= 3):
             col = item.split()
             if(count == 0):
+                if(col[0] == "END"):
+                    return
                 if(len(col) != 2):
                     print "line",i,"has error"
                     exit()
