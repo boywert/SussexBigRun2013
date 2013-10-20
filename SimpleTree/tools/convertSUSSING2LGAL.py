@@ -10,6 +10,9 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     halocat = {}
     for time in timesnap:
         filename = "%s/%s_%03d.z%3.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2])
-        print filename
+        print "Reading "+filename
+        data = numpy.loadtxt(filename)
+        for halo in data:
+            print halo
 
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
