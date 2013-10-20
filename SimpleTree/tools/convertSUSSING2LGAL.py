@@ -38,12 +38,30 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
 def readSussingtree(SUSSINGtree):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
+    count = 0;
     for (i,item) in enumerate(line):
         if(i == 2):
             totalhalo = long(item)
             print "tree",totalhalo,"halocat",len(halocat)
+        if(i >= 3):
+            col = item.split()
+            if(count == 0):
+                if(len(col) != 2):
+                    print "line",i,"has error"
+                    exit()
+                else:
+                    haloid = col[0]
+                    nprog = long(col[1])
+                    count = nprog
+            else:
+                if(len(col) != 1):
+                    print "line",i,"has error"
+                    exit()
+                else:
+                    progid = long(col[0])
+                    count--
 
-    close(f)
-
+                
+            
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
 readSussingtree(SUSSINGtree)
