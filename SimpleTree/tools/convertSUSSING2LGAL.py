@@ -59,7 +59,7 @@ def readSussingtree(SUSSINGtree):
                     exit()
                 else:
                     progid = long(col[0])
-                    count--
+                    count -= 1
 
                 
             
