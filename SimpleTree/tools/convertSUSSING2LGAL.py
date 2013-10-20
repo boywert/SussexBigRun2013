@@ -106,6 +106,6 @@ def readSussingtree(SUSSINGtree):
 
                 
             
-readAHFascii(SNAPfile,AHFdir,AHFprefix)
+readAHFascii()
 makeStuctree()
 readSussingtree(SUSSINGtree)
