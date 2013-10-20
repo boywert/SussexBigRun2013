@@ -23,6 +23,12 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     halocat = {}
     for time in timesnap:
         filename = "%s/%s_%03d.z%.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2])
+        if os.path.isfile(filename) == False:
+            filename = "%s/%s_%03d.z%.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2]+0.001)
+        if os.path.isfile(filename) == False:
+            filename = "%s/%s_%03d.z%.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2]-0.001)
+        if os.path.isfile(filename) == False:
+            exit()
         print "Reading "+filename
         stat = os.stat(filename)
         print stat.st_size
