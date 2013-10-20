@@ -50,7 +50,7 @@ int main()
   	  sample.FirstProgenitor = 61-i+1+j*nhalopertree;
   	  sample.NextProgenitor = -1;
   	  sample.FirstHaloInFOFgroup = 61-i;
-	  if(j==1 && i==61) sample.FirstHaloInFOFgroup = 0
+	  if(j==1 && i==61) sample.FirstHaloInFOFgroup = 0;
 	  if(i==firstsnap) sample.FirstProgenitor = -1;
   	  sample.NextHaloInFOFgroup = -1;
 	  if(j==0 && i==61) sample.NextHaloInFOFgroup = nhalopertree;
