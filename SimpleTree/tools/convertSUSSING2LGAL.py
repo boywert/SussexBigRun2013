@@ -32,6 +32,7 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
         if(stat.st_size > 384):
             data = numpy.loadtxt(filename)
             for halo in data:
-                print halo
+                halocat[halo[0]] = {}
+                halocat[halo[0]]["Mvir"] = halo[3]
 
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
