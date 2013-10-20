@@ -1,10 +1,10 @@
 import numpy
 import os
 
-AHFdir = "/export/data/virgo/SUSSING2013_DATA/datasetI"
+AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = ""
-SNAPfile = "/export/data/virgo/SUSSING2013_DATA/datasetI/data_snaplist.txt"
+SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 
 def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
@@ -34,5 +34,5 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
             for halo in data:
                 halocat[halo[0]] = {}
                 halocat[halo[0]]["Mvir"] = halo[3]
-
+                halocat[halo[0]]["Len"] = int(halo[2])
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
