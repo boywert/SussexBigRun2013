@@ -6,7 +6,8 @@ AHFprefix = "62.5_dm"
 SUSSINGtree = ""
 SNAPfile = "/export/data/virgo/SUSSING2013_DATA/datasetI/data_snaplist.txt"
 def properround(number,digits):
-    strnum = str(round(number,digits+1))
+    strfmt = "%."+(digits+1)+"f"
+    strnum = strfmt % (number)
     if strnum[len(strnum)-1] == "5":
         if long(strnum[len(strnum)-2])%2 == 0:
             strout = strnum[0:(len(strnum)-1)]
@@ -14,7 +15,8 @@ def properround(number,digits):
             strnum[len(strnum)-2] = str(long(strnum[len(strnum)-2])+1)
             strout = strnum[0:(len(strnum)-1)]
     else:
-        strout = str(round(number,digits))
+        strfmt = "%."+(digits)+"f"
+        strnum = strfmt % (number)
     return strout
 def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
