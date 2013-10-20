@@ -7,8 +7,11 @@ SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
 global halocat
+global SNAPfile
+global AHFdir
+global AHFprefix
 
-def readAHFascii(SNAPfile,AHFdir,AHFprefix):
+def readAHFascii():
     G = 6.67384e-11 # m^3/(kgs^2)
     m2Mpc = 1./3.08567758e22
     m2km = 0.001
@@ -43,6 +46,7 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
             for halo in data:
                 hid = long(halo[0])
                 halocat[hid] = {}
+                halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
                 halocat[hid]["Len"] = halo[4]
                 halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
@@ -53,6 +57,24 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
                 total_energy = (halo[38] + halo[39])*Msun2Gadget
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
+                halocat[hid]["FirstProgenitor"] = -1
+                halocat[hid]["NextProgenitor"] = -1
+                halocat[hid]["Descendant"] = -1
+                halocat[hid]["HostHalo"] = long(halo[1])
+                if(halocat[hid]["HostHalo"] == 0):
+                    halocat[hid]["HostHalo"] = -1
+                halocat[hid]["NextHalo"] = -1
+                halocat[hid]["SnapNum"] = long(time[0])
+
+def makeStuctree():
+    timesnap = numpy.loadtxt(SNAPfile)
+    for halo in halocat:
+        if(halo["HostHalo"] > -1):
+            hostid = halo["HostHalo"]
+            cursub = hostid
+            while cursub > -1:
+                cursub = halocat[cursub]["NextHalo"]
+            halocat[cursub]["NextHalo"] = halo["ID"]
 
 def readSussingtree(SUSSINGtree):
     f = open(SUSSINGtree)
@@ -85,4 +107,5 @@ def readSussingtree(SUSSINGtree):
                 
             
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
+makeStuctree()
 readSussingtree(SUSSINGtree)
