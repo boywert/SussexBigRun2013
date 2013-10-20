@@ -20,7 +20,7 @@ LastFile              0
 %-------------------------------------------------
 
 OutputDir           ./
-SimulationDir       ../SimpleTree/ 
+SimulationDir         /export/data/virgo/Boyd/Millgas/62.5_SF_0.2/
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
 %----------- Unscaled MS-7 -----------------------

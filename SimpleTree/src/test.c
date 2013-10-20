@@ -46,7 +46,7 @@ int main()
     }
   for(j=0;j<ntrees;j++)
     {
-      sample.Pos[0] = 10.0*j;
+      sample.Pos[0] = 0.5*j;
       for(i=61;i>=firstsnap;i--)
   	{
   	  sample.Descendant = 61-i-1+j*nhalopertree;
