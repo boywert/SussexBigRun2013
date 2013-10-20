@@ -26,10 +26,10 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
         print "checking "+filename
         if os.path.isfile(filename) == False:
             print "checking "+filename
-            filename = "%s/%s_%03d.z%.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2]+0.001)
+            filename[len(filename)-1] =  str(long(filename[len(filename)-1]) + 1)
         if os.path.isfile(filename) == False:
             print "checking "+filename
-            filename = "%s/%s_%03d.z%.3f.AHF_halos" % (AHFdir, AHFprefix, time[0], time[2]-0.001)
+            filename[len(filename)-1] =  str(long(filename[len(filename)-1]) - 2)
         if os.path.isfile(filename) == False:
             print "checking "+filename
             exit()
