@@ -8,7 +8,7 @@ int main()
   FILE *fp;
   firstsnap = 40;
   nhalopertree = 61-firstsnap+1;
-  ntrees = 5;
+  ntrees = 2;
   nhalos = ntrees*nhalopertree;
   sample.Len = 1000;
   sample.M_Mean200 = 100.0;
@@ -45,13 +45,15 @@ int main()
       sample.Pos[0] = 10.0*j;
       for(i=61;i>=firstsnap;i--)
   	{
-  	  sample.Descendant = 61-i-1;
+  	  sample.Descendant = 61-i-1+j*nhalopertree;
 	  if(i==61) sample.Descendant = -1;
-  	  sample.FirstProgenitor = 61-i+1;
+  	  sample.FirstProgenitor = 61-i+1+j*nhalopertree;
   	  sample.NextProgenitor = -1;
   	  sample.FirstHaloInFOFgroup = 61-i;
+	  if(j==1 && i==61) sample.FirstHaloInFOFgroup = 0
 	  if(i==firstsnap) sample.FirstProgenitor = -1;
   	  sample.NextHaloInFOFgroup = -1;
+	  if(j==0 && i==61) sample.NextHaloInFOFgroup = nhalopertree;
   	  sample.SnapNum = i;
   	  sample.FileNr = 0;
   	  sample.SubhaloIndex = sample.FirstHaloInFOFgroup;
