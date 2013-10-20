@@ -28,9 +28,10 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
             exit()
         print "Reading "+filename
         stat = os.stat(filename)
-        print stat.st_size
-        #data = numpy.loadtxt(filename)
-        #for halo in data:
-        #    print halo
+        #print stat.st_size
+        if(stat.st_size > 384):
+            data = numpy.loadtxt(filename)
+            for halo in data:
+                print halo
 
 readAHFascii(SNAPfile,AHFdir,AHFprefix)
