@@ -35,4 +35,5 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
                 halocat[halo[0]] = {}
                 halocat[halo[0]]["Mvir"] = halo[3]
                 halocat[halo[0]]["Len"] = int(halo[2])
-readAHFascii(SNAPfile,AHFdir,AHFprefix)
+    return halocat
+halocat = readAHFascii(SNAPfile,AHFdir,AHFprefix)
