@@ -22,16 +22,16 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
     halocat = {}
     for time in timesnap:
-        zstring = "%.3" % (time[2])
+        zstring = "%.3f" % (time[2])
         filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
         print "checking "+filename
         if os.path.isfile(filename) == False:
             print "checking "+filename
-            zstring = "%.3" % (time[2]+0.001)
+            zstring = "%.3f" % (time[2]+0.001)
             filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
         if os.path.isfile(filename) == False:
             print "checking "+filename
-            zstring = "%.3" % (time[2]-0.001)
+            zstring = "%.3f" % (time[2]-0.001)
             filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
         if os.path.isfile(filename) == False:
             print "checking "+filename
