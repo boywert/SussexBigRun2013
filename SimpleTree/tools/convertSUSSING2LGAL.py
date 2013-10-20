@@ -7,7 +7,7 @@ SUSSINGtree = ""
 SNAPfile = "/export/data/virgo/SUSSING2013_DATA/datasetI/data_snaplist.txt"
 def properround(number,digits):
     strnum = round(number,digits+1)
-    if strnum[len(strnum)-1] = "5":
+    if strnum[len(strnum)-1] == "5":
         if long(strnum[len(strnum)-2])%2 == 0:
             strout = strnum[0:(len(strnum)-1)]
         else:
