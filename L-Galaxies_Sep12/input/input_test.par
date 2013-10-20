@@ -13,7 +13,7 @@ McFile		      ./input/Mc.txt
 CoolFunctionsDir      ./CoolFunctions/
 
 FirstFile             0
-LastFile              0
+LastFile              7
 
 %-------------------------------------------------
 %----- Simulation input/output files  ------------
