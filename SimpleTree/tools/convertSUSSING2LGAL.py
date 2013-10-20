@@ -104,8 +104,3 @@ def readSussingtree(SUSSINGtree):
                     progid = long(col[0])
                     count -= 1
 
-                
-            
-readAHFascii()
-makeStuctree()
-readSussingtree(SUSSINGtree)
