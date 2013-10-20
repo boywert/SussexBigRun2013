@@ -3,12 +3,12 @@ import os
 
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
-SUSSINGtree = ""
+SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-
+halocat = {}
+global halocat
 def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
-    halocat = {}
     for time in timesnap:
         zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
@@ -34,6 +34,15 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
             for halo in data:
                 halocat[halo[0]] = {}
                 halocat[halo[0]]["Mvir"] = halo[3]
-                halocat[halo[0]]["Len"] = int(halo[2])
-    return halocat
-halocat = readAHFascii(SNAPfile,AHFdir,AHFprefix)
+
+def readSussingtree(SUSSINGtree):
+    f = open(SUSSINGtree)
+    line = f.read().splitlines()
+    for (i,item) in enumerate(line):
+        if(i == 2):
+            totalhalo = long(item)
+            print "tree",totalhalo,"halocat",len(halocat)
+
+    close(f)
+
+readAHFascii(SNAPfile,AHFdir,AHFprefix)
