@@ -27,7 +27,7 @@ int main()
   sample.MostBoundID = 0;
   printf("struct's size = %d\n",sizeof(struct Lgalaxy_halo_data));
   fp = fopen("treedata/trees_061.0","wb+");
-  number = 1
+  number = 1;
   fwrite (&number,1, sizeof(int), fp);
   printf("Ntrees = %d\n",ntrees);
   number = 44;
