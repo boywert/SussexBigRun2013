@@ -1,15 +1,17 @@
 import numpy
 import os
 import math
+
+global halocat
+global SNAPfile
+global AHFdir
+global AHFprefix
+
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
-global halocat
-global SNAPfile
-global AHFdir
-global AHFprefix
 
 def readAHFascii():
     G = 6.67384e-11 # m^3/(kgs^2)
