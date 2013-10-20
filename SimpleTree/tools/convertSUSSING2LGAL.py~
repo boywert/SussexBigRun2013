@@ -9,5 +9,3 @@ def readAHFascii(SNAPfile,AHFdir,AHFprefix):
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         print time
-
-readAHFascii(SNAPfile,AHFdir,AHFprefix)
