@@ -139,7 +139,7 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
-def outputtrees(halocat)
+def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
     print "start outputting trees"
