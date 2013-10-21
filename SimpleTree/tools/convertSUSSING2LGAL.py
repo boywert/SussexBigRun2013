@@ -82,7 +82,7 @@ def readAHFascii():
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
     for haloc in halocat:
-        print haloc
+        #print haloc
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
         upperhost = halo["HostHalo"]
@@ -139,6 +139,7 @@ def readSussingtree(SUSSINGtree,halocat):
     ntrees = 0
     nhalopertree = {}
     for haloid in halocat:
+        print haloid
         halo = halocat[haloid]
         curid = haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
