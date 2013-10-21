@@ -148,7 +148,7 @@ def outputtrees(halocat):
     print "start outputting trees"
     for haloid in halocat.iterkeys():
         halo = halocat[haloid]
-        if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
+        if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
             print haloid
             curid = haloid
             while curid > -1:
