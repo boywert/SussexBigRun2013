@@ -107,8 +107,6 @@ def readSussingtree(SUSSINGtree,halocat):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
-    for haloc in halocat:
-        print haloc
     for (i,item) in enumerate(line):
         if(i == 2):
             totalhalo = long(item)
@@ -134,12 +132,15 @@ def readSussingtree(SUSSINGtree,halocat):
                     progid = long(col[0])
                     if(nprog==count):
                         halocat[haloid]["FirstProgenitor"] = progid
+                        print haloid,"=>",progid
                     else:
                         halocat[prevhalo]["NextProgenitor"] = progid
+                        print prevhalo,"=>",progid
                     prevhalo = progid
                     count -= 1
     ntrees = 0
     nhalopertree = {}
+    print "start outputting trees"
     for haloc in halocat:
         print haloid
         halo = halocat[haloc]
