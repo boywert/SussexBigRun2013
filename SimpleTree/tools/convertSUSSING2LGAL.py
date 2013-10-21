@@ -142,6 +142,7 @@ def readSussingtree(SUSSINGtree,halocat):
 def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
+    print halocat
     for haloid in halocat:
         halo = halocat[haloid]
         curid = haloid
@@ -149,8 +150,8 @@ def outputtrees(halocat):
             while curid > -1:
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
-    return 1
+
 
 halo = readAHFascii()
-halo = readSussingtree(SUSSINGtree,halo)
-printout = outputtrees(halo)
+tree = readSussingtree(SUSSINGtree,halo)
+outputtrees(tree)
