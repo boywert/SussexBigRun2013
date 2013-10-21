@@ -87,6 +87,7 @@ def makeStuctree(halocat):
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
         upperhost = halo["HostHalo"]
+        ref = upperhost
         while upperhost > -1:
             ref = upperhost
             upperhost = halocat[upperhost]["HostHalo"]
