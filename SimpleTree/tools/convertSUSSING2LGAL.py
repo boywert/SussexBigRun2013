@@ -145,7 +145,7 @@ def outputtrees(halocat):
     nhalopertree = {}
     print "start outputting trees"
     for haloc in halocat.iterkeys():
-        print haloid
+        print haloc
         halo = halocat[haloc]
         curid = haloc
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
@@ -153,7 +153,7 @@ def outputtrees(halocat):
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
 
-halo = readAHFascii()
-ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf)
+#halo = readAHFascii()
+#ahf = readSussingtree(SUSSINGtree,halo)
+#outputtrees(ahf)
 
