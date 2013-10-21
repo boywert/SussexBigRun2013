@@ -105,7 +105,7 @@ def makeStuctree():
             halocat[curid]["NextHalo"] = haloc
 
 def readSussingtree(SUSSINGtree):
-    halocat2 = dict(halocat)
+    halocat2 = halocat.copy()
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
