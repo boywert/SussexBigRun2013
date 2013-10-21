@@ -2,7 +2,6 @@ import numpy
 import os
 import math
 
-global halocat
 global SNAPfile
 global AHFdir
 global AHFprefix
@@ -28,8 +27,8 @@ SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
 
-def readAHFascii():
-
+def readAHFascii(halocat):
+    halocat = {}
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         zstring = "%.3f" % (time[2])
@@ -79,19 +78,19 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
+    return halocat
 
-def makeStuctree():
+def makeStuctree(halocat):
     timesnap = numpy.loadtxt(SNAPfile)
     for haloc in halocat:
         halo = halocat[haloc]
-        if(halo["HostHalo"] > -1):
-            hostid = halo["HostHalo"]
-            cursub = hostid
-            while cursub > -1:
-                cursub = halocat[cursub]["NextHalo"]
-            halocat[cursub]["NextHalo"] = halo["ID"]
+        cursub = halo["HostHalo"]
+        while cursub > -1:
+            cursub = halocat[cursub]["NextHalo"]
+        halocat[cursub]["NextHalo"] = haloc
+    return halocat
 
-def readSussingtree(SUSSINGtree):
+def readSussingtree(SUSSINGtree,halocat):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -119,3 +118,4 @@ def readSussingtree(SUSSINGtree):
                     progid = long(col[0])
                     count -= 1
 
+    return halocat
