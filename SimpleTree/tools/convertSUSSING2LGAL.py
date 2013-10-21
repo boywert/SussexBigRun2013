@@ -147,7 +147,7 @@ def outputtrees(halocat):
     nhalopertree = {}
     print "start outputting trees"
     for haloc in halocat.iterkeys():
-        print haloc
+        #print haloc
         halo = halocat[haloc]
         curid = haloc
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
