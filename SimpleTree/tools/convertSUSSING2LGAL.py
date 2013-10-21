@@ -146,11 +146,11 @@ def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
     print "start outputting trees"
-    for haloc in halocat.iterkeys():
-        #print haloc
-        halo = halocat[haloc]
-        curid = haloc
+    for haloid in halocat.iterkeys():
+        halo = halocat[haloid]
+        print haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
+            curid = haloid
             while curid > -1:
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
