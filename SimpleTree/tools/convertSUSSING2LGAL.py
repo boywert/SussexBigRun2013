@@ -140,7 +140,7 @@ def outputtrees(halotree):
     for haloid in halotree:
         halo = halotree[haloid]
         curid = haloid
-        if(halo["SnapNum"] == 61 && halo["MainHalo"] == -1):
+        if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
             while curid > -1:
                 print curid ,"=>", halotree[curid]["NextHalo"]
                 curid = halotree[curid]["NextHalo"]
