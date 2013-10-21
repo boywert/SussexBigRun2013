@@ -83,6 +83,7 @@ def readAHFascii():
 def makeStuctree():
     timesnap = numpy.loadtxt(SNAPfile)
     for halo in halocat:
+        print halo
         if(halo["HostHalo"] > -1):
             hostid = halo["HostHalo"]
             cursub = hostid
