@@ -11,7 +11,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
-global halocat
+
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -79,13 +79,20 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-    makeStuctree()
+    halocat = makeStuctree(halocat)
 
-def makeStuctree():
+def makeStuctree(halocat):
     timesnap = numpy.loadtxt(SNAPfile)
     for haloc in halocat:
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
+        upperhost = halo["HostHalo"]
+        while upperhost > -1:
+            ref = upperhost
+            upperhost = halocat[upperhost]["HostHalo"]
+        if(upperhost != hosthalo):
+            hosthalo = upperhost
+        halocat[haloc]["MainHalo"] = hosthalo
         if(hosthalo > -1):
             cursub = hosthalo
             while cursub > -1:
