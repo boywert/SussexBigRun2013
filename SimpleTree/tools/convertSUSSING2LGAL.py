@@ -81,7 +81,7 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-    for haloc in halocat:
+    for haloc in halocat.iterkeys():
         #print haloc
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
@@ -141,7 +141,7 @@ def readSussingtree(SUSSINGtree,halocat):
     ntrees = 0
     nhalopertree = {}
     print "start outputting trees"
-    for haloc in halocat:
+    for haloc in halocat.iterkeys():
         print haloid
         halo = halocat[haloc]
         curid = haloid
@@ -150,8 +150,7 @@ def readSussingtree(SUSSINGtree,halocat):
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
 
-
-halo = readAHFascii()
+halo = dict(readAHFascii())
 readSussingtree(SUSSINGtree,halo)
 #outputtrees()
 
