@@ -90,7 +90,7 @@ def makeStuctree(halocat):
         while upperhost > -1:
             ref = upperhost
             upperhost = halocat[upperhost]["HostHalo"]
-        if(upperhost != ref):
+        if(hosthalo != ref):
             hosthalo = ref
         halocat[haloc]["MainHalo"] = hosthalo
         if(halocat[haloc]["MainHalo"] > -1):
