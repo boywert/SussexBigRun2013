@@ -79,10 +79,10 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
+    #make substructure relation
     halocat = makeStuctree(halocat)
 
 def makeStuctree(halocat):
-    timesnap = numpy.loadtxt(SNAPfile)
     for haloc in halocat:
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
@@ -90,11 +90,11 @@ def makeStuctree(halocat):
         while upperhost > -1:
             ref = upperhost
             upperhost = halocat[upperhost]["HostHalo"]
-        if(upperhost != hosthalo):
-            hosthalo = upperhost
+        if(upperhost != ref):
+            hosthalo = ref
         halocat[haloc]["MainHalo"] = hosthalo
-        if(hosthalo > -1):
-            cursub = hosthalo
+        if(halocat[haloc]["MainHalo"] > -1):
+            cursub = halocat[haloc]["MainHalo"]
             while cursub > -1:
                 curid = halocat[cursub]["ID"]
                 cursub = halocat[cursub]["NextHalo"]
