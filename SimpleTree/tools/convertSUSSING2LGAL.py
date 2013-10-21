@@ -148,4 +148,4 @@ def outputtrees(halotree):
 
 halo = readAHFascii()
 tree = readSussingtree(SUSSINGtree,halo)
-outputree(tree)
+outputrees(tree)
