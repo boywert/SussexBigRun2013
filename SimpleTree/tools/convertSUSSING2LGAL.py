@@ -56,7 +56,7 @@ def readAHFascii():
             data = numpy.loadtxt(filename)
             for halo in data:
                 hid = long(halo[0])
-                print hid
+                #print hid
                 halocat[hid] = {}
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
@@ -82,7 +82,7 @@ def readAHFascii():
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
     #make substructure relation
-    halocat = makeStuctree(halocat)
+    makeStuctree()
 
 def makeStuctree():
     for haloc in halocat:
