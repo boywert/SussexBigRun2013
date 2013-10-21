@@ -100,6 +100,7 @@ def makeStuctree(halocat):
                 cursub = halocat[cursub]["NextHalo"]
             print "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
+    return halocat
 
 def readSussingtree(SUSSINGtree):
     f = open(SUSSINGtree)
