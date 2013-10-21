@@ -84,10 +84,13 @@ def makeStuctree(halocat):
     timesnap = numpy.loadtxt(SNAPfile)
     for haloc in halocat:
         halo = halocat[haloc]
-        cursub = halo["HostHalo"]
-        while cursub > -1:
-            cursub = halocat[cursub]["NextHalo"]
-        halocat[cursub]["NextHalo"] = haloc
+        hosthalo= halo["HostHalo"]
+        if(hosthalo > -1):
+            cursub = hosthalo
+            while cursub > -1:
+                curid = halocat[cursub]["ID"]
+                cursub = halocat[cursub]["NextHalo"]
+            halocat[curid]["NextHalo"] = haloc
     return halocat
 
 def readSussingtree(SUSSINGtree,halocat):
