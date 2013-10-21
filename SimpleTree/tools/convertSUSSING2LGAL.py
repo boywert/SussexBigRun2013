@@ -12,8 +12,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
-global halocat
-global SUSSINGtree
+
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -28,7 +27,7 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-halocat = {}
+
 
 def readAHFascii():
     halocat = {}
@@ -82,8 +81,6 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-
-def makeStuctree():
     for haloc in halocat:
         print haloc
         halo = halocat[haloc]
@@ -104,7 +101,9 @@ def makeStuctree():
             print curid, "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
 
-def readSussingtree():
+    return halocat
+
+def readSussingtree(SUSSINGtree,halocat):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -137,8 +136,6 @@ def readSussingtree():
                         halocat[prevhalo]["NextProgenitor"] = progid
                     prevhalo = progid
                     count -= 1
-
-def outputtrees():
     ntrees = 0
     nhalopertree = {}
     for haloid in halocat:
@@ -150,8 +147,7 @@ def outputtrees():
                 curid = halocat[curid]["NextHalo"]
 
 
-readAHFascii()
-makeStuctree()
-#readSussingtree()
+halo = readAHFascii()
+readSussingtree(SUSSINGtree,halo)
 #outputtrees()
 
