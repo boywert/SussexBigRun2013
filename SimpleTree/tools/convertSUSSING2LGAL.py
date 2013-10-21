@@ -5,6 +5,7 @@ import math
 global SNAPfile
 global AHFdir
 global AHFprefix
+
 global G
 global m2Mpc
 global m2km
@@ -54,6 +55,7 @@ def readAHFascii():
             data = numpy.loadtxt(filename)
             for halo in data:
                 hid = long(halo[0])
+                print hid
                 halocat[hid] = {}
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
