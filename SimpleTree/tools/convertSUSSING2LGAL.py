@@ -105,7 +105,6 @@ def makeStuctree():
             halocat[curid]["NextHalo"] = haloc
 
 def readSussingtree(SUSSINGtree):
-    halocat2 = halocat.copy()
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -133,25 +132,24 @@ def readSussingtree(SUSSINGtree):
                 else:
                     progid = long(col[0])
                     if(nprog==count):
-                        halocat2[haloid]["FirstProgenitor"] = progid
+                        halocat[haloid]["FirstProgenitor"] = progid
                     else:
-                        halocat2[prevhalo]["NextProgenitor"] = progid
+                        halocat[prevhalo]["NextProgenitor"] = progid
                     prevhalo = progid
                     count -= 1
-    return dict(halocat2)
 
-def outputtrees(halocat2):
+def outputtrees():
     ntrees = 0
     nhalopertree = {}
-    for haloid in halocat2:
-        halo = halocat2[haloid]
+    for haloid in halocat:
+        halo = halocat[haloid]
         curid = haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
             while curid > -1:
-                print curid ,"=>", halocat2[curid]["NextHalo"]
-                curid = halocat2[curid]["NextHalo"]
+                print curid ,"=>", halocat[curid]["NextHalo"]
+                curid = halocat[curid]["NextHalo"]
 
 
 readAHFascii()
-tree = readSussingtree(SUSSINGtree)
-outputtrees(tree)
+readSussingtree(SUSSINGtree)
+outputtrees()
