@@ -142,10 +142,10 @@ def outputtrees(halotree):
         curid = haloid
         if(halo["SnapNum"] == 61 && halo["MainHalo"] == -1):
             while curid > -1:
-                print curid => halotree[curid]["NextHalo"]
+                print curid ,"=>", halotree[curid]["NextHalo"]
                 curid = halotree[curid]["NextHalo"]
 
 
 halo = readAHFascii()
 tree = readSussingtree(SUSSINGtree,halo)
-
+outputree(tree)
