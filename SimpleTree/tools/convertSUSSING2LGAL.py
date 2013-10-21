@@ -107,6 +107,8 @@ def readSussingtree(SUSSINGtree,halocat):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
+    for haloc in halocat:
+        print haloc
     for (i,item) in enumerate(line):
         if(i == 2):
             totalhalo = long(item)
@@ -138,9 +140,9 @@ def readSussingtree(SUSSINGtree,halocat):
                     count -= 1
     ntrees = 0
     nhalopertree = {}
-    for haloid in halocat:
+    for haloc in halocat:
         print haloid
-        halo = halocat[haloid]
+        halo = halocat[haloc]
         curid = haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
             while curid > -1:
