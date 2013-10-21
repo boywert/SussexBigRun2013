@@ -116,6 +116,7 @@ def readSussingtree(SUSSINGtree,halocat):
             col = item.split()
             if(count == 0):
                 if(col[0] == "END"):
+                    print "finish reading ",SUSSINGtree
                     return
                 if(len(col) != 2):
                     print "line",i,"has error"
