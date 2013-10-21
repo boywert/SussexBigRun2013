@@ -80,9 +80,8 @@ def readAHFascii():
                 halocat[hid]["SnapNum"] = long(time[0])
     #make substructure relation
     halocat = makeStuctree(halocat)
-    return halocat
 
-def makeStuctree(halocat):
+def makeStuctree():
     for haloc in halocat:
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
