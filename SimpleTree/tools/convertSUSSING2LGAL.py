@@ -85,6 +85,7 @@ def readAHFascii():
 
 def makeStuctree():
     for haloc in halocat:
+        print haloc
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
         upperhost = halo["HostHalo"]
