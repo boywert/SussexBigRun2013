@@ -131,6 +131,11 @@ def readSussingtree(SUSSINGtree,halocat):
                     exit()
                 else:
                     progid = long(col[0])
+                    if(nprog==count):
+                        halocat[haloid]["FirstProgenitor"] = progid
+                    else:
+                        halocat[prevhalo]["NextProgenitor"] = progid
+                    prevhalo = progid
                     count -= 1
     return halocat
 
