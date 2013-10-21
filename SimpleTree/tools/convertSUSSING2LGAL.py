@@ -149,8 +149,8 @@ def outputtrees(halocat):
             while curid > -1:
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
-
+    return 1
 
 halo = readAHFascii()
 halo = readSussingtree(SUSSINGtree,halo)
-outputtrees(halo)
+printout = outputtrees(halo)
