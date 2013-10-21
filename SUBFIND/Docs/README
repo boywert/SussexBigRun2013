@@ -1,0 +1,21 @@
+Instructions for using Gadget-3 SUBFIND on Gadget-2 snapshots
+-------------------------------------------------------------
+
+SAMGadget-2 does not include the SUBFIND algorithm, only FoF. Therefore, in order to find groups and subgroups to make halo merger trees for a SAM, SUBFIND must be run in post-processing on the snapshots from a DM-only SAMGadget-2 simulation. Gadget-3 has an inbuilt parallel SUBFIND algorithm that can be used for this purpose.
+
+The Gadget-3 code is in the Code subdirectory of this directory, and an example Config file, Makefile and parameter file are included in the Examples subdirectory of this directory. These examples are for cosmological (box) simulations. Simply copy the Makefile and Config file into the Code directory, edit the Makefile for the specific machine you are using, then type 
+
+make -j 4
+
+to compile the code. Next edit the parameter file to set the parameters
+
+1. OutputDir
+2. SnapshotFileBase
+3. NumFilesPerSnapshot
+
+You can then run SUBFIND on a desired Gadget-2 snapshot as
+
+mpirun -np <number of CPUs> ./P-Gadget3 <parameter file> 3 <snapshot number>
+
+where the '3' flag tells Gadget-3 that only FoF/SUBFIND is to be run. Group and subgroup catalogues for the chosen SAMGadget-2 snapshot are then written out in the simulation directory. 
+

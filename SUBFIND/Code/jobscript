@@ -1,0 +1,25 @@
+#!/bin/sh
+#$ -N Boyd
+#$ -cwd
+#$ -j y
+#$ -pe mpich 12
+#$ -q parallel.q
+#$ -S /bin/bash
+
+. /etc/profile.d/modules.sh
+
+module add shared
+
+echo "Got $NSLOTS processors."
+echo "Machines:"
+cat $TMPDIR/machines
+
+module add shared
+module add  fftw2/intel/12.1.3/nehalem/ofed/openmpi/1.4.4/2.1.5
+module add ofed/openmpi/intel/1.4.4 
+module add  gsl/intel/1.15
+module add hdf5/intel/1.8.6
+module add sge
+module add intel/parallel_studio_xe/current
+
+mpirun -np $NSLOTS -machinefile $TMPDIR/machines ./P-Gadget3 subfind_box.param 3 $1

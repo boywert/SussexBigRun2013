@@ -1,0 +1,134 @@
+% Relevant files
+
+InitCondFile  		/mnt/lustre/scratch/cs390/62.5_ICs/
+OutputDir               /mnt/lustre/scratch/cs390/Sussing
+
+EnergyFile        energy.txt
+InfoFile          info.txt
+TimingsFile       timings.txt
+CpuFile           cpu.txt
+TimebinFile       timebin.txt
+
+SnapshotFileBase  62.5_dm
+
+RestartFile       restart
+
+
+% CPU-time limit
+
+TimeLimitCPU      360000000.0
+ResubmitOn        0
+ResubmitCommand   xxx
+
+
+% Code options
+
+ICFormat              1
+SnapFormat            1
+
+ComovingIntegrationOn 1
+
+NumFilesPerSnapshot       16
+NumFilesWrittenInParallel 8
+
+
+% Characteristics of run
+
+TimeBegin           0.015625     % z=63
+TimeMax	            1.0          % z=0
+
+Omega0	              0.272   % Total matter density
+OmegaLambda           0.728
+OmegaBaryon           0.0
+
+HubbleParam           0.704   % Only needed for cooling
+
+BoxSize                62.5
+PeriodicBoundariesOn   1
+
+% Softening lengths
+
+MinGasHsmlFractional     0.5  % Minimum gas smoothing in terms of the gravitational softening length
+
+SofteningGas       0.0
+SofteningHalo      0.037
+SofteningDisk      0.0
+SofteningBulge     0.0         
+SofteningStars     0.0
+SofteningBndry     0.0     
+
+SofteningGasMaxPhys       0.0
+SofteningHaloMaxPhys      0.0093
+SofteningDiskMaxPhys      0.0
+SofteningBulgeMaxPhys     0.0        
+SofteningStarsMaxPhys     0.0
+SofteningBndryMaxPhys     0.0 
+
+
+% Output frequency
+
+OutputListOn        1
+OutputListFilename  /home/c/cs/cs390/Millennium_outtimes.txt
+
+TimeBetSnapshot        1.1
+TimeOfFirstSnapshot    1.1
+ 
+CpuTimeBetRestartFile  7200.0 
+
+TimeBetStatistics      0.5
+
+MaxRMSDisplacementFac  0.25
+
+
+% Accuracy of time integration
+
+TypeOfTimestepCriterion 0   
+	                    
+ErrTolIntAccuracy       0.02
+
+MaxSizeTimestep        0.05
+MinSizeTimestep        0.0
+
+
+% Tree algorithm and force accuracy
+
+ErrTolTheta             0.4
+
+TypeOfOpeningCriterion  1
+ErrTolForceAcc          0.005
+
+TreeDomainUpdateFrequency    0.05
+
+
+% Parameters of SPH
+
+DesNumNgb           64
+MaxNumNgbDeviation  1
+
+ArtBulkViscConst    1.0
+
+InitGasTemp         170.0  % Initial gas temperature in K, only used if not given in IC file
+
+MinGasTemp          5.0    
+CourantFac          0.15
+
+
+% Further code parameters
+
+PartAllocFactor       2.0
+BufferSize            200
+
+
+% System of units
+
+UnitLength_in_cm         3.085678e24        %  1.0 Mpc
+UnitMass_in_g            1.989e43           %  1.0e10 solar masses
+UnitVelocity_in_cm_per_s 1e5                %  1 km/sec
+
+GravityConstantInternal  0
+
+StarformationOn                    0
+CoolingOn                          0
+DesLinkNgb                         20
+ErrTolThetaSubfind                 0.4 
+MaxMemSize                         5120.0
