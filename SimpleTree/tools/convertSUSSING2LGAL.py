@@ -86,6 +86,7 @@ def makeStuctree(halocat):
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
         if(hosthalo > -1):
+            halocat[hosthalo]["Descendant"] = haloc
             cursub = hosthalo
             while cursub > -1:
                 curid = halocat[cursub]["ID"]
