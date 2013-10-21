@@ -81,6 +81,7 @@ def readAHFascii():
                 halocat[hid]["SnapNum"] = long(time[0])
     #make substructure relation
     halocat = makeStuctree(halocat)
+    return halocat
 
 def makeStuctree(halocat):
     for haloc in halocat:
@@ -99,11 +100,11 @@ def makeStuctree(halocat):
             while cursub > -1:
                 curid = halocat[cursub]["ID"]
                 cursub = halocat[cursub]["NextHalo"]
-            print curid,"change",halocat[curid]["NextHalo"],"to",haloc
+            #print curid, "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
     return halocat
 
-def readSussingtree(SUSSINGtree):
+def readSussingtree(SUSSINGtree,halocat):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -130,5 +131,7 @@ def readSussingtree(SUSSINGtree):
                 else:
                     progid = long(col[0])
                     count -= 1
+    return halocat
 
-readAHFascii()
+halo = readAHFascii()
+tree = readSussingtree(SUSSINGtree,halo)
