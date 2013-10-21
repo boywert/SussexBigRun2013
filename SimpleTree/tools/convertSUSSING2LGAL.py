@@ -151,6 +151,6 @@ def outputtrees():
 
 readAHFascii()
 makeStuctree()
-readSussingtree()
-outputtrees()
+#readSussingtree()
+#outputtrees()
 
