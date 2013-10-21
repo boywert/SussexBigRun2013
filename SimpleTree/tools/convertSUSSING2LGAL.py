@@ -104,6 +104,7 @@ def readAHFascii():
     return halocat
 
 def readSussingtree(SUSSINGtree,halocat):
+    halocopy = halocat.copy()
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -116,7 +117,7 @@ def readSussingtree(SUSSINGtree,halocat):
             if(count == 0):
                 if(col[0] == "END"):
                     print "finish reading ",SUSSINGtree
-                    return halocat
+                    return halocopy
                 if(len(col) != 2):
                     print "line",i,"has error"
                     exit()
@@ -131,10 +132,10 @@ def readSussingtree(SUSSINGtree,halocat):
                 else:
                     progid = long(col[0])
                     if(nprog==count):
-                        halocat[haloid]["FirstProgenitor"] = progid
+                        halocopy[haloid]["FirstProgenitor"] = progid
                         #print haloid,"=>",progid
                     else:
-                        halocat[prevhalo]["NextProgenitor"] = progid
+                        halocopy[prevhalo]["NextProgenitor"] = progid
                         #print prevhalo,"=>",progid
                     prevhalo = progid
                     count -= 1
@@ -152,7 +153,7 @@ def outputtrees(halocat):
                 print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
 
-halo = dict(readAHFascii())
-halo = readSussingtree(SUSSINGtree,halo)
-outputtrees(halo)
+halo = readAHFascii()
+ahf = readSussingtree(SUSSINGtree,halo)
+outputtrees(ahf)
 
