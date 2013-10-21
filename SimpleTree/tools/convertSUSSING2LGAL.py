@@ -122,7 +122,8 @@ def readSussingtree(SUSSINGtree,halocat):
                     print "line",i,"has error"
                     exit()
                 else:
-                    haloid = col[0]
+                    haloid = long(col[0])
+                    
                     nprog = long(col[1])
                     count = nprog
             else:
