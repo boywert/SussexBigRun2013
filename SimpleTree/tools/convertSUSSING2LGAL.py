@@ -30,6 +30,7 @@ SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
 
 def readAHFascii():
+    halocat = dict()
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         zstring = "%.3f" % (time[2])
