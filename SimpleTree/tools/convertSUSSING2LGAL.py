@@ -27,11 +27,10 @@ G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
-SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-halocat = {}
+SNAPfile = "/scratch/datasetI/data_snaplist.txt"halocat = {}
 
 def readAHFascii():
-    halocat = dict()
+    halocat = {}
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         zstring = "%.3f" % (time[2])
