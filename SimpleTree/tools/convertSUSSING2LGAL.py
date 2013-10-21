@@ -11,7 +11,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
-
+global halocat
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -26,10 +26,9 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-
+halocat = {}
 
 def readAHFascii():
-    halocat = {}
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         zstring = "%.3f" % (time[2])
@@ -102,9 +101,9 @@ def makeStuctree(halocat):
                 cursub = halocat[cursub]["NextHalo"]
             #print curid, "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
-    return halocat
 
-def readSussingtree(SUSSINGtree,halocat):
+def readSussingtree(SUSSINGtree):
+    halocat2 = dict(halocat)
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -132,26 +131,25 @@ def readSussingtree(SUSSINGtree,halocat):
                 else:
                     progid = long(col[0])
                     if(nprog==count):
-                        halocat[haloid]["FirstProgenitor"] = progid
+                        halocat2[haloid]["FirstProgenitor"] = progid
                     else:
-                        halocat[prevhalo]["NextProgenitor"] = progid
+                        halocat2[prevhalo]["NextProgenitor"] = progid
                     prevhalo = progid
                     count -= 1
-    return halocat
+    return dict(halocat2)
 
-def outputtrees(halocat):
+def outputtrees(halocat2):
     ntrees = 0
     nhalopertree = {}
-    print halocat
-    for haloid in halocat:
-        halo = halocat[haloid]
+    for haloid in halocat2:
+        halo = halocat2[haloid]
         curid = haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
             while curid > -1:
-                print curid ,"=>", halocat[curid]["NextHalo"]
-                curid = halocat[curid]["NextHalo"]
+                print curid ,"=>", halocat2[curid]["NextHalo"]
+                curid = halocat2[curid]["NextHalo"]
 
 
-halo = readAHFascii()
-tree = readSussingtree(SUSSINGtree,halo)
+readAHFascii()
+tree = readSussingtree(SUSSINGtree)
 outputtrees(tree)
