@@ -123,7 +123,6 @@ def readSussingtree(SUSSINGtree,halocat):
                     exit()
                 else:
                     haloid = long(col[0])
-                    
                     nprog = long(col[1])
                     count = nprog
             else:
@@ -140,18 +139,18 @@ def readSussingtree(SUSSINGtree,halocat):
                     count -= 1
     return halocat
 
-def outputtrees(halotree):
+def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
-    for haloid in halotree:
-        halo = halotree[haloid]
+    for haloid in halocat:
+        halo = halocat[haloid]
         curid = haloid
         if(halo["SnapNum"] == 61 & halo["MainHalo"] == -1):
             while curid > -1:
-                print curid ,"=>", halotree[curid]["NextHalo"]
-                curid = halotree[curid]["NextHalo"]
+                print curid ,"=>", halocat[curid]["NextHalo"]
+                curid = halocat[curid]["NextHalo"]
 
 
 halo = readAHFascii()
-tree = readSussingtree(SUSSINGtree,halo)
-outputtrees(tree)
+halo = readSussingtree(SUSSINGtree,halo)
+outputtrees(halo)
