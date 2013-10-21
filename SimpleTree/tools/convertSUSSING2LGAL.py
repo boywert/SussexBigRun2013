@@ -56,6 +56,8 @@ def readAHFascii():
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
                 # use Peebles lambdaE definition to find angular momentum 
+                halocat[hid]["Ep"] = halo[38]
+                halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
                 halocat[hid]["TotalEnergy"] = total_energy
