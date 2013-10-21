@@ -13,6 +13,7 @@ global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
 global halocat
+global SUSSINGtree
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -83,6 +84,8 @@ def readAHFascii():
                 halocat[hid]["SnapNum"] = long(time[0])
     #make substructure relation
     makeStuctree()
+    readSussingtree()
+    outputtrees()
 
 def makeStuctree():
     for haloc in halocat:
@@ -104,7 +107,7 @@ def makeStuctree():
             print curid, "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
 
-def readSussingtree(SUSSINGtree):
+def readSussingtree():
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -151,5 +154,4 @@ def outputtrees():
 
 
 readAHFascii()
-readSussingtree(SUSSINGtree)
-outputtrees()
+
