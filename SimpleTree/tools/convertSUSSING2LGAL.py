@@ -18,7 +18,7 @@ m2Mpc = 1./3.08567758e22
 m2km = 0.001
 kpc2Mpc = 0.001
 Msun2Gadget = 1.e-10
-kg2Msun = 1.989e30
+kg2Msun = 1.989e-30
 #change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
 G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 
