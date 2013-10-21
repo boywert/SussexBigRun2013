@@ -11,6 +11,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
+global halocat
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -78,25 +79,22 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-    return halocat
+    makeStuctree()
 
-def makeStuctree(halocat):
+def makeStuctree():
     timesnap = numpy.loadtxt(SNAPfile)
     for haloc in halocat:
         halo = halocat[haloc]
         hosthalo= halo["HostHalo"]
         if(hosthalo > -1):
-            halocat[hosthalo]["Descendant"] = haloc
             cursub = hosthalo
             while cursub > -1:
                 curid = halocat[cursub]["ID"]
                 cursub = halocat[cursub]["NextHalo"]
             print "change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
-        
-    return halocat
 
-def readSussingtree(SUSSINGtree,halocat):
+def readSussingtree(SUSSINGtree):
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -124,4 +122,4 @@ def readSussingtree(SUSSINGtree,halocat):
                     progid = long(col[0])
                     count -= 1
 
-    return halocat
+readAHFascii()
