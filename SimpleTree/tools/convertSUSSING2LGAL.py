@@ -99,7 +99,7 @@ def makeStuctree(halocat):
             while cursub > -1:
                 curid = halocat[cursub]["ID"]
                 cursub = halocat[cursub]["NextHalo"]
-            print "change",halocat[curid]["NextHalo"],"to",haloc
+            print curid,"change",halocat[curid]["NextHalo"],"to",haloc
             halocat[curid]["NextHalo"] = haloc
     return halocat
 
