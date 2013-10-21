@@ -149,10 +149,10 @@ def outputtrees(halocat):
     for haloid in halocat.iterkeys():
         halo = halocat[haloid]
         if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
-            print haloid
             curid = haloid
             while curid > -1:
-                print curid ,"=>", halocat[curid]["NextHalo"]
+                if halocat[curid]["NextHalo"] > -1:
+                    print curid ,"=>", halocat[curid]["NextHalo"]
                 curid = halocat[curid]["NextHalo"]
 
 #halo = readAHFascii()
