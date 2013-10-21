@@ -6,6 +6,21 @@ global halocat
 global SNAPfile
 global AHFdir
 global AHFprefix
+global G
+global m2Mpc
+global m2km
+global kpc2Mpc
+global Msun2Gadget
+global kg2Msun
+
+G = 6.67384e-11 # m^3/(kgs^2)
+m2Mpc = 1./3.08567758e22
+m2km = 0.001
+kpc2Mpc = 0.001
+Msun2Gadget = 1.e-10
+kg2Msun = 1.989e30
+#change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
+G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
@@ -14,14 +29,7 @@ SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 halocat = {}
 
 def readAHFascii():
-    G = 6.67384e-11 # m^3/(kgs^2)
-    m2Mpc = 1./3.08567758e22
-    m2km = 0.001
-    kpc2Mpc = 0.001
-    Msun2Gadget = 1.e-10
-    kg2Msun = 1.989e30
-    #change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
-    G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
+
     timesnap = numpy.loadtxt(SNAPfile)
     for time in timesnap:
         zstring = "%.3f" % (time[2])
@@ -59,6 +67,7 @@ def readAHFascii():
                 halocat[hid]["Ep"] = halo[38]
                 halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
+                halocat[hid]["LambdaE"] = halo[20]
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
                 halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
