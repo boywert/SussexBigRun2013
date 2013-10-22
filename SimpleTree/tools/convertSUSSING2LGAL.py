@@ -170,7 +170,7 @@ def outputtrees(halocat):
             while curid > -1:
                 (halocat,fulltree) = treecrowler(curid,halocat,ntrees,fulltree)
                 curid = halocat[curid]["NextHalo"]
-            if count > 0:
+            if len(fulltree[ntrees]) > 0:
                 nhalopertree.append(len(fulltree[ntrees]))
                 nhalos += len(fulltree[ntrees])
                 ntrees += 1
