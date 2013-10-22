@@ -156,6 +156,7 @@ def treecrowler(hid,halocat,treenr,halonr):
 
 def outputtrees(halocat):
     ntrees = 0
+    nhalos = 0
     nhalopertree = {}
     print "start outputting trees"
     for haloid in halocat.iterkeys():
@@ -167,7 +168,10 @@ def outputtrees(halocat):
                 count = treecrowler(curid,halocat,ntrees,count)   
                 curid = halocat[curid]["NextHalo"]
             print "Tree:",ntrees,"nhalo:",count
+            nhalos += count
             ntrees += 1
+    print "Ntrees:",ntrees
+    print "Nhalos:",nhalos
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
 #outputtrees(ahf)
