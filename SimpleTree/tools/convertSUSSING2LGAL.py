@@ -180,7 +180,7 @@ def outputtrees(halocat2):
                 nhalos += len(fulltree[ntrees])
                 ntrees += 1
 
-    fp = open("testfile","wb")
+    fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
     fp.write(buffer)
