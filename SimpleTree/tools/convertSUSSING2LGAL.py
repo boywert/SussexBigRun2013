@@ -146,13 +146,13 @@ def treecrowler(hid,halocat,treenr,halonr):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = halonr
     progid = halocat[hid]["FirstProgenitor"]
-    count = halonr
+    lastid = halonr
     if progid > -1:
-        count = treecrowler(progid,halocat,treenr,halonr+1)
+        lastid = treecrowler(progid,halocat,treenr,halonr+1)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
-        count = treecrowler(nextprog,halocat,treenr,halonr+1)
-    return count
+        lastid = treecrowler(nextprog,halocat,treenr,halonr+1)
+    return lastid
 
 def outputtrees(halocat):
     ntrees = 0
@@ -167,9 +167,10 @@ def outputtrees(halocat):
             while curid > -1:
                 count = treecrowler(curid,halocat,ntrees,count)   
                 curid = halocat[curid]["NextHalo"]
-            print "Tree:",ntrees,"nhalo:",count+1
-            nhalos += count+1
-            ntrees += 1
+            if count > 0:
+                print "Tree:",ntrees,"nhalo:",count+1
+                nhalos += count+1
+                ntrees += 1
     print "Ntrees:",ntrees
     print "Nhalos:",nhalos
     return halocat
