@@ -12,7 +12,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
-
+global previd
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -27,7 +27,7 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-
+prefid = -1
 
 def readAHFascii():
     halocat = {}
@@ -143,21 +143,21 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
-def treecrowler(hid,halocat,treenr,halonr,prev):
+def treecrowler(hid,halocat,treenr,halonr):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = halonr
-    if(prev > -1):
+    if(previd > -1):
         halocat[prev]["NextinTree"] = hid
-    prev = hid
+    previd = hid
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
     if progid > -1:
         halonr += 1
-        (lastid,prev,halocat) = treecrowler(progid,halocat,treenr,halonr,prev)
+        (lastid,halocat) = treecrowler(progid,halocat,treenr,halonr)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
         halonr += 1
-        (lastid,prev,halocat) = treecrowler(nextprog,halocat,treenr,halonr,prev)
+        (lastid,halocat) = treecrowler(nextprog,halocat,treenr,halonr)
     return (lastid,prev,halocat)
 
 def outputtrees(halocat):
@@ -171,9 +171,9 @@ def outputtrees(halocat):
         if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
             curid = haloid
             count = 0
-            prev = -1
+            previd = -1
             while curid > -1:
-                (count,prev,halocat) = treecrowler(curid,halocat,ntrees,count,prev)
+                (count,halocat) = treecrowler(curid,halocat,ntrees,count)
                 curid = halocat[curid]["NextHalo"]
             if count > 0:
                 nhalopertree[ntrees] = count+1
