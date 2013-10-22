@@ -196,7 +196,8 @@ def outputtrees(halocat):
             count += 1
         for hid in fulltree[tree]:
             halo = halocat[hid]
-            if(halo["MainHalo"] == -1) halo["MainHalo"] = halo["ID"]
+            if(halo["MainHalo"] == -1):
+                halo["MainHalo"] = halo["ID"]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
