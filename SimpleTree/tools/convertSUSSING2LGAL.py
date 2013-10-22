@@ -2,6 +2,7 @@ import numpy
 import os
 import math
 import struct
+import copy
 
 global SNAPfile
 global AHFdir
@@ -106,7 +107,7 @@ def readAHFascii():
     return halocat
 
 def readSussingtree(SUSSINGtree,halocat):
-    halocopy = halocat.deepcopy()
+    halocopy = copy.deepcopy(halocat)
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -157,7 +158,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
     return (halocat,fulltree)
 
 def outputtrees(halocat2):
-    halocat = halocat2.deepcopy()
+    halocat = copy.deepcopy(halocat2)
     ntrees = 0
     nhalos = 0
     nhalopertree = []
@@ -240,7 +241,7 @@ def outputtrees(halocat2):
 
     fp.close()
 
-#halo = readAHFascii()
-#ahf = readSussingtree(SUSSINGtree,halo)
-#outputtrees(ahf)
+halo = readAHFascii()
+ahf = readSussingtree(SUSSINGtree,halo)
+outputtrees(ahf)
 
