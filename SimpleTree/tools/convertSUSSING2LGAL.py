@@ -167,8 +167,8 @@ def outputtrees(halocat):
             while curid > -1:
                 count = treecrowler(curid,halocat,ntrees,count)   
                 curid = halocat[curid]["NextHalo"]
-            print "Tree:",ntrees,"nhalo:",count
-            nhalos += count
+            print "Tree:",ntrees,"nhalo:",count+1
+            nhalos += count+1
             ntrees += 1
     print "Ntrees:",ntrees
     print "Nhalos:",nhalos
