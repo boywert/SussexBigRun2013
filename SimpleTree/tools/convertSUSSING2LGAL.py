@@ -186,8 +186,10 @@ def outputtrees(halocat):
     for tree in range(ntrees):
         print tree,":",nhalopertree[tree]
     for tree in range(ntrees):
+        count = 0
         for hid in fulltree[tree]:
-            print tree,":", hid,":",halocat[hid]["HaloNr"] 
+            print tree,":", hid,":",halocat[hid]["HaloNr"],"=>",count 
+            count += 1
 
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
