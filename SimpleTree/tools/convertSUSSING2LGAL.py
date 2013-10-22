@@ -187,9 +187,11 @@ def outputtrees(halocat):
         print tree,":",nhalopertree[tree]
     for tree in range(ntrees):
         ref = firsthalointree[tree]
+        count = 0
         while ref > -1:
-            print tree,":",ref
+            print tree,":",ref,"(",count,":",halocat[ref]["Halonr"],")"
             ref = halocat[ref]["NextinTree"]
+            count += 1
     return halocat
 
 #halo = readAHFascii()
