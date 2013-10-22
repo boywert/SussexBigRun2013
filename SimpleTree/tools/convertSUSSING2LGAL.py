@@ -209,10 +209,19 @@ def outputtrees(halocat2):
             buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
             fp.write(buffer)
             if halo["MainHalo"] not in maptree:
+                #remove relationship from other trees
+                curhalo = halo["MainHalo"]
+                while curhalo > -1:
+                    if curhalo == hid:
+                        halocat[refhalo]["Nexthalo"] = halo["Nexthalo"]
+                    refhalo = curhalo
+                    curhalo= halocat[curhalo]["Nexthalo"]
                 halo["MainHalo"] = halo["ID"]
             buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
             fp.write(buffer)
             if halo["NextHalo"] not in maptree:
+                print halo
+                exit()
                 halo["NextHalo"] = -1
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
             fp.write(buffer)

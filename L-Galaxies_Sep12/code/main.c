@@ -295,13 +295,13 @@ void construct_galaxies(int filenr, int treenr, int halonr)
   halosdone++;
 
   prog = Halo[halonr].FirstProgenitor;
-  printf("boyd: prog of %d => %d\n",halonr,prog);
+  //printf("boyd: prog of %d => %d\n",halonr,prog);
   while(prog >= 0) //If halo has a progenitor
     {
       //printf("boyd: Halo: %d Firstprog = %d Doneflag=%d\n",halonr,prog,HaloAux[prog].DoneFlag);
       if(HaloAux[prog].DoneFlag == 0) //If progenitor hasn't been done yet
 	{
-	  printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,prog);
+	  //printf("Construct: filenr=%d, treenr=%d, halonr=%d\n",filenr,treenr,prog);
 	  construct_galaxies(filenr, treenr, prog);
 	}
       prog = Halo[prog].NextProgenitor;	//Jump to next halo in progenitors FOF
