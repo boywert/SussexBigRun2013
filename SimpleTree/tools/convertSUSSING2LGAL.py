@@ -151,8 +151,9 @@ def treecrowler(hid,halocat,treenr,halonr):
         count = treecrowler(progid,halocat,treenr,halonr+1)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
-        count = treecrowler(progid,halocat,treenr,halonr+1)
+        count = treecrowler(nextprog,halocat,treenr,halonr+1)
     return count
+
 def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
@@ -165,7 +166,6 @@ def outputtrees(halocat):
             while curid > -1:
                 count = treecrowler(curid,halocat,ntrees,count)   
                 curid = halocat[curid]["NextHalo"]
-            
             print "Tree:",ntrees,"nhalo:",count
             ntrees += 1
 #halo = readAHFascii()
