@@ -198,14 +198,10 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             maptree[hid] = count
             count += 1
+
+        #fix structure
         for hid in fulltree[tree]:
             halo = halocat[hid]
-            buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
-            fp.write(buffer)
-            buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
-            fp.write(buffer)
-            buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
-            fp.write(buffer)
             if halo["MainHalo"] not in maptree:
                 print "remove",hid,"from",halo["MainHalo"]
                 #remove relationship from other trees
@@ -217,15 +213,25 @@ def outputtrees(halocat2):
                     curhalo= halocat[curhalo]["NextHalo"]
                 halo["NextHalo"] = -1
                 halo["MainHalo"] = -1
+
+            if halo["NextHalo"] not in maptree:
+                mainhalo = halo["ID"]
+                halocat[mainhalo]["MainHalo"] = -1
+                halo["NextHalo"] = -1
+
+        for hid in fulltree[tree]:
+            halo = halocat[hid]
+            buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
+            fp.write(buffer)
             if(halo["MainHalo"] > -1):
                 buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
             else:
                 buffer = struct.pack("i",int(maptree[halo["ID"]]))
             fp.write(buffer)
-            if halo["NextHalo"] not in maptree:
-                print halo
-                exit()
-                halo["NextHalo"] = -1
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
             fp.write(buffer)
             buffer = struct.pack("i",halo["Len"])
