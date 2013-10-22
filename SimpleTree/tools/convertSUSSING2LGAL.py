@@ -202,14 +202,24 @@ def outputtrees(halocat2):
             halo = halocat[hid]
             if(halo["MainHalo"] == -1):
                 halo["MainHalo"] = halo["ID"]
+            if halo["Descendant"] is not in maptree:
+                print halo["Descendant"]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
             fp.write(buffer)
+            if halo["FirstProgenitor"] is not in maptree:
+                print halo["FirstProgenitor"]
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
             fp.write(buffer)
+            if halo["NextProgenitor"] is not in maptree:
+                print halo["NextProgenitor"]
             buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
             fp.write(buffer)
+            if halo["MainHalo"] is not in maptree:
+                print halo["MainHalo"]
             buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
             fp.write(buffer)
+            if halo["NextHalo"] is not in maptree:
+                print halo["NextHalo"]
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
             fp.write(buffer)
             buffer = struct.pack("i",halo["Len"])
