@@ -84,6 +84,7 @@ def readAHFascii():
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
                 halocat[hid]["NextinTree"] = -1
+    print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
         #print haloc
         halo = halocat[haloc]
@@ -107,7 +108,9 @@ def readAHFascii():
     return halocat
 
 def readSussingtree(SUSSINGtree,halocat):
+    print "Copy halo catalogue ..."
     halocopy = copy.deepcopy(halocat)
+    print "Read tree file ..."
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
