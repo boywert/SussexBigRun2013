@@ -142,6 +142,16 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
+def treecrowler(hid,halocat,treenr,halonr):
+    halocat[hid]["TreeNr"] = treenr
+    halocat[hid]["HaloNr"] = halonr
+    progid = halocat[hid]["FirstProgenitor"]
+    if progid > -1:
+        count = treecrowler(progid,halocat,treenr,halonr+1)
+    nextprog = halocat[hid]["NextProgenitor"]
+    if nextprog > -1:
+        count = treecrowler(progid,halocat,treenr,halonr+1)
+    return count
 def outputtrees(halocat):
     ntrees = 0
     nhalopertree = {}
@@ -150,11 +160,13 @@ def outputtrees(halocat):
         halo = halocat[haloid]
         if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
             curid = haloid
+            count = 0
             while curid > -1:
-                if halocat[curid]["NextHalo"] > -1:
-                    print curid ,"=>", halocat[curid]["NextHalo"]
+                count = treecrowler(hid,halocat,ntrees,count)   
                 curid = halocat[curid]["NextHalo"]
-
+            
+            print "Tree:",ntrees,"nhalo:",count
+            ntrees += 1
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
 #outputtrees(ahf)
