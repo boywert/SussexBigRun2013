@@ -194,6 +194,6 @@ def outputtrees(halocat):
             count += 1
 
 halo = readAHFascii()
-#ahf = readSussingtree(SUSSINGtree,halo)
-#outputtrees(ahf)
+ahf = readSussingtree(SUSSINGtree,halo)
+outputtrees(ahf)
 
