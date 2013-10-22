@@ -215,8 +215,8 @@ def outputtrees(halocat2):
                 halo["MainHalo"] = -1
 
             if halo["NextHalo"] not in maptree:
-                mainhalo = halo["ID"]
-                halocat[mainhalo]["MainHalo"] = -1
+                nexthalo = halo["NextHalo"]
+                halocat[nexthalo]["MainHalo"] = -1
                 halo["NextHalo"] = -1
 
         for hid in fulltree[tree]:
