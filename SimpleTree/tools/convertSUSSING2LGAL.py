@@ -1,6 +1,7 @@
 import numpy
 import os
 import math
+import struct
 
 global SNAPfile
 global AHFdir
@@ -143,54 +144,66 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
-def treecrowler(hid,halocat,treenr,halonr,fulltree):
+def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = len(fulltree[treenr])
     fulltree[treenr].append(hid)
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
     if progid > -1:
-        halonr += 1
-        (lastid,halocat,fulltree) = treecrowler(progid,halocat,treenr,halonr,fulltree)
+        (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
-        halonr += 1
-        (lastid,halocat,fulltree) = treecrowler(nextprog,halocat,treenr,halonr,fulltree)
-    return (lastid,halocat,fulltree)
+        (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
+    return (halocat,fulltree)
 
 def outputtrees(halocat):
     ntrees = 0
     nhalos = 0
-    nhalopertree = {}
-    firsthalointree = {}
+    nhalopertree = []
     fulltree = {}
     print "start outputting trees"
     for haloid in halocat.iterkeys():
         halo = halocat[haloid]
         if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1) & (halo["FirstProgenitor"] > -1):
             curid = haloid
-            count = 0
-            previd = -1
             fulltree[ntrees] = []
             while curid > -1:
-                (count,halocat,fulltree) = treecrowler(curid,halocat,ntrees,count,fulltree)
-                count+=1
+                (halocat,fulltree) = treecrowler(curid,halocat,ntrees,fulltree)
                 curid = halocat[curid]["NextHalo"]
             if count > 0:
-                nhalopertree[ntrees] = len(fulltree[ntrees])
-                firsthalointree[ntrees] = haloid
+                nhalopertree.append(len(fulltree[ntrees]))
                 nhalos += len(fulltree[ntrees])
                 ntrees += 1
 
+    fp = open("testfile","wb")
     print "Ntrees:",ntrees
+    buffer = struct.pack("i",int(ntrees))
+    fp.write(buffer)
     print "Nhalos:",nhalos
+    buffer = struct.pack("i",int(nhalos))
+    fp.write(buffer)
     for tree in range(ntrees):
         print tree,":",nhalopertree[tree]
+        buffer = struct.pack("i",int(nhalopertree[tree]))
+        fp.write(buffer)
     for tree in range(ntrees):
         count = 0
+        maptree = {}
+        maptree[-1] = -1
         for hid in fulltree[tree]:
-            print tree,":", hid,":",halocat[hid]["HaloNr"],"=>",count,"/",nhalopertree[tree]-1
+            maptree[hid] = count
             count += 1
+        for hid in fulltree[tree]:
+            halo = halocat[hid]
+            if(halo["MainHalo"] == -1) halo["MainHalo"] = halo["ID"]
+            buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
+            fp.write(buffer)
+    fp.close()
 
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
