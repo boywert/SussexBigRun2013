@@ -187,17 +187,25 @@ def outputtrees(halocat2):
             newfulltree[newntrees] = []
             for hids in fulltree[tree]:
                 newfulltree[newntrees].append(hids)
+
             while checked == 0:
+                count = 0
+                maptree = {}
+                maptree[-1] = -1
+                for hid in newfulltree[newntrees]:
+                    maptree[hid] = count
+                    count += 1
+
                 for hid in fulltree[tree]:
                     halo = halocat[hid]
-                    if halo["MainHalo"] not in fulltree[tree]:
+                    if halo["MainHalo"] not in maptree:
                         target = halo["MainHalo"]
                         oldtree = halocat[target]["TreeNr"]
                         for hids in fulltree[oldtree]:
                             newfulltree[newntrees].append(hids)
                         fulltree[oldtree] = []
                         break
-                    if halo["NextHalo"] not in fulltree[tree]:
+                    if halo["NextHalo"] not in maptree:
                         target = halo["NextHalo"]
                         oldtree = halocat[target]["TreeNr"]
                         for hids in fulltree[oldtree]:
