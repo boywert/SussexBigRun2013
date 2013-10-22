@@ -146,6 +146,7 @@ def treecrowler(hid,halocat,treenr,halonr):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = halonr
     progid = halocat[hid]["FirstProgenitor"]
+    count = halonr
     if progid > -1:
         count = treecrowler(progid,halocat,treenr,halonr+1)
     nextprog = halocat[hid]["NextProgenitor"]
