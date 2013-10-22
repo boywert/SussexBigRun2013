@@ -40,12 +40,12 @@ def readAHFascii():
         #print "checking "+filename
         if os.path.isfile(filename) == False:
             zstring = "%.3f" % (time[2]+0.00001)
-            #print zstring[len(zstring)-1] 
+            #print zstring[len(zstring)-1]
             filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
         if os.path.isfile(filename) == False:
             zstring = "%.3f" % (time[2]-0.00001)
             #print "checking "+filename
-            #print zstring[len(zstring)-1] 
+            #print zstring[len(zstring)-1]
             filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
         if os.path.isfile(filename) == False:
             print "checking error"+filename
@@ -66,7 +66,7 @@ def readAHFascii():
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
-                # use Peebles lambdaE definition to find angular momentum 
+                # use Peebles lambdaE definition to find angular momentum
                 halocat[hid]["Ep"] = halo[38]
                 halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
@@ -148,7 +148,6 @@ def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = len(fulltree[treenr])
     fulltree[treenr].append(hid)
-    print hid
     progid = halocat[hid]["FirstProgenitor"]
     if progid > -1:
         (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
@@ -172,7 +171,6 @@ def outputtrees(halocat):
                 (halocat,fulltree) = treecrowler(curid,halocat,ntrees,fulltree)
                 curid = halocat[curid]["NextHalo"]
             if len(fulltree[ntrees]) > 0:
-                print ntree,":",len(fulltree[ntrees])
                 nhalopertree.append(len(fulltree[ntrees]))
                 nhalos += len(fulltree[ntrees])
                 ntrees += 1
@@ -204,38 +202,6 @@ def outputtrees(halocat):
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
-            fp.write(buffer)
-            buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
-            fp.write(buffer)
-            buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
-            fp.write(buffer)
-            buffer = struct.pack("i",halo["Len"])
-            fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
-            fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
-            fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
-            fp.write(buffer)
-            buffer = struct.pack("fff",halo["Pos"])
-            fp.write(buffer)
-            buffer = struct.pack("fff",halo["Vel"])
-            fp.write(buffer)
-            buffer = struct.pack("f",halo["VelDisp"])
-            fp.write(buffer)
-            buffer = struct.pack("f",halo["Vmax"])
-            fp.write(buffer)
-            buffer = struct.pack("fff",halo["Spin"])
-            fp.write(buffer)
-            buffer = struct.pack("q",0) #Mostboundid
-            fp.write(buffer)
-            buffer = struct.pack("i",halo["SnapNum"])
-            fp.write(buffer)
-            buffer = struct.pack("i",0) #FileNr
-            fp.write(buffer)
-            buffer = struct.pack("i",0) #Subhaloindex
-            fp.write(buffer)
-            buffer = struct.pack("f",0.0) #Subhalfmass
             fp.write(buffer)
     fp.close()
 
