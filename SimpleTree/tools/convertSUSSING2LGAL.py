@@ -172,6 +172,7 @@ def outputtrees(halocat):
             ntrees += 1
     print "Ntrees:",ntrees
     print "Nhalos:",nhalos
+    return halocat
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
 #outputtrees(ahf)
