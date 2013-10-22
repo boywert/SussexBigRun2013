@@ -13,14 +13,14 @@ McFile		      ./input/Mc.txt
 CoolFunctionsDir      ./CoolFunctions/
 
 FirstFile             0
-LastFile              7
+LastFile              0
 
 %-------------------------------------------------
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-OutputDir           /scratch/output
-SimulationDir         /export/data/virgo/Boyd/Millgas/62.5_SF_0.2/
+OutputDir           /scratch/datasetI/outputs/
+SimulationDir         /scratch/datasetI/
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
 %----------- Unscaled MS-7 -----------------------
