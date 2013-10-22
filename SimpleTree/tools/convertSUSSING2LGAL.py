@@ -215,7 +215,8 @@ def outputtrees(halocat2):
             buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
             fp.write(buffer)
             if halo["MainHalo"] not in maptree:
-                print halo["MainHalo"]
+                print halo
+                print halocat[halo["MainHalo"]]
             buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
             fp.write(buffer)
             if halo["NextHalo"] not in maptree:
