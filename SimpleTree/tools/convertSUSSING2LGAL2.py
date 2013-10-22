@@ -181,7 +181,21 @@ def outputtrees(halocat2):
                 nhalopertree.append(len(fulltree[ntrees]))
                 nhalos += len(fulltree[ntrees])
                 ntrees += 1
- 
+
+
+     for tree in range(ntrees):
+         check = 0
+         while check == 0:
+             for hid in fulltree[tree]:
+                 halo = halocat[hid]
+                 if halo["MainHalo"] not in fulltree[tree]:
+                     target = halo["MainHalo"]
+                     oldtree = tree
+                     newtree = halocat[target]["TreeNr"]
+                     firsthalo = fulltree[oldtree]
+                     halocat[firsthalo] = newtree
+                
+
        
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
     print "Ntrees:",ntrees
@@ -202,25 +216,6 @@ def outputtrees(halocat2):
             maptree[hid] = count
             count += 1
 
-        #fix structure
-        for hid in fulltree[tree]:
-            halo = halocat[hid]
-            if halo["MainHalo"] not in maptree:
-                print "remove",hid,"from",halo["MainHalo"]
-                #remove relationship from other trees
-                curhalo = halo["MainHalo"]
-                while curhalo > -1:
-                    if curhalo == hid:
-                        halocat[refhalo]["NextHalo"] = halo["NextHalo"]
-                    refhalo = curhalo
-                    curhalo= halocat[curhalo]["NextHalo"]
-                halo["NextHalo"] = -1
-                halo["MainHalo"] = -1
-
-            if halo["NextHalo"] not in maptree:
-                nexthalo = halo["NextHalo"]
-                halocat[nexthalo]["MainHalo"] = -1
-                halo["NextHalo"] = -1
 
         for hid in fulltree[tree]:
             halo = halocat[hid]
