@@ -171,8 +171,8 @@ def outputtrees(halocat):
                     curid = halocat[curid]["NextHalo"]
             if count > 0:
                 print "Tree:",ntrees,"nhalo:",count+1
-                nhalopertree[ntrees] = count+1
-                firsthalointree[ntrees] = haloid
+                #nhalopertree[ntrees] = count+1
+                #firsthalointree[ntrees] = haloid
                 nhalos += count+1
                 ntrees += 1
     print "Ntrees:",ntrees
