@@ -168,9 +168,8 @@ def outputtrees(halocat):
             curid = haloid
             count = 0
             while curid > -1:
-                if(halocat[curid]["FirstProgenitor"] > -1):
-                    count = treecrowler(curid,halocat,ntrees,count)   
-                    curid = halocat[curid]["NextHalo"]
+                count = treecrowler(curid,halocat,ntrees,count)   
+                curid = halocat[curid]["NextHalo"]
             if count > 0:
                 print "Tree:",ntrees,"nhalo:",count+1
                 #nhalopertree[ntrees] = count+1
