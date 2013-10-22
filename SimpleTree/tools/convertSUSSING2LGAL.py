@@ -81,6 +81,7 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
+                halocat[hid]["NextinTree"] = -1
     for haloc in halocat.iterkeys():
         #print haloc
         halo = halocat[haloc]
@@ -142,19 +143,22 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
-def treecrowler(hid,halocat,treenr,halonr):
+def treecrowler(hid,halocat,treenr,halonr,prev):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = halonr
+    if(prev > -1):
+        halocat[prev]["NextinTree"] = hid
+    prev = hid
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
     if progid > -1:
         halonr += 1
-        lastid = treecrowler(progid,halocat,treenr,halonr)
+        (lastid,prev,halocat) = treecrowler(progid,halocat,treenr,halonr,prev)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
         halonr += 1
-        lastid = treecrowler(nextprog,halocat,treenr,halonr)
-    return lastid
+        (lastid,prev,halocat) = treecrowler(nextprog,halocat,treenr,halonr,prev)
+    return (lastid,prev,halocat)
 
 def outputtrees(halocat):
     ntrees = 0
@@ -167,8 +171,9 @@ def outputtrees(halocat):
         if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
             curid = haloid
             count = 0
+            prev = -1
             while curid > -1:
-                count = treecrowler(curid,halocat,ntrees,count)   
+                (count,prev,halocat) = treecrowler(curid,halocat,ntrees,count,prev)
                 curid = halocat[curid]["NextHalo"]
             if count > 0:
                 nhalopertree[ntrees] = count+1
@@ -180,6 +185,7 @@ def outputtrees(halocat):
     print "Nhalos:",nhalos
     for tree in range(ntrees):
         print tree,":",nhalopertree[tree]
+    return halocat
 
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
