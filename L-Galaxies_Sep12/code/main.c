@@ -225,7 +225,7 @@ void SAM(int filenr)
 	    {
     		if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
 		  {
-		    printf("Construct galaxies %d, %d, %d\n",filenr,treenr,halonr);
+		    //printf("Construct galaxies %d, %d, %d\n",filenr,treenr,halonr);
 		    construct_galaxies(filenr, treenr, halonr);
 		  }
 	    }
@@ -641,7 +641,7 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
 #ifdef STAR_FORMATION_HISTORY
   double age_in_years;
 #endif
-  printf("halonr = %d\n",halonr);
+  //printf("halonr = %d\n",halonr);
   // Eddington time in code units
   // Bizarrely, code units are UnitTime_in_s/Hubble_h
   t_Edd=1.42e16*Hubble_h/UnitTime_in_s;
