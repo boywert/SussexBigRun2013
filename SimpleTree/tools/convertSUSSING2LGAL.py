@@ -148,6 +148,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = len(fulltree[treenr])
     fulltree[treenr].append(hid)
+    print hid
     progid = halocat[hid]["FirstProgenitor"]
     if progid > -1:
         (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
