@@ -266,7 +266,7 @@ def outputtrees(halocat2):
 
     fp.close()
 
-#halo = readAHFascii()
-#ahf = readSussingtree(SUSSINGtree,halo)
-#outputtrees(ahf)
+halo = readAHFascii()
+ahf = readSussingtree(SUSSINGtree,halo)
+outputtrees(ahf)
 
