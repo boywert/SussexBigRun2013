@@ -109,7 +109,7 @@ def readAHFascii():
 
 def readSussingtree(SUSSINGtree,halocat):
     print "Copy halo catalogue ..."
-    halocopy = copy.deepcopy(halocat)
+    halocopy = copy.copy(halocat)
     print "Read tree file ..."
     f = open(SUSSINGtree)
     line = f.read().splitlines()
@@ -161,7 +161,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
     return (halocat,fulltree)
 
 def outputtrees(halocat2):
-    halocat = copy.deepcopy(halocat2)
+    halocat = copy.copy(halocat2)
     ntrees = 0
     nhalos = 0
     nhalopertree = []
