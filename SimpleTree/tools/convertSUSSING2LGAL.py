@@ -215,7 +215,7 @@ def outputtrees(halocat2):
                         halocat[refhalo]["NextHalo"] = halo["NextHalo"]
                     refhalo = curhalo
                     curhalo= halocat[curhalo]["NextHalo"]
-                halo["MainHalo"] = halo["ID"]
+                halo["NextHalo"] = -1
             if(halo["MainHalo"] > -1):
                 buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
             else:
