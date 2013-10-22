@@ -143,37 +143,37 @@ def readSussingtree(SUSSINGtree,halocat):
                     prevhalo = progid
                     count -= 1
 
-def treecrowler(hid,halocat,treenr,halonr):
+def treecrowler(hid,halocat,treenr,halonr,fulltree):
     halocat[hid]["TreeNr"] = treenr
     halocat[hid]["HaloNr"] = halonr
-    if(previd > -1):
-        halocat[previd]["NextinTree"] = hid
-    previd = hid
+    fulltree[treenr].append(hid)
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
     if progid > -1:
         halonr += 1
-        (lastid,halocat) = treecrowler(progid,halocat,treenr,halonr)
+        (lastid,halocat,fulltree) = treecrowler(progid,halocat,treenr,halonr,fulltree)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
         halonr += 1
-        (lastid,halocat) = treecrowler(nextprog,halocat,treenr,halonr)
-    return (lastid,halocat)
+        (lastid,halocat,fulltree) = treecrowler(nextprog,halocat,treenr,halonr,fulltree)
+    return (lastid,halocat,fulltree)
 
 def outputtrees(halocat):
     ntrees = 0
     nhalos = 0
     nhalopertree = {}
     firsthalointree = {}
+    fulltree = {}
     print "start outputting trees"
     for haloid in halocat.iterkeys():
         halo = halocat[haloid]
-        if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1):
+        if(halo["SnapNum"] == 61) & (halo["MainHalo"] == -1) & (halo["FirstProgenitor"] > -1):
             curid = haloid
             count = 0
             previd = -1
+            fulltree[ntrees] = []
             while curid > -1:
-                (count,halocat) = treecrowler(curid,halocat,ntrees,count)
+                (count,halocat,fulltree) = treecrowler(curid,halocat,ntrees,count,fulltree)
                 curid = halocat[curid]["NextHalo"]
             if count > 0:
                 nhalopertree[ntrees] = count+1
@@ -186,13 +186,8 @@ def outputtrees(halocat):
     for tree in range(ntrees):
         print tree,":",nhalopertree[tree]
     for tree in range(ntrees):
-        ref = firsthalointree[tree]
-        count = 0
-        while ref > -1:
-            if count != halocat[ref]["HaloNr"]:
-                print tree,":",ref,"(",count,":",halocat[ref]["HaloNr"],")"
-            ref = halocat[ref]["NextinTree"]
-            count += 1
+        for hid in fulltree[tree]:
+            print hid
 
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
