@@ -19,8 +19,8 @@ LastFile              0
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-OutputDir           ../SimpleTree/output/
-SimulationDir       ../SimpleTree/
+OutputDir           /scratch/datasetI/outputs/
+SimulationDir         /scratch/datasetI/
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
 %----------- Unscaled MS-7 -----------------------
