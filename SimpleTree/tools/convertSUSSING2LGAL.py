@@ -189,11 +189,11 @@ def outputtrees(halocat):
         ref = firsthalointree[tree]
         count = 0
         while ref > -1:
-            print tree,":",ref,"(",count,":",halocat[ref]["Halonr"],")"
+            print tree,":",ref,"(",count,":",halocat[ref]["HaloNr"],")"
             ref = halocat[ref]["NextinTree"]
             count += 1
 
-halo = readAHFascii()
-ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf)
+#halo = readAHFascii()
+#ahf = readSussingtree(SUSSINGtree,halo)
+#outputtrees(ahf)
 
