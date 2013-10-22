@@ -174,11 +174,12 @@ def outputtrees(halocat):
             fulltree[ntrees] = []
             while curid > -1:
                 (count,halocat,fulltree) = treecrowler(curid,halocat,ntrees,count,fulltree)
+                count+=1
                 curid = halocat[curid]["NextHalo"]
             if count > 0:
-                nhalopertree[ntrees] = count+1
+                nhalopertree[ntrees] = len(fulltree[ntrees])
                 firsthalointree[ntrees] = haloid
-                nhalos += count+1
+                nhalos += len(fulltree[ntrees])
                 ntrees += 1
 
     print "Ntrees:",ntrees
