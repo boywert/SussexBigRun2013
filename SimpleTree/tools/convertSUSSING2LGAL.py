@@ -200,8 +200,6 @@ def outputtrees(halocat2):
             count += 1
         for hid in fulltree[tree]:
             halo = halocat[hid]
-            if(halo["MainHalo"] == -1):
-                halo["MainHalo"] = halo["ID"]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
@@ -218,7 +216,10 @@ def outputtrees(halocat2):
                     refhalo = curhalo
                     curhalo= halocat[curhalo]["NextHalo"]
                 halo["MainHalo"] = halo["ID"]
-            buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
+            if(halo["MainHalo"] > -1):
+                buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
+            else:
+                buffer = struct.pack("i",int(maptree[halo["ID"]]))
             fp.write(buffer)
             if halo["NextHalo"] not in maptree:
                 print halo
@@ -258,7 +259,7 @@ def outputtrees(halocat2):
 
     fp.close()
 
-halo = readAHFascii()
-ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf)
+#halo = readAHFascii()
+#ahf = readSussingtree(SUSSINGtree,halo)
+#outputtrees(ahf)
 
