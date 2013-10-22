@@ -158,7 +158,7 @@ def treecrowler(hid,halocat,treenr,halonr):
     if nextprog > -1:
         halonr += 1
         (lastid,halocat) = treecrowler(nextprog,halocat,treenr,halonr)
-    return (lastid,prev,halocat)
+    return (lastid,halocat)
 
 def outputtrees(halocat):
     ntrees = 0
