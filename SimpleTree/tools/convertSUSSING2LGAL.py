@@ -27,7 +27,7 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-prefid = -1
+previd = -1
 
 def readAHFascii():
     halocat = {}
