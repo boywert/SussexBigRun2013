@@ -148,10 +148,12 @@ def treecrowler(hid,halocat,treenr,halonr):
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
     if progid > -1:
-        lastid = treecrowler(progid,halocat,treenr,halonr+1)
+        halonr += 1
+        lastid = treecrowler(progid,halocat,treenr,halonr)
     nextprog = halocat[hid]["NextProgenitor"]
     if nextprog > -1:
-        lastid = treecrowler(nextprog,halocat,treenr,halonr+1)
+        halonr += 1
+        lastid = treecrowler(nextprog,halocat,treenr,halonr)
     return lastid
 
 def outputtrees(halocat):
@@ -175,6 +177,7 @@ def outputtrees(halocat):
                 #firsthalointree[ntrees] = haloid
                 nhalos += count+1
                 ntrees += 1
+
     print "Ntrees:",ntrees
     print "Nhalos:",nhalos
 
