@@ -145,7 +145,7 @@ def readSussingtree(SUSSINGtree,halocat):
 
 def treecrowler(hid,halocat,treenr,halonr,fulltree):
     halocat[hid]["TreeNr"] = treenr
-    halocat[hid]["HaloNr"] = halonr
+    halocat[hid]["HaloNr"] = len(fulltree[treenr])
     fulltree[treenr].append(hid)
     progid = halocat[hid]["FirstProgenitor"]
     lastid = halonr
