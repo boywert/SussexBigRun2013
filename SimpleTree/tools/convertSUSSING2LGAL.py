@@ -13,7 +13,7 @@ global m2km
 global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
-global previd
+
 
 G = 6.67384e-11 # m^3/(kgs^2)
 m2Mpc = 1./3.08567758e22
@@ -28,7 +28,7 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/MergerTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-previd = -1
+
 
 def readAHFascii():
     halocat = {}
@@ -106,7 +106,7 @@ def readAHFascii():
     return halocat
 
 def readSussingtree(SUSSINGtree,halocat):
-    halocopy = halocat.copy()
+    halocopy = halocat.deepcopy()
     f = open(SUSSINGtree)
     line = f.read().splitlines()
     count = 0;
@@ -157,7 +157,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
     return (halocat,fulltree)
 
 def outputtrees(halocat2):
-    halocat = halocat2.copy()
+    halocat = halocat2.deepcopy()
     ntrees = 0
     nhalos = 0
     nhalopertree = []
@@ -204,6 +204,40 @@ def outputtrees(halocat2):
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["NextProgenitor"]]))
             fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["MainHalo"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
+            fp.write(buffer)
+            buffer = struct.pack("i",halo["Len"])
+            fp.write(buffer)
+            buffer = struct.pack("f",halo["Mvir"])
+            fp.write(buffer)
+            buffer = struct.pack("f",halo["Mvir"])
+            fp.write(buffer)
+            buffer = struct.pack("f",halo["Mvir"])
+            fp.write(buffer)
+            buffer = struct.pack("fff",halo["Pos"])
+            fp.write(buffer)
+            buffer = struct.pack("fff",halo["Vel"])
+            fp.write(buffer)
+            buffer = struct.pack("f",halo["VelDisp"])
+            fp.write(buffer)
+            buffer = struct.pack("f",halo["Vmax"])
+            fp.write(buffer)
+            buffer = struct.pack("fff",halo["Spin"])
+            fp.write(buffer)
+            buffer = struct.pack("q",0) #Mostboundid
+            fp.write(buffer)
+            buffer = struct.pack("i",halo["SnapNum"])
+            fp.write(buffer)
+            buffer = struct.pack("i",0) #FileNr
+            fp.write(buffer)
+            buffer = struct.pack("i",0) #Subhaloindex
+            fp.write(buffer)
+            buffer = struct.pack("f",0.0) #Subhalfmass
+            fp.write(buffer)
+
+
     fp.close()
 
 #halo = readAHFascii()
