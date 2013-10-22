@@ -27,7 +27,7 @@ G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
-SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LhaloTree"
+SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LHaloTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
 
 
