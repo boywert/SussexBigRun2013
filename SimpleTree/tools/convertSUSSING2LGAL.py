@@ -180,8 +180,7 @@ def outputtrees(halocat):
     print "Nhalos:",nhalos
     for tree in range(ntrees):
         print tree,":",nhalopertree[tree]
-    for tree in range(ntrees):
-        print
+
 #halo = readAHFascii()
 #ahf = readSussingtree(SUSSINGtree,halo)
 #outputtrees(ahf)
