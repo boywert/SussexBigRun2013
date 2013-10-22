@@ -164,8 +164,6 @@ def treecrowler(hid,halocat,treenr,fulltree):
 def outputtrees(halocat2):
     halocat = copy.copy(halocat2)
     ntrees = 0
-    nhalos = 0
-    nhalopertree = []
     cumnhalo = []
     fulltree = {}
     print "start outputting trees"
@@ -178,23 +176,44 @@ def outputtrees(halocat2):
                 (halocat,fulltree) = treecrowler(curid,halocat,ntrees,fulltree)
                 curid = halocat[curid]["NextHalo"]
             if len(fulltree[ntrees]) > 0:
-                nhalopertree.append(len(fulltree[ntrees]))
-                nhalos += len(fulltree[ntrees])
                 ntrees += 1
 
+    #GROUP TREES INTO BUSHES
+    newfulltree = {}
+    newntrees = 0
+    for tree in range(ntrees):
+        if(len(fulltree[tree]) > 0):
+            checked = 0
+            newfulltree[newntrees] = []
+            for hids in fulltree[tree]:
+                newfulltree[newntrees].append(hids)
+            while checked == 0:
+                for hid in fulltree[tree]:
+                    halo = halocat[hid]
+                    if halo["MainHalo"] not in fulltree[tree]:
+                        target = halo["MainHalo"]
+                        oldtree = halocat[target]["TreeNr"]
+                        for hids in fulltree[oldtree]:
+                            newfulltree[newntrees].append(hids)
+                        fulltree[oldtree] = []
+                        break
+                    if halo["NextHalo"] not in fulltree[tree]:
+                        target = halo["NextHalo"]
+                        oldtree = halocat[target]["TreeNr"]
+                        for hids in fulltree[oldtree]:
+                            newfulltree[newntrees].append(hids)
+                        fulltree[oldtree] = []
+                        break
+                    checked = 1
+            newntrees += 1
 
-     for tree in range(ntrees):
-         check = 0
-         while check == 0:
-             for hid in fulltree[tree]:
-                 halo = halocat[hid]
-                 if halo["MainHalo"] not in fulltree[tree]:
-                     target = halo["MainHalo"]
-                     oldtree = tree
-                     newtree = halocat[target]["TreeNr"]
-                     firsthalo = fulltree[oldtree]
-                     halocat[firsthalo] = newtree
-                
+    fulltree = newfulltree
+    ntrees = newntrees
+    nhalopertree = []
+    nhalos = 0
+    for tree in range(ntrees):
+        nhalopertree.append(len(fulltree[ntrees]))
+        nhalos += len(fulltree[ntrees])
 
        
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
