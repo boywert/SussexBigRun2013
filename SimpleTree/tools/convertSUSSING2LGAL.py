@@ -156,7 +156,8 @@ def treecrowler(hid,halocat,treenr,fulltree):
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
 
-def outputtrees(halocat):
+def outputtrees(halocat2):
+    halocat = halocat2.copy()
     ntrees = 0
     nhalos = 0
     nhalopertree = []
