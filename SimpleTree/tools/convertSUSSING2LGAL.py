@@ -189,7 +189,8 @@ def outputtrees(halocat):
         ref = firsthalointree[tree]
         count = 0
         while ref > -1:
-            print tree,":",ref,"(",count,":",halocat[ref]["HaloNr"],")"
+            if count != halocat[ref]["HaloNr"]:
+                print tree,":",ref,"(",count,":",halocat[ref]["HaloNr"],")"
             ref = halocat[ref]["NextinTree"]
             count += 1
 
