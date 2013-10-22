@@ -19,7 +19,7 @@ LastFile              0
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-OutputDir           ../SimpleTree/output/
+OutputDir           output/
 SimulationDir       ../SimpleTree/
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
