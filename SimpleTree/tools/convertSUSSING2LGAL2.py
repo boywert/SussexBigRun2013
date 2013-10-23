@@ -267,7 +267,7 @@ def outputtrees(halocat2):
                         else:
                             print halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"]
                             if halocat[target]["NextHalo"] > -1:
-                                print, "tree",halocat[halocat[target]["NextHalo"]]["TreeNr"]
+                                print "tree",halocat[halocat[target]["NextHalo"]]["TreeNr"]
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                            
                         insidecheck = 0
