@@ -185,6 +185,7 @@ def outputtrees(halocat2):
     newfulltree = {}
     newntrees = 0
     for tree in range(ntrees):
+        print "tree:",tree
         if(len(fulltree[tree]) > 0):
             checked = 0
             newfulltree[newntrees] = []
