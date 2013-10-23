@@ -85,6 +85,9 @@ def readAHFascii():
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
                 halocat[hid]["NextinTree"] = -1
+                halocat[hid]["HaloNr"] = -1
+                halocat[hid]["TreeNr"] = -1
+                
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
         #print haloc
@@ -198,19 +201,26 @@ def outputtrees(halocat2):
 
                 for hid in fulltree[tree]:
                     halo = halocat[hid]
-                    if halo["MainHalo"] not in maptree:
+                    if halo["MainHalo"] not in maptree: # -1 is in maptree
                         target = halo["MainHalo"]
                         oldtree = halocat[target]["TreeNr"]
-                        for hids in fulltree[oldtree]:
-                            newfulltree[newntrees].append(hids)
-                        fulltree[oldtree] = []
+                        if(oldtree > -1):
+                            for hids in fulltree[oldtree]:
+                                newfulltree[newntrees].append(hids)
+                            fulltree[oldtree] = []
+                        else:
+                            halo["NextHalo"] = -1
+                            halo["MainHalo"] = -1
                         break
-                    if halo["NextHalo"] not in maptree:
+                    if halo["NextHalo"] not in maptree: # -1 is in maptree
                         target = halo["NextHalo"]
                         oldtree = halocat[target]["TreeNr"]
-                        for hids in fulltree[oldtree]:
-                            newfulltree[newntrees].append(hids)
-                        fulltree[oldtree] = []
+                        if(oldtree > -1):
+                            for hids in fulltree[oldtree]:
+                                newfulltree[newntrees].append(hids)
+                            fulltree[oldtree] = []
+                        else:
+                            halo["NextHalo"] = halo[target]["NextHalo"]
                         break
                     checked = 1
             newntrees += 1
@@ -242,7 +252,6 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             maptree[hid] = count
             count += 1
-
 
         for hid in fulltree[tree]:
             halo = halocat[hid]
