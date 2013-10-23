@@ -230,8 +230,8 @@ def outputtrees(halocat2):
     nhalopertree = []
     nhalos = 0
     for tree in range(ntrees):
-        nhalopertree.append(len(fulltree[ntrees]))
-        nhalos += len(fulltree[ntrees])
+        nhalopertree.append(len(fulltree[tree]))
+        nhalos += len(fulltree[tree])
 
        
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
