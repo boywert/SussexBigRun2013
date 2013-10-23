@@ -294,7 +294,7 @@ def outputtrees(halocat2,fileout):
     unique = {}
     for tree in range(ntrees):
         for hid in fulltree[tree]:
-            unique{hid} = count
+            unique[hid] = count
             count += 1
 
     if count != len(unique):
