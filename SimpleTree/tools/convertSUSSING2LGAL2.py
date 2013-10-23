@@ -208,6 +208,8 @@ def outputtrees(halocat2):
                         print "change mainhalo ",halo["ID"],"=>",halo["MainHalo"]
                         target = halo["MainHalo"]
                         oldtree = halocat[target]["TreeNr"]
+                        print halo
+                        print halocat[target]
                         if(oldtree > -1):
                             for hids in fulltree[oldtree]:
                                 newfulltree[newntrees].append(hids)
