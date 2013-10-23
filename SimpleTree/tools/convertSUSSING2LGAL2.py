@@ -266,10 +266,10 @@ def outputtrees(halocat2):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
-                            if halocat[target]["NextHalo"] in maptree:
-                                print "T:",tree,"H:",hid," ",halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],"True"
-                            else:
-                                print "T:",tree,"H:",hid," ",halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],"False"
+                            #if halocat[target]["NextHalo"] in maptree:
+                            #    print "T:",tree,"H:",hid," ",halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],"True"
+                            #else:
+                            #    print "T:",tree,"H:",hid," ",halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],"False"
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                         insidecheck = 0
                         break
