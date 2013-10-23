@@ -210,7 +210,7 @@ def outputtrees(halocat2):
                     maptree[hid] = count
                     count += 1
                 
-                for hid in newfulltree[tree]:
+                for hid in newfulltree[newntrees]:
                     halo = halocat[hid]
                     if halo["ID"] == 48000000000594:
                         print halo
