@@ -87,6 +87,7 @@ def readAHFascii():
                 halocat[hid]["NextinTree"] = -1
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
+                halocat[hid]["movetonew"] = -1
                 
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
@@ -218,6 +219,7 @@ def outputtrees(halocat2):
                             for hids in fulltree[oldtree]:
                                 print "add ",hids,"to",newntrees
                                 newfulltree[newntrees].append(hids)
+                                halocat[hids]["movetonew"] = newntrees
                             fulltree[oldtree] = []
                         else:
                             halo["NextHalo"] = -1
@@ -232,6 +234,7 @@ def outputtrees(halocat2):
                         if(oldtree > -1):
                             for hids in fulltree[oldtree]:
                                 newfulltree[newntrees].append(hids)
+                                halocat[hids]["movetonew"] = newntrees
                             fulltree[oldtree] = []
                         else:
                             halo["NextHalo"] = halocat[target]["NextHalo"]
