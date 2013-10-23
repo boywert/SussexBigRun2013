@@ -265,7 +265,9 @@ def outputtrees(halocat2):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
+                            print halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],":",halocat[halocat[target]["NextHalo"]]["TreeNr"]
                             halo["NextHalo"] = halocat[target]["NextHalo"]
+                           
                         insidecheck = 0
                         break
                 if(insidecheck == 1):
@@ -295,13 +297,13 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             halo = halocat[hid]
             if (halo["MainHalo"] not in maptree):
-                print "error mainhalo  ", halo["MainHalo"] ,"not in ",tree
+                #print "error mainhalo  ", halo["MainHalo"] ,"not in ",tree
                 if halocat[halo["MainHalo"]]["TreeNr"] != -1:
-                    print halocat[halo["MainHalo"]]
+                #    print halocat[halo["MainHalo"]]
             if (halo["NextHalo"] not in maptree):
-                print "error nexthalo ", halo["NextHalo"] ,"not in ",tree
+                #print "error nexthalo ", halo["NextHalo"] ,"not in ",tree
                 if halocat[halo["NextHalo"]]["TreeNr"] != -1:
-                    print halocat[halo["NextHalo"]]
+                #    print halocat[halo["NextHalo"]]
 
 
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
