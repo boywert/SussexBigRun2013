@@ -185,6 +185,12 @@ def outputtrees(halocat2):
     #GROUP TREES INTO BUSHES
     newfulltree = {}
     newntrees = 0
+    oldmergetonew = []
+    newmergetonew = {}
+
+    for tree in range(ntrees):
+        oldmergetonew.append(-1)
+
     for tree in range(ntrees):
         print "tree:",tree
         if(len(fulltree[tree]) > 0):
@@ -209,21 +215,26 @@ def outputtrees(halocat2):
                         print "change mainhalo ",halo["ID"],"=>",halo["MainHalo"]
                         target = halo["MainHalo"]
                         oldtree = halocat[target]["TreeNr"]
-                        print halo
-                        print halocat[target]
-                        print "old tree",fulltree[oldtree]
-                        print "new tree",newfulltree[newntrees]
-                        if(len(fulltree[oldtree]) == 0):
-                            exit()
-                        if(oldtree > -1):
-                            for hids in fulltree[oldtree]:
+                        if(oldmergetonew[oldtree] == -1):
+                            if(oldtree > -1):
+                                oldmergetonew[oldtree] = newntrees
+                                for hids in fulltree[oldtree]:
+                                    print "add ",hids,"to",newntrees
+                                    newfulltree[newntrees].append(hids)
+                                    halocat[hids]["movetonew"] = newntrees
+                                fulltree[oldtree] = []
+                            else:
+                                halo["NextHalo"] = -1
+                                halo["MainHalo"] = -1
+                        else:
+                            srctree = oldmergetonew[oldtree]
+                            while srctree > -1:
+                                srctree = newmergetonew[srctree]
+                            for hid in newfulltree[srctree]:
                                 print "add ",hids,"to",newntrees
                                 newfulltree[newntrees].append(hids)
-                                halocat[hids]["movetonew"] = newntrees
-                            fulltree[oldtree] = []
-                        else:
-                            halo["NextHalo"] = -1
-                            halo["MainHalo"] = -1
+                            newmergetonew[srctree] = newntrees
+                            newfulltree[srctree] = []
                         insidecheck = 0
                         break
                     
@@ -231,17 +242,31 @@ def outputtrees(halocat2):
                         print "change nexthalo ",halo["ID"],"=>",halo["NextHalo"]
                         target = halo["NextHalo"]
                         oldtree = halocat[target]["TreeNr"]
-                        if(oldtree > -1):
-                            for hids in fulltree[oldtree]:
-                                newfulltree[newntrees].append(hids)
-                                halocat[hids]["movetonew"] = newntrees
-                            fulltree[oldtree] = []
+                        if(oldmergetonew[oldtree] == -1):
+                            if(oldtree > -1):
+                                oldmergetonew[oldtree] = newntrees
+                                for hids in fulltree[oldtree]:
+                                    print "add ",hids,"to",newntrees
+                                    newfulltree[newntrees].append(hids)
+                                    halocat[hids]["movetonew"] = newntrees
+                                fulltree[oldtree] = []
+                            else:
+                                halo["NextHalo"] = -1
+                                halo["MainHalo"] = -1
                         else:
-                            halo["NextHalo"] = halocat[target]["NextHalo"]
+                            srctree = oldmergetonew[oldtree]
+                            while srctree > -1:
+                                srctree = newmergetonew[srctree]
+                            for hid in newfulltree[srctree]:
+                                print "add ",hids,"to",newntrees
+                                newfulltree[newntrees].append(hids)
+                            newmergetonew[srctree] = newntrees
+                            newfulltree[srctree] = []
                         insidecheck = 0
                         break
                 if(insidecheck == 1):
                     checked = 1
+            newmergetonew[newntrees] = -1
             newntrees += 1
 
     fulltree = newfulltree
