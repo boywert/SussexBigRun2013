@@ -213,7 +213,7 @@ def outputtrees(halocat2,fileout):
                     maptree[hid] = count
                     count += 1
                 print tree,": trial:",countrep
-                if len(maptree) != len(newfulltree[newntrees]):
+                if len(maptree) != len(newfulltree[newntrees])+1:
                     print "INSIDE: dupplicate"
                     exit()
                 for hid in newfulltree[newntrees]:
@@ -309,7 +309,7 @@ def outputtrees(halocat2,fileout):
         for hid in fulltree[tree]:
             maptree[hid] = count
             count += 1
-        if len(fulltree[tree]) != len(maptree):
+        if len(fulltree[tree])+1 != len(maptree):
             print "There are dupplicated entries"
             print "Exit"
             exit()
