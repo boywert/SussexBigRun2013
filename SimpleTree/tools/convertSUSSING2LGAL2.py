@@ -295,10 +295,11 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             halo = halocat[hid]
             if (halo["MainHalo"] not in maptree):
-                print "error", halo["MainHalo"] ,"not in tree"
+                print "error", halo["MainHalo"] ,"not in ",tree
+                print halocat[halo["MainHalo"]]
             if (halo["NextHalo"] not in maptree):
-                print "error", halo["NextHalo"] ,"not in tree"
-       
+                print "error", halo["NextHalo"] ,"not in ",tree
+                print halocat[halo["NextHalo"]]
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
