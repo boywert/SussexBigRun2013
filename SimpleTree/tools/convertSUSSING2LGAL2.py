@@ -289,8 +289,18 @@ def outputtrees(halocat2,fileout):
             nhalos += len(newfulltree[tree])
             ntrees += 1
 
+    # check uniqueness
+    count = 0
+    unique = {}
+    for tree in range(ntrees):
+        for hid in fulltree[tree]:
+            unique{hid} = count
+            count += 1
 
-    
+    if count != len(unique):
+        print "trees are not isolated"
+        exit()
+
     fp = open(fileout,"wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
