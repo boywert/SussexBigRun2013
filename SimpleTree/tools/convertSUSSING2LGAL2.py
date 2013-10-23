@@ -220,7 +220,7 @@ def outputtrees(halocat2):
                                 newfulltree[newntrees].append(hids)
                             fulltree[oldtree] = []
                         else:
-                            halo["NextHalo"] = halo[target]["NextHalo"]
+                            halo["NextHalo"] = halocat[target]["NextHalo"]
                         break
                     checked = 1
             newntrees += 1
