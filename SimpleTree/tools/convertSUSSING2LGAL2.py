@@ -30,7 +30,7 @@ AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LHaloTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-
+FileOut = "/scratch/datasetI/treedata/trees_061.0"
 
 def readAHFascii():
     halocat = {}
@@ -165,7 +165,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
 
-def outputtrees(halocat2):
+def outputtrees(halocat2,fileout):
     halocat = copy.copy(halocat2)
     ntrees = 0
     cumnhalo = []
@@ -196,6 +196,7 @@ def outputtrees(halocat2):
         if(len(fulltree[tree]) > 0):
             checked = 0
             newfulltree[newntrees] = []
+            newmergetonew[newntrees] = -1
             for hids in fulltree[tree]:
                 newfulltree[newntrees].append(hids)
             fulltree[tree] = []
@@ -273,11 +274,8 @@ def outputtrees(halocat2):
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                         insidecheck = 0
                         break
-                if halo["ID"] == 48000000000594:
-                    print halo
                 if(insidecheck == 1):
                     checked = 1
-            newmergetonew[newntrees] = -1
             newntrees += 1
 
     nhalopertree = []
@@ -292,8 +290,8 @@ def outputtrees(halocat2):
             ntrees += 1
 
 
-
-    fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
+    
+    fp = open(fileout,"wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
     fp.write(buffer)
@@ -311,7 +309,10 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             maptree[hid] = count
             count += 1
-
+        if len(fulltree[tree]) != len(maptree):
+            print "There are dupplicated entries"
+            print "Exit"
+            exit()
         for hid in fulltree[tree]:
             halo = halocat[hid]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
@@ -367,5 +368,5 @@ def outputtrees(halocat2):
 
 halo = readAHFascii()
 ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf)
+outputtrees(ahf,FileOut)
 
