@@ -202,6 +202,7 @@ def outputtrees(halocat2,fileout):
             fulltree[tree] = []
             oldmergetonew[tree] = newntrees
             print "move oldtree:",tree,"=>",newntrees
+            countrep = 1
             while checked == 0:
                #print "Check tree ..."
                 count = 0
@@ -211,7 +212,10 @@ def outputtrees(halocat2,fileout):
                 for hid in newfulltree[newntrees]:
                     maptree[hid] = count
                     count += 1
-                
+                print tree,": trial:",countrep
+                if len(maptree) != len(newfulltree[newntrees]):
+                    print "INSIDE: dupplicate"
+                    exit()
                 for hid in newfulltree[newntrees]:
                     halo = halocat[hid]
                     if halo["MainHalo"] not in maptree: # -1 is in maptree
@@ -269,6 +273,7 @@ def outputtrees(halocat2,fileout):
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                         insidecheck = 0
                         break
+                countrep += 1
                 if(insidecheck == 1):
                     checked = 1
             newntrees += 1
