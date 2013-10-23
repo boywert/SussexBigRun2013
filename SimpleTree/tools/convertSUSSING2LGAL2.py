@@ -296,14 +296,14 @@ def outputtrees(halocat2):
             count += 1
         for hid in fulltree[tree]:
             halo = halocat[hid]
-            if (halo["MainHalo"] not in maptree):
-                #print "error mainhalo  ", halo["MainHalo"] ,"not in ",tree
-                if halocat[halo["MainHalo"]]["TreeNr"] != -1:
-                #    print halocat[halo["MainHalo"]]
-            if (halo["NextHalo"] not in maptree):
-                #print "error nexthalo ", halo["NextHalo"] ,"not in ",tree
-                if halocat[halo["NextHalo"]]["TreeNr"] != -1:
-                #    print halocat[halo["NextHalo"]]
+            # if (halo["MainHalo"] not in maptree):
+            #     #print "error mainhalo  ", halo["MainHalo"] ,"not in ",tree
+            #     if halocat[halo["MainHalo"]]["TreeNr"] != -1:
+            #     #    print halocat[halo["MainHalo"]]
+            # if (halo["NextHalo"] not in maptree):
+            #     #print "error nexthalo ", halo["NextHalo"] ,"not in ",tree
+            #     if halocat[halo["NextHalo"]]["TreeNr"] != -1:
+            #     #    print halocat[halo["NextHalo"]]
 
 
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
