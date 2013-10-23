@@ -266,6 +266,7 @@ def outputtrees(halocat2):
                                 newfulltree[srctree] = []
                         else:
                             print "T:",tree,"H:",hid," ",halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"]
+                            halo["NextHalo"] = halocat[target]["NextHalo"]
                         insidecheck = 0
                         break
                 if(insidecheck == 1):
