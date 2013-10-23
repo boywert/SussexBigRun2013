@@ -201,6 +201,7 @@ def outputtrees(halocat2,fileout):
                 newfulltree[newntrees].append(hids)
             fulltree[tree] = []
             oldmergetonew[tree] = newntrees
+            print "move oldtree:",tree,"=>",newntrees
             while checked == 0:
                #print "Check tree ..."
                 count = 0
@@ -236,6 +237,7 @@ def outputtrees(halocat2,fileout):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
+                            print "remove main halo"
                             halo["NextHalo"] = -1
                             halo["MainHalo"] = -1
                         insidecheck = 0
@@ -263,6 +265,7 @@ def outputtrees(halocat2,fileout):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
+                            print "forward halo"
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                         insidecheck = 0
                         break
