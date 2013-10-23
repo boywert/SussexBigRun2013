@@ -193,6 +193,7 @@ def outputtrees(halocat2):
                 newfulltree[newntrees].append(hids)
 
             while checked == 0:
+                print "Check tree ..."
                 count = 0
                 maptree = {}
                 maptree[-1] = -1
