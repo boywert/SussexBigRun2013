@@ -205,6 +205,7 @@ def outputtrees(halocat2):
                 for hid in fulltree[tree]:
                     halo = halocat[hid]
                     if halo["MainHalo"] not in maptree: # -1 is in maptree
+                        print "change ",halo["ID"],"=>",halo["MainHalo"]
                         target = halo["MainHalo"]
                         oldtree = halocat[target]["TreeNr"]
                         if(oldtree > -1):
@@ -218,6 +219,7 @@ def outputtrees(halocat2):
                         break
                     
                     if halo["NextHalo"] not in maptree: # -1 is in maptree
+                        print "change ",halo["ID"],"=>",halo["NextHalo"]
                         target = halo["NextHalo"]
                         oldtree = halocat[target]["TreeNr"]
                         if(oldtree > -1):
