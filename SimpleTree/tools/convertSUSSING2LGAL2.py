@@ -228,8 +228,11 @@ def outputtrees(halocat2):
                                 halo["MainHalo"] = -1
                         else:
                             srctree = oldmergetonew[oldtree]
+                            reftree = srctree
                             while srctree > -1:
+                                reftree = srctree
                                 srctree = newmergetonew[srctree]
+                            srctree = reftree
                             for hid in newfulltree[srctree]:
                                 print "add ",hids,"to",newntrees
                                 newfulltree[newntrees].append(hids)
@@ -255,8 +258,11 @@ def outputtrees(halocat2):
                                 halo["MainHalo"] = -1
                         else:
                             srctree = oldmergetonew[oldtree]
+                            reftree = srctree
                             while srctree > -1:
+                                reftree = srctree
                                 srctree = newmergetonew[srctree]
+                            srctree = reftree
                             for hid in newfulltree[srctree]:
                                 print "add ",hids,"to",newntrees
                                 newfulltree[newntrees].append(hids)
