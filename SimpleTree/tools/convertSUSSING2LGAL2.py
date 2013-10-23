@@ -69,12 +69,12 @@ def readAHFascii():
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
                 # use Peebles lambdaE definition to find angular momentum
-                halocat[hid]["Ep"] = halo[38]
-                halocat[hid]["Ek"] = halo[39]
+                #halocat[hid]["Ep"] = halo[38]
+                #halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
-                halocat[hid]["LambdaE"] = halo[20]
+                #halocat[hid]["LambdaE"] = halo[20]
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
-                halocat[hid]["TotalEnergy"] = total_energy
+                #halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
                 halocat[hid]["FirstProgenitor"] = -1
                 halocat[hid]["NextProgenitor"] = -1
@@ -84,7 +84,7 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-                halocat[hid]["NextinTree"] = -1
+                #halocat[hid]["NextinTree"] = -1
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
@@ -219,9 +219,9 @@ def outputtrees(halocat2):
                             if(oldmergetonew[oldtree] == -1):
                                 oldmergetonew[oldtree] = newntrees
                                 for hids in fulltree[oldtree]:
-                                    print "add ",hids,"to",newntrees
+                                    #print "add ",hids,"to",newntrees
                                     newfulltree[newntrees].append(hids)
-                                    halocat[hids]["movetonew"] = newntrees
+                                    #halocat[hids]["movetonew"] = newntrees
                                 fulltree[oldtree] = []
                             else:
                                 srctree = oldmergetonew[oldtree]
@@ -231,7 +231,7 @@ def outputtrees(halocat2):
                                     srctree = newmergetonew[srctree]
                                 srctree = reftree
                                 for hids in newfulltree[srctree]:
-                                    print "add ",hids,"to",newntrees
+                                    #print "add ",hids,"to",newntrees
                                     newfulltree[newntrees].append(hids)
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
@@ -250,7 +250,7 @@ def outputtrees(halocat2):
                                 for hids in fulltree[oldtree]:
                                     #print "add ",hids,"to",newntrees
                                     newfulltree[newntrees].append(hids)
-                                    halocat[hids]["movetonew"] = newntrees
+                                    #halocat[hids]["movetonew"] = newntrees
                                 fulltree[oldtree] = []
                             else:
                                 srctree = oldmergetonew[oldtree]
@@ -300,6 +300,8 @@ def outputtrees(halocat2):
             if (halo["NextHalo"] not in maptree):
                 print "error", halo["NextHalo"] ,"not in ",tree
                 print halocat[halo["NextHalo"]]
+
+
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
@@ -308,7 +310,7 @@ def outputtrees(halocat2):
     buffer = struct.pack("i",int(nhalos))
     fp.write(buffer)
     for tree in range(ntrees):
-        print tree,":",nhalopertree[tree]
+        #print tree,":",nhalopertree[tree]
         buffer = struct.pack("i",int(nhalopertree[tree]))
         fp.write(buffer)
     for tree in range(ntrees):
