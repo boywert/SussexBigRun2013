@@ -236,6 +236,7 @@ def outputtrees(halocat2):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
+                            
                             halo["NextHalo"] = -1
                             halo["MainHalo"] = -1
                         insidecheck = 0
@@ -340,6 +341,11 @@ def outputtrees(halocat2):
             else:
                 buffer = struct.pack("i",int(maptree[halo["ID"]]))
             fp.write(buffer)
+            if halo["NextHalo"] not in maptree:
+                print halo
+                print halo["NextHalo"]
+                print fulltree[tree]
+                exit
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
             fp.write(buffer)
             buffer = struct.pack("i",halo["Len"])
