@@ -192,7 +192,7 @@ def outputtrees(halocat2):
         oldmergetonew.append(-1)
 
     for tree in range(ntrees):
-        print "tree:",tree
+        #print "tree:",tree
         if(len(fulltree[tree]) > 0):
             checked = 0
             newfulltree[newntrees] = []
@@ -265,7 +265,9 @@ def outputtrees(halocat2):
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
-                            print halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"],":",halocat[halocat[target]["NextHalo"]]["TreeNr"]
+                            print halo["NextHalo"],":",halocat[target]["TreeNr"],"=>",halocat[target]["NextHalo"]
+                            if halocat[target]["NextHalo"] > -1:
+                                print, "tree",halocat[halocat[target]["NextHalo"]]["TreeNr"]
                             halo["NextHalo"] = halocat[target]["NextHalo"]
                            
                         insidecheck = 0
