@@ -199,7 +199,7 @@ def outputtrees(halocat2):
             for hids in fulltree[tree]:
                 newfulltree[newntrees].append(hids)
             fulltree[tree] = []
-            oldmergetonew[oldtree] = newntrees
+            oldmergetonew[tree] = newntrees
             while checked == 0:
                #print "Check tree ..."
                 count = 0
