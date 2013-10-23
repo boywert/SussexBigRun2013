@@ -300,7 +300,7 @@ def outputtrees(halocat2):
                     print halocat[halo["MainHalo"]]
             if (halo["NextHalo"] not in maptree):
                 print "error nexthalo ", halo["NextHalo"] ,"not in ",tree
-                if halocat[halo["NextHalo"]]["TreeNR"] != -1:
+                if halocat[halo["NextHalo"]]["TreeNr"] != -1:
                     print halocat[halo["NextHalo"]]
 
 
