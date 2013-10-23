@@ -273,13 +273,16 @@ def outputtrees(halocat2):
             newmergetonew[newntrees] = -1
             newntrees += 1
 
-    fulltree = newfulltree
-    ntrees = newntrees
     nhalopertree = []
     nhalos = 0
-    for tree in range(ntrees):
-        nhalopertree.append(len(fulltree[tree]))
-        nhalos += len(fulltree[tree])
+    ntrees = 0
+    fulltree = {}
+    for tree in range(newntrees):
+        if len(newfulltree[tree]) > 0:
+            nhalopertree.append(len(newfulltree[tree]))
+            fulltree[ntrees] = newfulltree[tree]
+            nhalos += len(newfulltree[tree])
+            ntrees += 1
 
        
     fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
