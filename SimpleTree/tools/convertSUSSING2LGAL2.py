@@ -212,6 +212,8 @@ def outputtrees(halocat2):
                         print halocat[target]
                         print "old tree",fulltree[oldtree]
                         print "new tree",newfulltree[newntrees]
+                        if(len(fulltree[oldtree]) == 0):
+                            exit()
                         if(oldtree > -1):
                             for hids in fulltree[oldtree]:
                                 print "add ",hids,"to",newntrees
