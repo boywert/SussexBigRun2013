@@ -254,8 +254,8 @@ def outputtrees(halocat2):
                                     halocat[hids]["movetonew"] = newntrees
                                 fulltree[oldtree] = []
                             else:
-                                halo["NextHalo"] = -1
-                                halo["MainHalo"] = -1
+                                halo["NextHalo"] = halocat[target]["NextHalo"]
+                                
                         else:
                             srctree = oldmergetonew[oldtree]
                             reftree = srctree
