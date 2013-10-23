@@ -344,7 +344,7 @@ def outputtrees(halocat2):
             if halo["NextHalo"] not in maptree:
                 print tree
                 print halo
-                print halo["NextHalo"]
+                print halocat[halo["NextHalo"]]
                 print fulltree[tree]
                 exit()
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
