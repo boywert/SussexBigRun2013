@@ -230,7 +230,7 @@ def outputtrees(halocat2):
                                     reftree = srctree
                                     srctree = newmergetonew[srctree]
                                 srctree = reftree
-                                for hid in newfulltree[srctree]:
+                                for hids in newfulltree[srctree]:
                                     print "add ",hids,"to",newntrees
                                     newfulltree[newntrees].append(hids)
                                 newmergetonew[srctree] = newntrees
@@ -241,7 +241,7 @@ def outputtrees(halocat2):
                         insidecheck = 0
                         break
                     if halo["NextHalo"] not in maptree: # -1 is in maptree
-                        print "change nexthalo ",halo["ID"],"=>",halo["MainHalo"]
+                        print "change nexthalo ",halo["ID"],"=>",halo["NextHalo"]
                         target = halo["NextHalo"]
                         oldtree = halocat[target]["TreeNr"]
                         if(oldtree > -1):
@@ -259,7 +259,7 @@ def outputtrees(halocat2):
                                     reftree = srctree
                                     srctree = newmergetonew[srctree]
                                 srctree = reftree
-                                for hid in newfulltree[srctree]:
+                                for hids in newfulltree[srctree]:
                                     print "add ",hids,"to",newntrees
                                     newfulltree[newntrees].append(hids)
                                 newmergetonew[srctree] = newntrees
