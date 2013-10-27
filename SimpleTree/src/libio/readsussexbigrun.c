@@ -594,7 +594,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   hid_t ihalo;
   chalo.nHalos = 0;
   chalo.redshift = redshift;
-  chalo.mhalos= memmgr_malloc(0,"Halo Array");
+  chalo.chalos= memmgr_malloc(0,"Halo Array");
   i = 0;
   sprintf(partfile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
   sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
@@ -661,7 +661,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   chalo.nHalos += numHalos;
   new = chalo.nHalos*sizeof(make_catalogue_halo_t);
 
-  chalo.mhalos = memmgr_realloc(chalo.mhalos,new,old,memmgr_buff);
+  chalo.mhalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
 
   for(i=0; i<numHalos; i++) 
