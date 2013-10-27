@@ -139,11 +139,6 @@ typedef struct make_catalogue_halo {
   halo_profile_t Profile;
 } make_catalogue_halo_t;
 
-typedef struct make_catalogue_halo_wrapper {
-  uint64_t nHalos;
-  float redshift;
-  make_catalogue_halo_t *chalos;
-} make_catalogue_halo_wrapper_t;
 
 typedef struct halo_profile {
   uint32_t      nbins;
@@ -178,6 +173,13 @@ typedef struct halo_profile {
   float        *Z_gas_sh;
   float        *Z_star_sh;
 } halo_profile_t;
+
+typedef struct make_catalogue_halo_wrapper {
+  uint64_t nHalos;
+  float redshift;
+  make_catalogue_halo_t *chalos;
+} make_catalogue_halo_wrapper_t;
+
 
 
 
