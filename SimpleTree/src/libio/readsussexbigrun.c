@@ -661,7 +661,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   chalo.nHalos += numHalos;
   new = chalo.nHalos*sizeof(make_catalogue_halo_t);
 
-  chalo.mhalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
+  chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
 
   for(i=0; i<numHalos; i++) 
