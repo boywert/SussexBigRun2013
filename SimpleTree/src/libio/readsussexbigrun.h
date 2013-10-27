@@ -77,6 +77,42 @@ typedef struct halo {
 
 #define halo_t_size 184
 
+
+typedef struct halo_profile {
+  uint32_t      nbins;
+  uint32_t      numColumns;
+  float        *r;
+  uint32_t     *npart;
+  float        *M_in_r;
+  float        *ovdens;
+  float        *dens;
+  float        *vcirc;
+  float        *vesc;
+  float        *sigv;
+  float        *Lx;
+  float        *Ly;
+  float        *Lz;
+  float        *b;
+  float        *c;
+  float        *Eax;
+  float        *Eay;
+  float        *Eaz;
+  float        *Ebx;
+  float        *Eby;
+  float        *Ebz;
+  float        *Ecx;
+  float        *Ecy;
+  float        *Ecz;
+  float        *Ekin;
+  float        *Epot;
+  float        *M_gas;
+  float        *M_star;
+  float        *u_gas;
+  float        *Z_gas_sh;
+  float        *Z_star_sh;
+} halo_profile_t;
+
+
 typedef struct make_catalogue_halo {
   uint32_t chunkid;
   uint32_t domainid;
@@ -139,40 +175,6 @@ typedef struct make_catalogue_halo {
   halo_profile_t Profile;
 } make_catalogue_halo_t;
 
-
-typedef struct halo_profile {
-  uint32_t      nbins;
-  uint32_t      numColumns;
-  float        *r;
-  uint32_t     *npart;
-  float        *M_in_r;
-  float        *ovdens;
-  float        *dens;
-  float        *vcirc;
-  float        *vesc;
-  float        *sigv;
-  float        *Lx;
-  float        *Ly;
-  float        *Lz;
-  float        *b;
-  float        *c;
-  float        *Eax;
-  float        *Eay;
-  float        *Eaz;
-  float        *Ebx;
-  float        *Eby;
-  float        *Ebz;
-  float        *Ecx;
-  float        *Ecy;
-  float        *Ecz;
-  float        *Ekin;
-  float        *Epot;
-  float        *M_gas;
-  float        *M_star;
-  float        *u_gas;
-  float        *Z_gas_sh;
-  float        *Z_star_sh;
-} halo_profile_t;
 
 typedef struct make_catalogue_halo_wrapper {
   uint64_t nHalos;
