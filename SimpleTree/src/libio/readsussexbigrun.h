@@ -142,7 +142,7 @@ typedef struct make_catalogue_halo {
 typedef struct make_catalogue_halo_wrapper {
   uint64_t nHalos;
   float redshift;
-  make_catalogue_halo_t *chalo;
+  make_catalogue_halo_t *chalos;
 } make_catalogue_halo_wrapper_t;
 
 typedef struct halo_profile {
