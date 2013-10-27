@@ -718,7 +718,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       if(chalo.chalos[counthalo].npart != npart)
 	{
 	  printf("redshift: %3.3f\n",chalo.redshift);
-	  printf("domain %d\n",domain);
+	  printf("domain %d\n",chunk);
 	  printf("haloid:%llu no:%ld local:%ld\n",chalo.chalos[counthalo].ID, counthalo, counthalo_local);
 	  printf("npart mismatch p:%d, h:%d\n",chalo.chalos[counthalo].npart,halo.npart);
 	  printf("Xc:%f, Yc:%f, Zc:%f\n",chalo.chalos[counthalo].Xc,chalo.chalos[counthalo].Yc,chalo.chalos[counthalo].Zc);
