@@ -616,7 +616,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 /* Use to read from RAW binary AHF */
 make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo, FILE *fppart, int chunk, int partition, make_catalogue_halo_wrapper_t chalo)
 {
-  uint64_t numHalos,counthalo,counthalo_local;
+  uint64_t numHalos,counthalo,counthalo_local,old_nHalos;
   order_uint64_t *maphalo;
   uint64_t numHaloFromPartFile;
   uint32_t numColumns;
@@ -660,6 +660,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
   counthalo = chalo.nHalos;
   counthalo_local = 0;
+  old_nHalos = chalo.nHalos;
   old = chalo.nHalos*sizeof(make_catalogue_halo_t);
   new = old + numHalos*sizeof(make_catalogue_halo_t);
   chalo.nHalos += numHalos;
@@ -679,20 +680,20 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
       /* maphalo */
       maphalo[i].ref = chalo.chalos[counthalo].ID;
-      maphalo[i].id = i;
+      maphalo[i].id = counthalo;
 
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
+
+      /* point to (long long unsigned)-1 if hosthalo = 0 */
+      if(chalo.chalos[counthalo].hostHalo == 0)
+	chalo.chalos[counthalo].hostHalo = NULLPOINT
+
       ReadUInt (fphalo, &(chalo.chalos[counthalo].numSubStruct), swap);    // numSubStruct(3)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
-
-      maxx = max(maxx,chalo.chalos[counthalo].Xc);
-      maxy = max(maxy,chalo.chalos[counthalo].Yc);
-      maxz = max(maxz,chalo.chalos[counthalo].Zc);
-
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VYc),          swap);    // VYc(10)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VZc),          swap);    // VZc(11)
@@ -774,9 +775,42 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo_local++;
     } // for(numHalos)
   printf("max = %f, %f, %f\n",maxx,maxy,maxz);
+
   /* Relabel ID and HostID */
-  qsort(maphalo, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
+  chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
+  
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
+  return chalo;
+}
+/* This function will map hostID to the ID we are using */
+/* The maphalo needs to be unsorted. I don't want to sort maphalo by id. -Boyd*/
+make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
+{
+  order_uint64_t *maphalo_sorted;
+  uint64_t i,hostid_unique_el,startid,stopid;
+  startid = maphalo_unsorted[0];
+  stopid = maphalo_unsorted[numHalos-1];
+
+  qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
+  maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
+
+  for(i=startid;i<=stopid;i++)
+    {
+      if(chalo.chalos[i].hostHalo != NULLPOINT)
+	{
+	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
+	  if(hostid_unique_el != NULLPOINT)
+	    {
+	      chalo.chalos[i].hostHalo = chalo.chalo[maphalo_sorted[hostid_unique_el].id].refID;
+	    }
+	  else
+	    {
+	      printf("Cannot find halo:%llu\n",chalo.chalos[i].hostHalo);
+	      exit(1);
+	    }
+	}
+    }
+  
   return chalo;
 }
 

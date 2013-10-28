@@ -42,4 +42,5 @@ extern uint64_t search_m_halo_t_array_for_oriID( uint64_t searchID, uint64_t n_a
 extern uint64_t search_particlelist_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array );
 extern uint64_t search_m_particle_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array );
 extern uint64_t search_key_sort_t_for_ID( uint64_t searchID, uint64_t n_array ,const void *Array );
+extern uint64_t search_order_unint64_t_for_ref( uint64_t searchID, uint64_t n_array ,const void *Array );
 #endif

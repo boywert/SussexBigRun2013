@@ -489,3 +489,42 @@ uint64_t search_key_sort_t_for_ID( uint64_t searchID, uint64_t n_array ,const vo
     }
   return NULLPOINT;
 }
+
+
+uint64_t search_order_unint64_t_for_ref( uint64_t searchID, uint64_t n_array ,const void *Array )
+{
+  uint64_t middle,low,high;
+  order_uint64_t *pool = (order_uint64_t *) Array;
+  //printf("start search\n");
+  /*
+    for(i =0; i< n_array; i++)
+    {
+    printf("%llu\n",pool[i]);
+    }
+  */
+  low = 0;
+  high = n_array-1;
+
+  /* if(searchID < pool[low] || searchID > pool[high]) */
+  /*   { */
+  /*     return NULLPOINT; */
+  /*   } */
+  while ( low <= high && high < NULLPOINT) 
+    {
+      middle = ( low + high ) / 2;
+ 
+      if ( searchID == pool[ middle ].ref )
+	{
+	  return middle;
+	}
+      else if ( searchID < pool[ middle ].ref )
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  return NULLPOINT;
+}

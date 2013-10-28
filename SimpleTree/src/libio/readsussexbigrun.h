@@ -205,5 +205,6 @@ extern make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE 
 extern m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
+extern make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos);
 extern void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr);
 #endif
