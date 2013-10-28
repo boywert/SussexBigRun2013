@@ -12,9 +12,6 @@
 
 #define  pow2(x)   ((x)*(x))
 #define  pow3(x)   ((x)*(x)*(x))
-#define  min(x,y)  ((x)<(y) ?(x):(y))
-#define  max(x,y)  ((x)>(y) ?(x):(y))
-
 
 extern const double speed_of_light;
 extern const uint64_t NULLPOINT;

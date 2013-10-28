@@ -627,6 +627,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
+  float maxx;
   struct particle_buffer *pid_buff;;
   if(fphalo == NULL || fppart == NULL) 
     {
@@ -665,7 +666,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
   chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
-
+  maxx = 0.;
   for(i=0; i<numHalos; i++) 
     {
       /* Read halo properties from AHF_halos */
@@ -675,6 +676,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
+      maxx = max(maxx,chalo.chalos[counthalo].Xc);
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
@@ -752,7 +754,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  
+  printf("max = %f\n",maxx);
   /* Relabel ID and HostID */
   return chalo;
 }
