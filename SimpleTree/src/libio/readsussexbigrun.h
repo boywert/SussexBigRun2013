@@ -182,9 +182,6 @@ typedef struct make_catalogue_halo_wrapper {
   make_catalogue_halo_t *chalos;
 } make_catalogue_halo_wrapper_t;
 
-
-
-
 struct particle_buffer
 {
   uint64_t ID;
@@ -207,4 +204,5 @@ extern make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE 
 extern m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo);
 extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
+extern void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr);
 #endif

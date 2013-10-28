@@ -1,5 +1,13 @@
-NPARTS		64000000000	#number of particles
-BOXSIZE		244000.0		#kpc/h
-CUBEP3MDOMAINS	10
-INPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130329_10_4000_244Mpc_ext2_test/results
-OUTPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130329_10_4000_244Mpc_ext2_test/mergertree
+NPARTSPERDIM	1728		#number of particles per dim
+BOXSIZE		47000.0		#kpc/h
+CUBEP3MDOMAINS	6
+
+# for making merger tree stuff
+INPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results
+OUTPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/mergertree
+
+# for convert chunks to cubep3m
+NCHUNKSPERDIM	3
+CHUNK_MPI	8
+CUBEP3MOUT	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results_fix
+CHUNKDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/AHF_halos

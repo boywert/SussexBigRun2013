@@ -755,3 +755,21 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   /* Relabel ID and HostID */
   return chalo;
 }
+
+void free_make_catalogue_halo_wrapper_t(make_catalogue_halo_wrapper_t *ptr)
+{
+  hid_t i,j;
+  char buff[memmgr_max_str];
+  for(j=0;j<1;j++)
+    {
+      sprintf(buff,"Particle: Halo Array");
+      for(i=0;i<ptr[j].nHalos;i++)
+	{
+	  memmgr_free(ptr[j].chalos[i].Particles,ptr[j].chalos[i].npart*sizeof(particlelist_t),buff);
+	}
+      sprintf(buff,"Halo Array");
+      memmgr_free(ptr[j].chalos,ptr[j].nHalos*sizeof(make_catalogue_halo_t),buff);
+    }
+  sprintf(buff,"Halo wrapper");
+  memmgr_free(ptr,sizeof(make_catalogue_halo_t),buff);
+}

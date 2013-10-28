@@ -10,6 +10,9 @@
 #include "readconfig.h"
 #define MAXSTRING 1024
 
+#define  pow2(x)   ((x)*(x))
+#define  pow3(x)   ((x)*(x)*(x))
+
 extern const double speed_of_light;
 extern const uint64_t NULLPOINT;
 extern const uint64_t MAXUSEABLE;
