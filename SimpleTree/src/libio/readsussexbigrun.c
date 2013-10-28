@@ -688,13 +688,13 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
 
       maxx = max(maxx,chalo.chalos[counthalo].Xc);
       maxy = max(maxy,chalo.chalos[counthalo].Yc);
       maxz = max(maxz,chalo.chalos[counthalo].Zc);
 
-      ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
-      ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VYc),          swap);    // VYc(10)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VZc),          swap);    // VZc(11)
