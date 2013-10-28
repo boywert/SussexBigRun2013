@@ -670,7 +670,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
     {
       /* Read halo properties from AHF_halos */
       ReadULong(fphalo, &(chalo.chalos[counthalo].ID),           swap);    // ID(1)
-      printf("HID: %llu\n",chalo.chalos[counthalo].ID);
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].numSubStruct), swap);    // numSubStruct(3)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
