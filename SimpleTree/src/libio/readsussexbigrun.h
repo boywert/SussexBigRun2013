@@ -115,7 +115,7 @@ typedef struct halo_profile {
 
 typedef struct make_catalogue_halo {
   uint32_t chunkid;
-  uint32_t domainid;
+  int domainid;
   uint64_t refID; 		/* Snap$15+chunk$10+mpi$7+id_order */
   float   Xc_abs;
   float   Yc_abs;
