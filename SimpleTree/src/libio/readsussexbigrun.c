@@ -600,10 +600,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
   fphalo = fopen(halofile,"rb");
   fppart = fopen(partfile,"rb");
+  printf("Halo: %s\n",halofile);
+  printf("Part: %s\n",partfile);  
   if(fphalo && fphalo)
     {
-      printf("Halo: %s not exist\n",halofile);
-      printf("Part: %s not exist\n",partfile);
       chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, chunk, i, chalo);
       fclose(fphalo);
       fclose(fppart);
