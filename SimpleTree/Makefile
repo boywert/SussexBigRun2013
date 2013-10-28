@@ -45,6 +45,6 @@ test: $(TESTSRCS) $(HEADERS) $(LIBSRC)
 
 chunk2cubep3m: $(CCCSRCS) $(HEADERS) $(LIBSRC)
 	mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $(TESTSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/chunk2cubep3m
+	$(CC) $(CFLAGS) $(CCCSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/chunk2cubep3m
 clean:
 	rm -f $(BINDIR)/*
