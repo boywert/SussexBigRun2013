@@ -76,6 +76,7 @@ int main(int argc,char **argv)
 	}
       for(l=0;l<pow3(chunk_per_dim);l++)
 	{
+	  printf("Redshift: %f\n", snap1);
 	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
