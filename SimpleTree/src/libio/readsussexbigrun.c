@@ -585,7 +585,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 
 
 
-make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chunk(char *folder, float redshift, int chunk )
+make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chunk(char *folder, float redshift, int snapid, int chunk )
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -594,6 +594,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   hid_t ihalo;
   chalo.nHalos = 0;
   chalo.redshift = redshift;
+  chalo.snapid = snapid;
   chalo.chalos= memmgr_malloc(0,"Halo Array");
   for(i=0;i<chunk_mpi;i++)
     {
@@ -716,6 +717,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Phi0),         swap);    // Phi0(42)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].cNFW),         swap);    // cNFW(43)
 
+      /* Specify other quantities */
+      chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
       /* Read nparts from AHF_particles */
       ReadULong(fppart, &(npart), swap);
 

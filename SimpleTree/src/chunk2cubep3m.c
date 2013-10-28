@@ -7,7 +7,7 @@ int main(int argc,char **argv)
   char command[1024],stringbuff[10];
   make_catalogue_halo_wrapper_t *halocatA;
   char memmgr_buff[memmgr_max_str];
-  double dt,snap1;
+  double dt,snap1,snapid1;
   hid_t ihalo;
   int i,j,k,l,tot_Snap;
   //int domain_per_dim;
@@ -68,6 +68,7 @@ int main(int argc,char **argv)
   for(i=start_snap;i<=tot_Snap;i++)
     {
       snap1 = snaplist[i];
+      snapid1 = i;
       sprintf(memmgr_buff,"Halo wrapper");
       if(mpi_rank==0)
 	{
@@ -80,9 +81,8 @@ int main(int argc,char **argv)
 	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
-	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 	      halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
-	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,l);
+	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,snapid1,l);
 	      free_make_catalogue_halo_wrapper(halocatA);
 	    }
 	}
