@@ -619,6 +619,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo, FILE *fppart, int chunk, int partition, make_catalogue_halo_wrapper_t chalo)
 {
   uint64_t numHalos,counthalo,counthalo_local;
+  order_uint64_t *maphalo;
   uint64_t numHaloFromPartFile;
   uint32_t numColumns;
   uint64_t i,size;
@@ -665,14 +666,21 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   new = old + numHalos*sizeof(make_catalogue_halo_t);
   chalo.nHalos += numHalos;
   new = chalo.nHalos*sizeof(make_catalogue_halo_t);
-
+  
   chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
   maxx = 0.;
+  /* use maphalo to map local IDs to Unique IDs */
+  maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
   for(i=0; i<numHalos; i++) 
     {
       /* Read halo properties from AHF_halos */
       ReadULong(fphalo, &(chalo.chalos[counthalo].ID),           swap);    // ID(1)
+
+      /* maphalo */
+      maphalo[i].ref = chalo.chalos[counthalo].ID;
+      maphalo[i].id = i;
+
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].numSubStruct), swap);    // numSubStruct(3)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
@@ -719,6 +727,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
       /* Specify other quantities */
       chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+      chalo.chalos[counthalo].domainid = -1;
+      chalo.chalos[counthalo].chunkid = chunk;
+
       /* Read nparts from AHF_particles */
       ReadULong(fppart, &(npart), swap);
 
@@ -760,6 +771,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
     } // for(numHalos)
   printf("max = %f\n",maxx);
   /* Relabel ID and HostID */
+  qsort(maphalo, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
+  memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
 }
 

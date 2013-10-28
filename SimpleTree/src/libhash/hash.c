@@ -62,6 +62,19 @@ ptid_t m_particle_binary_search_and_insert_element_replace_exist(m_particle_wrap
   return list->npart;
 }
 
+int compare_order_uint64_t_by_ref(const void *v1, const void *v2)
+{
+    const order_uint64_t *u1 = v1;
+    const order_uint64_t *u2 = v2;
+    int ret;
+    if(u1->ref < u2->ref)
+      ret = -1;
+    else if(u1->ref > u2->ref)
+      ret = 1;
+    else if(u1->ref == u2->ref)
+      ret = 0;
+    return ret;
+}
 
 int compare_m_halo_t_by_host_halo(const void *v1, const void *v2)
 {
