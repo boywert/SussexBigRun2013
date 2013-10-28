@@ -630,7 +630,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
-  float maxx;
+  float maxx,maxy,maxz;
   struct particle_buffer *pid_buff;;
   if(fphalo == NULL || fppart == NULL) 
     {
@@ -670,6 +670,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
   maxx = 0.;
+  maxy = 0.;
+  maxz = 0.;
   /* use maphalo to map local IDs to Unique IDs */
   maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
   for(i=0; i<numHalos; i++) 
@@ -686,7 +688,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
+
       maxx = max(maxx,chalo.chalos[counthalo].Xc);
+      maxy = max(maxy,chalo.chalos[counthalo].Yc);
+      maxz = max(maxz,chalo.chalos[counthalo].Zc);
+
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
@@ -769,7 +775,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  printf("max = %f\n",maxx);
+  printf("max = %f, %f, %f\n",maxx,maxy,maxz);
   /* Relabel ID and HostID */
   qsort(maphalo, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
