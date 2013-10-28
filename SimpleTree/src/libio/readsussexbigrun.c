@@ -756,7 +756,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   return chalo;
 }
 
-void free_make_catalogue_halo_wrapper_t(make_catalogue_halo_wrapper_t *ptr)
+void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
 {
   hid_t i,j;
   char buff[memmgr_max_str];
