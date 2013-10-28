@@ -38,7 +38,6 @@ int main(int argc,char **argv)
       i=0;
       while(fscanf(fp,"%g",&(snaplist[i])) != EOF)
 	{
-	  //	  printf("snap:%d  %f\n",i,snaplist[i]);
 	  i++;
 	}
       fclose(fp);
@@ -79,7 +78,7 @@ int main(int argc,char **argv)
 	{
 	  if(l%mpi_nodes == mpi_rank)
 	    {
-	      printf("\treading domain %d by rank:%d\n",l,mpi_rank);
+	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 	      halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,l);
