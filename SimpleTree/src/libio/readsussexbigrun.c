@@ -686,7 +686,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
       /* point to (long long unsigned)-1 if hosthalo = 0 */
       if(chalo.chalos[counthalo].hostHalo == 0)
-	chalo.chalos[counthalo].hostHalo = NULLPOINT
+	chalo.chalos[counthalo].hostHalo = NULLPOINT;
 
       ReadUInt (fphalo, &(chalo.chalos[counthalo].numSubStruct), swap);    // numSubStruct(3)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
@@ -788,8 +788,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 {
   order_uint64_t *maphalo_sorted;
   uint64_t i,hostid_unique_el,startid,stopid;
-  startid = maphalo_unsorted[0];
-  stopid = maphalo_unsorted[numHalos-1];
+  startid = maphalo_unsorted[0].id;
+  stopid = maphalo_unsorted[numHalos-1].id;
 
   qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
