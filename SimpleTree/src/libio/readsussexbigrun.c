@@ -790,7 +790,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
 {
   order_uint64_t *maphalo_sorted;
-  uint64_t i,count,hostid_unique_el,startid,stopid;
+  uint64_t i,j,count,hostid_unique_el,startid,stopid;
   double dist_sq;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
