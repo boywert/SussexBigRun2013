@@ -1,5 +1,5 @@
 #include "readsussexbigrun.h"
-
+int compare_make_catalogue_halo_t_by_Mvir(const void *v1, const void *v2);
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
@@ -857,4 +857,17 @@ void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
     }
   sprintf(buff,"Halo wrapper");
   memmgr_free(ptr,sizeof(make_catalogue_halo_t),buff);
+}
+int compare_make_catalogue_halo_t_by_Mvir(const void *v1, const void *v2)
+{
+    const make_catalogue_halo_t *u1 = v1;
+    const make_catalogue_halo_t *u2 = v2;
+    int ret;
+    if(u1->Mvir < u2->Mvir)
+      ret =  -1;
+    else if(u1->Mvir > u2->Mvir)
+      ret = 1;
+    else if(u1->Mvir == u2->Mvir)
+      ret = 0;
+    return ret;
 }

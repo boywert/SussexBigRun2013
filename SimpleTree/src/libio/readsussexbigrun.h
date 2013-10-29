@@ -10,7 +10,6 @@
 #include "common_io.h"
 #include "../libhash/hash.h"
 #include "../libmemmgr/memmgr.h"
-#include "../libio/readsussexbigrun.h"
 #include "../treeformat.h"
 #include "../common.h"
 #include "mpi.h"

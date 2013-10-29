@@ -33,7 +33,6 @@ extern int compare_uint64_t(const void *v1, const void *v2);
 extern int compare_double(const void *v1, const void *v2);
 extern int compare_merit_t_by_merit_delucia2007(const void *v1, const void *v2);
 extern int compare_merit_t_by_Mvir(const void *v1, const void *v2);
-extern int compare_make_catalogue_halo_t_by_Mvir(const void *v1, const void *v2);
 extern int compare_order_uint64_t_by_ref(const void *v1, const void *v2);
 
 extern uint64_t search_uint64_t_array( uint64_t searchKey, uint64_t n_array ,const void *Array );
