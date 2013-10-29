@@ -793,7 +793,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   order_uint64_t *maphalo_sorted;
   uint64_t i,j,count,hostid_unique_el,startid,stopid;
   double dist_sq;
-  printf("start: make tree struct\n");
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
 
@@ -802,11 +801,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   count = 0;
   for(i=startid;i<=stopid;i++)
     {  
-      printf("%llu : %llu\n",chalo.chalos[i].hostHalo, chalo.chalos[i].ID);
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
-	  printf("\t%llu:%llu\n",hostid_unique_el,numHalos);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
 	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].refID;
@@ -818,7 +815,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	}
       count++;
     }
-  printf("End: making tree struct\n");
   return chalo;
 }
 
