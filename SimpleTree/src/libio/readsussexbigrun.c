@@ -800,7 +800,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
   count = 0;
   for(i=startid;i<=stopid;i++)
-    {  
+    { 
+      printf("%llu/%llu\n",i,stopid);
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
