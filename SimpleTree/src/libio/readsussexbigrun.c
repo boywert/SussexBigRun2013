@@ -819,6 +819,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 		  if(sqrt(dist_sq) < chalo.chalos[j].Rvir)
 		    chalo.chalos[i].hostHalo = chalo.chalos[j].ID;
 		}
+	      printf("Change host => %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	}
       count++;
