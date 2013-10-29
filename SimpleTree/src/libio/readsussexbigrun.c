@@ -1,5 +1,5 @@
 #include "readsussexbigrun.h"
-int compare_make_catalogue_halo_t_by_Mvir(const void *v1, const void *v2);
+int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
@@ -107,6 +107,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
   min_x = block_x*domain_width+buffer_width;
+
   max_x = (block_x+1)*domain_width-buffer_width;
   min_y = block_y*domain_width+buffer_width;
   max_y = (block_y+1)*domain_width-buffer_width;
@@ -591,7 +592,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   char halofile[MAXSTRING],partfile[MAXSTRING];
   make_catalogue_halo_wrapper_t chalo;
   int i;
-  hid_t ihalo;
+  hid_t ihalo,jhalo;
   double dist_sq;
   chalo.nHalos = 0;
   chalo.redshift = redshift;
@@ -612,12 +613,20 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
     }
   /* Check host halo for structure-infant halos */
   /* 1. Sort halos by Mvir  */
-  qsort(chalo.chalos,chalo.nHalos,sizeof(make_catalogue_halo_t), compare_make_catalogue_halo_t_by_Mvir);
+  qsort(chalo.chalos,chalo.nHalos,sizeof(make_catalogue_halo_t), compare_make_catalogue_halo_t_by_Mvir_reverse);
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].hostHalo == 0)
 	{
-	  
+	  chalo.chalos[ihalo].hostHalo = NULLPOINT;
+	  for(jhalo=ihalo-1;jhalo>=0 && jhalo!=NULLPOINT;jhalo--)
+	    {
+	      dist_sq = (chalo.chalos[ihalo].Xc-chalo.chalos[jhalo].Xc)*(chalo.chalos[ihalo].Xc-chalo.chalos[jhalo].Xc)
+		+(chalo.chalos[ihalo].Yc-chalo.chalos[jhalo].Yc)*(chalo.chalos[ihalo].Yc-chalo.chalos[jhalo].Yc)
+		+(chalo.chalos[ihalo].Zc-chalo.chalos[jhalo].Zc)*(chalo.chalos[ihalo].Zc-chalo.chalos[jhalo].Zc);
+	      if(sqrt(dist_sq) < chalo.chalos[jhalo].Rvir)
+		chalo.chalos[ihalo].hostHalo = chalo.chalos[jhalo].ID;
+	    }
 	}
     }
   return chalo;
@@ -858,7 +867,7 @@ void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
   sprintf(buff,"Halo wrapper");
   memmgr_free(ptr,sizeof(make_catalogue_halo_t),buff);
 }
-int compare_make_catalogue_halo_t_by_Mvir(const void *v1, const void *v2)
+int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
 {
     const make_catalogue_halo_t *u1 = v1;
     const make_catalogue_halo_t *u2 = v2;
