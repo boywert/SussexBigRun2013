@@ -682,8 +682,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       maphalo[i].ref = chalo.chalos[counthalo].ID;
       maphalo[i].id = counthalo;
 
+      /* Make unique ID */
+      chalo.chalos[counthalo].ID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+    
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
-
       /* point to (long long unsigned)-1 if hosthalo = 0 */
       if(chalo.chalos[counthalo].hostHalo == 0)
 	chalo.chalos[counthalo].hostHalo = NULLPOINT;
@@ -731,7 +733,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].cNFW),         swap);    // cNFW(43)
 
       /* Specify other quantities */
-      chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+      //chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
       chalo.chalos[counthalo].domainid = -1;
       chalo.chalos[counthalo].chunkid = chunk;
 
@@ -789,6 +791,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 {
   order_uint64_t *maphalo_sorted;
   uint64_t i,count,hostid_unique_el,startid,stopid;
+  double dist_sq;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
 
@@ -796,19 +799,32 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
   count = 0;
   for(i=startid;i<=stopid;i++)
-    {
-      //printf("%llu : %llu\n",chalo.chalos[i].ID,chalo.chalos[i].hostHalo);
+    {  
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
-	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].refID;
+	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].ID;
 	    }
 	  else
 	    {
 	      printf("Halo: %llu:%llu, Cannot find halo:%llu\n",count,i,chalo.chalos[i].hostHalo);
 	      printf("\tPos: %f,%f,%f\n",chalo.chalos[i].Xc,chalo.chalos[i].Yc,chalo.chalos[i].Zc);
+	      printf("Try to find HostHalo by Position\n");
+	      chalo.chalos[i].hostHalo = NULLPOINT;
+	      for(j=i-1;j>=startid;j--)
+		{
+		  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc) 
+		    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc)
+		    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc);
+		  if(sqrt(dist_sq) < chalo.chalos[j].Rvir)
+		    {
+		      chalo.chalos[i].hostHalo = chalo.chalos[j].ID;
+		      break;
+		    }
+		}
+	      printf("\tNew hostHalo = %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	}
       count++;
