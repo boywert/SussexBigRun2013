@@ -808,6 +808,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	  else
 	    {
 	      printf("Halo: %llu:%llu, Cannot find halo:%llu\n",count,i,chalo.chalos[i].hostHalo);
+	      printf("\tPos: %f,%f,%f\n",chalo.chalos[i].Xc,chalo.chalos[i].Yc,chalo.chalos[i].Zc)
 	    }
 	}
       count++;
