@@ -776,7 +776,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  printf("max = %f, %f, %f\n",maxx,maxy,maxz);
+  //printf("max = %f, %f, %f\n",maxx,maxy,maxz);
 
   /* Relabel ID and HostID */
   chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
