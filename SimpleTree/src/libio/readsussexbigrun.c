@@ -779,7 +779,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   //printf("max = %f, %f, %f\n",maxx,maxy,maxz);
 
   /* Relabel ID and HostID */
-  //chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
+  chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
   
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
@@ -805,6 +805,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
+	      printf("%llu\n",hostid_unique_el);
 	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].ID;
 	    }
 	  else
