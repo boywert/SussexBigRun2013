@@ -800,12 +800,13 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   count = 0;
   for(i=startid;i<=stopid;i++)
     {  
+      printf("%llu\n",chalo.chalos[i].hostHalo);
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
-	      printf("%llu\n",hostid_unique_el);
+	      printf("\t\t%llu\n",hostid_unique_el);
 	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].ID;
 	    }
 	  else
