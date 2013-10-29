@@ -781,7 +781,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   /* Relabel ID and HostID */
   if(numHalos > 0)
     chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
-  
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
 }
@@ -815,16 +814,16 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	    {
 	      printf("Host in buffer: %llu\n",hostid_unique_el);
 	      chalo.chalos[i].hostHalo = 0;
-	      for(j=i-1;j>=startid && j!=NULLPOINT;j--)
-		{
-		  //printf("loop for j: %llu  %llu-%llu\n",j,startid,i);
-		  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc)
-		    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc)
-		    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc);
-		  if(sqrt(dist_sq) < chalo.chalos[j].Rvir)
-		    chalo.chalos[i].hostHalo = chalo.chalos[j].ID;
-		}
-	      printf("Change host => %llu\n",chalo.chalos[i].hostHalo);
+	      /* for(j=i-1;j>=startid && j!=NULLPOINT;j--) */
+	      /* 	{ */
+	      /* 	  //printf("loop for j: %llu  %llu-%llu\n",j,startid,i); */
+	      /* 	  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc) */
+	      /* 	    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc) */
+	      /* 	    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc); */
+	      /* 	  if(sqrt(dist_sq) < chalo.chalos[j].Rvir) */
+	      /* 	    chalo.chalos[i].hostHalo = chalo.chalos[j].ID; */
+	      /* 	} */
+	      /* printf("Change host => %llu\n",chalo.chalos[i].hostHalo); */
 	    }
 	}
       count++;
