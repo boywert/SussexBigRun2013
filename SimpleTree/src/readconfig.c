@@ -125,11 +125,11 @@ void readconfig()
       
     }
   param_npart_box = (long long)npart * (long long)npart * (long long)npart;
-  printf("npart_box = %llu\n",npart_box);
-  printf("boxsize = %lf\n",boxsize);
-  printf("domain_per_dim = %d\n",domain_per_dim);
-  printf("INPUTDIR = %s\n",INPUTDIR);
-  printf("OUTPUTDIR = %s\n",OUTPUTDIR);
+  /* printf("npart_box = %llu\n",npart_box); */
+  /* printf("boxsize = %lf\n",boxsize); */
+  /* printf("domain_per_dim = %d\n",domain_per_dim); */
+  /* printf("INPUTDIR = %s\n",INPUTDIR); */
+  /* printf("OUTPUTDIR = %s\n",OUTPUTDIR); */
 
   fclose(fp);
 }
