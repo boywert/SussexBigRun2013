@@ -815,7 +815,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	    {
 	      printf("Host in buffer: %llu\n",hostid_unique_el);
 	      chalo.chalos[i].hostHalo = NULLPOINT;
-	      for(j=i-1;j>=startid;j--)
+	      for(j=i-1;j>=startid && j!=NULLPOINT;j--)
 		{
 		  printf("loop for j: %llu  %llu-%llu\n",j,startid,i);
 		  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc)
