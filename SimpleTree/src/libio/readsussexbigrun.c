@@ -809,22 +809,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	    }
 	  else
 	    {
-	      printf("Halo: %llu:%llu, Cannot find halo:%llu\n",count,i,chalo.chalos[i].hostHalo);
-	      printf("\tPos: %f,%f,%f\n",chalo.chalos[i].Xc,chalo.chalos[i].Yc,chalo.chalos[i].Zc);
-	      printf("Try to find HostHalo by Position\n");
 	      chalo.chalos[i].hostHalo = NULLPOINT;
-	      for(j=i-1;j>=startid;j--)
-		{
-		  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc) 
-		    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc)
-		    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc);
-		  if(sqrt(dist_sq) < chalo.chalos[j].Rvir)
-		    {
-		      chalo.chalos[i].hostHalo = chalo.chalos[j].ID;
-		      break;
-		    }
-		}
-	      printf("\tNew hostHalo = %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	}
       count++;
