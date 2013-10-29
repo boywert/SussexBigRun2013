@@ -795,21 +795,21 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
   double dist_sq;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
-  printf("Start make struct\n");
+  //printf("Start make struct\n");
   qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
   count = 0;
   for(i=startid;i<=stopid;i++)
     { 
-      printf("%llu/%llu\n",i,stopid);
+      //printf("%llu/%llu\n",i,stopid);
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
-	  printf("hostid = %llu\n",hostid_unique_el);
+	  //printf("hostid = %llu\n",hostid_unique_el);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
 	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].refID;
-	      printf("Found host %llu\n",chalo.chalos[i].hostHalo);
+	      //printf("Found host %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	  else
 	    {
@@ -817,7 +817,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	      chalo.chalos[i].hostHalo = NULLPOINT;
 	      for(j=i-1;j>=startid && j!=NULLPOINT;j--)
 		{
-		  printf("loop for j: %llu  %llu-%llu\n",j,startid,i);
+		  //printf("loop for j: %llu  %llu-%llu\n",j,startid,i);
 		  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc)
 		    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc)
 		    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc);
@@ -829,7 +829,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	}
       count++;
     }
-  printf("Stop make struct\n");
+  //printf("Stop make struct\n");
   return chalo;
 }
 
