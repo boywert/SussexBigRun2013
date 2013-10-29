@@ -598,7 +598,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   chalo.redshift = redshift;
   chalo.snapid = snapid;
   chalo.chalos= memmgr_malloc(0,"Halo Array");
-  for(i=0;i<chunk_mpi;i++)
+  for(i=0;i<param_chunk_mpi;i++)
     {
       sprintf(partfile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
       sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
@@ -614,6 +614,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   /* Check host halo for structure-infant halos */
   /* 1. Sort halos by Mvir  */
   qsort(chalo.chalos,chalo.nHalos,sizeof(make_catalogue_halo_t), compare_make_catalogue_halo_t_by_Mvir_reverse);
+  /* 2. Try to map structure-infant to distant < Rvir */
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].hostHalo == 0)
@@ -714,7 +715,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
-      maxx = min(maxx,chalo.chalos[counthalo].Xc);
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
@@ -755,8 +755,17 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
       /* Specify other quantities */
       chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+
       chalo.chalos[counthalo].domainid = -1;
       chalo.chalos[counthalo].chunkid = chunk;
+
+ 
+      
+      
+      /* Set structure tree to default (no relationship) */
+      chalo.chalos[counthalo].UpHalo = -1;
+      chalo.chalos[counthalo].DownHalo = -1;
+      chalo.chalos[counthalo].NextHalo = -1;
 
       /* Read nparts from AHF_particles */
       ReadULong(fppart, &(npart), swap);

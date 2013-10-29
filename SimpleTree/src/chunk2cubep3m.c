@@ -20,8 +20,8 @@ int main(int argc,char **argv)
   
   init_memmgr();
   readconfig();
-  sprintf(folder, CHUNKDIR);
-  sprintf(outputfolder,OUTPUTDIR);
+  sprintf(folder, param_CHUNKDIR);
+  sprintf(outputfolder,param_OUTPUTDIR);
   sprintf(snaplistFile,"halofinds");
   
   if(mpi_rank==0)
@@ -75,7 +75,7 @@ int main(int argc,char **argv)
 	  sprintf(command,"echo %d > status",i);
 	  system(command);
 	}
-      for(l=0;l<pow3(chunk_per_dim);l++)
+      for(l=0;l<pow3(param_chunk_per_dim);l++)
 	{
 	  if(mpi_rank == 0) printf("Redshift: %f\n", snap1);
 	  if(l%mpi_nodes == mpi_rank)

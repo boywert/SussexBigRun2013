@@ -1,11 +1,11 @@
 #include "readconfig.h"
 
-long long unsigned npart_box;
-double  boxsize;
-int  domain_per_dim,chunk_per_dim,chunk_mpi;
-char INPUTDIR[1024];
-char OUTPUTDIR[1024];
-char CHUNKDIR[1024];
+long long unsigned param_npart_box;
+double  param_boxsize,param_buffer_size;
+int  param_domain_per_dim,param_chunk_per_dim,param_chunk_mpi;
+char param_INPUTDIR[1024];
+char param_OUTPUTDIR[1024];
+char param_CHUNKDIR[1024];
 
 struct config
 {
@@ -28,37 +28,37 @@ void readconfig()
   nconf=0;
 
   config[nconf].type = 4;
-  config[nconf].pointer = &(CHUNKDIR[0]);
+  config[nconf].pointer = &(param_CHUNKDIR[0]);
   sprintf(config[nconf].IDENTIFIER,"CHUNKDIR");
   config[nconf].used = 0;
   nconf++;
   
   config[nconf].type = 4;
-  config[nconf].pointer = &(INPUTDIR[0]);
+  config[nconf].pointer = &(param_INPUTDIR[0]);
   sprintf(config[nconf].IDENTIFIER,"INPUTDIR");
   config[nconf].used = 0;
   nconf++;
 
   config[nconf].type = 4;
-  config[nconf].pointer = &(OUTPUTDIR[0]);
+  config[nconf].pointer = &(param_OUTPUTDIR[0]);
   sprintf(config[nconf].IDENTIFIER,"OUTPUTDIR");
   config[nconf].used = 0;
   nconf++;
   
   config[nconf].type = 1;
-  config[nconf].pointer = &domain_per_dim;
+  config[nconf].pointer = &param_domain_per_dim;
   sprintf(config[nconf].IDENTIFIER,"CUBEP3MDOMAINS");
   config[nconf].used = 0;
   nconf++;
 
   config[nconf].type = 1;
-  config[nconf].pointer = &chunk_per_dim;
+  config[nconf].pointer = &param_chunk_per_dim;
   sprintf(config[nconf].IDENTIFIER,"NCHUNKSPERDIM");
   config[nconf].used = 0;
   nconf++;
 
   config[nconf].type = 1;
-  config[nconf].pointer = &chunk_mpi;
+  config[nconf].pointer = &param_chunk_mpi;
   sprintf(config[nconf].IDENTIFIER,"CHUNK_MPI");
   config[nconf].used = 0;
   nconf++;
@@ -70,7 +70,7 @@ void readconfig()
   nconf++;
 
   config[nconf].type = 3;
-  config[nconf].pointer = &boxsize;
+  config[nconf].pointer = &param_boxsize;
   sprintf(config[nconf].IDENTIFIER,"BOXSIZE");
   config[nconf].used = 0;
   nconf++;
@@ -124,7 +124,7 @@ void readconfig()
 	}
       
     }
-  npart_box = (long long)npart * (long long)npart * (long long)npart;
+  param_npart_box = (long long)npart * (long long)npart * (long long)npart;
   printf("npart_box = %llu\n",npart_box);
   printf("boxsize = %lf\n",boxsize);
   printf("domain_per_dim = %d\n",domain_per_dim);
