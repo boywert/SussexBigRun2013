@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "libmemmgr/memmgr.h"
+#include "libio/readsussexbigrun.h"
 typedef uint64_t ptid_t;
 typedef uint64_t hid_t;
 
