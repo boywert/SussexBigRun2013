@@ -782,18 +782,19 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
 }
+
 /* This function will map hostID to the ID we are using */
 /* The maphalo needs to be unsorted. I don't want to sort maphalo by id. -Boyd*/
 make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
 {
   order_uint64_t *maphalo_sorted;
-  uint64_t i,hostid_unique_el,startid,stopid;
+  uint64_t i,count,hostid_unique_el,startid,stopid;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
 
   qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
-
+  count = 0;
   for(i=startid;i<=stopid;i++)
     {
       if(chalo.chalos[i].hostHalo != NULLPOINT)
@@ -805,10 +806,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	    }
 	  else
 	    {
-	      printf("Cannot find halo:%llu\n",chalo.chalos[i].hostHalo);
+	      printf("Halo: %llu:%llu, Cannot find halo:%llu\n",count,i,chalo.chalos[i].hostHalo);
 	      exit(1);
 	    }
 	}
+      count++;
     }
   
   return chalo;
