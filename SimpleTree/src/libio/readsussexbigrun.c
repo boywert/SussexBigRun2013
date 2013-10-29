@@ -592,6 +592,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   make_catalogue_halo_wrapper_t chalo;
   int i;
   hid_t ihalo;
+  double dist_sq;
   chalo.nHalos = 0;
   chalo.redshift = redshift;
   chalo.snapid = snapid;
@@ -607,6 +608,15 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, chunk, i, chalo);
 	  fclose(fphalo);
 	  fclose(fppart);
+	}
+    }
+  /* Check host halo for structure-infant halos */
+  /* 1. Sort halos by Mvir  */
+  for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
+    {
+      if(chalo.chalos[ihalo].hostHalo == 0)
+	{
+	  
 	}
     }
   return chalo;
@@ -668,7 +678,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   
   chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
-  maxx = 0.;
+  maxx = boxsize;
   maxy = 0.;
   maxz = 0.;
   /* use maphalo to map local IDs to Unique IDs */
@@ -694,6 +704,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
       ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
+      maxx = min(maxx,chalo.chalos[counthalo].Xc);
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
       ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
@@ -776,7 +787,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  //printf("max = %f, %f, %f\n",maxx,maxy,maxz);
+  printf("max = %f\n",maxx);
 
   /* Relabel ID and HostID */
   if(numHalos > 0)
@@ -790,14 +801,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
 {
   order_uint64_t *maphalo_sorted;
-  uint64_t i,j,count,hostid_unique_el,startid,stopid;
-  double dist_sq;
+  uint64_t i,hostid_unique_el,startid,stopid;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
   //printf("Start make struct\n");
   qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
-  count = 0;
   for(i=startid;i<=stopid;i++)
     { 
       //printf("%llu/%llu\n",i,stopid);
@@ -811,8 +820,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	      //printf("Found host %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	  else
-	    {
-	      printf("Host in buffer: %llu\n",hostid_unique_el);
+	    { 
+	      /* Set hosthalo = 0 for subhalos of mainhalos which are in buffer */
 	      chalo.chalos[i].hostHalo = 0;
 	      /* for(j=i-1;j>=startid && j!=NULLPOINT;j--) */
 	      /* 	{ */
@@ -826,7 +835,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	      /* printf("Change host => %llu\n",chalo.chalos[i].hostHalo); */
 	    }
 	}
-      count++;
     }
   //printf("Stop make struct\n");
   return chalo;
