@@ -649,7 +649,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
-  float maxx,maxy,maxz;
   struct particle_buffer *pid_buff;;
   if(fphalo == NULL || fppart == NULL) 
     {
@@ -689,9 +688,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   
   chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
   flag = 0;
-  maxx = boxsize;
-  maxy = 0.;
-  maxz = 0.;
+
   /* use maphalo to map local IDs to Unique IDs */
   maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
   for(i=0; i<numHalos; i++) 
