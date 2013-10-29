@@ -612,6 +612,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
     }
   /* Check host halo for structure-infant halos */
   /* 1. Sort halos by Mvir  */
+  qsort(chalo.chalos,chalo.nHalos,sizeof(make_catalogue_halo_t), compare_make_catalogue_halo_t_by_Mvir);
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].hostHalo == 0)
@@ -787,7 +788,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  printf("max = %f\n",maxx);
+  //printf("max = %f\n",maxx);
 
   /* Relabel ID and HostID */
   if(numHalos > 0)
