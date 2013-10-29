@@ -813,6 +813,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	    }
 	  else
 	    {
+	      printf("Host in buffer: %llu\n",hostid_unique_el);
 	      chalo.chalos[i].hostHalo = NULLPOINT;
 	      for(j=i-1;j>=startid;j--)
 		{
