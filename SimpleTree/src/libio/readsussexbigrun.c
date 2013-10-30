@@ -871,7 +871,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
   /* Relabel ID and HostID */
   if(numHalos > 0)
-    chalo = sussexbigrun_make_treestruct(chalo,maphalo,numHalos);
+    chalo = sussexbigrun_find_hostHalo(chalo,maphalo,numHalos);
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
 }
