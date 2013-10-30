@@ -587,7 +587,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   make_catalogue_halo_wrapper_t chalo;
   uint64_t *maphalo;
   int i;
-  hid_t ihalo,jhalo;
+  hid_t ihalo,jhalo,hostid;
   double dist_sq;
   int indx,indy,indz;
   int chunk_X, chunk_Y, chunk_Z;
@@ -654,9 +654,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	    }
 	}
     }
-  shift_X = chunk_X*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
-  shift_Y = chunk_Y*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
-  shift_Z = chunk_Z*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_X = chunk_X*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_Y = chunk_Y*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_Z = chunk_Z*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
 
   lowerbound[0] = chunk_X*param_boxsize/param_chunk_perdim;
   lowerbound[1] = chunk_Y*param_boxsize/param_chunk_perdim;
@@ -693,7 +693,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  chalo.chalos[ihalo].domainid = chalo.chalos[hostid].domainid;
 	}
     }
-  memmgr_free(maphalo,numHalos*sizeof(uint64_t),"Maphalo");
+  memmgr_free(maphalo,chalo.numHalos*sizeof(uint64_t),"Maphalo");
   return chalo;
 }
 
@@ -825,7 +825,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
  
       /* Set structure tree to default (no relationship) */
       chalo.chalos[counthalo].UpHalo = -1;
-      chalo.chalos[counthalo].DownHalo = -1;
+      chalo.chalos[counthalo].FirstDownHalo = -1;
       chalo.chalos[counthalo].NextHalo = -1;
 
       /* Read nparts from AHF_particles */
