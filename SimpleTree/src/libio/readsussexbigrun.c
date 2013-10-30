@@ -1,5 +1,7 @@
 #include "readsussexbigrun.h"
+/* Some private function for this file only */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
+/* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
@@ -389,14 +391,6 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   /* printf("total duplicate : %llu\n",countpart); */
   return mhalo;
 }
-/* incomplete */
-void sussexbigrun_makestruct_tree(m_halo_wrapper_t mhalo)
-{
-  ptid_t ip;
-  hid_t ih;
-  ip = 1;
-  ih = 1;
-}
 
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
@@ -591,9 +585,14 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
   make_catalogue_halo_wrapper_t chalo;
+  uint64_t *maphalo;
   int i;
   hid_t ihalo,jhalo;
   double dist_sq;
+  int indx,indy,indz;
+  int chunk_X, chunk_Y, chunk_Z;
+  float shift_X, shift_Y, shift_Z;
+  float upperbound[3],lowerbound[3];
   chalo.nHalos = 0;
   chalo.redshift = redshift;
   chalo.snapid = snapid;
@@ -611,12 +610,15 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  fclose(fppart);
 	}
     }
+  maphalo = memmgr_malloc(chalo.nHalos*sizeof(uint64_t),"Maphalo");
+
   /* Check host halo for structure-infant halos */
   /* 1. Sort halos by Mvir  */
   qsort(chalo.chalos,chalo.nHalos,sizeof(make_catalogue_halo_t), compare_make_catalogue_halo_t_by_Mvir_reverse);
   /* 2. Try to map structure-infant to distant < Rvir */
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
+      maphalo[chalo.chalos[ihalo].refID] = ihalo;
       if(chalo.chalos[ihalo].hostHalo == 0)
 	{
 	  chalo.chalos[ihalo].hostHalo = NULLPOINT;
@@ -626,10 +628,72 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 		+(chalo.chalos[ihalo].Yc-chalo.chalos[jhalo].Yc)*(chalo.chalos[ihalo].Yc-chalo.chalos[jhalo].Yc)
 		+(chalo.chalos[ihalo].Zc-chalo.chalos[jhalo].Zc)*(chalo.chalos[ihalo].Zc-chalo.chalos[jhalo].Zc);
 	      if(sqrt(dist_sq) < chalo.chalos[jhalo].Rvir)
-		chalo.chalos[ihalo].hostHalo = chalo.chalos[jhalo].ID;
+		{
+		  chalo.chalos[ihalo].hostHalo = chalo.chalos[jhalo].ID;
+		  chalo.chalos[ihalo].UpHalo = chalo.chalos[jhalo].refID;
+		  chalo.chalos[ihalo].NextHalo = chalo.chalos[jhalo].FirstDownHalo;
+		  chalo.chalos[jhalo].FirstDownHalo = chalo.chalos[ihalo].refID;
+		}
 	    }
 	}
     }
+  /* Determine chunk x,y,z */
+  for(indz=0;indz<param_chunk_per_dim;indz++)
+    {
+      for(indy=0;indy<param_chunk_per_dim;indy++)
+	{
+	  for(indx=0;indx<param_chunk_per_dim;indx++)
+	    {
+	      if(chunk == indz*pow2(param_chunk_per_dim)+indy*param_chunk_per_dim+indx)
+		{
+		  chunk_X = indx;
+		  chunk_Y = indy;
+		  chunk_Z = indz;
+		  break;
+		}
+	    }
+	}
+    }
+  shift_X = chunk_X*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_Y = chunk_Y*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_Z = chunk_Z*param_boxsize/param_chunk_perdim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+
+  lowerbound[0] = chunk_X*param_boxsize/param_chunk_perdim;
+  lowerbound[1] = chunk_Y*param_boxsize/param_chunk_perdim;
+  lowerbound[2] = chunk_Z*param_boxsize/param_chunk_perdim;
+  upperbound[0] = (chunk_X+1)*param_boxsize/param_chunk_perdim;
+  upperbound[1] = (chunk_Y+1)*param_boxsize/param_chunk_perdim;
+  upperbound[2] = (chunk_Z+1)*param_boxsize/param_chunk_perdim;
+ 
+ /* Shift chunk and determine domain */
+  for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
+    {
+      chalo.chalos[ihalo].Xc = fmod(chalo.chalos[ihalo].Xc - shift_X + param_boxsize,param_boxsize);
+      chalo.chalos[ihalo].Yc = fmod(chalo.chalos[ihalo].Yc - shift_Y + param_boxsize,param_boxsize);
+      chalo.chalos[ihalo].Zc = fmod(chalo.chalos[ihalo].Zc - shift_Z + param_boxsize,param_boxsize);
+      if(chalo.chalos[ihalo].hostHalo == NULLPOINT 
+	 && chalo.chalos[ihalo].Xc >= lowerbound[0] && chalo.chalos[ihalo].Xc < upperbound[0]
+	 && chalo.chalos[ihalo].Yc >= lowerbound[1] && chalo.chalos[ihalo].Yc < upperbound[1]
+	 && chalo.chalos[ihalo].Zc >= lowerbound[2] && chalo.chalos[ihalo].Zc < upperbound[2]
+	 )
+	{
+	  /* reuse indx,indz,indz - too lazy to define new variables */
+	  indx = (int) (chalo.chalos[ihalo].Xc/(param_boxsize/param_domain_per_dim));
+	  indx = (indx+param_domain_per_dim)%param_domain_per_dim;
+	  indy = (int) (chalo.chalos[ihalo].Yc/(param_boxsize/param_domain_per_dim));
+	  indy = (indy+param_domain_per_dim)%param_domain_per_dim;
+	  indz = (int) (chalo.chalos[ihalo].Zc/(param_boxsize/param_domain_per_dim));
+	  indz = (indz+param_domain_per_dim)%param_domain_per_dim;
+	  /* determine domain */
+	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indz*param_domain_per_dim+indx;
+	}
+      else if(chalo.chalos[ihalo].hostHalo != NULLPOINT)
+	{
+	  hostid = maphalo[chalo.chalos[ihalo].UpHalo];
+	  chalo.chalos[ihalo].domainid = chalo.chalos[hostid].domainid;
+	}
+    }
+  memmgr_free(maphalo,numHalos*sizeof(uint64_t),"Maphalo");
   return chalo;
 }
 
@@ -646,6 +710,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   int      swap=0,flag;
   halo_t   halo;
   ptid_t ipart,npart;
+
   //ptid_t id;
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
@@ -655,6 +720,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       printf("Cannot open file to read\n");
       exit(1);
     }
+
   // figure out swap status Halos file
   fread(&one, sizeof(int32_t), 1, fphalo);
   if(one == 1)
@@ -701,7 +767,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       maphalo[i].id = counthalo;
 
       /* Make unique ID */
-      chalo.chalos[counthalo].ID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+      chalo.chalos[counthalo].ID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+i+1;
     
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
       /* point to (long long unsigned)-1 if hosthalo = 0 */
@@ -751,14 +817,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       ReadFloat(fphalo, &(chalo.chalos[counthalo].cNFW),         swap);    // cNFW(43)
 
       /* Specify other quantities */
-      chalo.chalos[counthalo].refID = chalo.snapid*pow(10,15)+chunk*pow(10,10)+partition*pow(10,7)+counthalo+1;
+      chalo.chalos[counthalo].refID = counthalo;
 
       chalo.chalos[counthalo].domainid = -1;
       chalo.chalos[counthalo].chunkid = chunk;
 
  
-      
-      
       /* Set structure tree to default (no relationship) */
       chalo.chalos[counthalo].UpHalo = -1;
       chalo.chalos[counthalo].DownHalo = -1;
@@ -814,7 +878,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 
 /* This function will map hostID to the ID we are using */
 /* The maphalo needs to be unsorted. I don't want to sort maphalo by id. -Boyd*/
-make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
+make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wrapper_t chalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
 {
   order_uint64_t *maphalo_sorted;
   uint64_t i,hostid_unique_el,startid,stopid;
@@ -832,29 +896,23 @@ make_catalogue_halo_wrapper_t sussexbigrun_make_treestruct(make_catalogue_halo_w
 	  //printf("hostid = %llu\n",hostid_unique_el);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
-	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].refID;
+	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].ID;
+	      chalo.chalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
+	      chalo.chalos[i].NextHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
+	      chalo.chalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = chalo.chalos[i].refID;
 	      //printf("Found host %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	  else
 	    { 
 	      /* Set hosthalo = 0 for subhalos of mainhalos which are in buffer */
 	      chalo.chalos[i].hostHalo = 0;
-	      /* for(j=i-1;j>=startid && j!=NULLPOINT;j--) */
-	      /* 	{ */
-	      /* 	  //printf("loop for j: %llu  %llu-%llu\n",j,startid,i); */
-	      /* 	  dist_sq = (chalo.chalos[i].Xc-chalo.chalos[j].Xc)*(chalo.chalos[i].Xc-chalo.chalos[j].Xc) */
-	      /* 	    +(chalo.chalos[i].Yc-chalo.chalos[j].Yc)*(chalo.chalos[i].Yc-chalo.chalos[j].Yc) */
-	      /* 	    +(chalo.chalos[i].Zc-chalo.chalos[j].Zc)*(chalo.chalos[i].Zc-chalo.chalos[j].Zc); */
-	      /* 	  if(sqrt(dist_sq) < chalo.chalos[j].Rvir) */
-	      /* 	    chalo.chalos[i].hostHalo = chalo.chalos[j].ID; */
-	      /* 	} */
-	      /* printf("Change host => %llu\n",chalo.chalos[i].hostHalo); */
 	    }
 	}
     }
   //printf("Stop make struct\n");
   return chalo;
 }
+
 
 void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
 {
@@ -873,16 +931,18 @@ void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
   sprintf(buff,"Halo wrapper");
   memmgr_free(ptr,sizeof(make_catalogue_halo_t),buff);
 }
+/* Private functions */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
 {
     const make_catalogue_halo_t *u1 = v1;
     const make_catalogue_halo_t *u2 = v2;
     int ret;
     if(u1->Mvir < u2->Mvir)
-      ret =  -1;
-    else if(u1->Mvir > u2->Mvir)
       ret = 1;
+    else if(u1->Mvir > u2->Mvir)
+      ret = -1;
     else if(u1->Mvir == u2->Mvir)
       ret = 0;
     return ret;
 }
+

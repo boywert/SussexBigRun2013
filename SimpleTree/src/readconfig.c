@@ -75,6 +75,12 @@ void readconfig()
   config[nconf].used = 0;
   nconf++;
 
+  config[nconf].type = 3;
+  config[nconf].pointer = &param_buffer_size;
+  sprintf(config[nconf].IDENTIFIER,"BUFFERSIZE");
+  config[nconf].used = 0;
+  nconf++;
+
   /* end define identifiers */
 
   fp = fopen("config","r");

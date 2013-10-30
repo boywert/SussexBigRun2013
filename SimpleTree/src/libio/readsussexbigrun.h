@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <math.h>
 #include <stdint.h>
 #include "common_io.h"
 #include "../libhash/hash.h"
@@ -117,10 +118,6 @@ typedef struct make_catalogue_halo {
   uint32_t chunkid;
   int domainid;
   uint64_t refID; 		/* Snap$15+chunk$10+mpi$7+id_order */
-  float   Xc_abs;
-  float   Yc_abs;
-  float   Zc_abs;
-  int dummy;
   /* AHF properties */
   uint64_t ID;
   uint64_t hostHalo;
@@ -167,7 +164,7 @@ typedef struct make_catalogue_halo {
   float   cNFW;
   /* Structure Tree */
   uint64_t UpHalo;
-  uint64_t DownHalo;
+  uint64_t FirstDownHalo;
   uint64_t NextHalo;
 
   /* Particle List */
