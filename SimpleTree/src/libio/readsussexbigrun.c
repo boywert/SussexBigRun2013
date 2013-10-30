@@ -869,10 +869,40 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
     } // for(numHalos)
   //printf("max = %f\n",maxx);
 
-  /* Relabel ID and HostID */
+  /* Relabel  HostID */
   if(numHalos > 0)
     chalo = sussexbigrun_find_hostHalo(chalo,maphalo,numHalos);
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
+  return chalo;
+}
+/* This function works only for domain_per_dim%chunk_per_dim = 0 */
+make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wrapper_t chalo, int chunk)
+{
+  uint64_t ihalo;
+  int domain_to_chunk[pow3(param_domain_per_dim)];
+  int i,j,k;
+  int ratio = param_domain_per_dim/param_chunk_per_dim
+  for(k=0;k<param_domain_per_dim;k++)
+    {
+      for(j=0;j<param_domain_per_dim;j++)
+	{
+	  for(i=0;i<param_domain_per_dim;i++)
+	    {
+	      domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] =
+	      k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
+	    }
+	}
+    }
+  for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
+    {
+      if(chalo.chalos[ihalo].domainid > -1)
+	{
+	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
+	    {
+	      printf("domain: %d is not in chunk %d\n",chalo.chalos[ihalo].domainid,chunk);
+	    }
+	}
+    }
   return chalo;
 }
 
@@ -904,7 +934,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wra
 	    }
 	  else
 	    { 
-	      /* Set hosthalo = 0 for subhalos of mainhalos which are in buffer */
+	      /* Set hosthalo = 0 for subhalos of mainhalos which are in AHF buffer */
 	      chalo.chalos[i].hostHalo = 0;
 	    }
 	}
@@ -912,6 +942,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wra
   //printf("Stop make struct\n");
   return chalo;
 }
+
+
 
 
 void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)

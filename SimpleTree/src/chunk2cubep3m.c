@@ -83,6 +83,7 @@ int main(int argc,char **argv)
 	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
 	      halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,snapid1,l);
+	      sussexbigrun_output_cubep3m(halocatA[0],l);
 	      free_make_catalogue_halo_wrapper(halocatA);
 	    }
 	}
