@@ -657,6 +657,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   shift_X = chunk_X*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
   shift_Y = chunk_Y*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
   shift_Z = chunk_Z*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
+  printf("shift: %f,%f,%f\n",shift_X,shift_Y,shift_Z);
 
   lowerbound[0] = chunk_X*param_boxsize/param_chunk_per_dim;
   lowerbound[1] = chunk_Y*param_boxsize/param_chunk_per_dim;
@@ -683,7 +684,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 
 	  /* determine domain */
 	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indz*param_domain_per_dim+indx;
-	  printf("chunk:%d/%d domain:%d = %d,%d,%d\n",chalo.chalos[ihalo].chunkid,chunk,chalo.chalos[ihalo].domainid,indx,indy,indz);
+	  //printf("chunk:%d/%d domain:%d = %d,%d,%d\n",chalo.chalos[ihalo].chunkid,chunk,chalo.chalos[ihalo].domainid,indx,indy,indz);
 	}
       else if(chalo.chalos[ihalo].hostHalo != NULLPOINT)
 	{
@@ -899,7 +900,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	{
 	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
 	    {
-	      printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
+	      //printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
 	      count++;
 	    }
 	}
