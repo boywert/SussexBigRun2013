@@ -668,9 +668,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
  /* Shift chunk and determine domain */
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
-      chalo.chalos[ihalo].Xc = fmod(chalo.chalos[ihalo].Xc + shift_X + param_boxsize,param_boxsize);
-      chalo.chalos[ihalo].Yc = fmod(chalo.chalos[ihalo].Yc + shift_Y + param_boxsize,param_boxsize);
-      chalo.chalos[ihalo].Zc = fmod(chalo.chalos[ihalo].Zc + shift_Z + param_boxsize,param_boxsize);
+      chalo.chalos[ihalo].Xc = chalo.chalos[ihalo].Xc + shift_X;
+      chalo.chalos[ihalo].Yc = chalo.chalos[ihalo].Yc + shift_Y;
+      chalo.chalos[ihalo].Zc = chalo.chalos[ihalo].Zc + shift_Z;
       if(chalo.chalos[ihalo].hostHalo == NULLPOINT 
 	 && chalo.chalos[ihalo].Xc >= lowerbound[0] && chalo.chalos[ihalo].Xc < upperbound[0]
 	 && chalo.chalos[ihalo].Yc >= lowerbound[1] && chalo.chalos[ihalo].Yc < upperbound[1]
@@ -679,11 +679,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	{
 	  /* reuse indx,indz,indz - too lazy to define new variables */
 	  indx = (int) (chalo.chalos[ihalo].Xc/(param_boxsize/param_domain_per_dim));
-	  indx = (indx+param_domain_per_dim)%param_domain_per_dim;
 	  indy = (int) (chalo.chalos[ihalo].Yc/(param_boxsize/param_domain_per_dim));
-	  indy = (indy+param_domain_per_dim)%param_domain_per_dim;
 	  indz = (int) (chalo.chalos[ihalo].Zc/(param_boxsize/param_domain_per_dim));
-	  indz = (indz+param_domain_per_dim)%param_domain_per_dim;
+
 	  /* determine domain */
 	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indz*param_domain_per_dim+indx;
 	}
