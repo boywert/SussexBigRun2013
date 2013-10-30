@@ -881,7 +881,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t ihalo;
   int domain_to_chunk[pow3(param_domain_per_dim)];
   int i,j,k;
-  int ratio = param_domain_per_dim/param_chunk_per_dim
+  int ratio = param_domain_per_dim/param_chunk_per_dim;
   for(k=0;k<param_domain_per_dim;k++)
     {
       for(j=0;j<param_domain_per_dim;j++)
