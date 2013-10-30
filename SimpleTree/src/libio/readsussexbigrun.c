@@ -684,6 +684,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 
 	  /* determine domain */
 	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indz*param_domain_per_dim+indx;
+	  printf("chunk:%d/%d domain:%d\n",chalo.chalos[ihalo].chunkid,chunk,chalo.chalos[ihalo].domainid)
 	}
       else if(chalo.chalos[ihalo].hostHalo != NULLPOINT)
 	{
