@@ -654,9 +654,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	    }
 	}
     }
-  shift_X = chunk_X*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
-  shift_Y = chunk_Y*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
-  shift_Z = chunk_Z*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
+  shift_X = chunk_X*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
+  shift_Y = chunk_Y*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
+  shift_Z = chunk_Z*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_domain_per_dim;
 
   lowerbound[0] = chunk_X*param_boxsize/param_chunk_per_dim;
   lowerbound[1] = chunk_Y*param_boxsize/param_chunk_per_dim;
