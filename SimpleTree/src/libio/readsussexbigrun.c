@@ -684,7 +684,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  indz = (int) (chalo.chalos[ihalo].Zc/ (param_boxsize/param_domain_per_dim));
 
 	  /* determine domain */
-	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indz*param_domain_per_dim+indx;
+	  chalo.chalos[ihalo].domainid = indz*pow2(param_domain_per_dim)+indy*param_domain_per_dim+indx;
 	  //printf("chunk:%d/%d domain:%d = %d,%d,%d\n",chalo.chalos[ihalo].chunkid,chunk,chalo.chalos[ihalo].domainid,indx,indy,indz);
 	}
       else if(chalo.chalos[ihalo].hostHalo != NULLPOINT)
