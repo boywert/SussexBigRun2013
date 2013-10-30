@@ -878,7 +878,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 /* This function works only for domain_per_dim%chunk_per_dim = 0 */
 make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wrapper_t chalo, int chunk)
 {
-  uint64_t ihalo;
+  uint64_t ihalo,count;
   int domain_to_chunk[pow3(param_domain_per_dim)];
   int i,j,k;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
@@ -893,16 +893,19 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    }
 	}
     }
+  count = 0;
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].domainid > -1)
 	{
 	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
 	    {
-	      printf("domain: %d is not in chunk %d\n",chalo.chalos[ihalo].domainid,chunk);
+	      //printf("domain: %d is not in chunk %d\n",chalo.chalos[ihalo].domainid,chunk);
+	      count++;
 	    }
 	}
     }
+  printf("outside chunk: %llu/%llu\n",count,chalo.nHalos);
   return chalo;
 }
 
