@@ -899,7 +899,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	{
 	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
 	    {
-	      //printf("domain: %d is not in chunk %d\n",chalo.chalos[ihalo].domainid,chunk);
+	      printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
 	      count++;
 	    }
 	}
