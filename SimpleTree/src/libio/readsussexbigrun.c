@@ -658,12 +658,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   shift_Y = chunk_Y*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
   shift_Z = chunk_Z*param_boxsize/param_chunk_per_dim - 2.*param_buffer_size*param_boxsize/param_chunk_per_dim;
 
-  lowerbound[0] = chunk_X*param_boxsize/param_chunk_perdim;
-  lowerbound[1] = chunk_Y*param_boxsize/param_chunk_perdim;
-  lowerbound[2] = chunk_Z*param_boxsize/param_chunk_perdim;
-  upperbound[0] = (chunk_X+1)*param_boxsize/param_chunk_perdim;
-  upperbound[1] = (chunk_Y+1)*param_boxsize/param_chunk_perdim;
-  upperbound[2] = (chunk_Z+1)*param_boxsize/param_chunk_perdim;
+  lowerbound[0] = chunk_X*param_boxsize/param_chunk_per_dim;
+  lowerbound[1] = chunk_Y*param_boxsize/param_chunk_per_dim;
+  lowerbound[2] = chunk_Z*param_boxsize/param_chunk_per_dim;
+  upperbound[0] = (chunk_X+1)*param_boxsize/param_chunk_per_dim;
+  upperbound[1] = (chunk_Y+1)*param_boxsize/param_chunk_per_dim;
+  upperbound[2] = (chunk_Z+1)*param_boxsize/param_chunk_per_dim;
  
  /* Shift chunk and determine domain */
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
@@ -693,7 +693,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  chalo.chalos[ihalo].domainid = chalo.chalos[hostid].domainid;
 	}
     }
-  memmgr_free(maphalo,chalo.numHalos*sizeof(uint64_t),"Maphalo");
+  memmgr_free(maphalo,chalo.nHalos*sizeof(uint64_t),"Maphalo");
   return chalo;
 }
 
