@@ -890,7 +890,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] =
 	      k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
-	      printf("domain:%d => %d\n",k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i,domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i]);
+	      //printf("domain:%d => %d\n",k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i,domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i]);
 	    }
 	}
     }
