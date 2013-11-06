@@ -1,0 +1,13 @@
+#!/bin/sh
+#$ -N boyd
+#$ -M cs390@sussex.ac.uk
+#$ -m bea
+#$ -cwd
+#$ -pe openmpi 32 #eg12-36
+#$ -q mps_amd.q
+#$ -S /bin/bash
+# source modules environment:
+module add sge
+
+#mpirun -np $NSLOTS $1
+   #print  absorp[i]

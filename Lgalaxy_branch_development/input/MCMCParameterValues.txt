@@ -1,0 +1,54 @@
+#Number of Parameters
+24
+#Name                          PropValue   PriorMin  PriorMax     Type      Sampling_Switch
+SfrEfficiency                     0.0       0.001     0.1        Physical         1
+SfrColdCrit                       0.0       0.001     10.0       Physical         1
+SfrBurstEfficiency                0.0       0.1       1.0        Physical         1
+SfrBurstSlope                     0.0       0.1       2.0        Physical         1
+AgnEfficiency                     0.0       1.e-8     1.e-1      Physical         1
+BlackHoleGrowthRate               0.0       0.01      0.1        Physical         1
+BlackHoleCutoffVelocity           0.0       1.        3000.      Physical         1
+FeedbackReheatingEpsilon          0.0       0.1       10.        Physical         1
+ReheatPreVelocity                 0.0       1.        1000.      Physical         1
+ReheatSlope                       0.0       0.1       5.         Physical         1
+FeedbackEjectionEfficiency        0.0       0.01      10.        Physical         1
+EjectPreVelocity                  0.0       1.        1000.      Physical         1
+EjectSlope                        0.0       0.1       5.0        Physical         1
+ReIncorporationFactor             0.0       1.e-7     1.e15      Physical         1
+Yield                             0.0       0.01      0.1        Physical         1
+ThreshMajorMerger                 0.0       0.1       0.5        Physical         1 
+RamPressureStrip_CutOffMass       0.0       1.e-5     1.e6       Physical         1 
+Reionization_z0                   0.0       6.0       20.0       Physical         1  
+Reionization_zr                   0.0       6.0       10.0       Physical         1 
+ReincZpower                       0.0       0.1       10.        Physical         0
+ReincVelocitypower                0.0       0.1       10.        Physical         0
+Omega_m                           0.0       0.1       0.6      Cosmological       0
+Sigma_8                           0.0       0.5       1.       Cosmological       0
+BaryonFrac                        0.0       0.01      0.3      Cosmological       0
+#values for the parameters - writen separately just to be easy to change all, same order as above
+0.02 0.056 0.7 0.19 1.5e-3 0.03 280 6.5 70 3.5 0.32 70 3.5 0.3 0.03 0.3 2.07e-04 8.0 7.0 3.0 3.0 0.272 0.81 0.167
+
+
+0.0534 0.068 0.529 0.477 0.00515 0.0157 240 1.98 342 0.854 0.878 297 0.628 2.28e+10 0.0424 0.362 2.07e+04 7.3 7.3 3.0 3.0 0.272 0.81 0.167
+
+0.054 0.0643 0.48 0.557 5.49e-03 0.0168 218 2.09 283 1.16 0.486 282 0.453 2.41e+10 0.0471 0.273 1.72e+04 7.44 6.13 3.0 3.0 0.272 0.81 0.167
+
+0.0237 0.561 0.871 3.23e-05 0.0176 133 2.42 276 0.923 0.485 369 0.492 1.7e+10 0.0395 0.137 9.16e+03 10.4 9.6 3.0 3.0 0.272 0.81 0.167
+
+0.0206 0.557 0.646 1.72e-05 0.0138 209 1.19 386 1.03 0.535 321 0.843 1.17e+10 0.0266 0.191 1.e-4 8.5 8.5 3.0 3.0 0.272 0.81 0.167
+
+0.055 0.56 0.7 3.23e-05 0.0146 280  2.12 405 0.921 0.645 336 0.46 1.81e+10 0.047 0.3 1.e-4 8.0 7.0 3.0 3.0 0.272 0.81 0.167
+
+0.03  0.57 0.7 3.53e-05 0.0152 265 1.99 395 0.903 0.668 325 0.472 1.9e+10 0.0476 0.304 8.28e+03 7.79 6.05 3.0 3.0 0.272 0.81 0.167
+
+0.032 0.56 0.7 3.23e-05 0.0146 280. 2.12 405 0.921 0.645 336 0.46 1.81e+10 0.043 0.3 1.e+4 8.0 7.0 3.0 3.0 0.272 0.81 0.167
+ 
+0.0319 0.56 0.7 2.7e-05 0.0157 2.15 395 0.938 0.607 358 0.382 1.36e+10 0.0414 3.0 3.0 280. 0.3 8.0 7.0 0.272 0.81 0.167
+
+0.055 0.56 0.7 3.23e-05 0.0146 2.12 405 0.921 0.645 336 0.46 1.81e+10 0.047 3.0 3.0 280. 0.3 7.0 8.0 0.272 0.81 0.167
+ 
+0.02 0.56 0.7 1.5e-5 0.03 6.5 70 3.5 0.32 70 3.5 0.3 0.03 3.0 3.0 280. 0.3 7.0 8.0 0.272 0.81 0.167
+  
+0.011 0.56 0.7 7.0e-6 0.03 4.0 80 3.2 0.18 90 3.2 0.3 0.0509 3.0 3.0 280. 0.3 7.0 8.0 0.272 0.81 0.167
+
+0.0363 0.56 0.7 2.47e-05 0.0193 2.99 329 0.361 0.623 301 0.745 1.9e+10 0.0509 3.0 3.0 280. 0.3 7.0 8.0 0.272 0.81 0.167

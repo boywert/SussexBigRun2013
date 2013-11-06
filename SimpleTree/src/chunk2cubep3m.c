@@ -77,9 +77,10 @@ int main(int argc,char **argv)
 	}
       for(l=0;l<pow3(param_chunk_per_dim);l++)
 	{
-	  if(mpi_rank == 0) printf("Redshift: %f\n", snap1);
 	  if(l%mpi_nodes == mpi_rank)
 	    {
+	      if(mpi_rank == 0) 
+		printf("Redshift: %f\n", snap1);
 	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
 	      halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,snapid1,l);
