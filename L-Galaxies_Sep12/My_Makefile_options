@@ -9,7 +9,7 @@ OPT += -DM05
 OPT += -DLOADIDS
 OPT += -DPRELOAD_TREES
 #OPT += -DMRII                # run on MS-II
-
+OPT += -DBOYDDEBUG
 #OPT += -DDEBUG
 #OPT += -DMASS_CHECKS
 
