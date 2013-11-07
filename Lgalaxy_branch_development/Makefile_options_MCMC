@@ -60,7 +60,7 @@ OPT += -DOUTPUT_REST_MAGS    # output rest-frame magnitudes
 #OPT += -DOUTPUT_MOMAF_INPUTS # writes out extra files which are std. input files for MoMaF (works both with and without galaxytree option)
 
 
-OPT += -DPHOTTABLES_PRECOMPUTED        
+#OPT += -DPHOTTABLES_PRECOMPUTED        
 #OPT += -DSPEC_PHOTABLES_ON_THE_FLY
 ifeq (SPEC_PHOTABLES_ON_THE_FLY,$(findstring SPEC_PHOTABLES_ON_THE_FLY,$(OPT)))
 #OPT += -DFULL_SPECTRA
