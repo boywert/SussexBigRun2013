@@ -3,31 +3,45 @@
 %------------------------------------------
 
 FileNameGalaxies      SA
-FileWithOutputRedshifts ./input/desired_output_redshifts.txt
+FileWithOutputRedshifts ./input/desired_output_redshifts_for_MCMC.txt
 
-SpecPhotDir                /galformod/data/L-Galaxies/Util/PhotTables_2.0/
-%SpecPhotDir               /afs/mpa/data/bmh20/workspace/SpecPhotTables/
-PhotPrefix             M05_Chabrier ; BC03_Chabrier ;CB07_Chabrier 
-FileWithFilterNames    ./input/Filter_Names_for_MCMC.txt
-McFile				   ./input/Mc.txt
-CoolFunctionsDir       ./CoolFunctions/
-CosmologyTablesDir     /galformod/scratch/bmh20/Workspace/CosmologyTables/
+SpecPhotDir               /galformod/scratch/bmh20/Workspace/SpecPhotTables/
+PhotPrefix               M05 ; BC03 ;CB07
+SpecPhotIMF               Chabrier ; Salpeter ; Kroupa 
+FileWithFilterNames       ./input/Filter_Names_for_MCMC.txt
+
+McFile				      ./input/Mc.txt
+CoolFunctionsDir          ./CoolFunctions/
+CosmologyTablesDir        /galformod/scratch/bmh20/Workspace/CosmologyTables/
 
 
 %Variables needed for the MCMC
-MCMCParameterValues                   ./input/MCMCParameterValues.txt
-ObsConstraintsDir                     ./ObsConstraints/
-%MCMCSampleDir                     /galformod/data/L-Galaxies/Util/Samples/
-MCMCSampleDir                     /galformod/scratch/bmh20/Workspace/Sampling/Samples/
-MCMCSampleFilePrefix              cut_optimal  
+MCMCParameterValues             ./input/MCMCParameterValues.txt
+MCMCObsConstraints              ./input/MCMCObsConstraints.txt
+ObsConstraintsDir               ./ObsConstraints/
 
-MCMCSampleFile   200             ;File with sample of Dark matter trees to use as input                                     
-MCMCSampleFileType     2          ;type of halo selection
+
+%look at read_sample_info() to lear about the files that are read
+%MCMCSampleDir                     /galformod/data/L-Galaxies/Util/Samples/
+MCMCSampleDir                      /galformod/scratch/bmh20/Workspace/Sampling/Samples/
+
+ 
+MCMCSampleFilePrefix             optimal_marcel1  ; % optimal_marcel1 (MCMCSampleFileType = 3)  (310070)
+                                                    %*cut_optimal (MCMCSampleFileType = 2) 
+                                                    % optimal (MCMCSampleFileType = 1)   
+
+%2300 2300 - normal
+%3100 - clustering
+MCMCSampleFile       100          ;File with IDs of sample of Dark matter trees to use as input
+MCMCSampleFileType     3          ;type of halo selection
                                           % 1 - all halos selected (high computational cost, minor improve in sample quality)
                                           %*2 - no selection of very massive halos
+                                          % 3 - optimum selection for clustering
+MCMCTreeSampleFile   3100        ;Sample of Dark Matter trees
+MCMCHaloModelDir                 ./mcmc_halomodel/
+                                   
                                        
-                                       
-ChainLength     1000                  ;length of MCMC chains
+ChainLength     0                     ;length of MCMC chains
 Sample_Physical_Parameters      1     ;set to zero to keep physical parameters at initial values
 Time_Dependant_PhysPar          0     ;set to zero to have the same physical parameters at all z 
 Sample_Cosmological_Parameters  0     ;set to zero to keep cosmological parameters at initial values
@@ -36,7 +50,7 @@ MCMCMode                        0     ;acceptance rate option
                                           % 1 find a high likelihood -> AcceptanceLogic = (lhood2 > lhood1)
 MCMC_LogStep_Size               0.05  ;size of log_normal step when proposing new parameters
 MCMC_Initial_Par_Displacement   0.0   ;size of log_normal displacement for the initial parameters in each chain
-MCMC_Minimum_Obs_Error          0.0   ;minimum value allowed for observation error bars (maximum level of agreement required)
+MCMC_Minimum_Obs_Error          0.10   ;minimum value allowed for observation error bars (maximum level of agreement required)
 
 
 
@@ -44,38 +58,47 @@ MCMC_Minimum_Obs_Error          0.0   ;minimum value allowed for observation err
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-SimulationDir	        /galformod/scratch/bmh20/Workspace/MergerTrees/
-LastDarkMatterSnapShot  63
-Hashbits                8     ; needed for Peano hilbert key output with the GALAXYTREE option
-OutputDir               ./output/
+SimulationDir	             /galformod/scratch/bmh20/Workspace/MergerTrees/
+LastDarkMatterSnapShot    63
+Hashbits                     8     ; needed for Peano hilbert key output with the GALAXYTREE option
+OutputDir                    ./output/
 
-MaxMemSize              3000
+MaxMemSize              20000
 
 
 %-------------------------------------------------
 %-----   Scaling options    ----------------------
 %-------------------------------------------------
 
-ScalePos            1.04311
-ScaleMass           1.23488
+ScalePos            1.0
+ScaleMass           1.0
 
-%ScalePos            1.0
-%ScaleMass           1.0
-
+%ScalePos            0.927545
+%ScaleMass           1.00548
 
 --------------------------------------------------
 %----- Cosmological paramters --------------------
 %-------------------------------------------------
 
-BaryonFrac      0.167
-Sigma8          0.807
+BaryonFrac      0.17
+Sigma8          0.9
 
 %WMAP1
-Omega           0.272 
-OmegaLambda     0.728 
-Hubble_h        0.704
+Omega           0.25 
+OmegaLambda     0.75 
+Hubble_h        0.73
 
-%WMAP7
+
+%BaryonFrac      0.155
+
+%WMAP9
+%Omega           0.315 
+%OmegaLambda     0.683 
+%Hubble_h        0.673
+
+
+
+%WMAP1
 Omega_OriginalCosm           0.25 
 OmegaLambda_OriginalCosm     0.75 
 Hubble_h_OriginalCosm        0.73
@@ -83,14 +106,13 @@ Hubble_h_OriginalCosm        0.73
 
 %RELATED TO SIMULATION 
 
-FileWithZList   ./input/zlist_wmp7_MR.txt 
-PartMass        0.106281    ;should be changed according to the dark matter simulation being used
-BoxSize         521.555  
+FileWithZList                 ./input/zlist_MR.txt 
+PartMass                      0.0860657   ;should be changed according to the dark matter simulation being used
+BoxSize                       500.
 
-FileWithZList_OriginalCosm   ./input/zlist_MR.txt
-PartMass_OriginalCosm        0.0860657  ;should be changed according to the dark matter simulation being used
-BoxSize_OriginalCosm         500.
-
+FileWithZList_OriginalCosm    ./input/zlist_MR.txt
+PartMass_OriginalCosm         0.0860657 ;should be changed according to the dark matter simulation being used
+BoxSize_OriginalCosm          500.
 
 
 
@@ -115,7 +137,7 @@ EjectionRecipe                  1   ;choice of ejection of satellite galaxies.
                                            % this also changes where the ejected gas from type 2 ends up in mergers 
                                            % (maybe it should be a different option).
 
-ReIncorporationRecipe           2   ;reincorporation time scale
+ReIncorporationRecipe           1   ;reincorporation time scale
 				                      % 0 -- Delucia2007, 
 				                      %*1 -- Guo2010 (suppression in small halos)
 				                      % 2 -- Henriques2012 (Mdot_eject=-gama_ej*M_ejected*M_vir)
@@ -179,13 +201,15 @@ RecycleFraction             0.43    ;0.43 fraction of SF mass instantaneously re
 %% Mergers
 ThreshMajorMerger	    0.3     ;major merger when mass ratio gt this
 
+
 %%Hot Gas stripping
-RamPressureStrip_CutOffMass 0. ;in code Units of 10^10
+RamPressureStrip_CutOffMass 1.e4 ;in code Units of 10^10
 
 %% Star formation
 SfrEfficiency               0.02  
 SfrLawPivotVelocity         1000.0
 SfrLawSlope                 0.0
+SfrColdCrit                 0.19
 
 %% Star formation bursts during mergers
 SfrBurstEfficiency          0.56 
