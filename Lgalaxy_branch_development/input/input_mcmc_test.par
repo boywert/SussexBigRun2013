@@ -5,7 +5,7 @@
 FileNameGalaxies      SA
 FileWithOutputRedshifts ./input/desired_output_redshifts_for_MCMC.txt
 
-SpecPhotDir              /home/c/cs/cs390/SussexBigRun2013/L-Galaxies_Sep12/PhotTables_2.0/
+SpecPhotDir              /home/c/cs/cs390/SussexBigRun2013/L-Galaxies_Sep12
 PhotPrefix               M05 ; BC03 ;CB07
 SpecPhotIMF               Chabrier ; Salpeter ; Kroupa 
 FileWithFilterNames       ./input/Filter_Names_for_MCMC.txt
