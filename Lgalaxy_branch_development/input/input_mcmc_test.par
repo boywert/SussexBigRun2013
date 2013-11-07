@@ -33,7 +33,7 @@ MCMCSampleFilePrefix             cut_optimal  ; % optimal_marcel1 (MCMCSampleFil
 %2300 2300 - normal
 %3100 - clustering
 MCMCSampleFile       100          ;File with IDs of sample of Dark matter trees to use as input
-MCMCSampleFileType     3          ;type of halo selection
+MCMCSampleFileType     1          ;type of halo selection
                                           % 1 - all halos selected (high computational cost, minor improve in sample quality)
                                           %*2 - no selection of very massive halos
                                           % 3 - optimum selection for clustering
