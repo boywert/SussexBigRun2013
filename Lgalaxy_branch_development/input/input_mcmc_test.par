@@ -59,7 +59,7 @@ MCMC_Minimum_Obs_Error          0.10   ;minimum value allowed for observation er
 %-------------------------------------------------
 
 SimulationDir	             /galformod/scratch/bmh20/Workspace/MergerTrees/
-LastDarkMatterSnapShot    63
+LastDarkMatterSnapShot    61
 Hashbits                     8     ; needed for Peano hilbert key output with the GALAXYTREE option
 OutputDir                    ./output/
 
@@ -106,13 +106,13 @@ Hubble_h_OriginalCosm        0.73
 
 %RELATED TO SIMULATION 
 
-FileWithZList                 ./input/zlist_MR.txt 
+FileWithZList                 ./input/zlist_MR7.txt 
 PartMass                      0.0860657   ;should be changed according to the dark matter simulation being used
-BoxSize                       500.
+BoxSize                       62.5
 
-FileWithZList_OriginalCosm    ./input/zlist_MR.txt
+FileWithZList_OriginalCosm    ./input/zlist_MR7.txt
 PartMass_OriginalCosm         0.0860657 ;should be changed according to the dark matter simulation being used
-BoxSize_OriginalCosm          500.
+BoxSize_OriginalCosm          62.5
 
 
 
