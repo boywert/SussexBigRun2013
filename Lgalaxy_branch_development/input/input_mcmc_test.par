@@ -22,11 +22,10 @@ ObsConstraintsDir               ./ObsConstraints/
 
 
 %look at read_sample_info() to lear about the files that are read
-%MCMCSampleDir                     /galformod/data/L-Galaxies/Util/Samples/
 MCMCSampleDir                      ./Samples/
 
  
-MCMCSampleFilePrefix             cut_optimal  ; % optimal_marcel1 (MCMCSampleFileType = 3)  (310070)
+MCMCSampleFilePrefix               ; % optimal_marcel1 (MCMCSampleFileType = 3)  (310070)
                                                     %*cut_optimal (MCMCSampleFileType = 2) 
                                                     % optimal (MCMCSampleFileType = 1)   
 
