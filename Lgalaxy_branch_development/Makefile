@@ -20,11 +20,11 @@ INCL   = ./code/allvars.h  ./code/proto.h  Makefile
 
 # Either include the default set of Makefile options, or define your own
 #include Makefile_options
-include My_Makefile_options
-#include My_Makefile_options_MCMC
+#include My_Makefile_options
+include Makefile_options_MCMC
 
 # Choose your system type (needs to match an entry in Makefile_compilers)
-SYSTYPE = "COSM"
+SYSTYPE = "Sussex"
 include Makefile_compilers
 
 
