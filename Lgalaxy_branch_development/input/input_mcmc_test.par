@@ -10,7 +10,7 @@ PhotPrefix               M05 ; BC03 ;CB07
 SpecPhotIMF               Chabrier ; Salpeter ; Kroupa 
 FileWithFilterNames       ./input/Filter_Names_for_MCMC.txt
 
-McFile				      ./input/Mc.txt
+McFile		          ./input/Mc.txt
 CoolFunctionsDir          ./CoolFunctions/
 CosmologyTablesDir        /galformod/scratch/bmh20/Workspace/CosmologyTables/
 
@@ -26,7 +26,7 @@ ObsConstraintsDir               ./ObsConstraints/
 MCMCSampleDir                      ./Samples/
 
  
-MCMCSampleFilePrefix             optimal_marcel1  ; % optimal_marcel1 (MCMCSampleFileType = 3)  (310070)
+MCMCSampleFilePrefix             cut_optimal  ; % optimal_marcel1 (MCMCSampleFileType = 3)  (310070)
                                                     %*cut_optimal (MCMCSampleFileType = 2) 
                                                     % optimal (MCMCSampleFileType = 1)   
 
