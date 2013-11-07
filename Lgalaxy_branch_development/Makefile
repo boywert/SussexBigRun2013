@@ -37,8 +37,8 @@ CFLAGS =   -g $(OPTIONS) $(OPT) $(OPTIMIZE) $(GSL_INCL)
 $(EXEC): $(OBJS) 
 	$(CC) $(OPTIMIZE) $(OBJS) $(LIBS)   -o  $(EXEC)  
 
-$(OBJS): $(INCL) My_Makefile_options Makefile_compilers
-#$(OBJS): $(INCL) My_Makefile_options_MCMC Makefile_compilers
+#$(OBJS): $(INCL) My_Makefile_options Makefile_compilers
+$(OBJS): $(INCL) Makefile_options_MCMC Makefile_compilers
 
 clean:
 	rm -f $(OBJS)
