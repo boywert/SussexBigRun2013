@@ -5,14 +5,14 @@
 FileNameGalaxies      SA
 FileWithOutputRedshifts ./input/desired_output_redshifts_for_MCMC.txt
 
-SpecPhotDir              /home/c/cs/cs390/SussexBigRun2013/L-Galaxies_Sep12/PhotTables_2.0/
+SpecPhotDir               /galformod/scratch/bmh20/Workspace/SpecPhotTables/
 PhotPrefix               M05 ; BC03 ;CB07
 SpecPhotIMF               Chabrier ; Salpeter ; Kroupa 
 FileWithFilterNames       ./input/Filter_Names_for_MCMC.txt
 
 McFile				      ./input/Mc.txt
 CoolFunctionsDir          ./CoolFunctions/
-CosmologyTablesDir        /galformod/scratch/bmh20/Workspace/CosmologyTables/
+CosmologyTablesDir        ./galformod/scratch/bmh20/Workspace/CosmologyTables/
 
 
 %Variables needed for the MCMC
@@ -22,7 +22,7 @@ ObsConstraintsDir               ./ObsConstraints/
 
 
 %look at read_sample_info() to lear about the files that are read
-%MCMCSampleDir                     /galformod/data/L-Galaxies/Util/Samples/
+
 MCMCSampleDir                      ./Samples/
 
  
@@ -59,7 +59,7 @@ MCMC_Minimum_Obs_Error          0.10   ;minimum value allowed for observation er
 %-------------------------------------------------
 
 SimulationDir	             /galformod/scratch/bmh20/Workspace/MergerTrees/
-LastDarkMatterSnapShot    63
+LastDarkMatterSnapShot    61
 Hashbits                     8     ; needed for Peano hilbert key output with the GALAXYTREE option
 OutputDir                    ./output/
 
