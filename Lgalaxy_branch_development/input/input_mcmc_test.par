@@ -58,10 +58,10 @@ MCMC_Minimum_Obs_Error          0.10   ;minimum value allowed for observation er
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-SimulationDir	             /galformod/scratch/bmh20/Workspace/MergerTrees/
+SimulationDir	             /scratch/62.5_dm_SF/
 LastDarkMatterSnapShot    61
 Hashbits                     8     ; needed for Peano hilbert key output with the GALAXYTREE option
-OutputDir                    ./output/
+OutputDir                    /scratch/62.5_dm_SF/outputs/
 
 MaxMemSize              20000
 
