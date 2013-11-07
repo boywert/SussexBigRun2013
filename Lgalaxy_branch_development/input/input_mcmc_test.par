@@ -37,7 +37,7 @@ MCMCSampleFileType     3          ;type of halo selection
                                           % 1 - all halos selected (high computational cost, minor improve in sample quality)
                                           %*2 - no selection of very massive halos
                                           % 3 - optimum selection for clustering
-MCMCTreeSampleFile   3100        ;Sample of Dark Matter trees
+MCMCTreeSampleFile   7        ;Sample of Dark Matter trees
 MCMCHaloModelDir                 ./mcmc_halomodel/
                                    
                                        
