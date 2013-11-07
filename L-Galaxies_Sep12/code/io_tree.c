@@ -169,6 +169,7 @@ void load_tree_table(int filenr)
       printf("\t FileTreeNr: %ld\n",HaloIDs_Data[j].FileTreeNr);
       printf("\t FirstProgenitor:%ld\n",HaloIDs_Data[j].FirstProgenitor);
       printf("\t NextProgenitor:%ld\n",HaloIDs_Data[j].NextProgenitor);
+      printf("\t LastProgenitor:%ld\n",HaloIDs_Data[j].LastProgenitor);
       printf("\t Descendant:%ld\n",HaloIDs_Data[j].Descendant);
       printf("\t FirstHaloInFOFgroup:%ld\n",HaloIDs_Data[j].FirstHaloInFOFgroup);
       printf("\t NextHaloInFOFgroup:%ld\n",HaloIDs_Data[j].NextHaloInFOFgroup);  
