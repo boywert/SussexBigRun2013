@@ -582,8 +582,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 
 make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chunk(char *folder, float redshift, int snapid, int chunk )
 {
-  FILE *fphalo,*fppart;
-  char halofile[MAXSTRING],partfile[MAXSTRING];
+  FILE *fphalo,*fppart,*fpprof;
+  char halofile[MAXSTRING],partfile[MAXSTRING],proffile[MAXSTRING];
   make_catalogue_halo_wrapper_t chalo;
   uint64_t *maphalo;
   int i;
@@ -601,13 +601,16 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
     {
       sprintf(partfile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
       sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
       fphalo = fopen(halofile,"rb");
       fppart = fopen(partfile,"rb");  
-      if(fphalo && fphalo)
+      fpprof = fopen(proffile,"rb"); 
+      if(fphalo && fphalo && fpprof)
 	{
 	  chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, chunk, i, chalo);
 	  fclose(fphalo);
 	  fclose(fppart);
+	  fclose(fpprof);
 	}
     }
   maphalo = memmgr_malloc(chalo.nHalos*sizeof(uint64_t),"Maphalo");
