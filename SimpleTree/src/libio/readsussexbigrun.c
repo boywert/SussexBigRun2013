@@ -875,6 +875,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return chalo;
 }
+
 /* This function works only for domain_per_dim%chunk_per_dim = 0 */
 make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wrapper_t chalo, int chunk)
 {
@@ -889,7 +890,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	  for(i=0;i<param_domain_per_dim;i++)
 	    {
 	      domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] =
-	      k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
+		k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
 	      //printf("domain:%d => %d\n",k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i,domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i]);
 	    }
 	}
@@ -907,7 +908,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	}
     }
   if(count > 0)
-    printf("\t\t\t\t\t\t\toutside chunk: %llu/%llu\n",count,chalo.nHalos);
+    printf("\t\t\t\toutside chunk: %llu/%llu\n",count,chalo.nHalos);
   return chalo;
 }
 
@@ -948,8 +949,71 @@ make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wra
   return chalo;
 }
 
+void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof)
+{
+  prof->r       = (float *)       calloc(nbins, sizeof(float));
+  prof->npart   = (uint32_t*)     calloc(nbins, sizeof(uint32_t));
+  prof->M_in_r  = (float *)       calloc(nbins, sizeof(float));
+  prof->ovdens  = (float *)       calloc(nbins, sizeof(float));
+  prof->dens    = (float *)       calloc(nbins, sizeof(float));
+  prof->vcirc   = (float *)       calloc(nbins, sizeof(float));
+  prof->vesc    = (float *)       calloc(nbins, sizeof(float));
+  prof->sigv    = (float *)       calloc(nbins, sizeof(float));
+  prof->Lx      = (float *)       calloc(nbins, sizeof(float));
+  prof->Ly      = (float *)       calloc(nbins, sizeof(float));
+  prof->Lz      = (float *)       calloc(nbins, sizeof(float));
+  prof->b       = (float *)       calloc(nbins, sizeof(float));
+  prof->c       = (float *)       calloc(nbins, sizeof(float));
+  prof->Eax     = (float *)       calloc(nbins, sizeof(float));
+  prof->Eay     = (float *)       calloc(nbins, sizeof(float));
+  prof->Eaz     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ebx     = (float *)       calloc(nbins, sizeof(float));
+  prof->Eby     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ebz     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ecx     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ecy     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ecz     = (float *)       calloc(nbins, sizeof(float));
+  prof->Ekin    = (float *)       calloc(nbins, sizeof(float));
+  prof->Epot    = (float *)       calloc(nbins, sizeof(float));
+  prof->M_gas   = (float *)       calloc(nbins, sizeof(float));
+  prof->M_star  = (float *)       calloc(nbins, sizeof(float));
+  prof->u_gas   = (float *)       calloc(nbins, sizeof(float));
+  prof->Z_gas_sh  = (float *)       calloc(nbins, sizeof(float));
+  prof->Z_star_sh = (float *)       calloc(nbins, sizeof(float));
+}
 
-
+void AHF_free_profiles(halo_profile_t *prof)
+{
+  free(prof->r);
+  free(prof->npart);
+  free(prof->M_in_r);
+  free(prof->ovdens);
+  free(prof->dens);
+  free(prof->vcirc);
+  free(prof->vesc);
+  free(prof->sigv);
+  free(prof->Lx);
+  free(prof->Ly);
+  free(prof->Lz);
+  free(prof->b);
+  free(prof->c);
+  free(prof->Eax);
+  free(prof->Eay);
+  free(prof->Eaz);
+  free(prof->Ebx);
+  free(prof->Eby);
+  free(prof->Ebz);
+  free(prof->Ecx);
+  free(prof->Ecy);
+  free(prof->Ecz);
+  free(prof->Ekin);
+  free(prof->Epot);
+  free(prof->M_gas);
+  free(prof->M_star);
+  free(prof->u_gas);
+  free(prof->Z_gas_sh);
+  free(prof->Z_star_sh);
+}
 
 void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
 {
@@ -968,6 +1032,7 @@ void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
   sprintf(buff,"Halo wrapper");
   memmgr_free(ptr,sizeof(make_catalogue_halo_t),buff);
 }
+
 /* Private functions */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2)
 {
