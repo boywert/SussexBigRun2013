@@ -612,6 +612,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  fclose(fppart);
 	  fclose(fpprof);
 	}
+      else
+	{
+	  printf("Cannot open files\n");
+	  exit(1);
+	}
     }
   maphalo = memmgr_malloc(chalo.nHalos*sizeof(uint64_t),"Maphalo");
 
