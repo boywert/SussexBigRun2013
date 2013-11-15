@@ -142,22 +142,22 @@ void readconfig()
 	  if(config[i].type == 1) //int
 	    {
 	      value_int = (int *) config[i].pointer;
-	      printf("%s\t%d",config[i].IDENTIFIER, *value_int);
+	      printf("%s\t%d\n",config[i].IDENTIFIER, *value_int);
 	    }
 	  else if(config[i].type == 2) //long long unsigned
 	    {
 	      value_llu = (uint64_t *) config[i].pointer;
-	      printf("%s\t%llu",config[i].IDENTIFIER, *value_llu);
+	      printf("%s\t%llu\n",config[i].IDENTIFIER, *value_llu);
 	    }
 	  else if(config[i].type == 3) //double
 	    {
 	      value_double = (double *) config[i].pointer;
-	      printf("%s\t%lf",config[i].IDENTIFIER, *value_double);
+	      printf("%s\t%lf\n",config[i].IDENTIFIER, *value_double);
 	    }
 	  else if(config[i].type == 4) //string
 	    {
 	      value_str = (char *) config[i].pointer;
-	      printf("%s\t%s",config[i].IDENTIFIER,value_str);
+	      printf("%s\t%s\n",config[i].IDENTIFIER,value_str);
 	    }
 
 	}
