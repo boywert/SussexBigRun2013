@@ -607,7 +607,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
       fpprof = fopen(proffile,"rb"); 
       if(fphalo && fphalo && fpprof)
 	{
-	  chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, chunk, i, chalo);
+	  chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, fpprof, chunk, i, chalo);
 	  fclose(fphalo);
 	  fclose(fppart);
 	  fclose(fpprof);
@@ -702,7 +702,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 
 
 /* Use to read from RAW binary AHF */
-make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo, FILE *fppart, int chunk, int partition, make_catalogue_halo_wrapper_t chalo)
+make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo, FILE *fppart, FILE *fpprof, int chunk, int partition, make_catalogue_halo_wrapper_t chalo)
 {
   uint64_t numHalos,counthalo,counthalo_local,old_nHalos;
   order_uint64_t *maphalo;
@@ -744,7 +744,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   ReadULong(fphalo, &numHalos,   swap);
   ReadUInt (fphalo, &numColumns, swap);
   //printf("halofile: nhalo = %llu\n",numHalos);
- 
+  ReadULong(fpprof, &numHalos,   swap);
+  ReadUInt (fpprof, &numColumns, swap);
+  printf("numcolumn = %d\n",numcolumns);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = chalo.nHalos;
