@@ -747,8 +747,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   else
     swap = 1;
  
-  ReadULong(fppart, &numHaloFromProfFile,   swap);
-  ReadUInt (fppart, &numColumns, swap);
+  ReadULong(fpprof, &numHaloFromProfFile,   swap);
+  ReadUInt (fpprof, &numColumns, swap);
   printf("num = %llu, col = %d\n", (long long unsigned)numHaloFromProfFile, numColumns);
   ReadULong(fppart, &numHaloFromPartFile,   swap);
   ReadUInt (fppart, &numColumns, swap);
