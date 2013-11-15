@@ -2,11 +2,12 @@
 #$ -N boyd
 #$ -M cs390@sussex.ac.uk
 #$ -m bea
+#$ -j y
 #$ -cwd
-#$ -pe openmpi 32 #eg12-36
+#$ -pe openmpi 27 #eg12-36
 #$ -q mps_amd.q
 #$ -S /bin/bash
 # source modules environment:
 module add sge
 
-mpirun -np $NSLOTS -machinefile $TMPDIR/machines $1
+mpirun -np $NSLOTS $1
