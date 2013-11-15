@@ -19,7 +19,10 @@ struct config
 void readconfig()
 {
   FILE* fp;
-  char buffer[1024],ident[1024],value[1024];
+  char buffer[1024],ident[1024],value[1024],value_str[1024];
+  int value_int;
+  uint64_t value_llu;
+  double value_double;
   char *pch;
   int count,nconf,i,npart;
   struct config config[100];
@@ -131,11 +134,30 @@ void readconfig()
       
     }
   param_npart_box = (long long)npart * (long long)npart * (long long)npart;
-  /* printf("npart_box = %llu\n",npart_box); */
-  /* printf("boxsize = %lf\n",boxsize); */
-  /* printf("domain_per_dim = %d\n",domain_per_dim); */
-  /* printf("INPUTDIR = %s\n",INPUTDIR); */
-  /* printf("OUTPUTDIR = %s\n",OUTPUTDIR); */
+  if(mpi_rank == 0)
+    {
+      for(i=0;i<nconf;i++)
+	{
+	  if(config[i].type == 1) //int
+	    {
+	      printf("%s\t%d",config[i].IDENTIFIER, (int *) *(config[i].pointer));
+	    }
+	  else if(config[i].type == 2) //long long unsigned
+	    {
+	      printf("%s\t%llu",config[i].IDENTIFIER, (uint64_t *)*(config[i].pointer));
+	    }
+	  else if(config[i].type == 3) //double
+	    {
+	      printf("%s\t%lf",config[i].IDENTIFIER,(double *) *(config[i].pointer));
+	    }
+	  else if(config[i].type == 4) //string
+	    {
+	      printf("%s\t%s",config[i].IDENTIFIER,(char *) *(config[i].pointer));
+	    }
+
+	}
+    }
+ 
 
   fclose(fp);
 }
