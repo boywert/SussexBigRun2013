@@ -746,10 +746,18 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
      swap = 0;
   else
     swap = 1;
+
+  // figure out swap status Particles file
+  fread(&one, sizeof(int32_t), 1, fpprof);
+  if(one == 1)
+     swap = 0;
+  else
+    swap = 1;
  
   ReadULong(fpprof, &numHaloFromProfFile,   swap);
   ReadUInt (fpprof, &numColumns, swap);
   printf("num = %llu, col = %d\n", (long long unsigned)numHaloFromProfFile, numColumns);
+ 
   ReadULong(fppart, &numHaloFromPartFile,   swap);
   ReadUInt (fppart, &numColumns, swap);
   //printf("particlefile: nhalo = %llu\n",numHaloFromPartFile);
