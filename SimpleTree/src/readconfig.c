@@ -134,7 +134,7 @@ void readconfig()
 	}
       
     }
-  param_npart_box = (long long)npart * (long long)npart * (long long)npart;
+
   if(mpi_rank == 0)
     {
       for(i=0;i<nconf;i++)
@@ -163,6 +163,6 @@ void readconfig()
 	}
     }
  
-
+  param_npart_box = (long long)npart * (long long)npart * (long long)npart;
   fclose(fp);
 }
