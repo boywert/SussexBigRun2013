@@ -20,9 +20,9 @@ void readconfig()
 {
   FILE* fp;
   char buffer[1024],ident[1024],value[1024],value_str[1024];
-  int value_int;
-  uint64_t value_llu;
-  double value_double;
+  int *value_int;
+  uint64_t *value_llu;
+  double *value_double;
   char *pch;
   int count,nconf,i,npart;
   struct config config[100];
@@ -140,19 +140,23 @@ void readconfig()
 	{
 	  if(config[i].type == 1) //int
 	    {
-	      printf("%s\t%d",config[i].IDENTIFIER, (int *) *(config[i].pointer));
+	      value_int = (int *) config[i].pointer;
+	      printf("%s\t%d",config[i].IDENTIFIER, *value_int);
 	    }
 	  else if(config[i].type == 2) //long long unsigned
 	    {
-	      printf("%s\t%llu",config[i].IDENTIFIER, (uint64_t *)*(config[i].pointer));
+	      value_llu = (uint64_t *) config[i].pointer;
+	      printf("%s\t%llu",config[i].IDENTIFIER, *value_llu);
 	    }
 	  else if(config[i].type == 3) //double
 	    {
-	      printf("%s\t%lf",config[i].IDENTIFIER,(double *) *(config[i].pointer));
+	      value_double = (double *) config[i].pointer;
+	      printf("%s\t%lf",config[i].IDENTIFIER, *value_double);
 	    }
 	  else if(config[i].type == 4) //string
 	    {
-	      printf("%s\t%s",config[i].IDENTIFIER,(char *) *(config[i].pointer));
+	      value_str = (char *) config[i].pointer;
+	      printf("%s\t%s",config[i].IDENTIFIER,value_str);
 	    }
 
 	}
