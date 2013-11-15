@@ -752,9 +752,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   ReadULong(fphalo, &numHalos,   swap);
   ReadUInt (fphalo, &numColumns, swap);
   //printf("halofile: nhalo = %llu\n",numHalos);
-  ReadULong(fpprof, &numHalos,   swap);
-  ReadUInt (fpprof, &numColumns, swap);
-  printf("numcolumn = %d\n",(int) numColumns);
+
 
   sprintf(memmgr_buff,"Halo Array");
 
