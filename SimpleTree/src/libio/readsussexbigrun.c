@@ -756,7 +756,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
  
   ReadULong(fpprof, &numHaloFromProfFile,   swap);
   ReadUInt (fpprof, &numColumns, swap);
-  printf("num = %llu, col = %d\n", (long long unsigned)numHaloFromProfFile, numColumns);
  
   ReadULong(fppart, &numHaloFromPartFile,   swap);
   ReadUInt (fppart, &numColumns, swap);
@@ -765,6 +764,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   ReadUInt (fphalo, &numColumns, swap);
   //printf("halofile: nhalo = %llu\n",numHalos);
 
+  if(numHalos != numHaloFromPartFile ||numHalos != numHaloFromProfFile)
+    {
+      printf("Number of halos don't match\nExit()\n");
+      exit(1);
+    }
 
   sprintf(memmgr_buff,"Halo Array");
 
