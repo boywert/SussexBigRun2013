@@ -716,7 +716,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   order_uint64_t *maphalo;
   uint64_t numHaloFromPartFile;
   uint64_t numHaloFromProfFile;
-  uint32_t numColumns;
+  uint32_t numColumns,nbins,ibin;
   uint64_t i,size;
   int32_t  one;
   int      swap=0,flag;
@@ -892,6 +892,40 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 	  chalo.chalos[counthalo].Particles[ipart].ID = pid_buff[ipart].ID;
 	}
       memmgr_free(pid_buff,chalo.chalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
+      ReadUInt(fpprof, &nbins, swap);
+      if(chalo.chalos[counthalo].nbins != nbins)
+	{
+	  printf("nbins do not match.\nExit()\n");
+	  exit(1);
+	}
+      AHF_alloc_profiles(chalo.chalos[counthalo].nbins, &(chalo.chalos[counthalo].Profile));
+      for(ibin=0; ibin<nbins; ibin++) {
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.r[ibin]),      swap);
+	ReadUInt (fpprof, &(chalo.chalos[counthalo].Profile.npart[ibin]),  swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.M_in_r[ibin]), swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.ovdens[ibin]), swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.dens[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.vcirc[ibin]),  swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.vesc[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.sigv[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Lx[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ly[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Lz[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.b[ibin]),      swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.c[ibin]),      swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eax[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eay[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eaz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ebx[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eby[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ebz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecx[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecy[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ekin[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Epot[ibin]),   swap);
+      }
+      
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
@@ -1003,11 +1037,6 @@ void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof)
   prof->Ecz     = (float *)       calloc(nbins, sizeof(float));
   prof->Ekin    = (float *)       calloc(nbins, sizeof(float));
   prof->Epot    = (float *)       calloc(nbins, sizeof(float));
-  prof->M_gas   = (float *)       calloc(nbins, sizeof(float));
-  prof->M_star  = (float *)       calloc(nbins, sizeof(float));
-  prof->u_gas   = (float *)       calloc(nbins, sizeof(float));
-  prof->Z_gas_sh  = (float *)       calloc(nbins, sizeof(float));
-  prof->Z_star_sh = (float *)       calloc(nbins, sizeof(float));
 }
 
 void AHF_free_profiles(halo_profile_t *prof)
@@ -1036,11 +1065,7 @@ void AHF_free_profiles(halo_profile_t *prof)
   free(prof->Ecz);
   free(prof->Ekin);
   free(prof->Epot);
-  free(prof->M_gas);
-  free(prof->M_star);
-  free(prof->u_gas);
-  free(prof->Z_gas_sh);
-  free(prof->Z_star_sh);
+
 }
 
 void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)

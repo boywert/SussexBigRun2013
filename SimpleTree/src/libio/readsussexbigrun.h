@@ -106,11 +106,11 @@ typedef struct halo_profile {
   float        *Ecz;
   float        *Ekin;
   float        *Epot;
-  float        *M_gas;
-  float        *M_star;
-  float        *u_gas;
-  float        *Z_gas_sh;
-  float        *Z_star_sh;
+  /* float        *M_gas; */
+  /* float        *M_star; */
+  /* float        *u_gas; */
+  /* float        *Z_gas_sh; */
+  /* float        *Z_star_sh; */
 } halo_profile_t;
 
 
