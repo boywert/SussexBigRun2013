@@ -602,9 +602,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
       sprintf(partfile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
       sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
       sprintf(proffile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
-      printf("reading %s\n",partfile);
-      printf("reading %s\n",halofile);
-      printf("reading %s\n",proffile);
+      /* printf("reading %s\n",partfile); */
+      /* printf("reading %s\n",halofile); */
+      /* printf("reading %s\n",proffile); */
       fphalo = fopen(halofile,"rb");
       fppart = fopen(partfile,"rb");  
       fpprof = fopen(proffile,"rb"); 
@@ -715,6 +715,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   uint64_t numHalos,counthalo,counthalo_local,old_nHalos;
   order_uint64_t *maphalo;
   uint64_t numHaloFromPartFile;
+  uint64_t numHaloFromProfFile;
   uint32_t numColumns;
   uint64_t i,size;
   int32_t  one;
@@ -745,7 +746,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
      swap = 0;
   else
     swap = 1;
-  
+ 
+  ReadULong(fppart, &numHaloFromProfFile,   swap);
+  ReadUInt (fppart, &numColumns, swap);
+  printf("num = %llu, col = %d\n", (long long unsigned)numHaloFromProfFile, numColumns);
   ReadULong(fppart, &numHaloFromPartFile,   swap);
   ReadUInt (fppart, &numColumns, swap);
   //printf("particlefile: nhalo = %llu\n",numHaloFromPartFile);
