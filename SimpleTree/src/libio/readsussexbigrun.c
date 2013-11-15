@@ -2,6 +2,7 @@
 /* Some private function for this file only */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
 void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
+void AHF_free_profiles(halo_profile_t *prof);
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -1074,7 +1075,7 @@ void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
       for(i=0;i<ptr[j].nHalos;i++)
 	{
 	  memmgr_free(ptr[j].chalos[i].Particles,ptr[j].chalos[i].npart*sizeof(particlelist_t),buff);
-	  AHF_free_profiles(ptr[j].chalos[i].Profile);
+	  AHF_free_profiles(&(ptr[j].chalos[i].Profile));
 	}
       sprintf(buff,"Halo Array");
       memmgr_free(ptr[j].chalos,ptr[j].nHalos*sizeof(make_catalogue_halo_t),buff);
