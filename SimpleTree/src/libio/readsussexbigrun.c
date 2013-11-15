@@ -1,6 +1,7 @@
 #include "readsussexbigrun.h"
 /* Some private function for this file only */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
+void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
