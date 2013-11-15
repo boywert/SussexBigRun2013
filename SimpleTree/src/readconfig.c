@@ -19,7 +19,8 @@ struct config
 void readconfig()
 {
   FILE* fp;
-  char buffer[1024],ident[1024],value[1024],value_str[1024];
+  char buffer[1024],ident[1024],value[1024];
+  char *value_str;
   int *value_int;
   uint64_t *value_llu;
   double *value_double;
