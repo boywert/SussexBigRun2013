@@ -1050,12 +1050,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 /* This function is for transfering Profiles between MPI ranks - I'm too lazy to write this several times - Boyd */
 void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node)
 {
-  if(mpi_rank == inode)
+  if(mpi_rank == src_node)
     {
       MPI_Send(src_prof->r, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD);
       MPI_Send(src_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD);
     }
-  else if(mpi_rank == jnode)
+  else if(mpi_rank == target_node)
     {
       MPI_Recv(target_prof->, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       MPI_Send(src_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD);
