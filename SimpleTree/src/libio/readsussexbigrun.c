@@ -941,7 +941,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t ihalo,count_export[mpi_nodes];
   uint64_t *export_halo[mpi_nodes];
   int domain_to_chunk[pow3(param_domain_per_dim)];
-  int i,j,k,inode,jnode;
+  int i,j,k,inode,jnode,target_chunk;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
   for(k=0;k<param_domain_per_dim;k++)
@@ -968,9 +968,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
 	    {
 	      //printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
-	      count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]++;
-	      realloc(export_halo[domain_to_chunk[chalo.chalos[ihalo].domainid]], count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]*sizeof(uint64_t));
-	      export_halo[domain_to_chunk[chalo.chalos[ihalo].domainid]][count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]-1] = ihalo;
+	      target_chunk = domain_to_chunk[chalo.chalos[ihalo].domainid];
+	      count_export[target_chunk]++;
+	      realloc(export_halo[target_chunk], count_export[target_chunk]*sizeof(uint64_t));
+	      export_halo[target_chunk][count_export[target_chunk]-1] = ihalo;
 	    }
 	}
     }
