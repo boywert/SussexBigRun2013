@@ -977,7 +977,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    }
 	}
     }
-  MPI_Barrier(MPI_COMM_WORLD);
+  //MPI_Barrier(MPI_COMM_WORLD);
 
   /* Exchange halos */
   /* Transfer from inode -> jnode */
