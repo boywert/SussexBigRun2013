@@ -999,12 +999,14 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
   	    }
   	  MPI_Barrier(MPI_COMM_WORLD);
-  	  /* if(mpi_rank == jnode) */
-  	  /*   { */
-  	  /*     chalo.nHalos += rev_nhalos; */
-  	  /*     chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array"); */
-  	  /*   } */
-  	  //MPI_Barrier(MPI_COMM_WORLD);
+  	  if(mpi_rank == jnode)
+  	    {
+  	      chalo.nHalos += rev_nhalos;
+  	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
+  	    }
+  	  MPI_Barrier(MPI_COMM_WORLD);
+	  if(mpi_rank == inode || mpi_rank == jnode)
+	    rev_nhalos = 0;
   	}
     }
   for(inode=0;inode<mpi_nodes;inode++)
