@@ -3,6 +3,7 @@
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
 void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
 void AHF_free_profiles(halo_profile_t *prof);
+void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node);
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -941,7 +942,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t ihalo,count_export[mpi_nodes];
   uint64_t *export_halo[mpi_nodes];
   int domain_to_chunk[pow3(param_domain_per_dim)];
-  int i,j,k,inode,jnode,target_chunk;
+  int i,j,k,inode,jnode,target_chunk,common_nbins;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
   MPI_Request request[mpi_nodes];
@@ -1024,6 +1025,17 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile));
 		}
 	    }
+	  MPI_Barrier(MPI_COMM_WORLD);
+	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
+	    {
+	      if(mpi_rank == inode)
+		common_nbins = chalo.chalos[export_halo[jnode][ihalo]].nbins;
+	      else if(mpi_rank == jnode)
+		common_nbins = chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins;
+	     
+	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profiles),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profiles), common_nbins, inode, jnode);
+	    }	  
+	  MPI_Barrier(MPI_COMM_WORLD);
 	  if(mpi_rank == inode || mpi_rank == jnode)
 	    rev_nhalos = 0;
   	}
@@ -1033,6 +1045,45 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
       free(export_halo[inode]);
     }
   return chalo;
+}
+
+/* This function is for transfering Profiles between MPI ranks - I'm too lazy to write this several times - Boyd */
+void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node)
+{
+  if(mpi_rank == inode)
+    {
+      MPI_Send(src_prof->r, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD);
+      MPI_Send(src_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD);
+    }
+  else if(mpi_rank == jnode)
+    {
+      MPI_Recv(target_prof->, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Send(src_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD);
+    }
+  /* prof->r       = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->npart   = (uint32_t*)     calloc(nbins, sizeof(uint32_t)); */
+  /* prof->M_in_r  = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->ovdens  = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->dens    = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->vcirc   = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->vesc    = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->sigv    = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Lx      = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ly      = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Lz      = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->b       = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->c       = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Eax     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Eay     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Eaz     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ebx     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Eby     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ebz     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ecx     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ecy     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ecz     = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Ekin    = (float *)       calloc(nbins, sizeof(float)); */
+  /* prof->Epot    = (float *)       calloc(nbins, sizeof(float)); */
 }
 
 /* This function will map hostID to the ID we are using */
