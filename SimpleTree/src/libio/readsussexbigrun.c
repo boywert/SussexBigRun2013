@@ -1008,11 +1008,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      if(mpi_rank == inode)
 		{
-		  MPI_Send(&(chalo.chalos[export_halo[jnode][ihalo]]), sizeof(make_catalogue_halo_t), MPI_BYTES, jnode, (mpi_nodes*inode+jnode)*rev_nhalos+ihalo, MPI_COMM_WORLD);
+		  MPI_Send(&(chalo.chalos[export_halo[jnode][ihalo]]), sizeof(make_catalogue_halo_t), MPI_BYTE, jnode, (mpi_nodes*inode+jnode)*rev_nhalos+ihalo, MPI_COMM_WORLD);
 		}
 	      else if(mpi_rank == jnode)
 		{
-		  MPI_Recv(&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo]), sizeof(make_catalogue_halo_t), MPI_BYTES, inode, (mpi_nodes*inode+jnode)*rev_nhalos +ihalo, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		  MPI_Recv(&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo]), sizeof(make_catalogue_halo_t), MPI_BYTE, inode, (mpi_nodes*inode+jnode)*rev_nhalos +ihalo, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		}
 	    }
 	  MPI_Barrier(MPI_COMM_WORLD);
