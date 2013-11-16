@@ -944,6 +944,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   int i,j,k,inode,jnode,target_chunk;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
+  MPI_Request request[mpi_nodes];
+  MPI_Status status[mpi_nodes];
   for(k=0;k<param_domain_per_dim;k++)
     {
       for(j=0;j<param_domain_per_dim;j++)
@@ -987,19 +989,19 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      send_nhalos = count_export[jnode];
 	      rev_nhalos = send_nhalos;
-	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
+	      MPI_ISend(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
 	    }
 	  if(mpi_rank == jnode)
 	    {
 	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	    }
-	  MPI_Barrier(MPI_COMM_WORLD);	  
+	  //MPI_Barrier(MPI_COMM_WORLD);	  
 	  if(mpi_rank == jnode)
 	    {
 	      chalo.nHalos += rev_nhalos;
 	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
 	    }
-	  MPI_Barrier(MPI_COMM_WORLD);
+	  //MPI_Barrier(MPI_COMM_WORLD);
 	}
     }
   for(inode=0;inode<mpi_nodes;inode++)
