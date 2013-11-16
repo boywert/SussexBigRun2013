@@ -1016,6 +1016,14 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		}
 	    }
 	  MPI_Barrier(MPI_COMM_WORLD);
+	  if(mpi_rank == jnode)
+	    {
+	      for(ihalo=0;ihalo<rev_nhalos;ihalo++)
+		{
+		  chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Particles = memmgr_malloc(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].npart*sizeof(struct particle_buffer),"Particle: Halo Array");
+		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile));
+		}
+	    }
 	  if(mpi_rank == inode || mpi_rank == jnode)
 	    rev_nhalos = 0;
   	}
