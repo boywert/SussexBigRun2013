@@ -970,7 +970,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	      //printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
 	      target_chunk = domain_to_chunk[chalo.chalos[ihalo].domainid];
 	      count_export[target_chunk]++;
-	      realloc(export_halo[target_chunk], count_export[target_chunk]*sizeof(uint64_t));
+	      export_halo[target_chunk] = realloc(export_halo[target_chunk], count_export[target_chunk]*sizeof(uint64_t));
 	      export_halo[target_chunk][count_export[target_chunk]-1] = ihalo;
 	    }
 	}
