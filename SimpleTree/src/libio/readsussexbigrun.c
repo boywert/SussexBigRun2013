@@ -1033,7 +1033,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	      else if(mpi_rank == jnode)
 		common_nbins = chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins;
 	     
-	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profiles),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profiles), common_nbins, inode, jnode);
+	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profile),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile), common_nbins, inode, jnode);
 	    }	  
 	  MPI_Barrier(MPI_COMM_WORLD);
 	  if(mpi_rank == inode || mpi_rank == jnode)
