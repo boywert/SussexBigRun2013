@@ -956,8 +956,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    }
 	}
     }
-  count_export = 0;
-  export_halo = malloc(0);
+  for(inode=0;inode<mpi_nodes;inode++)
+    {
+      count_export[inode] = 0;
+      export_halo[inode] = malloc(0);
+    }
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].domainid > -1)
