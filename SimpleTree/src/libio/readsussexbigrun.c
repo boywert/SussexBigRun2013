@@ -981,29 +981,31 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 
   /* Exchange halos */
   /* Transfer from inode -> jnode */
-  /* for(inode=0;inode<mpi_nodes;inode++) */
-  /*   { */
-  /*     for(jnode=0;jnode<mpi_nodes;jnode++) */
-  /* 	{ */
-  /* 	  if(mpi_rank == inode) */
-  /* 	    { */
-  /* 	      send_nhalos = count_export[jnode]; */
-  /* 	      rev_nhalos = send_nhalos; */
-  /* 	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD); */
-  /* 	    } */
-  /* 	  if(mpi_rank == jnode) */
-  /* 	    { */
-  /* 	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE); */
-  /* 	    } */
-  /* 	  //MPI_Barrier(MPI_COMM_WORLD);	   */
-  /* 	  if(mpi_rank == jnode) */
-  /* 	    { */
-  /* 	      chalo.nHalos += rev_nhalos; */
-  /* 	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array"); */
-  /* 	    } */
-  /* 	  //MPI_Barrier(MPI_COMM_WORLD); */
-  /* 	} */
-  /*   } */
+  rev_nhalos = 0;
+  MPI_Barrier(MPI_COMM_WORLD);
+  for(inode=0;inode<mpi_nodes;inode++)
+    {
+      for(jnode=0;jnode<mpi_nodes;jnode++)
+  	{
+  	  if(mpi_rank == inode)
+  	    {
+  	      send_nhalos = count_export[jnode];
+  	      rev_nhalos = send_nhalos;
+  	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
+  	    }
+  	  if(mpi_rank == jnode)
+  	    {
+  	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  	    }
+  	  //MPI_Barrier(MPI_COMM_WORLD);
+  	  /* if(mpi_rank == jnode) */
+  	  /*   { */
+  	  /*     chalo.nHalos += rev_nhalos; */
+  	  /*     chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array"); */
+  	  /*   } */
+  	  //MPI_Barrier(MPI_COMM_WORLD);
+  	}
+    }
   for(inode=0;inode<mpi_nodes;inode++)
     {
       free(export_halo[inode]);
