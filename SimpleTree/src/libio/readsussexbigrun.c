@@ -926,7 +926,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
-  //printf("max = %f\n",maxx);
 
   /* Relabel  HostID */
   if(numHalos > 0)
@@ -936,12 +935,15 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
 }
 
 /* This function works only for domain_per_dim%chunk_per_dim = 0 */
+/* Use 1 MPI per chunk */
 make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wrapper_t chalo, int chunk)
 {
-  uint64_t ihalo,count;
+  uint64_t ihalo,count_export[mpi_nodes];
+  uint64_t *export_halo[mpi_nodes];
   int domain_to_chunk[pow3(param_domain_per_dim)];
-  int i,j,k;
+  int i,j,k,inode,jnode;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
+  uint64_t send_nhalos,rev_nhalos;
   for(k=0;k<param_domain_per_dim;k++)
     {
       for(j=0;j<param_domain_per_dim;j++)
@@ -954,7 +956,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    }
 	}
     }
-  count = 0;
+  count_export = 0;
+  export_halo = malloc(0);
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
       if(chalo.chalos[ihalo].domainid > -1)
@@ -962,12 +965,43 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	  if(domain_to_chunk[chalo.chalos[ihalo].domainid] != chunk)
 	    {
 	      //printf("domain: %d is not in chunk %d:%d\n",chalo.chalos[ihalo].domainid,chunk,domain_to_chunk[chalo.chalos[ihalo].domainid]);
-	      count++;
+	      count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]++;
+	      realloc(export_halo[domain_to_chunk[chalo.chalos[ihalo].domainid]], count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]*sizeof(uint64_t));
+	      export_halo[domain_to_chunk[chalo.chalos[ihalo].domainid]][count_export[domain_to_chunk[chalo.chalos[ihalo].domainid]]-1] = ihalo;
 	    }
 	}
     }
-  if(count > 0)
-    printf("\t\t\t\toutside chunk: %llu/%llu\n",count,chalo.nHalos);
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  /* Exchange halos */
+  /* Transfer from inode -> jnode */
+  for(inode=0;inode<mpi_nodes;inode++)
+    {
+      for(jnode=0;jnode<mpi_nodes;jnode++)
+	{
+	  if(mpi_rank == inode)
+	    {
+	      send_nhalos = count_export[jnode];
+	      rev_nhalos = send_nhalos;
+	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
+	    }
+	  if(mpi_rank == jnode)
+	    {
+	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	    }
+	  MPI_Barrier(MPI_COMM_WORLD);	  
+	  if(mpi_rank == jnode)
+	    {
+	      chalo.nhalos += rev_nhalos;
+	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
+	    }
+	  MPI_Barrier(MPI_COMM_WORLD);
+	}
+    }
+  for(inode=0;inode<mpi_nodes;inode++)
+    {
+      free(export_halo[inode]);
+    }
   return chalo;
 }
 
@@ -979,23 +1013,20 @@ make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wra
   uint64_t i,hostid_unique_el,startid,stopid;
   startid = maphalo_unsorted[0].id;
   stopid = maphalo_unsorted[numHalos-1].id;
-  //printf("Start make struct\n");
   qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
   maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
   for(i=startid;i<=stopid;i++)
     { 
-      //printf("%llu/%llu\n",i,stopid);
+ 
       if(chalo.chalos[i].hostHalo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(chalo.chalos[i].hostHalo, numHalos, maphalo_sorted);
-	  //printf("hostid = %llu\n",hostid_unique_el);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
 	      chalo.chalos[i].hostHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].ID;
 	      chalo.chalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
 	      chalo.chalos[i].NextHalo = chalo.chalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
 	      chalo.chalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = chalo.chalos[i].refID;
-	      //printf("Found host %llu\n",chalo.chalos[i].hostHalo);
 	    }
 	  else
 	    { 
@@ -1004,7 +1035,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_find_hostHalo(make_catalogue_halo_wra
 	    }
 	}
     }
-  //printf("Stop make struct\n");
   return chalo;
 }
 

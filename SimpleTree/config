@@ -1,3 +1,4 @@
+# COBEP3M Parameters
 NPARTSPERDIM	1728		#number of particles per dim
 BOXSIZE		47000.0		#kpc/h
 CUBEP3MDOMAINS	6
