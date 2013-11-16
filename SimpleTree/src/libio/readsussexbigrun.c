@@ -1060,8 +1060,8 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
     }
   else if(mpi_rank == target_node)
     {
-      MPI_Recv(target_prof->, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-      MPI_Recv(target>npart, nbins*sizeof(uint32_t), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->r, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
   /* prof->r       = (float *)       calloc(nbins, sizeof(float)); */
   /* prof->npart   = (uint32_t*)     calloc(nbins, sizeof(uint32_t)); */
