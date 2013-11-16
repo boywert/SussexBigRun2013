@@ -977,7 +977,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    }
 	}
     }
-  //MPI_Barrier(MPI_COMM_WORLD);
 
   /* Exchange halos */
   /* Transfer from inode -> jnode */
@@ -1005,6 +1004,18 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
   	    }
   	  MPI_Barrier(MPI_COMM_WORLD);
+	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
+	    {
+	      if(mpi_rank == inode)
+		{
+		  MPI_Send(&(chalo.chalos[export_halo[jnode][ihalo]]), sizeof(make_catalogue_halo_t), MPI_BYTES, jnode, (mpi_nodes*inode+jnode)*rev_nhalos+ihalo, MPI_COMM_WORLD);
+		}
+	      else if(mpi_rank == jnode)
+		{
+		  MPI_Recv(&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo]), sizeof(make_catalogue_halo_t), MPI_BYTES, inode, (mpi_nodes*inode+jnode)*rev_nhalos +ihalo, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		}
+	    }
+	  MPI_Barrier(MPI_COMM_WORLD);
 	  if(mpi_rank == inode || mpi_rank == jnode)
 	    rev_nhalos = 0;
   	}
