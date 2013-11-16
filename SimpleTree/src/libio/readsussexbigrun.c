@@ -989,7 +989,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      send_nhalos = count_export[jnode];
 	      rev_nhalos = send_nhalos;
-	      MPI_ISend(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
+	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
 	    }
 	  if(mpi_rank == jnode)
 	    {
