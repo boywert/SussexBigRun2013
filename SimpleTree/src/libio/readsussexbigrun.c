@@ -995,7 +995,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	  MPI_Barrier(MPI_COMM_WORLD);	  
 	  if(mpi_rank == jnode)
 	    {
-	      chalo.nhalos += rev_nhalos;
+	      chalo.nHalos += rev_nhalos;
 	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
 	    }
 	  MPI_Barrier(MPI_COMM_WORLD);
