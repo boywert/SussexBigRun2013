@@ -1026,7 +1026,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile));
 		}
 	    }
-	    {
+	    
 
 	  MPI_Barrier(MPI_COMM_WORLD);
 	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
