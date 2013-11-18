@@ -991,79 +991,79 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   rev_nhalos = 0;
   MPI_Barrier(MPI_COMM_WORLD);
     
-  for(inode=0;inode<mpi_nodes;inode++)
-    {
-      for(jnode=0;jnode<mpi_nodes;jnode++)
-  	{
-  	  if(mpi_rank == inode)
-  	    {
-  	      send_nhalos = count_export[jnode];
-  	      rev_nhalos = send_nhalos;
-  	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD);
-  	    }
-  	  if(mpi_rank == jnode)
-  	    {
-  	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-  	    }
-  	  MPI_Barrier(MPI_COMM_WORLD);
-  	  if(mpi_rank == jnode)
-  	    {
-  	      chalo.nHalos += rev_nhalos;
-  	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array");
-  	    }
-  	  MPI_Barrier(MPI_COMM_WORLD);
-	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
-	    {
-	      if(mpi_rank == inode)
-		{
-		  MPI_Send(&(chalo.chalos[export_halo[jnode][ihalo]]), sizeof(make_catalogue_halo_t), MPI_BYTE, jnode, (mpi_nodes*inode+jnode)*rev_nhalos+ihalo, MPI_COMM_WORLD);
-		}
-	      else if(mpi_rank == jnode)
-		{
-		  MPI_Recv(&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo]), sizeof(make_catalogue_halo_t), MPI_BYTE, inode, (mpi_nodes*inode+jnode)*rev_nhalos +ihalo, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		}
-	    }
-	  MPI_Barrier(MPI_COMM_WORLD);
-	  if(mpi_rank == jnode)
-	    {
-	      for(ihalo=0;ihalo<rev_nhalos;ihalo++)
-		{
-		  chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Particles = memmgr_malloc(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].npart*sizeof(struct particle_buffer),"Particle: Halo Array");
-		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile));
-		}
-	    }
+  /* for(inode=0;inode<mpi_nodes;inode++) */
+  /*   { */
+  /*     for(jnode=0;jnode<mpi_nodes;jnode++) */
+  /* 	{ */
+  /* 	  if(mpi_rank == inode) */
+  /* 	    { */
+  /* 	      send_nhalos = count_export[jnode]; */
+  /* 	      rev_nhalos = send_nhalos; */
+  /* 	      MPI_Send(&send_nhalos, 1, MPI_UNSIGNED_LONG_LONG, jnode, mpi_nodes*inode+jnode, MPI_COMM_WORLD); */
+  /* 	    } */
+  /* 	  if(mpi_rank == jnode) */
+  /* 	    { */
+  /* 	      MPI_Recv(&rev_nhalos, 1, MPI_UNSIGNED_LONG_LONG, inode, mpi_nodes*inode+jnode, MPI_COMM_WORLD, MPI_STATUS_IGNORE); */
+  /* 	    } */
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	  if(mpi_rank == jnode) */
+  /* 	    { */
+  /* 	      chalo.nHalos += rev_nhalos; */
+  /* 	      chalo.chalos = memmgr_realloc(chalo.chalos,chalo.nHalos*sizeof(make_catalogue_halo_t),(chalo.nHalos-rev_nhalos)*sizeof(make_catalogue_halo_t),"Halo Array"); */
+  /* 	    } */
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	  for(ihalo=0;ihalo<rev_nhalos;ihalo++) */
+  /* 	    { */
+  /* 	      if(mpi_rank == inode) */
+  /* 		{ */
+  /* 		  MPI_Send(&(chalo.chalos[export_halo[jnode][ihalo]]), sizeof(make_catalogue_halo_t), MPI_BYTE, jnode, (mpi_nodes*inode+jnode)*rev_nhalos+ihalo, MPI_COMM_WORLD); */
+  /* 		} */
+  /* 	      else if(mpi_rank == jnode) */
+  /* 		{ */
+  /* 		  MPI_Recv(&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo]), sizeof(make_catalogue_halo_t), MPI_BYTE, inode, (mpi_nodes*inode+jnode)*rev_nhalos +ihalo, MPI_COMM_WORLD, MPI_STATUS_IGNORE); */
+  /* 		} */
+  /* 	    } */
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	  if(mpi_rank == jnode) */
+  /* 	    { */
+  /* 	      for(ihalo=0;ihalo<rev_nhalos;ihalo++) */
+  /* 		{ */
+  /* 		  chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Particles = memmgr_malloc(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].npart*sizeof(struct particle_buffer),"Particle: Halo Array"); */
+  /* 		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile)); */
+  /* 		} */
+  /* 	    } */
 	    
 
-	  MPI_Barrier(MPI_COMM_WORLD);
-	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
-	    {
-	      if(mpi_rank == inode)
-		common_nbins = chalo.chalos[export_halo[jnode][ihalo]].nbins;
-	      else if(mpi_rank == jnode)
-		common_nbins = chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins;
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	  for(ihalo=0;ihalo<rev_nhalos;ihalo++) */
+  /* 	    { */
+  /* 	      if(mpi_rank == inode) */
+  /* 		common_nbins = chalo.chalos[export_halo[jnode][ihalo]].nbins; */
+  /* 	      else if(mpi_rank == jnode) */
+  /* 		common_nbins = chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins; */
 	     
-	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profile),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile), common_nbins, inode, jnode);
+  /* 	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profile),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile), common_nbins, inode, jnode); */
 
-	      if(mpi_rank == inode || mpi_rank == jnode)
-		MPI_Barrier(MPI_COMM_WORLD);
-	    }	  
-	  MPI_Barrier(MPI_COMM_WORLD);
-	  if(mpi_rank == inode)
-	    {
-	      for(ihalo=0;ihalo<rev_nhalos;ihalo++)
-		{
-		  chalo.chalos[export_halo[jnode][ihalo]].domainid = -1;
-		}
-	    }
-	  if(mpi_rank == inode || mpi_rank == jnode)
-	    rev_nhalos = 0;
-	  MPI_Barrier(MPI_COMM_WORLD);
-  	}
-    }
-  for(inode=0;inode<mpi_nodes;inode++)
-    {
-      free(export_halo[inode]);
-    }
+  /* 	      if(mpi_rank == inode || mpi_rank == jnode) */
+  /* 		MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	    }	   */
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	  if(mpi_rank == inode) */
+  /* 	    { */
+  /* 	      for(ihalo=0;ihalo<rev_nhalos;ihalo++) */
+  /* 		{ */
+  /* 		  chalo.chalos[export_halo[jnode][ihalo]].domainid = -1; */
+  /* 		} */
+  /* 	    } */
+  /* 	  if(mpi_rank == inode || mpi_rank == jnode) */
+  /* 	    rev_nhalos = 0; */
+  /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	} */
+  /*   } */
+  /* for(inode=0;inode<mpi_nodes;inode++) */
+  /*   { */
+  /*     free(export_halo[inode]); */
+  /*   } */
   
   for(i=0;i<ratio;i++)
     {
