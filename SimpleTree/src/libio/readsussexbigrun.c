@@ -1224,7 +1224,6 @@ void AHF_free_profiles(halo_profile_t *prof)
   free(prof->Ecz);
   free(prof->Ekin);
   free(prof->Epot);
-
 }
 
 void free_make_catalogue_halo_wrapper(make_catalogue_halo_wrapper_t *ptr)
