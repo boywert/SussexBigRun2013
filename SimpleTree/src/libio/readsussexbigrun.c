@@ -945,7 +945,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   int i,j,k,inode,jnode,target_chunk,common_nbins,idomain;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
-  uint64_t count_halos[ratio],domain_contained[ratio];
+  uint64_t count_halos[pow3(ratio)],domain_contained[pow3(ratio)];
 
   idomain = 0;
   for(k=0;k<param_domain_per_dim;k++)
@@ -1065,7 +1065,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
       free(export_halo[inode]);
     }
   
-  for(i=0;i<ratio;i++)
+  for(i=0;i<pow3(ratio);i++)
     {
       printf("domain : %d => %d\n",i,domain_contained[i]);
     }
