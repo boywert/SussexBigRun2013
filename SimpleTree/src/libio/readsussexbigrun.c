@@ -982,9 +982,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   /* Exchange halos */
   /* Transfer from inode -> jnode */
   rev_nhalos = 0;
-  if(mpi_rank == 0)
-    MPI_Barrier(MPI_COMM_WORLD);
-
+  MPI_Barrier(MPI_COMM_WORLD);
+    
   for(inode=0;inode<mpi_nodes;inode++)
     {
       for(jnode=0;jnode<mpi_nodes;jnode++)
@@ -1037,6 +1036,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		common_nbins = chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins;
 	     
 	      MPI_transfer_profiles(&(chalo.chalos[export_halo[jnode][ihalo]].Profile),&(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile), common_nbins, inode, jnode);
+
+	      if(mpi_rank == inode || mpi_rank == jnode)
+		MPI_Barrier(MPI_COMM_WORLD);
 	    }	  
 	  MPI_Barrier(MPI_COMM_WORLD);
 	  if(mpi_rank == inode || mpi_rank == jnode)
@@ -1056,6 +1058,7 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
   /* Make things the same as the other function */
   int inode = src_node;
   int jnode = target_node;
+
   if(mpi_rank == src_node)
     {
       MPI_Send(src_prof->r, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD);
@@ -1110,7 +1113,6 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
       MPI_Recv(target_prof->Ekin, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+23, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       MPI_Recv(target_prof->Epot, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+24, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
-
 }
 
 /* This function will map hostID to the ID we are using */
