@@ -1041,8 +1041,16 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		MPI_Barrier(MPI_COMM_WORLD);
 	    }	  
 	  MPI_Barrier(MPI_COMM_WORLD);
+	  if(mpi_rank == inode)
+	    {
+	      for(ihalo=0;ihalo<rev_nhalos;ihalo++)
+		{
+		  chalo.chalos[export_halo[jnode][ihalo]].domainid = -1;
+		}
+	    }
 	  if(mpi_rank == inode || mpi_rank == jnode)
 	    rev_nhalos = 0;
+	  MPI_Barrier(MPI_COMM_WORLD);
   	}
     }
   for(inode=0;inode<mpi_nodes;inode++)
