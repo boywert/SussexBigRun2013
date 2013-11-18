@@ -982,7 +982,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   /* Exchange halos */
   /* Transfer from inode -> jnode */
   rev_nhalos = 0;
-  MPI_Barrier(MPI_COMM_WORLD);
+  if(mpi_rank == 0)
+    MPI_Barrier(MPI_COMM_WORLD);
 
   for(inode=0;inode<mpi_nodes;inode++)
     {
@@ -1025,6 +1026,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		  AHF_alloc_profiles(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].nbins, &(chalo.chalos[chalo.nHalos-rev_nhalos+ihalo].Profile));
 		}
 	    }
+	    {
+
 	  MPI_Barrier(MPI_COMM_WORLD);
 	  for(ihalo=0;ihalo<rev_nhalos;ihalo++)
 	    {
@@ -1047,7 +1050,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   return chalo;
 }
 
-/* This function is for transfering Profiles between MPI ranks - I'm too lazy to write this several times - Boyd */
+/* This function is for transfering Profiles between MPI ranks - It would make my life more complicate without this function - Boyd */
 void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node)
 {
   /* Make things the same as the other function */
@@ -1057,36 +1060,57 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
     {
       MPI_Send(src_prof->r, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD);
       MPI_Send(src_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD);
+      MPI_Send(src_prof->M_in_r, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+3, MPI_COMM_WORLD);
+      MPI_Send(src_prof->ovdens, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+4, MPI_COMM_WORLD);
+      MPI_Send(src_prof->dens, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+5, MPI_COMM_WORLD);
+      MPI_Send(src_prof->vcirc, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+6, MPI_COMM_WORLD);
+      MPI_Send(src_prof->vesc, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+7, MPI_COMM_WORLD);
+      MPI_Send(src_prof->sigv, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+8, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Lx, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+9, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ly, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+10, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Lz, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+11, MPI_COMM_WORLD);
+      MPI_Send(src_prof->b, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+12, MPI_COMM_WORLD);
+      MPI_Send(src_prof->c, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+13, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Eax, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+14, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Eay, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+15, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Eaz, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+16, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ebx, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+17, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Eby, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+18, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ebz, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+19, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ecx, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+20, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ecy, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+21, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ecz, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+22, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Ekin, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+23, MPI_COMM_WORLD);
+      MPI_Send(src_prof->Epot, nbins*sizeof(float), MPI_BYTE, target_node, (mpi_nodes*inode+jnode)*100+24, MPI_COMM_WORLD);
     }
   else if(mpi_rank == target_node)
     {
       MPI_Recv(target_prof->r, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
       MPI_Recv(target_prof->npart, nbins*sizeof(uint32_t), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->M_in_r, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->ovdens, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+4, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->dens, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+5, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->vcirc, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+6, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->vesc, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+7, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->sigv, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+8, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Lx, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+9, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ly, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+10, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Lz, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+11, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->b, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+12, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->c, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+13, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Eax, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+14, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Eay, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+15, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Eaz, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+16, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ebx, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+17, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Eby, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+18, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ebz, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+19, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ecx, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+20, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ecy, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+21, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ecz, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+22, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Ekin, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+23, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      MPI_Recv(target_prof->Epot, nbins*sizeof(float), MPI_BYTE, src_node, (mpi_nodes*inode+jnode)*100+24, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
-  /* prof->r       = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->npart   = (uint32_t*)     calloc(nbins, sizeof(uint32_t)); */
-  /* prof->M_in_r  = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->ovdens  = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->dens    = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->vcirc   = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->vesc    = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->sigv    = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Lx      = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ly      = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Lz      = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->b       = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->c       = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Eax     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Eay     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Eaz     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ebx     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Eby     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ebz     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ecx     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ecy     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ecz     = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Ekin    = (float *)       calloc(nbins, sizeof(float)); */
-  /* prof->Epot    = (float *)       calloc(nbins, sizeof(float)); */
+
 }
 
 /* This function will map hostID to the ID we are using */
