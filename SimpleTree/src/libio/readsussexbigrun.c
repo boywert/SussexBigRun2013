@@ -942,11 +942,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t ihalo,count_export[mpi_nodes];
   uint64_t *export_halo[mpi_nodes];
   int domain_to_chunk[pow3(param_domain_per_dim)];
-  int i,j,k,inode,jnode,target_chunk,common_nbins;
+  int i,j,k,inode,jnode,target_chunk,common_nbins,idomain;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
-  MPI_Request request[mpi_nodes];
-  MPI_Status status[mpi_nodes];
+  uint64_t count_halos[ratio],domain_contained[ratio];
+
+  idomain = 0;
   for(k=0;k<param_domain_per_dim;k++)
     {
       for(j=0;j<param_domain_per_dim;j++)
@@ -955,6 +956,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] =
 		k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
+	      if(domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] == chunk)
+		{
+		  domain_contained[idomain] = k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i;
+		  count_halos[idomain] = 0;
+		  idomain++;
+		}
 	      //printf("domain:%d => %d\n",k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i,domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i]);
 	    }
 	}
@@ -1056,6 +1063,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   for(inode=0;inode<mpi_nodes;inode++)
     {
       free(export_halo[inode]);
+    }
+  
+  for(i=0;i<ratio;i++)
+    {
+      printf("domain : %d => %d\n",i,domain_contained[i]);
     }
   return chalo;
 }
