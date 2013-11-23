@@ -1117,7 +1117,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   printf("sbuf = %s\n",sbuf);
   system(sbuf);
   cubep3m_halos_file = (FILE **) malloc(ndomains*sizeof(FILE *));
-  printf("loop files\n");
   for(ifile=0;ifile<ndomains;ifile++)
     {
       printf("ifile = %d\n",ifile);
