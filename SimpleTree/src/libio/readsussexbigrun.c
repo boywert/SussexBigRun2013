@@ -1124,7 +1124,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
       printf("ifile = %d\n",ifile);
       /* halos_bin */
       sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
-      cubep3m_halos_file[ifile] = fopen(sbuf,"wb+");
+      cubep3m_halos_file[ifile] = fopen(sbuf,"rwb+");
       /* write header */
       fwrite(&one,sizeof(int32_t),1,cubep3m_halos_file[ifile]);
       fwrite(&zero,sizeof(uint64_t),1,cubep3m_halos_file[ifile]);
