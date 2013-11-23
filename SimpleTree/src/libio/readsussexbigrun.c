@@ -1117,12 +1117,10 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   printf("open files\n");
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
-  printf("sbuf = %s\n",sbuf);
   system(sbuf);
   cubep3m_halos_file = (FILE **) malloc(ndomains*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
-      printf("ifile = %d\n",ifile);
       /* halos_bin */
       sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
       cubep3m_halos_file[ifile] = fopen(sbuf,"rwb+");
