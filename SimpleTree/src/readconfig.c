@@ -6,6 +6,7 @@ int  param_domain_per_dim,param_chunk_per_dim,param_chunk_mpi;
 char param_INPUTDIR[1024];
 char param_OUTPUTDIR[1024];
 char param_CHUNKDIR[1024];
+char param_CUBEP3MOUT[1024];
 
 struct config
 {
@@ -52,6 +53,12 @@ void readconfig()
   config[nconf].type = 1;
   config[nconf].pointer = &param_domain_per_dim;
   sprintf(config[nconf].IDENTIFIER,"CUBEP3MDOMAINS");
+  config[nconf].used = 0;
+  nconf++;
+
+  config[nconf].type = 1;
+  config[nconf].pointer = &param_cubep3mout;
+  sprintf(config[nconf].IDENTIFIER,"CUBEP3MOUT");
   config[nconf].used = 0;
   nconf++;
 

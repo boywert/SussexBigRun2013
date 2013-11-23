@@ -4,6 +4,10 @@ int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2
 void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
 void AHF_free_profiles(halo_profile_t *prof);
 void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node);
+void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file);
+void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos_file, int *domain_contained);
+void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
+
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -325,7 +329,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
     {
       if(mhalo.mhalos[ihalo].host_halo < NULLPOINT)
 	{
-	  hostid = search_m_halo_t_array_for_oriID( mhalo.mhalos[ihalo].host_halo,mhalo.nHalos,mhalo.mhalos);
+s	  hostid = search_m_halo_t_array_for_oriID( mhalo.mhalos[ihalo].host_halo,mhalo.nHalos,mhalo.mhalos);
 	  if(hostid == NULLPOINT) printf("hostid = %llu <= %llu\n",(hid_t)mhalo.mhalos[ihalo].host_halo, (hid_t)hostid);
 	}
     } 
@@ -942,11 +946,16 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t ihalo,count_export[mpi_nodes];
   uint64_t *export_halo[mpi_nodes];
   int domain_to_chunk[pow3(param_domain_per_dim)];
+  int domain_to_fileptr[pow3(param_domain_per_dim)];
   int i,j,k,inode,jnode,target_chunk,common_nbins,idomain;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
-  uint64_t count_halos[pow3(ratio)],domain_contained[pow3(ratio)];
+  int ndomains = pow3(ratio);
+  uint64_t count_halos[pow3(ratio)];
+  int *domain_contained;
+  FILE **cubep3m_halos_file;
 
+  domain_contained = calloc(pow3(ratio),sizeof(int));
   idomain = 0;
   for(k=0;k<param_domain_per_dim;k++)
     {
@@ -956,9 +965,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	    {
 	      domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] =
 		k/ratio*pow2(param_chunk_per_dim) + j/ratio*param_chunk_per_dim + i/ratio;
+	      domain_to_fileptr[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] = NULLPOINT;
 	      if(domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] == chunk)
 		{
 		  domain_contained[idomain] = k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i;
+		  domain_to_fileptr[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] = idomain;
 		  count_halos[idomain] = 0;
 		  idomain++;
 		}
@@ -1065,11 +1076,103 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
       free(export_halo[inode]);
     }
   
-  for(i=0;i<pow3(ratio);i++)
-    {
-      printf("domain : %d => %d\n",i,domain_contained[i]);
-    }
+  MPI_Barrier(MPI_COMM_WORLD);
+
+  open_cubep3m_for_writing(ndomains, chalo.redshift, cubep3m_halos_file, domain_contained);
+  close_cubep3m_for_writing(ndomains, cubep3m_halos_file);
   return chalo;
+}
+
+/* Change nHalos */
+void alter_domain_nhalos(int ndomains, FILE **cubep3m_halos_file, uint64_t *DomainNhalos)
+{
+  int ifile;
+  for(ifile=0;ifile<ndomains;ifile++)
+    {
+      fseek (cubep3m_halos_file[ifile] , 0L , SEEK_SET );
+    }
+}
+
+/* Close AHF files */
+void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
+{
+  int ifile;
+  for(ifile=0;ifile<ndomains;ifile++)
+    {
+      fclose(cubep3m_halos_file[ifile]);
+    }
+}
+
+/* Open AHF files and add headers */
+void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos_file, int *domain_contained)
+{
+  int ifile;
+  char *sbuf;
+  uint64_t zero=0;
+  int32_t sizerow,one=1;
+
+  sizerow = (int32_t) halo_t_size;
+  sprintf(sbuf,"mkdir -p %s/z_%2.3f");
+  system(sbuf);
+  cubep3m_halos_file = malloc(ndomains*sizeof(FILE*));
+  
+  for(ifile=0;ifile<ndomains;ifile++)
+    {
+      /* halos_bin */
+      sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
+      cubep3m_halos_file[ifile] = fopen(sbuf,"wb+");
+      /* write header */
+      fwrite(&one,sizeof(int32_t),1,cubep3m_halos_file[ifile]);
+      fwrite(&zero,sizeof(uint64_t),1,cubep3m_halos_file[ifile]);
+      fwrite(&sizerow,sizeof(int32_t),1,cubep3m_halos_file[ifile]); 
+    }
+}
+
+void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
+{
+  fwrite(halo->ID,           sizeof(uint64_t), 1, fphalo);       // ID(1)
+  fwrite(halo->hostHalo,     sizeof(uint64_t), 1, fphalo);       // hostHalo(2)
+  fwrite(halo->numSubStruct, sizeof(uint32_t), 1, fphalo);       // numSubStruct(3)
+  fwrite(halo->Mvir,         sizeof(float),    1, fphalo);       // Mvir(4)
+  fwrite(halo->npart,        sizeof(uint32_t), 1, fphalo);       // npart(5)
+  fwrite(halo->Xc,           sizeof(float),    1, fphalo);       // Xc(6)
+  fwrite(halo->Yc,           sizeof(float),    1, fphalo);       // Yc(7)
+  fwrite(halo->Zc,           sizeof(float),    1, fphalo);       // Zc(8)
+  fwrite(halo->VXc,          sizeof(float),    1, fphalo);       // VXc(9)
+  fwrite(halo->VYc,          sizeof(float),    1, fphalo);       // VYc(10)
+  fwrite(halo->VZc,          sizeof(float),    1, fphalo);       // VZc(11)
+  fwrite(halo->Rvir,         sizeof(float),    1, fphalo);       // Rvir(12)
+  fwrite(halo->Rmax,         sizeof(float),    1, fphalo);       // Rmax(13)
+  fwrite(halo->r2,           sizeof(float),    1, fphalo);       // r2(14)
+  fwrite(halo->mbp_offset,   sizeof(float),    1, fphalo);       // mbp_offset(15)
+  fwrite(halo->com_offset,   sizeof(float),    1, fphalo);       // com_offset(16)
+  fwrite(halo->Vmax,         sizeof(float),    1, fphalo);       // Vmax(17)
+  fwrite(halo->v_esc,        sizeof(float),    1, fphalo);       // v_esc(18)
+  fwrite(halo->sigV,         sizeof(float),    1, fphalo);       // sigV(19)
+  fwrite(halo->lambda,       sizeof(float),    1, fphalo);       // lambda(20)
+  fwrite(halo->lambdaE,      sizeof(float),    1, fphalo);       // lambdaE(21)
+  fwrite(halo->Lx,           sizeof(float),    1, fphalo);       // Lx(22)
+  fwrite(halo->Ly,           sizeof(float),    1, fphalo);       // Ly(23)
+  fwrite(halo->Lz,           sizeof(float),    1, fphalo);       // Lz(24)
+  fwrite(halo->b,            sizeof(float),    1, fphalo);       // b(25)
+  fwrite(halo->c,            sizeof(float),    1, fphalo);       // c(26)
+  fwrite(halo->Eax,          sizeof(float),    1, fphalo);       // Eax(27)
+  fwrite(halo->Eay,          sizeof(float),    1, fphalo);       // Eay(28)
+  fwrite(halo->Eaz,          sizeof(float),    1, fphalo);       // Eaz(29) 
+  fwrite(halo->Ebx,          sizeof(float),    1, fphalo);       // Ebx(30)
+  fwrite(halo->Eby,          sizeof(float),    1, fphalo);       // Eby(31)
+  fwrite(halo->Ebz,          sizeof(float),    1, fphalo);       // Ebz(32)
+  fwrite(halo->Ecx,          sizeof(float),    1, fphalo);       // Ecx(33)
+  fwrite(halo->Ecy,          sizeof(float),    1, fphalo);       // Ecy(34)
+  fwrite(halo->Ecz,          sizeof(float),    1, fphalo);       // Ecz(35) 
+  fwrite(halo->ovdens,       sizeof(float),    1, fphalo);       // ovdens(36)
+  fwrite(halo->nbins,        sizeof(uint32_t), 1, fphalo);       // nbins(37) 
+  fwrite(halo->fMhires,      sizeof(float),    1, fphalo);       // fMhires(38)
+  fwrite(halo->Ekin,         sizeof(float),    1, fphalo);       // Ekin(39)
+  fwrite(halo->Epot,         sizeof(float),    1, fphalo);       // Epot(40)
+  fwrite(halo->SurfP,        sizeof(float),    1, fphalo);       // SurfP(41)
+  fwrite(halo->Phi0,         sizeof(float),    1, fphalo);       // Phi0(42)
+  fwrite(halo->cNFW,         sizeof(float),    1, fphalo);       // cNFW(43)
 }
 
 /* This function is for transfering Profiles between MPI ranks - It would make my life more complicate without this function - Boyd */
