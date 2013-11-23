@@ -1127,6 +1127,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
       fwrite(&zero,sizeof(uint64_t),1,cubep3m_halos_file[ifile]);
       fwrite(&sizerow,sizeof(int32_t),1,cubep3m_halos_file[ifile]); 
     }
+  printf("finish open files\n");
 }
 
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
