@@ -56,13 +56,13 @@ void readconfig()
   config[nconf].used = 0;
   nconf++;
 
-  config[nconf].type = 1;
+  config[nconf].type = 4;
   config[nconf].pointer = &(param_CUBEP3MOUT[0]);
   sprintf(config[nconf].IDENTIFIER,"CUBEP3MOUT");
   config[nconf].used = 0;
   nconf++;
 
-  config[nconf].type = 4;
+  config[nconf].type = 1;
   config[nconf].pointer = &param_chunk_per_dim;
   sprintf(config[nconf].IDENTIFIER,"NCHUNKSPERDIM");
   config[nconf].used = 0;
