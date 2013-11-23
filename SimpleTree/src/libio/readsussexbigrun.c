@@ -1104,6 +1104,7 @@ void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
       fclose(cubep3m_halos_file[ifile]);
     }
   free(cubep3m_halos_file);
+  printf("finish close file\n");
 }
 
 /* Open AHF files and add headers */
