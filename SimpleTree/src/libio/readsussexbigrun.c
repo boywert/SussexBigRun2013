@@ -1128,10 +1128,10 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
     }
 }
 
-void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
+void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t halo)
 {
-  fwrite(halo.ID,           sizeof(uint64_t), 1, fphalo);       // ID(1)
-  fwrite(halo->hostHalo,     sizeof(uint64_t), 1, fphalo);       // hostHalo(2)
+  fwrite(&(halo->ID),           sizeof(uint64_t), 1, fphalo);       // ID(1)
+  fwrite(&(halo->hostHalo),     sizeof(uint64_t), 1, fphalo);       // hostHalo(2)
   fwrite(halo->numSubStruct, sizeof(uint32_t), 1, fphalo);       // numSubStruct(3)
   fwrite(halo->Mvir,         sizeof(float),    1, fphalo);       // Mvir(4)
   fwrite(halo->npart,        sizeof(uint32_t), 1, fphalo);       // npart(5)
