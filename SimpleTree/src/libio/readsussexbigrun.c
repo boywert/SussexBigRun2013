@@ -1112,7 +1112,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   uint64_t zero=0;
   int32_t sizerow,one=1;
   printf("open files\n");
-  sizerow = (int32_t) halo_t_size;
+  sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   printf("finish mkdir\n");
   system(sbuf);
