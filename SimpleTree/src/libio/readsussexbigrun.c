@@ -1108,7 +1108,7 @@ void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
 void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos_file, int *domain_contained)
 {
   int ifile;
-  char *sbuf;
+  char sbuf[MAXSTRING];
   uint64_t zero=0;
   int32_t sizerow,one=1;
   printf("open files\n");
