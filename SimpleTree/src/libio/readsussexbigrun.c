@@ -1097,6 +1097,7 @@ void alter_domain_nhalos(int ndomains, FILE **cubep3m_halos_file, uint64_t *Doma
 void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
 {
   int ifile;
+  printf("close files\n");
   for(ifile=0;ifile<ndomains;ifile++)
     {
       fclose(cubep3m_halos_file[ifile]);
@@ -1110,7 +1111,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   char *sbuf;
   uint64_t zero=0;
   int32_t sizerow,one=1;
-
+  printf("open files\n");
   sizerow = (int32_t) halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f",param_CUBEP3MOUT,redshift);
   system(sbuf);
