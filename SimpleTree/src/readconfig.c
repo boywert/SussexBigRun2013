@@ -57,7 +57,7 @@ void readconfig()
   nconf++;
 
   config[nconf].type = 1;
-  config[nconf].pointer = &param_cubep3mout;
+  config[nconf].pointer = &(param_CUBEP3MOUT[0]);
   sprintf(config[nconf].IDENTIFIER,"CUBEP3MOUT");
   config[nconf].used = 0;
   nconf++;
