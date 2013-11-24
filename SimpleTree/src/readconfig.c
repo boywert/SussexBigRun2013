@@ -2,7 +2,7 @@
 
 long long unsigned param_npart_box;
 double  param_boxsize,param_buffer_size;
-int  param_domain_per_dim,param_chunk_per_dim,param_chunk_mpi;
+int  param_domain_per_dim,param_chunk_per_dim,param_chunk_mpi,param_domain_per_chunk;
 char param_INPUTDIR[1024];
 char param_OUTPUTDIR[1024];
 char param_CHUNKDIR[1024];
@@ -171,5 +171,6 @@ void readconfig()
     }
  
   param_npart_box = (long long)npart * (long long)npart * (long long)npart;
+  param_domain_per_chunk = pow3(param_domain_per_dim/param_chunk_per_dim)
   fclose(fp);
 }

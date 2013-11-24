@@ -7,11 +7,8 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
 void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
-int ratio;
-ratio = param_domain_per_dim/param_chunk_per_dim;
-int domain_per_chunk;
-domain_per_chunk = pow3(ratio);
-FILE *cubep3m_save_halos_file[domain_per_chunk];
+
+FILE *cubep3m_save_halos_file[param_domain_per_chunk];
 
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
@@ -954,6 +951,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   int domain_to_fileptr[pow3(param_domain_per_dim)];
   int i,j,k,inode,jnode,target_chunk,common_nbins,idomain;
   uint64_t send_nhalos,rev_nhalos;
+  int ratio = param_domain_per_dim/param_chunk_per_dim;
   int ndomains = pow3(ratio);
   uint64_t count_halos[pow3(ratio)];
   int *domain_contained;
