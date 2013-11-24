@@ -7,8 +7,9 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
 void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
-
-FILE **cubep3m_save_halos_file;
+int ratio = param_domain_per_dim/param_chunk_per_dim;
+int domain_per_chunk = pow3(ratio);
+FILE *cubep3m_save_halos_file[domain_per_chunk];
 
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
@@ -950,7 +951,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   int domain_to_chunk[pow3(param_domain_per_dim)];
   int domain_to_fileptr[pow3(param_domain_per_dim)];
   int i,j,k,inode,jnode,target_chunk,common_nbins,idomain;
-  int ratio = param_domain_per_dim/param_chunk_per_dim;
   uint64_t send_nhalos,rev_nhalos;
   int ndomains = pow3(ratio);
   uint64_t count_halos[pow3(ratio)];
@@ -1079,7 +1079,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   
   MPI_Barrier(MPI_COMM_WORLD);
 
-  open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained);
+  open_cubep3m_for_writing(domain_per_chunk, chalo.redshift, domain_contained);
   MPI_Barrier(MPI_COMM_WORLD);
   close_cubep3m_for_writing(ndomains);
   MPI_Barrier(MPI_COMM_WORLD);
@@ -1106,7 +1106,6 @@ void close_cubep3m_for_writing(int ndomains)
     {
       /* fclose(cubep3m_save_halos_file[ifile]); */
     }
-  free(cubep3m_save_halos_file);
   printf("finish close file\n");
 }
 
@@ -1121,7 +1120,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
-  cubep3m_save_halos_file = calloc(ndomains,sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
