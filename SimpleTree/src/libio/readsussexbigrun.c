@@ -7,8 +7,10 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
 void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
-int ratio = param_domain_per_dim/param_chunk_per_dim;
-int domain_per_chunk = pow3(ratio);
+int ratio;
+ratio = param_domain_per_dim/param_chunk_per_dim;
+int domain_per_chunk;
+domain_per_chunk = pow3(ratio);
 FILE *cubep3m_save_halos_file[domain_per_chunk];
 
 /* End private function */
