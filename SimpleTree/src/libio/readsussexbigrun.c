@@ -1,4 +1,6 @@
 #include "readsussexbigrun.h"
+
+
 /* Some private function for this file only */
 int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2);
 void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
@@ -7,10 +9,13 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
 void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
+void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
 
 FILE **cubep3m_save_halos_file;
 
 /* End private function */
+
+
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
@@ -953,9 +958,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   uint64_t send_nhalos,rev_nhalos;
   int ratio = param_domain_per_dim/param_chunk_per_dim;
   int ndomains = pow3(ratio);
-  uint64_t count_halos[pow3(ratio)];
   int *domain_contained;
-
+  uint64_t *nhalos_per_domain;
+  
+  nhalos_per_domain = calloc(ndomains,sizeof(uint64_t));
   domain_contained = calloc(ndomains,sizeof(int));
   idomain = 0;
   for(k=0;k<param_domain_per_dim;k++)
@@ -971,7 +977,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 		{
 		  domain_contained[idomain] = k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i;
 		  domain_to_fileptr[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i] = idomain;
-		  count_halos[idomain] = 0;
+     
 		  idomain++;
 		}
 	      //printf("domain:%d => %d\n",k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i,domain_to_chunk[k*pow2(param_domain_per_dim)+j*param_domain_per_dim+i]);
@@ -1084,22 +1090,26 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
     {
       if(chalo.chalos[ihalo].domainid > -1)
 	{ 
-	  //write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
+	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
+	  nhalos_per_domain[domain_to_fileptr[chalo.chalos[ihalo].domainid]]++;
 	}
     }
+  alter_domain_nhalos(ndomains, nhalos_per_domain);
   close_cubep3m_for_writing(ndomains);
-  MPI_Barrier(MPI_COMM_WORLD);
   free(domain_contained);
+  free(nhalos_per_domain);
   return chalo;
 }
 
 /* Change nHalos */
-void alter_domain_nhalos(int ndomains, FILE **cubep3m_halos_file, uint64_t *DomainNhalos)
+void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain)
 {
   int ifile;
   for(ifile=0;ifile<ndomains;ifile++)
     {
-      fseek (cubep3m_halos_file[ifile] , 0L , SEEK_SET );
+      /* halos */
+      fseek (cubep3m_save_halos_file[ifile] , sizeof(int32_t) , SEEK_SET );
+      fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
     }
 }
 
@@ -1135,9 +1145,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  fwrite(&one,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);
 	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
 	  fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);
-	  fseek (cubep3m_save_halos_file[ifile] ,sizeof(int32_t) , SEEK_SET );
-	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
-	  fseek (cubep3m_save_halos_file[ifile] ,0L , SEEK_END );
 	}
       
       else
