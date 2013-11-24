@@ -8,7 +8,7 @@ void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
 
-FILE *cubep3m_save_halos_file[param_domain_per_chunk];
+FILE **cubep3m_save_halos_file;
 
 /* End private function */
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
@@ -1106,6 +1106,7 @@ void close_cubep3m_for_writing(int ndomains)
     {
       /* fclose(cubep3m_save_halos_file[ifile]); */
     }
+  free(cubep3m_save_halos_file);
   printf("finish close file\n");
 }
 
@@ -1120,6 +1121,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
+  cubep3m_save_halos_file = malloc(param_domain_per_chunk*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
