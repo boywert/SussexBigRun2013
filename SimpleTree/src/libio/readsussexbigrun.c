@@ -4,8 +4,8 @@ int compare_make_catalogue_halo_t_by_Mvir_reverse(const void *v1, const void *v2
 void AHF_alloc_profiles( uint32_t nbins, halo_profile_t *prof);
 void AHF_free_profiles(halo_profile_t *prof);
 void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof, int nbins, int src_node, int target_node);
-void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file);
-void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos_file, int *domain_contained);
+void close_cubep3m_for_writing(int ndomains, FILE ***cubep3m_halos_file);
+void open_cubep3m_for_writing(int ndomains, float redshift, FILE ***cubep3m_halos_file, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
 
 /* End private function */
@@ -1095,20 +1095,20 @@ void alter_domain_nhalos(int ndomains, FILE **cubep3m_halos_file, uint64_t *Doma
 }
 
 /* Close AHF files */
-void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
+void close_cubep3m_for_writing(int ndomains, FILE ***cubep3m_halos_file)
 {
   int ifile;
   printf("close files\n");
   for(ifile=0;ifile<ndomains;ifile++)
     {
-      fclose(cubep3m_halos_file[ifile]);
+      fclose(*(cubep3m_halos_file[ifile]));
     }
-  free(*cubep3m_halos_file);
+  free(**cubep3m_halos_file);
   printf("finish close file\n");
 }
 
 /* Open AHF files and add headers */
-void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos_file, int *domain_contained)
+void open_cubep3m_for_writing(int ndomains, float redshift, FILE ***cubep3m_halos_file, int *domain_contained)
 {
   int ifile;
   char sbuf[MAXSTRING];
@@ -1117,16 +1117,16 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
-  *cubep3m_halos_file = malloc(ndomains*sizeof(FILE *));
+  **cubep3m_halos_file = malloc(ndomains*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
       sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
-      cubep3m_halos_file[ifile] = fopen(sbuf,"rwb+");
+      *(cubep3m_halos_file[ifile]) = fopen(sbuf,"rwb+");
       /* write header */
-      fwrite(&one,sizeof(int32_t),1,cubep3m_halos_file[ifile]);
-      fwrite(&zero,sizeof(uint64_t),1,cubep3m_halos_file[ifile]);
-      fwrite(&sizerow,sizeof(int32_t),1,cubep3m_halos_file[ifile]); 
+      fwrite(&one,sizeof(int32_t),1,*(cubep3m_halos_file[ifile]));
+      fwrite(&zero,sizeof(uint64_t),1,*(cubep3m_halos_file[ifile]));
+      fwrite(&sizerow,sizeof(int32_t),1,*(cubep3m_halos_file[ifile])); 
     }
 }
 
