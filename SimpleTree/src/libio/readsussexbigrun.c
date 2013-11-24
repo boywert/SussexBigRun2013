@@ -1080,8 +1080,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   
   MPI_Barrier(MPI_COMM_WORLD);
 
-  open_cubep3m_for_writing(ndomains, chalo.redshift, &(cubep3m_halos_file), domain_contained);
-  close_cubep3m_for_writing(ndomains, &(cubep3m_halos_file));
+  open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained);
+  close_cubep3m_for_writing(ndomains);
   free(domain_contained);
   return chalo;
 }
