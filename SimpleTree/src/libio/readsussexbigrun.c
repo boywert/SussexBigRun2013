@@ -955,9 +955,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   int ndomains = pow3(ratio);
   uint64_t count_halos[pow3(ratio)];
   int *domain_contained;
-  FILE **cubep3m_halos_file;
 
-  domain_contained = calloc(pow3(ratio),sizeof(int));
+  domain_contained = calloc(ndomains,sizeof(int));
   idomain = 0;
   for(k=0;k<param_domain_per_dim;k++)
     {
@@ -1080,10 +1079,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   
   MPI_Barrier(MPI_COMM_WORLD);
 
-  open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained);
-  MPI_Barrier(MPI_COMM_WORLD);
-  close_cubep3m_for_writing(ndomains);
-  MPI_Barrier(MPI_COMM_WORLD);
+  /* open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained); */
+  /* MPI_Barrier(MPI_COMM_WORLD); */
+  /* close_cubep3m_for_writing(ndomains); */
+  /* MPI_Barrier(MPI_COMM_WORLD); */
   free(domain_contained);
   return chalo;
 }
@@ -1122,7 +1121,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
-  cubep3m_save_halos_file = malloc(ndomains*sizeof(FILE *));
+  cubep3m_save_halos_file = calloc(ndomains,sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
