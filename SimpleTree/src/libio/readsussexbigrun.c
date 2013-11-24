@@ -1082,7 +1082,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained);
   for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
     {
-      if(chalo.chalo[ihalo].domainid > -1)
+      if(chalo.chalos[ihalo].domainid > -1)
 	{ 
 	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalo[ihalo].domainid]], &(chalo.chalos[ihalo]));
 	}
