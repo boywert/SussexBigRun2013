@@ -1137,7 +1137,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);
 	  fseek (cubep3m_save_halos_file[ifile] ,sizeof(int32_t) , SEEK_SET );
 	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
-	  fseek (cubep3m_save_halos_file[ifile] ,sizeof(int32_t) , SEEK_END );
+	  fseek (cubep3m_save_halos_file[ifile] ,0L , SEEK_END );
 	}
       
       else
