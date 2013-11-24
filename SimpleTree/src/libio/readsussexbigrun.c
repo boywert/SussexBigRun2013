@@ -1103,7 +1103,7 @@ void close_cubep3m_for_writing(int ndomains, FILE **cubep3m_halos_file)
     {
       fclose(cubep3m_halos_file[ifile]);
     }
-  free(cubep3m_halos_file);
+  free(*cubep3m_halos_file);
   printf("finish close file\n");
 }
 
@@ -1117,7 +1117,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, FILE **cubep3m_halos
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
-  cubep3m_halos_file = (FILE **) malloc(ndomains*sizeof(FILE *));
+  *cubep3m_halos_file = (FILE **) malloc(ndomains*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
