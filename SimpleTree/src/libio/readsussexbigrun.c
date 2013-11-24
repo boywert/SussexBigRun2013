@@ -1084,7 +1084,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
     {
       if(chalo.chalos[ihalo].domainid > -1)
 	{ 
-	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalo[ihalo].domainid]], &(chalo.chalos[ihalo]));
+	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
 	}
     }
   close_cubep3m_for_writing(ndomains);
@@ -1107,13 +1107,11 @@ void alter_domain_nhalos(int ndomains, FILE **cubep3m_halos_file, uint64_t *Doma
 void close_cubep3m_for_writing(int ndomains)
 {
   int ifile;
-  printf("close files\n");
   for(ifile=0;ifile<ndomains;ifile++)
     {
       fclose(cubep3m_save_halos_file[ifile]);
     }
   free(cubep3m_save_halos_file);
-  printf("finish close file\n");
 }
 
 /* Open AHF files and add headers */
@@ -1123,7 +1121,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   char sbuf[MAXSTRING];
   uint64_t zero=0;
   int32_t sizerow,one=1;
-  printf("open files\n");
   sizerow = halo_t_size;
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
@@ -1146,7 +1143,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  exit(1);
 	}
     }
-  printf("finish open files\n");
 }
 
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
