@@ -1080,7 +1080,13 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
   MPI_Barrier(MPI_COMM_WORLD);
 
   open_cubep3m_for_writing(ndomains, chalo.redshift, domain_contained);
-  MPI_Barrier(MPI_COMM_WORLD);
+  for(ihalo=0;ihalo<chalo.nHalos;ihalo++)
+    {
+      if(chalo.chalo[ihalo].domainid > -1)
+	{ 
+	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalo[ihalo].domainid]], &(chalo.chalos[ihalo]));
+	}
+    }
   close_cubep3m_for_writing(ndomains);
   MPI_Barrier(MPI_COMM_WORLD);
   free(domain_contained);
@@ -1104,7 +1110,7 @@ void close_cubep3m_for_writing(int ndomains)
   printf("close files\n");
   for(ifile=0;ifile<ndomains;ifile++)
     {
-      /* fclose(cubep3m_save_halos_file[ifile]); */
+      fclose(cubep3m_save_halos_file[ifile]);
     }
   free(cubep3m_save_halos_file);
   printf("finish close file\n");
@@ -1132,7 +1138,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  fwrite(&one,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);
 	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
 	  fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);
-	  fclose(cubep3m_save_halos_file[ifile]); 
 	}
       
       else
@@ -1140,10 +1145,6 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  printf("cannot open file %s\n",sbuf);
 	  exit(1);
 	}
-      /* /\* write header *\/ */
-      /* fwrite(&one,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]); */
-      /* fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]); */
-      /* fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_halos_file[ifile]);  */
     }
   printf("finish open files\n");
 }
