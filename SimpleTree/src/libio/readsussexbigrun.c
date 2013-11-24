@@ -1126,7 +1126,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
     {
       /* halos_bin */
       sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
-      if((cubep3m_save_halos_file[ifile] = fopen(sbuf,"rwb+")) != NULL)
+      if((cubep3m_save_halos_file[ifile] = fopen(sbuf,"wb+")) != NULL)
 	fclose(cubep3m_save_halos_file[ifile]); 
       else
 	{
