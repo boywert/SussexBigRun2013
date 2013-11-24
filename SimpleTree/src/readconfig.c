@@ -171,6 +171,6 @@ void readconfig()
     }
  
   param_npart_box = (long long)npart * (long long)npart * (long long)npart;
-  param_domain_per_chunk = pow3(param_domain_per_dim/param_chunk_per_dim)
+  param_domain_per_chunk = pow3(param_domain_per_dim/param_chunk_per_dim);
   fclose(fp);
 }
