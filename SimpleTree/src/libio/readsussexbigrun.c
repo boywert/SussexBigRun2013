@@ -10,7 +10,7 @@ void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
 void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
-void write_AHF_particles(FILE *fppart, int nparts, particlelist_t *Particles);
+void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
 
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
 
