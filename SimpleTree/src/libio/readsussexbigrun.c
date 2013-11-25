@@ -1213,8 +1213,8 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles)
 {
   uint64_t ipart;
-  fwrite(&(nparts), sizeof(uint64_t), 1, fpprof);
-  for(ipart=0;ipart<npart;ipart++)
+  fwrite(&(nparts), sizeof(uint64_t), 1, fppart);
+  for(ipart=0;ipart<nparts;ipart++)
     {
       fwrite(&(Particles[ipart].ID), sizeof(uint64_t), 1, fppart);
     }
