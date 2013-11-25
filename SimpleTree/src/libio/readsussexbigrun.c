@@ -1096,7 +1096,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	{ 
 	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
 	  write_AHF_profiles(cubep3m_save_profiles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].nbins, &(chalo.chalos[ihalo].Profile));
-	  write_AHF_particles(cubep3m_save_particles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].nparts, chalo.chalos[ihalo].Particles);
+	  write_AHF_particles(cubep3m_save_particles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].npart, chalo.chalos[ihalo].Particles);
 	  nhalos_per_domain[domain_to_fileptr[chalo.chalos[ihalo].domainid]]++;
 	}
     }
@@ -1210,7 +1210,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
     }
 }
 
-void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
+void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles)
 {
   uint64_t ipart;
   fwrite(&(nparts), sizeof(uint64_t), 1, fpprof);
