@@ -9,10 +9,11 @@ void MPI_transfer_profiles(halo_profile_t *src_prof,halo_profile_t *target_prof,
 void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
+void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
 
 FILE **cubep3m_save_halos_file;
-
+FILE **cubep3m_save_profiles_file;
 /* End private function */
 
 
@@ -1091,6 +1092,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
       if(chalo.chalos[ihalo].domainid > -1)
 	{ 
 	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
+	  write_AHF_profiles(cubep3m_save_profiles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].nbins, &(chalo.chalos[ihalo].Profile));
 	  nhalos_per_domain[domain_to_fileptr[chalo.chalos[ihalo].domainid]]++;
 	}
     }
@@ -1110,6 +1112,10 @@ void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain)
       /* halos */
       fseek (cubep3m_save_halos_file[ifile] , sizeof(int32_t) , SEEK_SET );
       fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
+
+      /* halos */
+      fseek (cubep3m_save_profiles_file[ifile] , sizeof(int32_t) , SEEK_SET );
+      fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_profiles_file[ifile]);
     }
 }
 
@@ -1120,8 +1126,10 @@ void close_cubep3m_for_writing(int ndomains)
   for(ifile=0;ifile<ndomains;ifile++)
     {
       fclose(cubep3m_save_halos_file[ifile]);
+      fclose(cubep3m_save_profiles_file[ifile]);
     }
   free(cubep3m_save_halos_file);
+  free(cubep3m_save_profiles_file);
 }
 
 /* Open AHF files and add headers */
@@ -1135,9 +1143,11 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   sprintf(sbuf,"mkdir -p %s/z_%2.3f/",param_CUBEP3MOUT,redshift);
   system(sbuf);
   cubep3m_save_halos_file = malloc(param_domain_per_chunk*sizeof(FILE *));
+  cubep3m_save_profiles_file = malloc(param_domain_per_chunk*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
+      sizerow = 43;
       sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
       if((cubep3m_save_halos_file[ifile] = fopen(sbuf,"wb+")) != NULL)
 	{
@@ -1152,9 +1162,61 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  printf("cannot open file %s\n",sbuf);
 	  exit(1);
 	}
+
+      /* profiles_bin */
+      sizerow = 24;
+      sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_profiles.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
+      if((cubep3m_save_profiles_file[ifile] = fopen(sbuf,"wb+")) != NULL)
+	{
+	  /* write header */
+	  fwrite(&one,sizeof(int32_t),1,cubep3m_save_profiles_file[ifile]);
+	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_profiles_file[ifile]);
+	  fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_profiles_file[ifile]);
+	}
+      
+      else
+	{
+	  printf("cannot open file %s\n",sbuf);
+	  exit(1);
+	}      
     }
 }
 
+/* write profiles to file */
+void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile)
+{
+  int ibin;
+  fwrite(&(nbins), sizeof(uint32_t), 1, fpprof);
+  for(ibin=0;ibin<nbins;ibin++)
+    {
+      fwrite(&(Profile->r[ibin]),      sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->npart[ibin]),  sizeof(uint32_t),1, fpprof);
+      fwrite(&(Profile->M_in_r[ibin]), sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->ovdens[ibin]), sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->dens[ibin]),   sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->vcirc[ibin]),  sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->vesc[ibin]),   sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->sigv[ibin]),   sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Lx[ibin]),     sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ly[ibin]),     sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Lz[ibin]),     sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->b[ibin]),      sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->c[ibin]),      sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Eax[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Eay[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Eaz[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ebx[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Eby[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ebz[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ecx[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ecy[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ecz[ibin]),    sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Ekin[ibin]),   sizeof(float)   ,1, fpprof);
+      fwrite(&(Profile->Epot[ibin]),   sizeof(float)   ,1, fpprof);
+    }
+}
+
+/* write halo properties to file */
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
 {
   fwrite(&(halo->ID),           sizeof(uint64_t), 1, fphalo);       // ID(1)
