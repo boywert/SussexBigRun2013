@@ -10,10 +10,13 @@ void close_cubep3m_for_writing(int ndomains);
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained);
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo);
 void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
+void write_AHF_particles(FILE *fppart, int nparts, particlelist_t *Particles);
+
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
 
 FILE **cubep3m_save_halos_file;
 FILE **cubep3m_save_profiles_file;
+FILE **cubep3m_save_particles_file;
 /* End private function */
 
 
@@ -1093,6 +1096,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 	{ 
 	  write_AHF_halos(cubep3m_save_halos_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], &(chalo.chalos[ihalo]));
 	  write_AHF_profiles(cubep3m_save_profiles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].nbins, &(chalo.chalos[ihalo].Profile));
+	  write_AHF_particles(cubep3m_save_particles_file[domain_to_fileptr[chalo.chalos[ihalo].domainid]], chalo.chalos[ihalo].nparts, chalo.chalos[ihalo].Particles);
 	  nhalos_per_domain[domain_to_fileptr[chalo.chalos[ihalo].domainid]]++;
 	}
     }
@@ -1113,9 +1117,13 @@ void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain)
       fseek (cubep3m_save_halos_file[ifile] , sizeof(int32_t) , SEEK_SET );
       fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_halos_file[ifile]);
 
-      /* halos */
+      /* profiles */
       fseek (cubep3m_save_profiles_file[ifile] , sizeof(int32_t) , SEEK_SET );
       fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_profiles_file[ifile]);
+
+      /* particles */
+      fseek (cubep3m_save_particles_file[ifile] , sizeof(int32_t) , SEEK_SET );
+      fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_particles_file[ifile]);
     }
 }
 
@@ -1127,9 +1135,11 @@ void close_cubep3m_for_writing(int ndomains)
     {
       fclose(cubep3m_save_halos_file[ifile]);
       fclose(cubep3m_save_profiles_file[ifile]);
+      fclose(cubep3m_save_particles_file[ifile]);
     }
   free(cubep3m_save_halos_file);
   free(cubep3m_save_profiles_file);
+  free(cubep3m_save_particles_file);
 }
 
 /* Open AHF files and add headers */
@@ -1144,6 +1154,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
   system(sbuf);
   cubep3m_save_halos_file = malloc(param_domain_per_chunk*sizeof(FILE *));
   cubep3m_save_profiles_file = malloc(param_domain_per_chunk*sizeof(FILE *));
+  cubep3m_save_particles_file = malloc(param_domain_per_chunk*sizeof(FILE *));
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos_bin */
@@ -1179,6 +1190,33 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
 	  printf("cannot open file %s\n",sbuf);
 	  exit(1);
 	}      
+
+      /* particles_bin */
+      sizerow = 24;
+      sprintf(sbuf,"%s/z_%2.3f/%2.3f_AHF_halos_cubepm_domain_%d_particles.dat_bin",param_CUBEP3MOUT,redshift,redshift,domain_contained[ifile]);
+      if((cubep3m_save_particles_file[ifile] = fopen(sbuf,"wb+")) != NULL)
+	{
+	  /* write header */
+	  fwrite(&one,sizeof(int32_t),1,cubep3m_save_particles_file[ifile]);
+	  fwrite(&zero,sizeof(uint64_t),1,cubep3m_save_particles_file[ifile]);
+	  fwrite(&sizerow,sizeof(int32_t),1,cubep3m_save_particles_file[ifile]);
+	}
+      
+      else
+	{
+	  printf("cannot open file %s\n",sbuf);
+	  exit(1);
+	}   
+    }
+}
+
+void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
+{
+  uint64_t ipart;
+  fwrite(&(nparts), sizeof(uint64_t), 1, fpprof);
+  for(ipart=0;ipart<npart;ipart++)
+    {
+      fwrite(&(Particles[ipart].ID), sizeof(uint64_t), 1, fpprof);
     }
 }
 
