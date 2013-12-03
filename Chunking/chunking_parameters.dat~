@@ -16,26 +16,26 @@
 input_redshift
 #
 # Particle data path:
-/Users/ww60/Documents/work/code_output/cubep3m/cubepm_110526_3_216_20Mpc/output/
+/research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/
 #
 # Chunk output path (NB this requires subdirectories to be setup (see documentation):
-/Users/ww60/Documents/work/code_output/cubep3m/cubepm_110526_3_216_20Mpc/chunked_output/
+/mnt/lustre/scratch/cs390/tmp/cubepm_110526_3_216_20Mpc/chunked_output/
 #
 # Cubep3m boxlength (in Mpc/h):
-20
+47
 #
 # Cubep3m Nodes per dimension:
-3
+6
 # Cubep3m fine mesh cells per dimension (i.e. twice the particles per dimension):
-432
+3456
 #
 # PID flag. set to 1 if PIDs are available in the simulation output, or 0 if not:
-0
+1
 #
 # Buffer size in Mpc/h (see documentation):
-1.0
+2.0
 #
 # Chunking dimensions (number of chunks in x,y,z):
-2
-2
-2
+3
+3
+3
