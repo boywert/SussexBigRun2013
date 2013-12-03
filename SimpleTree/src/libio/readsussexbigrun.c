@@ -410,7 +410,234 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   return mhalo;
 }
 
-m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
+m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *fpprof, int domain, m_halo_wrapper_t chalo)
+{
+  uint64_t numHalos,counthalo,counthalo_local,old_nHalos;
+  order_uint64_t *maphalo;
+  uint64_t numHaloFromPartFile;
+  uint64_t numHaloFromProfFile;
+  uint32_t numColumns,nbins,ibin;
+  uint64_t i,size;
+  int32_t  one;
+  int      swap=0,flag;
+  halo_t   halo;
+  ptid_t ipart,npart;
+
+  //ptid_t id;
+  size_t old,new;
+  char memmgr_buff[memmgr_max_str];
+  struct particle_buffer *pid_buff;;
+  if(fphalo == NULL || fppart == NULL) 
+    {
+      printf("Cannot open file to read\n");
+      exit(1);
+    }
+
+  // figure out swap status Halos file
+  fread(&one, sizeof(int32_t), 1, fphalo);
+  if(one == 1)
+    swap = 0;
+  else
+    swap = 1;
+  
+  // figure out swap status Particles file
+  fread(&one, sizeof(int32_t), 1, fppart);
+  if(one == 1)
+     swap = 0;
+  else
+    swap = 1;
+
+  // figure out swap status Particles file
+  fread(&one, sizeof(int32_t), 1, fpprof);
+  if(one == 1)
+     swap = 0;
+  else
+    swap = 1;
+ 
+  ReadULong(fpprof, &numHaloFromProfFile,   swap);
+  ReadUInt (fpprof, &numColumns, swap);
+ 
+  ReadULong(fppart, &numHaloFromPartFile,   swap);
+  ReadUInt (fppart, &numColumns, swap);
+  //printf("particlefile: nhalo = %llu\n",numHaloFromPartFile);
+  ReadULong(fphalo, &numHalos,   swap);
+  ReadUInt (fphalo, &numColumns, swap);
+  //printf("halofile: nhalo = %llu\n",numHalos);
+
+  if(numHalos != numHaloFromPartFile ||numHalos != numHaloFromProfFile)
+    {
+      printf("Number of halos don't match\nExit()\n");
+      exit(1);
+    }
+
+  sprintf(memmgr_buff,"Halo Array");
+
+  counthalo = chalo.nHalos;
+  counthalo_local = 0;
+  old_nHalos = chalo.nHalos;
+  old = chalo.nHalos*sizeof(m_halo_t);
+  new = old + numHalos*sizeof(m_halo_t);
+  chalo.nHalos += numHalos;
+  new = chalo.nHalos*sizeof(m_halo_t);
+  
+  chalo.chalos = memmgr_realloc(chalo.chalos,new,old,memmgr_buff);
+  flag = 0;
+
+  /* use maphalo to map local IDs to Unique IDs */
+  maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
+  for(i=0; i<numHalos; i++) 
+    {
+      /* Read halo properties from AHF_halos */
+      ReadULong(fphalo, &(chalo.chalos[counthalo].ID),           swap);    // ID(1)
+
+      /* maphalo */
+      maphalo[i].ref = chalo.chalos[counthalo].ID;
+      maphalo[i].id = counthalo;
+
+    
+      ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
+      /* point to (long long unsigned)-1 if hosthalo = 0 */
+      if(chalo.chalos[counthalo].hostHalo == 0)
+	chalo.chalos[counthalo].hostHalo = NULLPOINT;
+
+      ReadUInt (fphalo, &(chalo.chalos[counthalo].numSubStruct), swap);    // numSubStruct(3)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Mvir),         swap);    // Mvir(4)
+      ReadUInt (fphalo, &(chalo.chalos[counthalo].npart),        swap);    // npart(5)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Xc),           swap);    // Xc(6)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Yc),           swap);    // Yc(7)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Zc),           swap);    // Zc(8)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].VXc),          swap);    // VXc(9)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].VYc),          swap);    // VYc(10)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].VZc),          swap);    // VZc(11)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Rvir),         swap);    // Rvir(12)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Rmax),         swap);    // Rmax(13)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].r2),           swap);    // r2(14)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].mbp_offset),   swap);    // mbp_offset(15)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].com_offset),   swap);    // com_offset(16)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Vmax),         swap);    // Vmax(17)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].v_esc),        swap);    // v_esc(18)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].sigV),         swap);    // sigV(19)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].lambda),       swap);    // lambda(20)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].lambdaE),      swap);    // lambdaE(21)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Lx),           swap);    // Lx(22)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ly),           swap);    // Ly(23)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Lz),           swap);    // Lz(24)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].b),            swap);    // b(25)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].c),            swap);    // c(26)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Eax),          swap);    // Eax(27)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Eay),          swap);    // Eay(28)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Eaz),          swap);    // Eaz(29)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ebx),          swap);    // Ebx(30)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Eby),          swap);    // Eby(31)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ebz),          swap);    // Ebz(32)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ecx),          swap);    // Ecx(33)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ecy),          swap);    // Ecy(34)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ecz),          swap);    // Ecz(35)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].ovdens),       swap);    // ovdens(36)
+      ReadUInt (fphalo, &(chalo.chalos[counthalo].nbins),        swap);    // nbins(37)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].fMhires),      swap);    // fMhires(38)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Ekin),         swap);    // Ekin(39)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Epot),         swap);    // Epot(40)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].SurfP),        swap);    // SurfP(41)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].Phi0),         swap);    // Phi0(42)
+      ReadFloat(fphalo, &(chalo.chalos[counthalo].cNFW),         swap);    // cNFW(43)
+
+      /* Specify other quantities */
+      chalo.chalos[counthalo].refID = counthalo;
+
+      chalo.chalos[counthalo].domainid = -1;
+      chalo.chalos[counthalo].chunkid = chunk;
+
+ 
+      /* Set structure tree to default (no relationship) */
+      chalo.chalos[counthalo].UpHalo = -1;
+      chalo.chalos[counthalo].FirstDownHalo = -1;
+      chalo.chalos[counthalo].NextHalo = -1;
+
+      /* Read nparts from AHF_particles */
+      ReadULong(fppart, &(npart), swap);
+
+      if(chalo.chalos[counthalo].npart != npart)
+	{
+	  printf("redshift: %3.3f\n",chalo.redshift);
+	  printf("domain %d\n",chunk);
+	  printf("haloid:%llu no:%ld local:%ld\n",chalo.chalos[counthalo].ID, counthalo, counthalo_local);
+	  printf("npart mismatch p:%d, h:%d\n",chalo.chalos[counthalo].npart,halo.npart);
+	  printf("Xc:%f, Yc:%f, Zc:%f\n",chalo.chalos[counthalo].Xc,chalo.chalos[counthalo].Yc,chalo.chalos[counthalo].Zc);
+	  flag = 1;
+	  global_error = 1;
+	  exit(1);
+	}
+
+      sprintf(memmgr_buff,"Particle: Halo Array");
+      chalo.chalos[counthalo].Particles = memmgr_malloc(chalo.chalos[counthalo].npart*sizeof(particlelist_t),memmgr_buff);
+      sprintf(memmgr_buff,"Particle: Buffer");
+      pid_buff = memmgr_malloc(chalo.chalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
+      
+       /* Read Particle one by one (poor computer,need to read this over and over again) */
+      for(ipart=0; ipart<chalo.chalos[counthalo].npart; ipart++) 
+	{
+	  ReadULong(fppart, &(pid_buff[ipart].ID), swap);
+	  // ReadFloat(fppart, &(pid_buff[ipart].energy), swap);
+	  if(flag == 3)
+	    {
+	      printf("p: %llu \t %f\n",pid_buff[ipart].ID,pid_buff[ipart].energy);
+	    }
+	}
+      /* Do something to sort particles by energy */
+      for(ipart=0; ipart<chalo.chalos[counthalo].npart; ipart++) 
+	{
+	  chalo.chalos[counthalo].Particles[ipart].ID = pid_buff[ipart].ID;
+	}
+      memmgr_free(pid_buff,chalo.chalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
+      ReadUInt(fpprof, &nbins, swap);
+      if(chalo.chalos[counthalo].nbins != nbins)
+	{
+	  printf("nbins do not match.\nExit()\n");
+	  exit(1);
+	}
+      AHF_alloc_profiles(chalo.chalos[counthalo].nbins, &(chalo.chalos[counthalo].Profile));
+      for(ibin=0; ibin<nbins; ibin++) {
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.r[ibin]),      swap);
+	ReadUInt (fpprof, &(chalo.chalos[counthalo].Profile.npart[ibin]),  swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.M_in_r[ibin]), swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.ovdens[ibin]), swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.dens[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.vcirc[ibin]),  swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.vesc[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.sigv[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Lx[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ly[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Lz[ibin]),     swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.b[ibin]),      swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.c[ibin]),      swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eax[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eay[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eaz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ebx[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Eby[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ebz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecx[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecy[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ecz[ibin]),    swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Ekin[ibin]),   swap);
+	ReadFloat(fpprof, &(chalo.chalos[counthalo].Profile.Epot[ibin]),   swap);
+      }
+      
+      counthalo++;
+      counthalo_local++;
+    } // for(numHalos)
+
+  /* Relabel  HostID */
+  if(numHalos > 0)
+    chalo = sussexbigrun_find_hostHalo(chalo,maphalo,numHalos);
+  memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
+  return chalo;
+}
+
+
+
+m_halo_wrapper_t sussexbigrun_read_AHF_binary_Watson(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
   uint64_t numHalos,counthalo,counthalo_local;
   //uint64_t numHaloFromPartFile;
