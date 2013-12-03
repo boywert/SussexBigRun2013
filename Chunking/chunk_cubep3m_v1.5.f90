@@ -2262,7 +2262,10 @@ subroutine open_chunk_files
 		&'xv_chunk_'//dummy_c(1:len_trim(dummy_c))//&
 		&'_'//file(1:len_trim(file))//'.dat'
 
-
+            call system("mkdir -p "&
+                &//chunk_output_path(1:len_trim(chunk_output_path))//&
+		&'z_'//redshift(1:len_trim(redshift))&
+		&//'/chunk_'//dummy_c(1:len_trim(dummy_c)))
 #ifdef GFORTRAN		           
 	    open (unit=100+chunk_file_int,file=ifile,access='stream')
 #endif
