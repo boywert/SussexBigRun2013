@@ -19,7 +19,7 @@ input_redshift
 /research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/
 #
 # Chunk output path (NB this requires subdirectories to be setup (see documentation):
-/mnt/lustre/scratch/cs390/tmp/cubepm_110526_3_216_20Mpc/chunked_output/
+/mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/
 #
 # Cubep3m boxlength (in Mpc/h):
 47
@@ -33,9 +33,9 @@ input_redshift
 1
 #
 # Buffer size in Mpc/h (see documentation):
-2.0
+1.5
 #
 # Chunking dimensions (number of chunks in x,y,z):
-3
-3
-3
+6
+6
+6
