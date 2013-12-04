@@ -40,40 +40,42 @@ cd ${chunk_srcfolder}
 make clean
 make 
 
+mpirun -np $mpi_chunk $chunk_exec
+mpirun -np $mpi_chunk $chunk_exec
+mpirun -np $mpi_chunk $chunk_exec
+# while read line
+# do
+#     rm -rf ${chunk_folder}
+#     redshift=$(printf '%3.3f' $line)
+#     echo "redshift = " $redshift
+#     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
+#     #make folder prepared for chunking
+#     for i in $(seq 0 $n_chunks_total)
+#     do
+# 	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
+# 	mkdir -p "$this_workspace"
+# 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
+# 	mkdir -p "$this_chunkfolder"
+#     done
+#     cd ${this_workspace}
+#     this_chunk_param="chunk_param"
 
-while read line
-do
-    rm -rf ${chunk_folder}
-    redshift=$(printf '%3.3f' $line)
-    echo "redshift = " $redshift
-    firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
-    #make folder prepared for chunking
-    for i in $(seq 0 $n_chunks_total)
-    do
-	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
-	mkdir -p "$this_workspace"
-	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
-	mkdir -p "$this_chunkfolder"
-    done
-    cd ${this_workspace}
-    this_chunk_param="chunk_param"
-
-    echo ${redshift} > ${this_chunk_param}
-    echo "dummy" >>  $this_chunk_param
-    echo $particle_folder >> $this_chunk_param
-    echo $chunk_folder >> $this_chunk_param
-    echo $cubep3m_boxsize >> $this_chunk_param
-    echo $cubep3m_node >> $this_chunk_param
-    echo $cubep3m_mesh >> $this_chunk_param
-    echo $pid_flag >> $this_chunk_param
-    echo $buffer_size >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
-    if [ -e $firstfile ] 
-    then
-	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
-	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
-    fi
-done < halofinds
+#     echo ${redshift} > ${this_chunk_param}
+#     echo "dummy" >>  $this_chunk_param
+#     echo $particle_folder >> $this_chunk_param
+#     echo $chunk_folder >> $this_chunk_param
+#     echo $cubep3m_boxsize >> $this_chunk_param
+#     echo $cubep3m_node >> $this_chunk_param
+#     echo $cubep3m_mesh >> $this_chunk_param
+#     echo $pid_flag >> $this_chunk_param
+#     echo $buffer_size >> $this_chunk_param
+#     echo $n_chunks_pd >> $this_chunk_param
+#     echo $n_chunks_pd >> $this_chunk_param
+#     echo $n_chunks_pd >> $this_chunk_param
+#     if [ -e $firstfile ] 
+#     then
+# 	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
+# 	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
+#     fi
+# done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
