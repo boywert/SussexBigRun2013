@@ -4,13 +4,13 @@
 #$ -m bea
 #$ -j y
 #$ -cwd
-#$ -pe openmpi 8 #eg12-36
+#$ -pe openmpi 216 #eg12-36
 #$ -q mps_amd.q
 #$ -S /bin/bash
 # source modules environment:
 module add sge
 
-mpi_chunk=8
+mpi_chunk=216
 mpi_ahf=8
 
 cubep3m_boxsize=47
@@ -69,7 +69,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
 
-    mpirun -np 8 $chunk_exec $this_chunk_param
+    mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
 
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
