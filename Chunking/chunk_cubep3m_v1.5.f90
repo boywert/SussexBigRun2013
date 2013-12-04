@@ -92,7 +92,7 @@ program chunk_cubep3m
   endif
 
   if(rank .eq. 0) call read_parameters
-  call exit
+  stop
   call broadcast_parameters
 
   call variable_initialise
