@@ -36,6 +36,6 @@ input_redshift
 1.5
 #
 # Chunking dimensions (number of chunks in x,y,z):
-6
-6
-6
+3
+3
+3
