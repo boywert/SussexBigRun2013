@@ -31,7 +31,7 @@ while read line
 do
     redshift=$(printf '%3.3f' $line)
     #make folder prepared for chunking
-    for i in {0..$(n_chunks_total)}
+    for i in {0..$n_chunks_total}
     do
 	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
 	mkdir -p $this_workspace
