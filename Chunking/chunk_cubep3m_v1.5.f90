@@ -2582,7 +2582,7 @@ subroutine read_parameters
 
     character(300)  :: line1
     integer(4)	  :: Num_args, IO, param_count
-    character(1000)  :: arg1, parameterfile
+    character(400)  :: arg1, parameterfile
 
     ! input parameter variables:
 
