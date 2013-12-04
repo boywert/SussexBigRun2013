@@ -69,7 +69,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
 
-    mpirun -np 8 /home/c/cs/cs390/SussexBigRun2013/Chunking/chunk /test/test/ets/dfsfsdfsdfdsf/sdfsdfsdfsd/sdfsdf
+    mpirun -np 8 /home/c/cs/cs390/SussexBigRun2013/Chunking/chunk /test/test/ets
 
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
