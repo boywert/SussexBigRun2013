@@ -73,6 +73,7 @@ do
     if [ -e $firstfile ] 
     then
 	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
+	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
     fi
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
