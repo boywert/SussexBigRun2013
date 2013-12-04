@@ -93,8 +93,6 @@ program chunk_cubep3m
 
   if(rank .eq. 0) call read_parameters
 
-  call mpi_abort(mpi_comm_world,ierr,ierr)
-
   call broadcast_parameters
 
   call variable_initialise
@@ -2608,7 +2606,7 @@ subroutine read_parameters
 
       CALL GETARG(1,arg1)
       read(arg1,*) parameterfile
-      write(*,*) "Reading parameter file: ",&
+      write(*,*) "Reading parameter file: ",& 
 	  &parameterfile(1:len_trim(parameterfile))
 
     endif

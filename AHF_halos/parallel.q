@@ -72,7 +72,20 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     if [ -e $firstfile ] 
     then
-	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
+	this_pbs="submit.pbs"
+	chunk_job_name=$(printf '%s_chunking_%s' $redshift $i)
+	echo "#!/bin/bash" > $this_pbs
+	echo "#$ -N" $chunk_job_name >> $this_pbs
+	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
+	echo "#$ -m bea" >> $this_pbs
+	echo "#$ -j y" >> $this_pbs
+	echo "#$ -cwd" >> $this_pbs
+	echo "#$ -pe openmpi" $mpi_chunk >> $this_pbs 
+	echo "#$ -q mps_amd.q" >> $this_pbs
+	echo "#$ -S /bin/bash" >> $this_pbs
+	echo "module add sge" >> $this_pbs
+	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
+	qsub $this_pbs
     fi
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
