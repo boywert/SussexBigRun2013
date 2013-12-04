@@ -69,7 +69,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
-    if [-a $firstfile]
+    if [ -e $firstfile ] 
     then
 	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
     fi
