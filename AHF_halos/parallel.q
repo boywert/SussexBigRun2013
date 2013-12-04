@@ -35,10 +35,10 @@ ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc
 #compile things
 cd ${ahf_folder}
 make clean
-make > /dev/null
+make 
 cd ${chunk_srcfolder}
 make clean
-make > /dev/null
+make 
 
 
 while read line
@@ -70,7 +70,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $this_chunk_param
     cat ${this_chunk_param}
-
+    echo "mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}"
+    mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}
 done < halofinds
-mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
