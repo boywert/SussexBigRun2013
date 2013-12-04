@@ -10,15 +10,15 @@
 # source modules environment:
 module add sge
 
-cubep3m_boxsize = 47
-cubep3m_mesh = 3456
-cubep3m_node = 6
+cubep3m_boxsize = "47"
+cubep3m_mesh = "3456"
+cubep3m_node = "6"
 
-pid_flag = 1
-buffer_size = 1.5
-drho = 200
-n_chunks_pd = 3
-n_chunks_total = 27
+pid_flag = "1"
+buffer_size = "1.5"
+drho = "200"
+n_chunks_pd = "3"
+n_chunks_total = "27"
 
 workspace = "/home/c/cs/cs390/SussexBigRun2013/AHF_halos/"
 particle_folder = "/research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/"
