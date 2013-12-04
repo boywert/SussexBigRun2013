@@ -35,10 +35,10 @@ ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc
 #compile things
 cd ${ahf_folder}
 make clean
-make
+make > /dev/null
 cd ${chunk_srcfolder}
 make clean
-make
+make > /dev/null
 
 
 while read line
