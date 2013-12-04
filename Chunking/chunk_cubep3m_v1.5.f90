@@ -92,8 +92,9 @@ program chunk_cubep3m
   endif
 
   if(rank .eq. 0) call read_parameters
-  call finalise_chunker
-  stop
+
+  call mpi_abort(mpi_comm_world,ierr,ierr)
+
   call broadcast_parameters
 
   call variable_initialise
