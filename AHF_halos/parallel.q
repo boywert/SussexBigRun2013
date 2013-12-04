@@ -36,7 +36,7 @@ do
 	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
 	mkdir -p "$this_workspace"
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
-	mkdir -p "$this_chunkspace"
+	mkdir -p "$this_chunkfolder"
     done
     this_chunk_param=$(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
     echo ${redshift} > ${this_chunk_param}
