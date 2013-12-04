@@ -22,9 +22,20 @@ n_chunks_total="27"
 
 workspace="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/"
 particle_folder="/research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/"
+ahf_folder="/home/c/cs/cs390/SussexBigRun2013/ahf-v1.0-056.SUSSEXBIGRUN/"
 ahf_exec="/home/c/cs/cs390/SussexBigRun2013/ahf-v1.0-056.SUSSEXBIGRUN/bin/AHF-v1.0-056"
+chunk_srcfolder="/home/c/cs/cs390/SussexBigRun2013/Chunking/"
+chunk_exec="/home/c/cs/cs390/SussexBigRun2013/Chunking/chunk"
 chunk_folder="/mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/"
 ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc_ext2/"
+
+#compile things
+cd ${ahf_folder}
+make clean
+make
+cd ${chunk_srcfolder}
+make clean
+make
 
 
 while read line
