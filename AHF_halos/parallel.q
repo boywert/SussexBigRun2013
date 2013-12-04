@@ -34,23 +34,23 @@ do
     for i in {0..$(n_chunks_total)}
     do
 	this_workspace = $(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
-	mkdir -p $(this_workspace)
+	mkdir -p $this_workspace
 	this_chunkfolder = $(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
-	mkdir -p $(this_chunkspace)
+	mkdir -p $this_chunkspace
     done
     this_chunk_param = $(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
-    echo $redshift > $(this_chunk_param)
-    echo "dummy" >>  $(this_chunk_param)
-    echo $particle_folder >> $(this_chunk_param)
-    echo $chunk_folder >> $(this_chunk_param)
-    echo $cubep3m_boxsize >> $(this_chunk_param)
-    echo $cubep3m_node >> $(this_chunk_param)
-    echo $cubep3m_mesh >> $(this_chunk_param)
-    echo $pid_flag >> $(this_chunk_param)
-    echo $buffer_size >> $(this_chunk_param)
-    echo $n_chunks_pd >> $(this_chunk_param)
-    echo $n_chunks_pd >> $(this_chunk_param)
-    echo $n_chunks_pd >> $(this_chunk_param)
+    echo $redshift > $this_chunk_param
+    echo "dummy" >>  $this_chunk_param
+    echo $particle_folder >> $this_chunk_param
+    echo $chunk_folder >> $this_chunk_param
+    echo $cubep3m_boxsize >> $this_chunk_param
+    echo $cubep3m_node >> $this_chunk_param
+    echo $cubep3m_mesh >> $this_chunk_param
+    echo $pid_flag >> $this_chunk_param
+    echo $buffer_size >> $this_chunk_param
+    echo $n_chunks_pd >> $this_chunk_param
+    echo $n_chunks_pd >> $this_chunk_param
+    echo $n_chunks_pd >> $this_chunk_param
 done < halofinds
 
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
