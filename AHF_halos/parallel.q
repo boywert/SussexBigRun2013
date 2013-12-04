@@ -43,7 +43,7 @@ make
 
 while read line
 do
-    rm -rf ${chunk_folder}
+    
     redshift=$(printf '%3.3f' $line)
     echo "redshift = " $redshift
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
@@ -55,6 +55,7 @@ do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p "$this_chunkfolder"
     done
+    rm -rf ${this_chunkfolder}/*
     cd ${this_workspace}
     this_chunk_param="chunk_param"
 
