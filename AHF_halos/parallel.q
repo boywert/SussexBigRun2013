@@ -73,7 +73,7 @@ do
     if [ -e $firstfile ] 
     then
 	this_pbs="submit.pbs"
-	chunk_job_name=$(printf '%s_chunking' $redshift)
+	chunk_job_name=$(printf 'chunking_%s' $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $chunk_job_name >> $this_pbs
 	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
