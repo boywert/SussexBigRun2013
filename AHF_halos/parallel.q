@@ -53,6 +53,7 @@ do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p "$this_chunkfolder"
     done
+
     this_chunk_param=$(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
 
     echo ${redshift} > ${this_chunk_param}
@@ -69,7 +70,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $this_chunk_param
     cat ${this_chunk_param}
-    mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}
+    mpirun -np ${mpi_chunk} "${chunk_exec} ${this_chunk_param}"
 done < halofinds
 
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
