@@ -43,6 +43,7 @@ make
 
 while read line
 do
+    rm -rf ${chunk_folder}
     redshift=$(printf '%3.3f' $line)
     #make folder prepared for chunking
     for i in $(seq 0 $n_chunks_total)
@@ -53,6 +54,7 @@ do
 	mkdir -p "$this_chunkfolder"
     done
     this_chunk_param=$(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
+
     echo ${redshift} > ${this_chunk_param}
     echo "dummy" >>  $this_chunk_param
     echo $particle_folder >> $this_chunk_param
@@ -65,7 +67,7 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
-    rm -rf ${chunk_folder}
+    
     mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}
 done < halofinds
 
