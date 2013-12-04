@@ -38,7 +38,7 @@ do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p $this_chunkspace
     done
-    this_chunk_param = $(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
+    this_chunk_param=$(printf '%s/z_%s_%d/chunk_param' $workspace $redshift $drho)
     echo $redshift > $this_chunk_param
     echo "dummy" >>  $this_chunk_param
     echo $particle_folder >> $this_chunk_param
