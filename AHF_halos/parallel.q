@@ -40,10 +40,10 @@ cd ${chunk_srcfolder}
 make clean
 make 
 
+last_redshift="1000.0"
 
 while read line
 do
-    
     redshift=$(printf '%3.3f' $line)
     echo "redshift = " $redshift
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
@@ -55,7 +55,7 @@ do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p "$this_chunkfolder"
     done
-    rm -rf ${this_chunkfolder}/*
+    
     cd ${this_workspace}
     this_chunk_param="chunk_param"
 
@@ -89,5 +89,6 @@ do
 	cat $this_pbs
 	qsub $this_pbs
     fi
+    rm -rf ${chunk_folder}/z_${redshift}/*
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
