@@ -67,7 +67,8 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
-    
+    echo $this_chunk_param
+    cat ${this_chunk_param}
     mpirun -np ${mpi_chunk} ${chunk_exec} ${this_chunk_param}
 done < halofinds
 
