@@ -10,5 +10,5 @@
 # source modules environment:
 module add sge
 
-mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template 
+mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
 

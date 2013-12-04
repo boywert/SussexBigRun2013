@@ -1,16 +1,32 @@
 [AHF]
-ic_filetype       = 21
-LgridDomain       = 128
-LgridMax          = 16777216 
-NperDomCell       = 5.0
-NperRefCell       = 5.0
-VescTune          = 1.5 
-NminPerHalo       = 20
-RhoVir            = 0
-Dvir              = 200 
-MaxGatherRad      = 3.0	
+
+ic_filename = /mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/z_10.877/chunk_0/10.877xv_chunk_0_
+
+ic_filetype = 21
+
+outfile_prefix = /mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/z_10.877/chunk_0/10.877.
+
+LgridDomain = 128
+
+LgridMax = 16777216
+
+NperDomCell = 5.0
+
+NperRefCell = 5.0
+
+VescTune = 1.5
+
+NminPerHalo = 20
+
+RhoVir = 0
+
+Dvir = 200
+
+MaxGatherRad = 3.0
+
 LevelDomainDecomp = 6
-NcpuReading       = 8
-de_filename       = my_dark_energy_table.txt
-ic_filename       = /mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/z_10.877/chunk_0/10.877xv_chunk_0_
-outfile_prefix    = /mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/z_10.877/chunk_0/10.877.
+
+NcpuReading = 8
+
+de_filename = my_dark_energy_table.txt
+
