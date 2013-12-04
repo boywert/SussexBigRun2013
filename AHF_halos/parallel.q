@@ -4,13 +4,13 @@
 #$ -m bea
 #$ -j y
 #$ -cwd
-#$ -pe openmpi 216 #eg12-36
+#$ -pe openmpi 8 #eg12-36
 #$ -q mps_amd.q
 #$ -S /bin/bash
 # source modules environment:
 module add sge
 
-mpi_chunk=216
+mpi_chunk=8
 mpi_ahf=8
 
 cubep3m_boxsize=47
