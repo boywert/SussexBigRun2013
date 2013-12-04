@@ -45,6 +45,7 @@ while read line
 do
     rm -rf ${chunk_folder}
     redshift=$(printf '%3.3f' $line)
+    firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
     #make folder prepared for chunking
     for i in $(seq 0 $n_chunks_total)
     do
@@ -68,8 +69,9 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
     echo $n_chunks_pd >> $this_chunk_param
-
-    mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
-
+    if [-a $firstfile]
+    then
+	mpirun -np $mpi_chunk $chunk_exec $this_chunk_param
+    fi
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
