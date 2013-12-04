@@ -34,6 +34,7 @@ do
     for i in $(seq 0 $n_chunks_total)
     do
 	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
+	echo $this_workspace
 	mkdir -p ${this_workspace}
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p ${this_chunkspace}
