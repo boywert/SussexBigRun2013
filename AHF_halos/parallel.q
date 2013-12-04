@@ -45,7 +45,7 @@ while read line
 do
     rm -rf ${chunk_folder}
     redshift=$(printf '%3.3f' $line)
-    echo 'redshift = ${redshift}'
+    echo "redshift = " $redshift
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
     #make folder prepared for chunking
     for i in $(seq 0 $n_chunks_total)
