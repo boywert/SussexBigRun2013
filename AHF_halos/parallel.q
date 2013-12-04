@@ -73,7 +73,7 @@ do
     if [ -e $firstfile ] 
     then
 	this_pbs="submit.pbs"
-	chunk_job_name=$(printf '%s_chunking_%s' $redshift $i)
+	chunk_job_name=$(printf '%s_chunking' $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $chunk_job_name >> $this_pbs
 	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
@@ -85,6 +85,7 @@ do
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
+	cat $this_pbs
 	qsub $this_pbs
     fi
 done < halofinds
