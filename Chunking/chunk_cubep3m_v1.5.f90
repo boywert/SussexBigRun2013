@@ -92,6 +92,7 @@ program chunk_cubep3m
   endif
 
   if(rank .eq. 0) call read_parameters
+  call finalise_chunker
   stop
   call broadcast_parameters
 
