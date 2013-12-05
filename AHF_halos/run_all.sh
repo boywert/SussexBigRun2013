@@ -38,6 +38,7 @@ cubep3minfo="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/cubep3m.info"
 
 snaplist="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/snaplist"
 halofinds="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/halofinds"
+lastsnap="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/lastsnap"
 #compile things
 cd ${ahf_folder}
 make clean
@@ -97,7 +98,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	cat $this_pbs
-	#qsub $this_pbs
+	qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
@@ -133,7 +134,7 @@ do
 	    echo "module add sge" >> $this_pbs
 	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    cat $this_pbs
-	    #qsub $this_pbs
+	    qsub $this_pbs
 	done
 	# clean chunk
 	this_pbs=$(printf 'clean_ahf_%s.pbs' $redshift $i)
@@ -150,9 +151,9 @@ do
 	echo "module add sge" >> $this_pbs
 	echo "rm -rf ${chunk_folder}/z_${redshift}/*" >> $this_pbs
 	echo "echo $redshift >> $snaplist" >> $this_pbs
-
+	echo "echo $line > $lastsnap" >> $this_pbs
 	cat $this_pbs
-	#qsub $this_pbs
+	qsub $this_pbs
 	
     fi
 done < $halofinds
