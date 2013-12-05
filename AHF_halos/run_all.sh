@@ -53,7 +53,6 @@ while read line
 do
     redshift=$(printf '%3.3f' $line)
     echo "redshift = " $redshift
-    rm -rf ${chunk_folder}/z_${redshift}/*
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
     #make folder prepared for chunking
     this_workspace=$(printf '%s/z_%s_%d/' $workspace $redshift $drho)
@@ -149,7 +148,9 @@ do
 	echo "#$ -q serial.q" >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
+	echo "rm -rf ${chunk_folder}/z_${redshift}/*" >> $this_pbs
 	echo "echo $redshift >> $snaplist" >> $this_pbs
+
 	cat $this_pbs
 	#qsub $this_pbs
 	
