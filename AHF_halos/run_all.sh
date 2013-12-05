@@ -146,7 +146,8 @@ do
 	echo "#$ -j y" >> $this_pbs
 	echo "#$ -cwd" >> $this_pbs
 	echo "#$ -hold_jid" $job_list >> $this_pbs 
-	echo "#$ -q serial.q" >> $this_pbs
+	echo "#$ -pe openmpi 1"  >> $this_pbs 
+	echo "#$ -q mps_amd.q" >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
 	echo "rm -rf ${chunk_folder}/z_${redshift}/*" >> $this_pbs
