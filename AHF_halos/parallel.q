@@ -62,7 +62,7 @@ do
     done
  
     cd ${this_workspace}
-    this_chunk_param="chunk_param"
+    this_chunk_param=$(printf 'chunk_param_%s' $redshift)
 
     echo ${redshift} > ${this_chunk_param}
     echo "dummy" >>  $this_chunk_param
@@ -79,7 +79,7 @@ do
     if [ -e $firstfile ] 
     then
 	# Chunk cubep3m
-	this_pbs="chunking.pbs"
+	this_pbs=$(printf 'chunking_%s.pbs' $redshift)
 	chunk_job_name=$(printf 'chunking_%s' $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $chunk_job_name >> $this_pbs
