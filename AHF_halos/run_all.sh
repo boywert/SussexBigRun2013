@@ -145,7 +145,7 @@ do
 	echo "#$ -m bea" >> $this_pbs
 	echo "#$ -j y" >> $this_pbs
 	echo "#$ -cwd" >> $this_pbs
-	echo "#$ -hold_jid" $job_list >> $this_pbs 
+	#echo "#$ -hold_jid" $job_list >> $this_pbs 
 	echo "#$ -pe openmpi 1"  >> $this_pbs 
 	echo "#$ -q mps_amd.q" >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
