@@ -53,6 +53,7 @@ while read line
 do
     redshift=$(printf '%3.3f' $line)
     echo "redshift = " $redshift
+    rm -rf ${chunk_folder}/z_${redshift}/*
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
     #make folder prepared for chunking
     this_workspace=$(printf '%s/z_%s_%d/' $workspace $redshift $drho)
@@ -97,12 +98,13 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	cat $this_pbs
-	qsub $this_pbs
+	#qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
 	cp $cubep3minfo $this_cubep3m_info
 	
+	job_list=""
 	for i in $(seq 0 $last_chunk)
 	do
 	    cd $this_workspace
@@ -118,6 +120,7 @@ do
 	    # pbs file
 	    this_pbs=$(printf 'ahf_%s_%d.pbs' $redshift $i)
 	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
+	    job_list+=" $ahf_job_name"
 	    echo "#!/bin/bash" > $this_pbs
 	    echo "#$ -N" $ahf_job_name >> $this_pbs
 	    echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
@@ -131,10 +134,25 @@ do
 	    echo "module add sge" >> $this_pbs
 	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    cat $this_pbs
-	    qsub $this_pbs
+	    #qsub $this_pbs
 	done
-	echo $redshift >> $snaplist
+	# clean chunk
+	this_pbs=$(printf 'clean_ahf_%s.pbs' $redshift $i)
+	clean_name=$(printf 'clean_ahf_%s' $redshift $i)
+	echo "#!/bin/bash" > $this_pbs
+	echo "#$ -N" $clean_name >> $this_pbs
+	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
+	echo "#$ -m bea" >> $this_pbs
+	echo "#$ -j y" >> $this_pbs
+	echo "#$ -cwd" >> $this_pbs
+	echo "#$ -hold_jid" $job_list >> $this_pbs 
+	echo "#$ -q serial.q" >> $this_pbs
+	echo "#$ -S /bin/bash" >> $this_pbs
+	echo "module add sge" >> $this_pbs
+	echo "echo $redshift >> $snaplist" >> $this_pbs
+	cat $this_pbs
+	#qsub $this_pbs
+	
     fi
-    rm -rf ${chunk_folder}/z_${redshift}/*
 done < halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
