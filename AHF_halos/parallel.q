@@ -22,6 +22,7 @@ buffer_size=1.5
 drho=200
 n_chunks_pd=3
 n_chunks_total=27
+last_chunk=26
 
 workspace="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/"
 particle_folder="/research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/"
@@ -31,6 +32,10 @@ chunk_srcfolder="/home/c/cs/cs390/SussexBigRun2013/Chunking/"
 chunk_exec="/home/c/cs/cs390/SussexBigRun2013/Chunking/chunk"
 chunk_folder="/mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/"
 ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc_ext2/"
+
+ahf_template="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/AHF.input-template"
+cubep3minfo="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/cubep3m.info"
+
 
 #compile things
 cd ${ahf_folder}
@@ -48,14 +53,14 @@ do
     echo "redshift = " $redshift
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
     #make folder prepared for chunking
-    for i in $(seq 0 $n_chunks_total)
+    this_workspace=$(printf '%s/z_%s_%d/' $workspace $redshift $drho)
+    mkdir -p $this_workspace
+    for i in $(seq 0 $last_chunk)
     do
-	this_workspace=$(printf '%s/z_%s_%d/chunk_%d/' $workspace $redshift $drho $i)
-	mkdir -p "$this_workspace"
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
-	mkdir -p "$this_chunkfolder"
+	mkdir -p $this_chunkfolder
     done
-    
+ 
     cd ${this_workspace}
     this_chunk_param="chunk_param"
 
@@ -73,7 +78,8 @@ do
     echo $n_chunks_pd >> $this_chunk_param
     if [ -e $firstfile ] 
     then
-	this_pbs="submit.pbs"
+	# Chunk cubep3m
+	this_pbs="chunking.pbs"
 	chunk_job_name=$(printf 'chunking_%s' $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $chunk_job_name >> $this_pbs
@@ -87,7 +93,26 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	cat $this_pbs
-	qsub $this_pbs
+	#qsub $this_pbs
+	# run AHF on every chunks
+	for i in $(seq 0 $last_chunk)
+	do
+	    cd $this_workspace
+	    this_pbs=$(printf 'ahf_chunk_%d' $i)
+	    this_ahf_config=$(printf 'ahf_config_%d' $i)
+	    this_cubep3m_info="cubep3m.info"
+	    # ahf input file
+	    cp $ahf_template $this_ahf_config
+	    $this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
+	    $this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
+	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
+	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
+
+	    # cubep3m
+	    cp $cubep3minfo $this_cubep3m_info
+
+	done
+	
     fi
     rm -rf ${chunk_folder}/z_${redshift}/*
 done < halofinds
