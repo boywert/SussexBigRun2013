@@ -104,7 +104,7 @@ do
 	this_cubep3m_info="cubep3m.info"
 	cp $cubep3minfo $this_cubep3m_info
 	
-	job_list=""
+
 	for i in $(seq 0 $last_chunk)
 	do
 	    cd $this_workspace
@@ -120,7 +120,7 @@ do
 	    # pbs file
 	    this_pbs=$(printf 'ahf_%s_%d.pbs' $redshift $i)
 	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
-	    job_list+=" $ahf_job_name"
+
 	    echo "#!/bin/bash" > $this_pbs
 	    echo "#$ -N" $ahf_job_name >> $this_pbs
 	    echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
@@ -135,26 +135,28 @@ do
 	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    cat $this_pbs
 	    qsub $this_pbs
+	    
+            # clean chunk
+	    this_pbs=$(printf 'clean_ahf_%s_%d.pbs' $redshift $i)
+	    clean_name=$(printf 'clean_ahf_%s_%d' $redshift $i)
+	    echo "#!/bin/bash" > $this_pbs
+	    echo "#$ -N" $clean_name >> $this_pbs
+	    echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
+	    echo "#$ -m bea" >> $this_pbs
+	    echo "#$ -j y" >> $this_pbs
+	    echo "#$ -cwd" >> $this_pbs
+	    echo "#$ -hold_jid" $ahf_job_name >> $this_pbs 
+	    echo "#$ -pe openmpi 1"  >> $this_pbs 
+	    echo "#$ -q mps_amd.q" >> $this_pbs
+	    echo "#$ -S /bin/bash" >> $this_pbs
+	    echo "module add sge" >> $this_pbs
+	    echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
+	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
+	    echo "echo $line > $lastsnap" >> $this_pbs
+	    cat $this_pbs
+	    qsub $this_pbs
 	done
-	# clean chunk
-	this_pbs=$(printf 'clean_ahf_%s.pbs' $redshift)
-	clean_name=$(printf 'clean_ahf_%s' $redshift)
-	echo "#!/bin/bash" > $this_pbs
-	echo "#$ -N" $clean_name >> $this_pbs
-	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
-	echo "#$ -m bea" >> $this_pbs
-	echo "#$ -j y" >> $this_pbs
-	echo "#$ -cwd" >> $this_pbs
-	#echo "#$ -hold_jid" $job_list >> $this_pbs 
-	echo "#$ -pe openmpi 1"  >> $this_pbs 
-	echo "#$ -q mps_amd.q" >> $this_pbs
-	echo "#$ -S /bin/bash" >> $this_pbs
-	echo "module add sge" >> $this_pbs
-	echo "rm -rf ${chunk_folder}/z_${redshift}/*" >> $this_pbs
-	echo "echo $redshift >> $snaplist" >> $this_pbs
-	echo "echo $line > $lastsnap" >> $this_pbs
-	cat $this_pbs
-	qsub $this_pbs	
+	
     fi
 done < $halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
