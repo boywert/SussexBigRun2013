@@ -37,7 +37,7 @@ ahf_template="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/AHF.input-template"
 cubep3minfo="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/cubep3m.info"
 
 snaplist="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/snaplist"
-
+halofinds="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/halofinds"
 #compile things
 cd ${ahf_folder}
 make clean
@@ -155,5 +155,5 @@ do
 	#qsub $this_pbs
 	
     fi
-done < halofinds
+done < $halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
