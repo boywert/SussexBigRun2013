@@ -36,6 +36,7 @@ ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc
 ahf_template="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/AHF.input-template"
 cubep3minfo="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/cubep3m.info"
 
+snaplist="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/snaplist"
 
 #compile things
 cd ${ahf_folder}
@@ -47,6 +48,7 @@ make
 
 last_redshift="1000.0"
 
+echo '' > $snaplist
 while read line
 do
     redshift=$(printf '%3.3f' $line)
@@ -93,7 +95,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	cat $this_pbs
-	#qsub $this_pbs
+	qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	cp $cubep3minfo $this_cubep3m_info
@@ -126,9 +128,9 @@ do
 	    echo "module add sge" >> $this_pbs
 	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    cat $this_pbs
-
+	    qsub $this_pbs
 	done
-	
+	echo $redshift >> $snaplist
     fi
     rm -rf ${chunk_folder}/z_${redshift}/*
 done < halofinds
