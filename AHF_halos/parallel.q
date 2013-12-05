@@ -95,6 +95,9 @@ do
 	cat $this_pbs
 	#qsub $this_pbs
 	# run AHF on every chunks
+	# cubep3m
+	cp $cubep3minfo $this_cubep3m_info
+	
 	for i in $(seq 0 $last_chunk)
 	do
 	    cd $this_workspace
@@ -102,14 +105,12 @@ do
 	    this_ahf_config=$(printf 'ahf_config_%d' $i)
 	    this_cubep3m_info="cubep3m.info"
 	    # ahf input file
-	    cp $ahf_template $this_ahf_config
-	    $this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
-	    $this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
+	    cp ${ahf_template} ${this_ahf_config}
+	    this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
+	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 
-	    # cubep3m
-	    cp $cubep3minfo $this_cubep3m_info
 
 	done
 	
