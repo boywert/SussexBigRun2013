@@ -137,8 +137,8 @@ do
 	    qsub $this_pbs
 	done
 	# clean chunk
-	this_pbs=$(printf 'clean_ahf_%s.pbs' $redshift $i)
-	clean_name=$(printf 'clean_ahf_%s' $redshift $i)
+	this_pbs=$(printf 'clean_ahf_%s.pbs' $redshift)
+	clean_name=$(printf 'clean_ahf_%s' $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $clean_name >> $this_pbs
 	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
@@ -153,8 +153,7 @@ do
 	echo "echo $redshift >> $snaplist" >> $this_pbs
 	echo "echo $line > $lastsnap" >> $this_pbs
 	cat $this_pbs
-	qsub $this_pbs
-	
+	qsub $this_pbs	
     fi
 done < $halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
