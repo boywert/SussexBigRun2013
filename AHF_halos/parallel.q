@@ -110,7 +110,22 @@ do
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
-
+	    # pbs file
+	    this_pbs=$(printf 'ahf_%s_%d.pbs' $redshift $i)
+	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
+	    echo "#!/bin/bash" > $this_pbs
+	    echo "#$ -N" $ahf_job_name >> $this_pbs
+	    echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
+	    echo "#$ -m bea" >> $this_pbs
+	    echo "#$ -j y" >> $this_pbs
+	    echo "#$ -cwd" >> $this_pbs
+	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
+	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
+	    echo "#$ -q mps_amd.q" >> $this_pbs
+	    echo "#$ -S /bin/bash" >> $this_pbs
+	    echo "module add sge" >> $this_pbs
+	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
+	    cat $this_pbs
 
 	done
 	
