@@ -142,7 +142,7 @@ do
 	    echo "#$ -q mps_amd.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
-	    echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
+	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
 	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
 	    echo "echo $line > $lastsnap" >> $this_pbs
 	    cat $this_pbs
