@@ -1,13 +1,5 @@
 #!/bin/bash
-#$ -N boyd
-#$ -M cs390@sussex.ac.uk
-#$ -m bea
-#$ -j y
-#$ -cwd
-#$ -pe openmpi 216 #eg12-36
-#$ -q mps_amd.q
-#$ -S /bin/bash
-# source modules environment:
+
 module add sge
 
 mpi_chunk=216
@@ -18,7 +10,7 @@ cubep3m_mesh=3456
 cubep3m_node=6
 
 pid_flag=1
-buffer_size=1.5
+buffer_size=0.8
 drho=200
 n_chunks_pd=3
 n_chunks_total=27
