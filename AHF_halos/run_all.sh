@@ -121,6 +121,11 @@ do
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
+	    if ! ((i % 2)); then
+		echo "#$ -q mps_amd.q" >> $this_pbs
+	    else
+		echo "#$ -q parallel.q" >> $this_pbs
+	    fi
 	    echo "#$ -q mps_amd.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
