@@ -3,7 +3,7 @@
 module add sge
 
 mpi_chunk=216
-mpi_ahf=8
+mpi_ahf=16
 
 cubep3m_boxsize=47
 cubep3m_mesh=3456
@@ -90,7 +90,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	cat $this_pbs
-	qsub $this_pbs
+	#qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
@@ -146,7 +146,7 @@ do
 	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
 	    echo "echo $line > $lastsnap" >> $this_pbs
 	    cat $this_pbs
-	    qsub $this_pbs
+	    #qsub $this_pbs
 	done
 	
     fi
