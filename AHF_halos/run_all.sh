@@ -123,7 +123,7 @@ do
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
-	    echo "#$ -l mem_free=$mem_need_ahfG" >> $this_pbs
+	    echo "#$ -l mem_free=${mem_need_ahf}G" >> $this_pbs
        	    echo "#$ -q pact.q" >> $this_pbs
 	    echo "#$ -q mps_amd.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
