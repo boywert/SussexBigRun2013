@@ -16,21 +16,25 @@ n_chunks_pd=3
 n_chunks_total=27
 last_chunk=26
 
-workspace="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/"
+base_folder="/mnt/lustre/scratch/cs390/codes/SussexBigRun2013/"
+workspace="$base_folder/AHF_halos/"
 particle_folder="/research/prace/cubepm_131025_6_1728_47Mpc_ext2/results/"
-ahf_folder="/home/c/cs/cs390/SussexBigRun2013/ahf-v1.0-056.SUSSEXBIGRUN/"
-ahf_exec="/home/c/cs/cs390/SussexBigRun2013/ahf-v1.0-056.SUSSEXBIGRUN/bin/AHF-v1.0-056"
-chunk_srcfolder="/home/c/cs/cs390/SussexBigRun2013/Chunking/"
-chunk_exec="/home/c/cs/cs390/SussexBigRun2013/Chunking/chunk"
+ahf_folder="$base_folder/ahf-v1.0-056.SUSSEXBIGRUN/"
+ahf_exec="$base_folder/ahf-v1.0-056.SUSSEXBIGRUN/bin/AHF-v1.0-056"
+chunk_srcfolder="$base_folder/Chunking/"
+chunk_exec="$base_folder/Chunking/chunk"
 chunk_folder="/mnt/lustre/scratch/cs390/tmp/cubepm_131025_6_1728_47Mpc_ext2/chunked_output/"
 ahfoutput_folder="/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131025_6_1728_47Mpc_ext2/"
 
-ahf_template="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/AHF.input-template"
-cubep3minfo="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/cubep3m.info"
+ahf_template="$base_folder/AHF_halos/AHF.input-template"
+cubep3minfo="$base_folder/AHF_halos/cubep3m.info"
 
-snaplist="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/snaplist"
-halofinds="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/halofinds"
-lastsnap="/home/c/cs/cs390/SussexBigRun2013/AHF_halos/lastsnap"
+snaplist="$base_folder/AHF_halos/snaplist"
+halofinds="$base_folder/AHF_halos/halofinds"
+lastsnap="$base_folder/AHF_halos/lastsnap"
+
+echo $lastsnap
+exit
 #compile things
 cd ${ahf_folder}
 make clean
@@ -89,7 +93,7 @@ do
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
-	cat $this_pbs
+	#cat $this_pbs
 	#qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
@@ -121,7 +125,7 @@ do
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
-	    if ! ((i % 2)); then
+	    if  ((i % $last_chunk)); then
 		echo "#$ -q mps_amd.q" >> $this_pbs
 	    else
 		echo "#$ -q parallel.q" >> $this_pbs
@@ -130,7 +134,7 @@ do
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    echo 'mpirun -np' $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
-	    cat $this_pbs
+	    #cat $this_pbs
 	    qsub $this_pbs
 	    
             # clean chunk
@@ -150,7 +154,7 @@ do
 	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
 	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
 	    echo "echo $line > $lastsnap" >> $this_pbs
-	    cat $this_pbs
+	    #cat $this_pbs
 	    #qsub $this_pbs
 	done
 	
