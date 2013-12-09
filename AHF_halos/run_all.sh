@@ -3,8 +3,8 @@
 module add sge
 
 mpi_chunk=216
-mpi_ahf=16
-
+mpi_ahf=32
+mem_need_ahf=110
 cubep3m_boxsize=47
 cubep3m_mesh=3456
 cubep3m_node=6
@@ -33,8 +33,6 @@ snaplist="$base_folder/AHF_halos/snaplist"
 halofinds="$base_folder/AHF_halos/halofinds"
 lastsnap="$base_folder/AHF_halos/lastsnap"
 
-echo $lastsnap
-exit
 #compile things
 cd ${ahf_folder}
 make clean
@@ -125,11 +123,8 @@ do
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
-	    if  ((i % $last_chunk)); then
-		echo "#$ -q mps_amd.q" >> $this_pbs
-	    else
-		echo "#$ -q parallel.q" >> $this_pbs
-	    fi
+	    echo "#$ -l mem_free=$mem_need_ahfG" >> $this_pbs
+       	    echo "#$ -q pact.q" >> $this_pbs
 	    echo "#$ -q mps_amd.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
