@@ -124,13 +124,13 @@ do
 	    echo "#$ -j y" >> $this_pbs
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
-	    echo "#$ -pe openmp" $mpi_ahf >> $this_pbs 
+	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
 	    echo "#$ -l mem_free=${mem_need_ahf}G" >> $this_pbs
        	    echo "#$ -q pact.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
-	    echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
-	    echo $ahf_exec $this_ahf_config >> $this_pbs
+	    #echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
+	    echo "mpirun -np" $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    #cat $this_pbs
 	    qsub $this_pbs
 	    
