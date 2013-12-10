@@ -56,13 +56,13 @@ do
     do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p $this_chunkfolder
-	rm -rf $this_chunkfolder/*
 	this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/' $ahfoutput_folder $redshift $drho $i)
 	mkdir -p $this_output_prefix
 	rm -rf $this_output_prefix/*
     done
  
     cd ${this_workspace}
+    rm -rf *
     this_chunk_param=$(printf 'chunk_param_%s' $redshift)
 
     echo ${redshift} > ${this_chunk_param}
@@ -94,7 +94,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
-	#qsub $this_pbs
+	qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
