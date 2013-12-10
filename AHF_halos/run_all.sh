@@ -56,6 +56,7 @@ do
     do
 	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
 	mkdir -p $this_chunkfolder
+	rm -rf $this_chunkfolder/*
 	this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/' $ahfoutput_folder $redshift $drho $i)
 	mkdir -p $this_output_prefix
 	rm -rf $this_output_prefix/*
@@ -129,7 +130,7 @@ do
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
-	    echo $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
+	    echo $ahf_exec $this_ahf_config >> $this_pbs
 	    #cat $this_pbs
 	    qsub $this_pbs
 	    
