@@ -126,7 +126,7 @@ do
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
 	    echo "#$ -l mem_free=${mem_need_ahf}G" >> $this_pbs
-       	    echo "#$ -q pact.q" >> $this_pbs
+       	    echo "#$ -q pact_medium.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    #echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
