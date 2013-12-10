@@ -58,6 +58,7 @@ do
 	mkdir -p $this_chunkfolder
 	this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/' $ahfoutput_folder $redshift $drho $i)
 	mkdir -p $this_output_prefix
+	rm -rf $this_output_prefix/*
     done
  
     cd ${this_workspace}
