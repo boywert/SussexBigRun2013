@@ -140,7 +140,7 @@ int main(int argc, char **argv)
  }
 #endif /* DEBUG_STARTRUN */
   
-  printf("before AHFptfocus\n");
+
   /*==========================================================================================
    * AHFptfocus:
    *
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 #endif /* AHFptfocus */
   
   
-  
+
   
 #ifdef AHFrfocus
   /*====================================================================
@@ -253,6 +253,8 @@ int main(int argc, char **argv)
   timing.rfocus += time(NULL);
 #endif 
   
+
+  printf("boyd check\n");
   
 #		if (defined WITH_MPI && defined MPI_TIMING)
 	global_mpi.stop = MPI_Wtime();
