@@ -94,8 +94,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
-	#qsub $this_pbs
-	# run AHF on every chunks
+	
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
 	cp $cubep3minfo $this_cubep3m_info
@@ -126,7 +125,7 @@ do
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
 	    echo "#$ -l mem_free=${mem_need_ahf}G" >> $this_pbs
-       	    echo "#$ -q mps_amd.q" >> $this_pbs
+       	    echo "#$ -q pact_medium.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    #echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
