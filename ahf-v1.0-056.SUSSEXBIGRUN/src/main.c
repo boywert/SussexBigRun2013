@@ -278,7 +278,6 @@ int main(int argc, char **argv)
   loadbalance_log(global_io.log, global_info.loadbal);
   timing.loadbalance += time(NULL);
 #		else
-    printf("finish load balance\n");
 	/* Generate the SFC keys for all particles */
   timing.sfckey -= time(NULL);
 	for (uint64_t i=0; i<global_info.no_part; i++) {

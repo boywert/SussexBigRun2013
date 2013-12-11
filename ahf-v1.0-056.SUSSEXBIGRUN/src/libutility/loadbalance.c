@@ -538,6 +538,7 @@ local_recalc_localparts(io_logging_t log,
 	               "Calculating how many particle of which process "
 	               "we are holding.");
 	for (j=0; j<loadbal->ncpu; j++) {
+		printf("loadbal j=%d\n",(int)j);
 		loadbal->no_parts_loc[j] = UINT64_C(0);
 		for (i=loadbal->fstkey[j]; i<=loadbal->lstkey[j]; i++) {
 			loadbal->no_parts_loc[j] += (uint64_t)(loadbal->loc_bf[i]);
