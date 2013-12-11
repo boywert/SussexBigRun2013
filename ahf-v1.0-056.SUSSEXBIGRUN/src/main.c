@@ -140,7 +140,7 @@ int main(int argc, char **argv)
  }
 #endif /* DEBUG_STARTRUN */
   
-  
+  printf("before AHFptfocus\n");
   /*==========================================================================================
    * AHFptfocus:
    *
