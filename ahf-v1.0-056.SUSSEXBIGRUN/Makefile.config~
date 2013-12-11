@@ -8,8 +8,8 @@
 # (define your own, if needed!)                                    #
 #------------------------------------------------------------------#
 #SYSTEM =	"Standard SQL"
-#SYSTEM =	"Standard OpenMP"
-SYSTEM =	"Standard MPI"
+SYSTEM =	"Standard OpenMP"
+#SYSTEM =	"Standard MPI"
 #SYSTEM =	"Standard MPI+OpenMP"
 #SYSTEM =	"Debug"
 
