@@ -512,7 +512,7 @@ int main(int argc, char **argv)
    * grid hierarchy or what else we plan to do...
    *=====================================================================*/
   
-  
+  printf("finish reading files\n");
   
   
   
