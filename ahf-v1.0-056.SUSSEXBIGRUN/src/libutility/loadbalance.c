@@ -542,7 +542,7 @@ local_recalc_localparts(io_logging_t log,
 		printf("finish set no_part_loc[%d] = 0\n",j);
 		for (i=loadbal->fstkey[j]; i<=loadbal->lstkey[j]; i++) {
 			loadbal->no_parts_loc[j] += (uint64_t)(loadbal->loc_bf[i]);
-			printf("\tfinish set no_part_loc[%j]=%llu\n",j,(long long unsigned)loadbal->no_parts_loc[j]);
+			printf("\tfinish set no_part_loc[%d]=%llu\n",j,(long long unsigned)loadbal->no_parts_loc[j]);
 		}
 	}
 	printf("finish local_recal_localparts\n");
