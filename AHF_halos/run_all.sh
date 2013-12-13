@@ -97,7 +97,7 @@ do
 	echo "rm -rf" $this_ic_filename >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
-	qsub $this_pbs
+	#qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
