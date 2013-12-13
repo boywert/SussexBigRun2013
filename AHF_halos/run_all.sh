@@ -114,6 +114,7 @@ do
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
+	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
 	    # pbs file
 	    this_pbs=$(printf 'ahf_%s_%d.pbs' $redshift $i)
 	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
