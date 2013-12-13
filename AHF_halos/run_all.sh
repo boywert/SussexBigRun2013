@@ -133,6 +133,7 @@ do
        	    echo "#$ -q " $qname >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
+	    echo "rm -f ${this_output_prefix}*"
 	    #echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
 	    echo "mpirun -np" $mpi_ahf $ahf_exec $this_ahf_config >> $this_pbs
 	    #cat $this_pbs
