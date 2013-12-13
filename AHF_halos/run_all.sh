@@ -62,7 +62,7 @@ do
     done
  
     cd ${this_workspace}
-    rm -rf *
+    #rm -rf *
     this_chunk_param=$(printf 'chunk_param_%s' $redshift)
 
     echo ${redshift} > ${this_chunk_param}
@@ -89,7 +89,7 @@ do
 	echo "#$ -j y" >> $this_pbs
 	echo "#$ -cwd" >> $this_pbs
 	echo "#$ -pe openmpi" $mpi_chunk >> $this_pbs 
-	echo "#$ -q mps_amd.q" >> $this_pbs
+	echo "#$ -q pact.q" >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
@@ -126,7 +126,7 @@ do
 	    echo "#$ -hold_jid" $chunk_job_name >> $this_pbs
 	    echo "#$ -pe openmpi" $mpi_ahf >> $this_pbs 
 	    echo "#$ -l mem_free=${mem_need_ahf}G" >> $this_pbs
-       	    echo "#$ -q mps_amd.q" >> $this_pbs
+       	    echo "#$ -q pact.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    #echo "export OMP_NUM_THREADS=${mpi_ahf}" >> $this_pbs
@@ -145,7 +145,7 @@ do
 	    echo "#$ -cwd" >> $this_pbs
 	    echo "#$ -hold_jid" $ahf_job_name >> $this_pbs 
 	    echo "#$ -pe openmpi 1"  >> $this_pbs 
-	    echo "#$ -q mps_amd.q" >> $this_pbs
+	    echo "#$ -q pact.q" >> $this_pbs
 	    echo "#$ -S /bin/bash" >> $this_pbs
 	    echo "module add sge" >> $this_pbs
 	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
