@@ -1,0 +1,16 @@
+
+OutputDir             /ptmp/vrs/NewMillennium/NewTest432/
+
+SnapshotFileBase      snap_newtest432
+
+FirstSnapShotNr       0
+LastSnapShotNr        67
+
+SnapSkipFac           1
+
+
+NumberOfOutputFiles   8
+
+
+
+

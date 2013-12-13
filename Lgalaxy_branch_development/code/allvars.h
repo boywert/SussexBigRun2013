@@ -769,8 +769,8 @@ extern struct  halo_ids_data
 #else
 extern struct  halo_ids_data
 {
- long long FirstHaloInFOFgroup;
-} *HaloIDs, *HaloIDs_Data;
+ long long FirstHaloInFOFgroup; /* The same as FOFid */
+} *haloids, *HaloIDs_Data;
 #endif
 
 

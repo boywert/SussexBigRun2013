@@ -1,0 +1,15 @@
+
+SimulationDir         /afs/mpa/sim/Millennium/
+
+
+
+LastSnapShotNr        63
+
+FirstFile             0
+LastFile              511
+
+
+FilesPerSnapshot      512
+
+
+SnapshotFileBase      snap_millennium

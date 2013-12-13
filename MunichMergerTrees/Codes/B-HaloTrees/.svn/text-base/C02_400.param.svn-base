@@ -1,0 +1,9 @@
+
+OutputDir             /gpfs/mpa/vrs/Billennium/halo_C02/C02_400/
+
+SnapshotFileBase      snap_C02_400
+
+FirstSnapShotNr       0
+LastSnapShotNr        1023
+
+SnapSkipFac           1

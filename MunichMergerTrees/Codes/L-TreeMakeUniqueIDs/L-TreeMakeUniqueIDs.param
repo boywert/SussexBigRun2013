@@ -1,0 +1,9 @@
+SimulationDir         /export/virgo/Boyd/Millgas/62.5_SF_0.2/
+LastSnapShotNr        61
+FirstFile             0  
+LastFile              7   
+FilesPerSnapshot      1  
+FileWithSnapList      /pactusers/cs390/MillGas_snaplist.txt
+BoxSize               62.5
+Hashbits              8   
+

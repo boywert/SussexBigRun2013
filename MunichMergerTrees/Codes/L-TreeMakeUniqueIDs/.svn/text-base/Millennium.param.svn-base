@@ -1,0 +1,20 @@
+
+SimulationDir         /afs/mpa/sim/Millennium/
+
+
+
+LastSnapShotNr        63
+
+FirstFile             0
+LastFile              511
+
+
+FilesPerSnapshot      512
+
+
+FileWithSnapList      millennium_zlist.txt
+
+BoxSize               500.0
+
+Hashbits              8
+

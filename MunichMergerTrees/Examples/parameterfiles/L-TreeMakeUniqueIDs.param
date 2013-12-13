@@ -1,0 +1,9 @@
+SimulationDir         /blah/
+LastSnapShotNr        63
+FirstFile             0  
+LastFile              15   
+FilesPerSnapshot      1  
+FileWithSnapList      millennium_zlist.txt
+BoxSize               125.0
+Hashbits              8   
+

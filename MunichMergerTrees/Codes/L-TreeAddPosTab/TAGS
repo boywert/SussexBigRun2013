@@ -1,0 +1,68 @@
+
+allvars.c,591
+struct particle_data *P;P7,26
+struct io_header header;10,53
+int NumPart;13,80
+long long *IDs;IDs15,94
+float *Pos;Pos16,110
+int TotIDs;18,123
+int *SnapNumHalo;SnapNumHalo22,138
+int FirstFile;24,157
+int LastFile;25,215
+int Ntrees;27,230
+int FilesPerSnapshot;29,283
+int LastSnapShotNr;30,305
+int SnapFormat;31,325
+char OutputDir[OutputDir33,342
+char SimulationDir[SimulationDir34,363
+char SnapshotFileBase[SnapshotFileBase35,388
+int TotHalos;37,417
+int *FirstHaloInSnap;FirstHaloInSnap39,432
+int *TreeNHalos;TreeNHalos43,457
+int *TreeFirstHalo;TreeFirstHalo44,474
+
+hdf5_io.c,125
+void read_hdf5_attribute(14,180
+void read_hdf5_header(50,1076
+void read_hdf5_dataset(69,2713
+void read_all_types(94,3405
+
+main.c,566
+int SnapNum;15,202
+struct bigtab_data17,216
+} *BigTab;BigTab23,298
+int swap_file=25,310
+char label[label27,328
+int  nextblock;28,343
+void swap_Nbyte(38,1016
+void swap_header(60,1504
+void find_block(89,2821
+#define FBSKIP 94,2920
+int test_block(130,3815
+#define TBSKIP 136,3927
+int main(177,4911
+void count_ids(224,5747
+void load_ids(261,6557
+void save_ids(318,7966
+void load_pos_data(397,9804
+void free_pos_data(602,14275
+int do_match(613,14324
+int compare_snap_id(653,14818
+int compare_bigtab_id(666,15071
+int compare_bigtab_index(679,15318
+
+mymalloc.c,219
+#define MAXBLOCKS 10,120
+static unsigned long Nblocks 12,143
+static void *Table[Table14,178
+static size_t SizeTable[SizeTable16,210
+static size_t TotMem 18,247
+void *mymalloc(mymalloc21,292
+void myfree(58,880
+
+read_parameters.c,123
+#define DOUBLE 10,120
+#define STRING 11,137
+#define INT 12,154
+#define MAXTAGS 13,168
+void read_parameter_file(17,191

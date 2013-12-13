@@ -1,0 +1,4 @@
+OutputDir          /blah/
+SnapshotFileBase   snap
+SnapSkipFac        1
+LastSnapShotNr     63

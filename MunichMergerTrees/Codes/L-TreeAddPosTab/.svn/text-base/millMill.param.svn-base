@@ -1,0 +1,15 @@
+
+SimulationDir         /afs/mpa/sim/milliMill/
+
+
+
+LastSnapShotNr        63
+
+FirstFile             0
+LastFile              7
+
+
+FilesPerSnapshot      8
+
+
+SnapshotFileBase      snap_milli

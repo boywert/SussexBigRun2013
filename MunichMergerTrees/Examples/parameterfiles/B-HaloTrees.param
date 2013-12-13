@@ -1,0 +1,7 @@
+OutputDir             /blah/
+SnapshotFileBase      snap
+FirstSnapShotNr       0
+LastSnapShotNr        63
+SnapSkipFac           1
+NumberOfOutputFiles   16
+

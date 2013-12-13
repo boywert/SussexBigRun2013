@@ -1,0 +1,58 @@
+
+* Title: General Information about Integration of a Post Processing Module into ProC *
+
+#####################################################
+Date: 25.04.2005
+Author: Gordana Stojceska
+Questions and Comments: stojcesk@mpa-garching.mpg.de
+			  kuchar@mpa-garching.mpg.de
+#####################################################
+
+
+
+This file describes how a Post Processing module can be integrated in ProC (ProcessCoordinator).
+
+The following changes have been made to the original code:
+1. Changes in the Makefile
+2. Changes in the "read_parameters.c" file
+3. Added new interface, "paramparser.h"
+
+
+** Short explanation of the changes:
+
+1. Changes in the Makefile
+The following piece of code is added to the Makefile:
+
+*******************************************************************
+### uncomment PARSING for using support of ProC parameter files ###
+#PARSING="PROCCOMPATIBLE"
+
+ifeq ($(PARSING), "PROCCOMPATIBLE")
+OBJS += paramparser.o
+OPTIONS += -D PROCCOMPATIBLE
+endif
+
+###
+*******************************************************************
+
+If the variable "PARSING" is commented, then the code will be compiled and executed in its own original version. Otherwise, the code will be compiled together with the "paramparser.c", the variable "PROCCOMPATIBLE" will be defined and the changes made in the "read_parameters.c" will be activated. Then the code should be compatible with ProC.
+ 
+2. Changes in the "read_parameters.c" file
+First of all, one should include the header "paramparser.h" to this file. 
+(#include "paramparser.h" on the very beggining). 
+After that, the second big change starts with the comment:
+
+/*start of the proposed code compatible with ProC*/
+
+and ends with the comment:
+
+/*end of the proposed code compatible with ProC*/
+
+The functions defined in the "paramparser.h" are used here. There are also two different proposals how they can be used. One of them uses minimal number of functions, so that one can see how much effort is needed to make the code ProC-compatible. The second proposal involves all possible (suitable) functions that one can use from the header file, instead of using functions like atof() or atoi().
+If the variable PROPOSAL1 is uncommented then one can use the first proposal. Otherwise, the second proposal will be taken into account.
+
+3. Added new interface, "paramparser.h"
+Two files are added to the module's directory, namely: "paramparser.c" and "paramparser.h" which are neccessary for the module to be compatible with ProC.
+
+
+For any questions or comments please do not hessitate to contact us.
