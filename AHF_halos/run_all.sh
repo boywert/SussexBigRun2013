@@ -3,14 +3,14 @@
 module add sge
 
 mpi_chunk=216
-mpi_ahf=32
-mem_need_ahf=110
+mpi_ahf=16
+mem_need_ahf=60
 cubep3m_boxsize=47
 cubep3m_mesh=3456
 cubep3m_node=6
 
 pid_flag=1
-buffer_size=0.8
+buffer_size=2.0
 drho=200
 n_chunks_pd=3
 n_chunks_total=27
@@ -63,7 +63,7 @@ do
     done
  
     cd ${this_workspace}
-    #rm -rf *
+    rm -rf *
     this_chunk_param=$(printf 'chunk_param_%s' $redshift)
 
     echo ${redshift} > ${this_chunk_param}
@@ -95,7 +95,7 @@ do
 	echo "module add sge" >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
-	#qsub $this_pbs
+	qsub $this_pbs
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
