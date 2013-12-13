@@ -93,6 +93,7 @@ do
 	echo "#$ -q" $qname >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
+	echo "rm -rf" $chunk_folder >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
 	qsub $this_pbs
