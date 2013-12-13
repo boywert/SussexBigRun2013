@@ -83,6 +83,7 @@ do
 	# Chunk cubep3m
 	this_pbs=$(printf 'chunking_%s.pbs' $redshift)
 	chunk_job_name=$(printf 'chunking_%s' $redshift)
+	this_ic_filename=$(printf '%s/z_%s/' $chunk_folder $redshift)
 	echo "#!/bin/bash" > $this_pbs
 	echo "#$ -N" $chunk_job_name >> $this_pbs
 	echo "#$ -M cs390@sussex.ac.uk" >> $this_pbs
@@ -93,7 +94,7 @@ do
 	echo "#$ -q" $qname >> $this_pbs
 	echo "#$ -S /bin/bash" >> $this_pbs
 	echo "module add sge" >> $this_pbs
-	echo "rm -rf" $chunk_folder >> $this_pbs
+	echo "rm -rf" $this_ic_filename >> $this_pbs
 	echo 'mpirun -np' $mpi_chunk $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
 	qsub $this_pbs
