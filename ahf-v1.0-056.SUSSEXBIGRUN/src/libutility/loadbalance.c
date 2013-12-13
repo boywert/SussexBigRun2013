@@ -539,13 +539,11 @@ local_recalc_localparts(io_logging_t log,
 	               "we are holding.");
 	for (j=0; j<loadbal->ncpu; j++) {
 		loadbal->no_parts_loc[j] = UINT64_C(0);
-		//printf("finish set no_part_loc[%d] = 0\n",j);
 		for (i=loadbal->fstkey[j]; i<=loadbal->lstkey[j]; i++) {
 			loadbal->no_parts_loc[j] += (uint64_t)(loadbal->loc_bf[i]);
-			//printf("\tfinish set no_part_loc[%d]=%llu\n",j,(long long unsigned)loadbal->no_parts_loc[j]);
+			
 		}
 	}
-	printf("finish local_recal_localparts\n");
 }
 
 inline static void
