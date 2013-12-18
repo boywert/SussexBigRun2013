@@ -105,9 +105,9 @@ typedef struct m_halo
   hid_t nprogs;
   merit_t merit_embed;
   /* ####################### */
-  hid_t main_subhalo;
-  hid_t next_subhalo;
-  hid_t host_halo;
+  hid_t FirstDownHalo;
+  hid_t NextHalo;
+  hid_t UpHalo;
   /* ####################### */
   double dm_dt;
   int used;
