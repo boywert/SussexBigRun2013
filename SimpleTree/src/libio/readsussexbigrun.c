@@ -428,7 +428,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *
   char memmgr_buff[memmgr_max_str];
   struct particle_buffer *pid_buff;
 
-#define SKIP(&fp,byte) {fseek(&fd, byte, SEEK_CUR);}
+#define SKIP(fp,byte) {fseek(fd, byte, SEEK_CUR);}
 
   if(fphalo == NULL || fppart == NULL) 
     {
@@ -594,6 +594,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *
 	  mhalo.mhalos[counthalo].Particles[ipart].energy = pid_buff[ipart].energy;
 	}
       memmgr_free(pid_buff,mhalo.mhalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
+
+#ifdef READPROFILES
       ReadUInt(fpprof, &nbins, swap);
       if(mhalo.mhalos[counthalo].nbins != nbins)
 	{
@@ -628,6 +630,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *
 	ReadFloat(fpprof, &(mhalo.mhalos[counthalo].Profile.Epot[ibin]),   swap);
       }
       
+#endif	/* READPROFILES */
       counthalo++;
       counthalo_local++;
     } // for(numHalos)

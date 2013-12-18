@@ -50,7 +50,7 @@ typedef struct m_particle_wrapper
 typedef struct particlelist
 {
   ptid_t ID;
-  //float energy;
+  float energy;
 } particlelist_t;
 
 struct Lgalaxy_halo_data
