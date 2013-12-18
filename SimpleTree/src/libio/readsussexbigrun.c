@@ -844,9 +844,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   chalo.chalos= memmgr_malloc(0,"Halo Array");
   for(i=0;i<param_chunk_mpi;i++)
     {
-      sprintf(partfile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
-      sprintf(halofile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
-      sprintf(proffile,"%s/z_%2.3f_178/chunk_%d/%2.3fxv..%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
       /* printf("reading %s\n",partfile); */
       /* printf("reading %s\n",halofile); */
       /* printf("reading %s\n",proffile); */
@@ -859,6 +859,11 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	  fclose(fphalo);
 	  fclose(fppart);
 	  fclose(fpprof);
+	}
+      else
+	{
+	  printf("Cannot open files\nExit(1)\n");
+	  exit(1);
 	}
     }
   maphalo = memmgr_malloc(chalo.nHalos*sizeof(uint64_t),"Maphalo");
