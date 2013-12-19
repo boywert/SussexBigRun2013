@@ -918,7 +918,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	      else
 		{
 		  printf("Cannot open files\nExit(1)\n");
-		  printf("halo:%d, part:%d, prof:%d\n",(int)fphalo,(int)fppart,(int)fpprof);
 		  exit(1);
 		}
 	    }
@@ -1034,7 +1033,6 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   if(fphalo == NULL || fppart == NULL || fpprof == NULL) 
     {
       printf("Cannot open file to read\n");
-      printf("halo:%d, part:%d, prof:%d\n",(int)fphalo,(int)fppart,(int)fpprof);
       exit(1);
     }
 
