@@ -853,6 +853,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   int chunk_X, chunk_Y, chunk_Z;
   float shift_X, shift_Y, shift_Z;
   float upperbound[3],lowerbound[3];
+  int try_round = 0;
   chalo.nHalos = 0;
   chalo.redshift = redshift;
   chalo.snapid = snapid;
@@ -866,6 +867,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
       printf("reading %s\n",halofile); 
       printf("reading %s\n",proffile); 
       fphalo = fopen(halofile,"rb");
+      
       fppart = fopen(partfile,"rb");  
       fpprof = fopen(proffile,"rb"); 
       if(fphalo && fphalo && fpprof)
@@ -877,9 +879,49 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	}
       else
 	{
-	  printf("Cannot open files\nExit(1)\n");
-	  printf("halo:%d, part:%d, prof:%d\n",(int)fphalo,(int)fppart,(int)fpprof);
-	  exit(1);
+	  sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
+	  sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
+	  sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
+	  printf("reading %s\n",partfile); 
+	  printf("reading %s\n",halofile); 
+	  printf("reading %s\n",proffile); 
+	  fphalo = fopen(halofile,"rb");
+      
+	  fppart = fopen(partfile,"rb");  
+	  fpprof = fopen(proffile,"rb"); 
+	  if(fphalo && fphalo && fpprof)
+	    {
+	      chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, fpprof, chunk, i, chalo);
+	      fclose(fphalo);
+	      fclose(fppart);
+	      fclose(fpprof);
+	    }
+	  else
+	    {
+	      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
+	      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
+	      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
+	      printf("reading %s\n",partfile); 
+	      printf("reading %s\n",halofile); 
+	      printf("reading %s\n",proffile); 
+	      fphalo = fopen(halofile,"rb");
+      
+	      fppart = fopen(partfile,"rb");  
+	      fpprof = fopen(proffile,"rb"); 
+	      if(fphalo && fphalo && fpprof)
+		{
+		  chalo = sussexbigrun_read_AHF_binary_from_raw(fphalo, fppart, fpprof, chunk, i, chalo);
+		  fclose(fphalo);
+		  fclose(fppart);
+		  fclose(fpprof);
+		}
+	      else
+		{
+		  printf("Cannot open files\nExit(1)\n");
+		  printf("halo:%d, part:%d, prof:%d\n",(int)fphalo,(int)fppart,(int)fpprof);
+		  exit(1);
+		}
+	    }
 	}
     }
   maphalo = memmgr_malloc(chalo.nHalos*sizeof(uint64_t),"Maphalo");
