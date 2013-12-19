@@ -556,10 +556,24 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       ReadFloat(fphalo, &(ahf_halo.Phi0),         swap);    // Phi0(42)
       ReadFloat(fphalo, &(ahf_halo.cNFW),         swap);    // cNFW(43)
 
-      /* Specify other quantities */
-      mhalo.mhalos[counthalo].refID = counthalo;
 
+      mhalo.mhalos[counthalo].ID = mhalo.snapid*pow(10,15)+domain*pow(10,10)+i+1;
+      mhalo.mhalos[counthalo].refID = counthalo;
+      mhalo.mhalos[counthalo].oriID = ahf_halo.ID;
       mhalo.mhalos[counthalo].domainID = domain;
+      mhalo.mhalos[counthalo].Mvir = ahf_halo.Mvir;
+      mhalo.mhalos[counthalo].Rvir = ahf_halo.Rvir;
+      mhalo.mhalos[counthalo].Xc = ahf_halo.Xc;
+      mhalo.mhalos[counthalo].Yc = ahf_halo.Yc;
+      mhalo.mhalos[counthalo].Zc = ahf_halo.Zc;
+      mhalo.mhalos[counthalo].VXc = ahf_halo.VXc;
+      mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
+      mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
+
+      if(ahf_halo.hostHalo == 0)
+	mhalo.mhalos[counthalo].host_halo = NULLPOINT;
+      else
+	mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
 
 
  
