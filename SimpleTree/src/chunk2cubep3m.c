@@ -69,26 +69,29 @@ int main(int argc,char **argv)
     {
       snap1 = snaplist[i];
       snapid1 = i;
-      sprintf(memmgr_buff,"Halo wrapper");
-      if(mpi_rank==0)
+      if(snap1 >= 0.0)
 	{
-	  sprintf(command,"echo %d > status",i);
-	  system(command);
-	}
-      for(l=0;l<pow3(param_chunk_per_dim);l++)
-	{
-	  if(l%mpi_nodes == mpi_rank)
+	  sprintf(memmgr_buff,"Halo wrapper");
+	  if(mpi_rank==0)
 	    {
-	      if(mpi_rank == 0) 
-		printf("Redshift: %f\n", snap1);
-	      printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
-	      halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
-	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,snapid1,l);
-	      halocatA[0] = sussexbigrun_output_cubep3m(halocatA[0],l);
-	      free_make_catalogue_halo_wrapper(halocatA);
+	      sprintf(command,"echo %d > status",i);
+	      system(command);
 	    }
+	  for(l=0;l<pow3(param_chunk_per_dim);l++)
+	    {
+	      if(l%mpi_nodes == mpi_rank)
+		{
+		  if(mpi_rank == 0) 
+		    printf("Redshift: %f\n", snap1);
+		  printf("\treading chunk %d by rank:%d\n",l,mpi_rank);
+		  halocatA = memmgr_malloc(1*sizeof(make_catalogue_halo_wrapper_t),memmgr_buff);      
+		  halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_chunk(folder,snap1,snapid1,l);
+		  halocatA[0] = sussexbigrun_output_cubep3m(halocatA[0],l);
+		  free_make_catalogue_halo_wrapper(halocatA);
+		}
+	    }
+	  MPI_Barrier(MPI_COMM_WORLD);
 	}
-      MPI_Barrier(MPI_COMM_WORLD);
       if(mpi_rank==0)
 	{
 	  sprintf(command,"echo %d > status",i+1);
