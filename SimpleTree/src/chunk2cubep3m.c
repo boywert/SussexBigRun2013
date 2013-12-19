@@ -91,12 +91,13 @@ int main(int argc,char **argv)
 		}
 	    }
 	  MPI_Barrier(MPI_COMM_WORLD);
+	  if(mpi_rank==0)
+	    {
+	      sprintf(command,"echo %d > status",i+1);
+	      system(command);
+	    }
 	}
-      if(mpi_rank==0)
-	{
-	  sprintf(command,"echo %d > status",i+1);
-	  system(command);
-	}
+  
       MPI_Barrier(MPI_COMM_WORLD);
     } 
   finalise_MPI();
