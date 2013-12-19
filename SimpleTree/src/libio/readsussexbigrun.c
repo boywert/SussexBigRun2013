@@ -455,24 +455,27 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   else
     swap = 1;
 
-  // figure out swap status Particles file
+#ifdef READPROFILES
+  // figure out swap status Profile file
   fread(&one, sizeof(int32_t), 1, fpprof);
   if(one == 1)
      swap = 0;
   else
     swap = 1;
- 
   ReadULong(fpprof, &numHaloFromProfFile,   swap);
   ReadUInt (fpprof, &numColumns, swap);
- 
+#endif
   ReadULong(fppart, &numHaloFromPartFile,   swap);
   ReadUInt (fppart, &numColumns, swap);
   //printf("particlefile: nhalo = %llu\n",numHaloFromPartFile);
   ReadULong(fphalo, &numHalos,   swap);
   ReadUInt (fphalo, &numColumns, swap);
   //printf("halofile: nhalo = %llu\n",numHalos);
-
-  if(numHalos != numHaloFromPartFile ||numHalos != numHaloFromProfFile)
+#ifdef READPROFILES
+  if(numHalos != numHaloFromPartFile || numHalos != numHaloFromProfFile)
+#else
+  if(numHalos != numHaloFromPartFile)
+#endif
     {
       printf("Number of halos don't match\nExit()\n");
       exit(1);
