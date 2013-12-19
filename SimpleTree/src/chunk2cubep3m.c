@@ -59,7 +59,7 @@ int main(int argc,char **argv)
 	    sscanf(stringbuff,"%d",&start_snap);
 	  fclose (fp);
 	}
-      if(start_snap < 1) start_snap = 1;
+      if(start_snap < 0) start_snap = 0;
       printf("Start making merger trees from Snapshot:%d z=%3.3f\n",start_snap,snaplist[start_snap]);
     }
   MPI_Barrier(MPI_COMM_WORLD);
