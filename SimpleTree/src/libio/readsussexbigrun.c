@@ -879,9 +879,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	}
       else
 	{
-	  sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
-	  sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
-	  sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift+0.0001);
+	  sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
+	  sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
+	  sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
 	  printf("reading %s\n",partfile); 
 	  printf("reading %s\n",halofile); 
 	  printf("reading %s\n",proffile); 
@@ -898,9 +898,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	    }
 	  else
 	    {
-	      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
-	      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
-	      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift-0.0001);
+	      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
+	      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
+	      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
 	      printf("reading %s\n",partfile); 
 	      printf("reading %s\n",halofile); 
 	      printf("reading %s\n",proffile); 
