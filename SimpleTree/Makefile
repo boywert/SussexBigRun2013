@@ -10,7 +10,7 @@ LIBSRC += $(SRCDIR)/libio/readsussexbigrun.h $(SRCDIR)/libio/readsussexbigrun.c
 LIBSRC += $(SRCDIR)/libmemmgr/memmgr.h $(SRCDIR)/libmemmgr/memmgr.c
 LIBSRC += $(SRCDIR)/libhash/hash.h $(SRCDIR)/libhash/hash.c
 
-MAINSRCS = $(SRCDIR)/main.c $(SRCDIR)/main.h 
+MTREESRCS = $(SRCDIR)/maketree.c $(SRCDIR)/main.h 
 TESTSRCS = $(SRCDIR)/test.c $(SRCDIR)/main.h 
 CCCSRCS = $(SRCDIR)/chunk2cubep3m.c $(SRCDIR)/main.h 
 
@@ -22,7 +22,7 @@ SRCS += $(SRCDIR)/cosmology.h $(SRCDIR)/cosmology.c
 SRCS += $(SRCDIR)/descendant.h $(SRCDIR)/descendant.c
 SRCS += $(SRCDIR)/MPI_distribute.h $(SRCDIR)/MPI_distribute.c
 
-MAINSRCS += $(SRCS)
+MTREESRCS += $(SRCS)
 TESTSRCS += $(SRCS)
 CCCSRCS += $(SRCS)
 OPT = 
@@ -35,9 +35,9 @@ CFLAGS += $(OPT)
 
 all: maketree test chunk2cubep3m
 
-maketree: $(MAINSRCS) $(HEADERS) $(LIBSRC)
+maketree: $(MTREESRCS) $(HEADERS) $(LIBSRC)
 	mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $(MAINSRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/maketree
+	$(CC) $(CFLAGS) $(MTREESRCS) $(HEADERS) $(LIBSRC) -o $(BINDIR)/maketree
 
 test: $(TESTSRCS) $(HEADERS) $(LIBSRC)
 	mkdir -p $(BINDIR)
