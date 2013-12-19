@@ -13,7 +13,11 @@ void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
 void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
 
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
-
+#ifdef READPROFILES
+m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *fpprof, int domain, m_halo_wrapper_t mhalo);
+#else
+m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
+#endif
 FILE **cubep3m_save_halos_file;
 FILE **cubep3m_save_profiles_file;
 FILE **cubep3m_save_particles_file;
@@ -409,8 +413,11 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   /* printf("total duplicate : %llu\n",countpart); */
   return mhalo;
 }
-
+#ifdef READPROFILES
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *fpprof, int domain, m_halo_wrapper_t mhalo)
+#else
+m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
+#endif
 {
   uint64_t numHalos,counthalo,counthalo_local,old_nHalos;
   order_uint64_t *maphalo;
