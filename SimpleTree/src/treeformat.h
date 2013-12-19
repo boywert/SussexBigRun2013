@@ -102,6 +102,7 @@ typedef struct m_halo
   hid_t main_progenitor;
   hid_t next_progenitor;
   hid_t descendant;
+  hid_t host_halo;
   hid_t nprogs;
   merit_t merit_embed;
   /* ####################### */
