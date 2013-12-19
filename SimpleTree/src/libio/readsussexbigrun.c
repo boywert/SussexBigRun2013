@@ -988,9 +988,10 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
   struct particle_buffer *pid_buff;;
-  if(fphalo == NULL || fppart == NULL) 
+  if(fphalo == NULL || fppart == NULL || fpprof == NULL) 
     {
       printf("Cannot open file to read\n");
+      printf("halo:%d, part:%d, prof:%d\n",(int)fphalo,(int)fppart,(int)fpprof);
       exit(1);
     }
 
