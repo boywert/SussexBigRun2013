@@ -1,5 +1,5 @@
 CC =  mpicc
-CFLAGS = -g -openmp
+CFLAGS = -g -openmp -fpp
 
 SRCDIR = src
 BINDIR = bin
