@@ -120,6 +120,7 @@ typedef struct m_halo_wrapper
 {
   hid_t nHalos;
   float redshift;
+  int snapid;
   m_halo_t *mhalos;
 } m_halo_wrapper_t;
 
