@@ -315,7 +315,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
   uint64_t old,new;
   char memmgr_buff[memmgr_max_str];
   // m_particle_wrapper_t *tmp;
-  //key_sort_t *key_for_sort;
+  // key_sort_t *key_for_sort;
 #ifdef TOPLEVELONLY
   tot_halos = 0;  
   //printf("Filter halos and particles\n");
@@ -776,13 +776,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary_Watson(FILE *fphalo, FILE *fppart,
       ReadFloat(fphalo, &halo.Phi0,         swap);    // Phi0(42)
       ReadFloat(fphalo, &halo.cNFW,         swap);    // cNFW(43)
  
-      //=================================================================================
-      // write halo properties
-      //=================================================================================
-      //printf("%ld %f %f %f %f\n",halo.ID,halo.Mvir,halo.Xc,halo.Yc,halo.Zc);
+      /* Copy only needed information */
 
-      //
-      //printf("ID = %ld\n",halo.ID);
       mhalo.mhalos[counthalo].ID = counthalo;
       mhalo.mhalos[counthalo].refID = pow(10,15)+domain*pow(10,10)+counthalo_local;
       mhalo.mhalos[counthalo].oriID = halo.ID;

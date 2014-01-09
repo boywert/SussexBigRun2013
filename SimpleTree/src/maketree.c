@@ -15,17 +15,23 @@ int main(int argc,char **argv)
   //double boxsize;
   float snaplist[1024];
   FILE *fp;
-  
+  /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
   
+  /* [Boyd] initialise memory menager (don't need to use this actually, but some parts of the codes 
+     are still using this method to track the memory used) */
   init_memmgr();
-  //sprintf(folder,"/ccc/cont005/home/ra1089/srisawac/scratch/AHF/cubepm_130315_6_1728_47Mpc_ext2/results");
-  //sprintf(outputfolder,"/ccc/cont005/home/ra1089/srisawac/scratch/cubepm_130315_6_1728_47Mpc_ext2");
+
+  /* [Boyd] Read config files == TODO need to specify config file later */
   readconfig();
+
   sprintf(folder, param_INPUTDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
+
+  /* TODO = need to specify this in config file */
   sprintf(snaplistFile,"halofinds");
   
+  /* Use rank 0 to read the config/snapshot files and broadcast */
   if(mpi_rank==0)
     {
       fp = fopen(snaplistFile,"r");
@@ -40,17 +46,19 @@ int main(int argc,char **argv)
       i=0;
       while(fscanf(fp,"%g",&(snaplist[i])) != EOF)
 	{
-	  //	  printf("snap:%d  %f\n",i,snaplist[i]);
 	  i++;
 	}
       fclose(fp);
       tot_Snap = i;
     }
+  /* Broadcast snapshot information to other nodes */
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(snaplist, 1024, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&tot_Snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
+
+  /* Read status file == TODO> specify this in config file */
   if(mpi_rank==0)
     {
       fp = fopen("status","r");
@@ -68,26 +76,35 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&start_snap, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
+
+  /* Main part for linking snapshots */
   for(i=start_snap;i<=tot_Snap;i++)
     {
       snap1 = snaplist[i-1];
       snap2 = snaplist[i];
       sprintf(memmgr_buff,"Halo wrapper");
-      //sprintf(folder,"/mnt/lustre/scratch/cs390/testcurie");  
-      //halocat = sussexbigrun_load_halo_catalogue_binary(folder,6.000,10*10*10);
+
+      /* calculate time difference */
       dt = get_delta_t_in_hubble_unit(snap2,snap1);
+
       if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",snap1,snap2,i);
+
+      /* update status file */
       if(mpi_rank==0)
 	{
 	  sprintf(command,"echo %d > status",i);
 	  system(command);
 	}
+
+      /* Use all nodes to link particles in their specified domains */
       for(l=0;l<pow3(param_domain_per_dim);l++)
 	{
 	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      printf("\treading domain %d by rank:%d\n",l,mpi_rank);
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
+
+	      /* Allocate memory for halo catalogues*/
 	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
 	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
 	      halocatB[0].snapid = i-1;
@@ -96,7 +113,6 @@ int main(int argc,char **argv)
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snap1, l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
-	      
 	      free_m_halo_wrapper(halocatA);
 
 	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
@@ -114,15 +130,7 @@ int main(int argc,char **argv)
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
-  //memmgr_printdetails();
-  /* for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++) */
-  /*   { */
-  /*     printf("%ld => %f\n",halocatA[0].mhalos[ihalo].ID,halocatA[0].mhalos[ihalo].Mvir); */
-  /*   } */
-  /* exit(0); */
 
-  /* printf(" delta t = %lf, ligt = %lf\n", dt,dt*speed_of_light*max_part_speed_in_c); */
-  //(void) MPI_distribute_remove_duplicate_with_structure_level(halocatA,0);
   finalise_MPI();
   return 0;
 }
