@@ -10,11 +10,10 @@ int main(int argc,char **argv)
   double dt,snap1,snap2;
   hid_t ihalo;
   int i,j,k,l,tot_Snap;
-  //int domain_per_dim;
   int start_snap;
-  //double boxsize;
   float snaplist[1024];
   FILE *fp;
+
   /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
   
@@ -28,10 +27,10 @@ int main(int argc,char **argv)
   sprintf(folder, param_INPUTDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
 
-  /* TODO = need to specify this in config file */
+  /* [Boyd] TODO = need to specify this in config file */
   sprintf(snaplistFile,"halofinds");
   
-  /* Use rank 0 to read the config/snapshot files and broadcast */
+  /* [Boyd] Use rank 0 to read the config/snapshot files and broadcast */
   if(mpi_rank==0)
     {
       fp = fopen(snaplistFile,"r");
@@ -115,8 +114,8 @@ int main(int argc,char **argv)
 
 	      free_m_halo_wrapper(halocatA);
 
-	      //if(mpi_rank==0) printf("Saving ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 #ifdef OUTPUTDMDT
+	      if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 #endif
 	      free_m_halo_wrapper(halocatB);

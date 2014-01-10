@@ -11,6 +11,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
 
+  /* [Boyd] Make the catalogue B exclusive table */
+
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
   tmppart = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
   tmppart[0].npart = 0;
@@ -61,6 +63,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   new = countpart*sizeof(m_particle_t);
   tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
   tmppart[0].npart = countpart;
+
+  /* Finish making catalogue B exclusive table */
 
   merit = malloc(haloB->nHalos*sizeof(merit_t));
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
