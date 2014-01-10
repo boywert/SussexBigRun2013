@@ -291,6 +291,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
       fclose(fphalo);
       fclose(fppart);
     }
+  
   /* for(ihalo=0;ihalo<mhalo.nHalos;ihalo++) */
   /*   { */
   /*     printf("%ld => %f\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Mvir); */
@@ -347,6 +348,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
     {
       if(mhalo.mhalos[ihalo].host_halo < NULLPOINT)
 	{
+	  printf("test => %llu\n",mhalo.mhalos[ihalo].host_halo);
 	  hostid = search_m_halo_t_array_for_oriID( mhalo.mhalos[ihalo].host_halo,mhalo.nHalos,mhalo.mhalos);
 	  if(hostid == NULLPOINT) printf("hostid = %llu <= %llu\n",(hid_t)mhalo.mhalos[ihalo].host_halo, (hid_t)hostid);
 	}
