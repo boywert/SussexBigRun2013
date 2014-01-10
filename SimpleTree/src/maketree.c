@@ -13,7 +13,7 @@ int main(int argc,char **argv)
   int start_snap;
   float snaplist[1024];
   FILE *fp;
-  int snapused[2];
+  float redshiftused[2];
 
   /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
@@ -80,14 +80,14 @@ int main(int argc,char **argv)
   /* Main part for linking snapshots */
   for(i=start_snap;i<=tot_Snap;i++)
     {
-      snapused[0] = snaplist[i-1];
-      snapused[1] = snaplist[i];
+      redshiftused[0] = snaplist[i-1];
+      redshiftused[1] = snaplist[i];
       sprintf(memmgr_buff,"Halo wrapper");
 
       /* calculate time difference */
-      dt = get_delta_t_in_hubble_unit(snapused[1],snapused[0]);
+      dt = get_delta_t_in_hubble_unit(redshiftused[1],redshiftused[0]);
 
-      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",snapused[0],snapused[1],i);
+      if(mpi_rank==0) printf("Making link AB: %3.3f=>%3.3f step %d\n",redshiftused[0],redshiftused[1],i);
 
       /* update status file */
       if(mpi_rank==0)
@@ -109,8 +109,8 @@ int main(int argc,char **argv)
 	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
 	      halocatB[0].snapid = i;
 	      halocatA[0].snapid = i-1;
-	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,snapused[1],l);
-	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, snapused[2], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
+	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);
+	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[2], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
 	      free_m_halo_wrapper(halocatA);
