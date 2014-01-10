@@ -61,7 +61,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   qsort(tmppartB[0].mparticle, tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   old = tmppartB[0].npart*sizeof(m_particle_t);
   new = countpart*sizeof(m_particle_t);
-  tmppartB[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
+  tmppartB[0].mparticle = memmgr_realloc(tmppartB[0].mparticle,new,old,memmgr_buff);
   tmppartB[0].npart = countpart;
 
   /* Make exclusive PIDs lists and correct npart */
