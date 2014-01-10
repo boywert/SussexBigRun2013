@@ -4,8 +4,9 @@ BOXSIZE		47000.0		#kpc/h
 CUBEP3MDOMAINS	6
 
 # for making merger tree stuff
-INPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/results
-OUTPUTDIR	/mnt/lustre/scratch/cs390/Sussexbigrun2013/cubepm_130315_6_1728_47Mpc_ext2/mergertree
+INPUTDIR	/mnt/lustre/scratch/cs390/AHF_halos_fixed/cubepm_131025_6_1728_47Mpc_ext2/
+OUTPUTDIR	/mnt/lustre/scratch/cs390/AHF_halos_fixed/cubepm_131025_6_1728_47Mpc_ext2/mergertrees/
+
 
 # for convert chunks to cubep3m
 NCHUNKSPERDIM	3
