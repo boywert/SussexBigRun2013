@@ -432,7 +432,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       printf("Number of halos don't match\nExit()\n");
       exit(1);
     }
-
+  printf("rank %d has %llu halos\n",mpi_rank,numHalos);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = mhalo.nHalos;
