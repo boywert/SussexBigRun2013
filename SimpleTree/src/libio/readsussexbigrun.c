@@ -281,7 +281,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
   //tot_domain = 10;
   i = domain;
-  if(rank == 0) printf("redshift = %3.3f\n",redshift);
+  if(mpi_rank == 0) printf("redshift = %3.3f\n",redshift);
   sprintf(halofile,"%s/z_%3.3f/%3.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,redshift,i);
   sprintf(partfile,"%s/z_%3.3f/%3.3f_AHF_halos_cubepm_domain_%d_particles.dat_bin",folder,redshift,redshift,i);
   fphalo = fopen(halofile,"rb");
