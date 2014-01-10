@@ -101,7 +101,7 @@ int main(int argc,char **argv)
 	{
 	  if(l%mpi_nodes == mpi_rank)
 	    {
-	      printf("\treading domain %d by rank:%d\n",l,mpi_rank);
+	      //printf("\treading domain %d by rank:%d\n",l,mpi_rank);
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 
 	      /* Allocate memory for halo catalogues*/
