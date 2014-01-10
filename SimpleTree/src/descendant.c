@@ -81,7 +81,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
 	  //printf("outside: search for %llu\n",curpart);
-	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppartB[0].mparticle[0]) );
+	  ihid =  search_m_particle_t_for_ID(curpart,tmppartB[0].npart,&(tmppartB[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
 	    {
 	      merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
