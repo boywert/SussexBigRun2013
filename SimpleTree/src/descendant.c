@@ -1,9 +1,9 @@
 #include "descendant.h"
 
-
+/* Make link A -> B, timewise */
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
-  m_particle_wrapper_t *tmppart;
+  m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog;
   double max_Mvir;
@@ -14,10 +14,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /* [Boyd] Make the catalogue B exclusive table */
 
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
-  tmppart = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
-  tmppart[0].npart = 0;
+  tmppartB = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
+  tmppartB[0].npart = 0;
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  tmppart[0].mparticle = memmgr_malloc(0,memmgr_buff);
+  tmppartB[0].mparticle = memmgr_malloc(0,memmgr_buff);
   qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
   countpart = 0;
 
@@ -27,42 +27,44 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       haloB->mhalos[ihalo].ID = ihalo;
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
-      tmppart[0].npart += haloB->mhalos[ihalo].npart;
-      tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,sizeof(m_particle_t)*tmppart[0].npart,sizeof(m_particle_t)*(tmppart[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
+      tmppartB[0].npart += haloB->mhalos[ihalo].npart;
+      tmppartB[0].mparticle = memmgr_realloc(tmppartB[0].mparticle,sizeof(m_particle_t)*tmppartB[0].npart,sizeof(m_particle_t)*(tmppartB[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
       for(ipart=0;ipart<haloB->mhalos[ihalo].npart;ipart++)
   	{
-    	  tmppart[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
-  	  tmppart[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
+    	  tmppartB[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
+  	  tmppartB[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
   	  countpart++;
     	}
   
     }
-  qsort(tmppart[0].mparticle,tmppart[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  qsort(tmppartB[0].mparticle,tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   ref = NULLPOINT;
   countpart = 0;
   sprintf(memmgr_buff,"TMP particles: Hash");
   
   printf("loop to remove dup\n");
   
-  for(ipart=0;ipart<tmppart[0].npart;ipart++)
+  for(ipart=0;ipart<tmppartB[0].npart;ipart++)
     {
-      if(tmppart[0].mparticle[ipart].ID == ref)
+      if(tmppartB[0].mparticle[ipart].ID == ref)
   	{
-  	  tmppart[0].mparticle[ipart].ID = NULLPOINT;
+  	  tmppartB[0].mparticle[ipart].ID = NULLPOINT;
   	}
       else
   	{
 	  countpart++;
-  	  ref = tmppart[0].mparticle[ipart].ID;
+  	  ref = tmppartB[0].mparticle[ipart].ID;
   	}
    
     }
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
-  qsort(tmppart[0].mparticle, tmppart[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
-  old = tmppart[0].npart*sizeof(m_particle_t);
+  qsort(tmppartB[0].mparticle, tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
+  old = tmppartB[0].npart*sizeof(m_particle_t);
   new = countpart*sizeof(m_particle_t);
-  tmppart[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
-  tmppart[0].npart = countpart;
+  tmppartB[0].mparticle = memmgr_realloc(tmppart[0].mparticle,new,old,memmgr_buff);
+  tmppartB[0].npart = countpart;
+
+  /* Make exclusive PIDs lists and correct npart */
 
   /* Finish making catalogue B exclusive table */
 
@@ -79,7 +81,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	{
 	  curpart = haloA->mhalos[ihalo].Particles[ipart].ID;
 	  //printf("outside: search for %llu\n",curpart);
-	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppart[0].mparticle[0]) );
+	  ihid =  search_m_particle_t_for_ID(curpart,tmppart[0].npart,&(tmppartB[0].mparticle[0]) );
 	  if(ihid < NULLPOINT) 
 	    {
 	      merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
