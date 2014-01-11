@@ -1023,7 +1023,8 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
   ReadUInt (fphalo, &numColumns, swap);
   //printf("halofile: nhalo = %llu\n",numHalos);
 
-  if(numHalos != numHaloFromPartFile ||numHalos != numHaloFromProfFile)
+  printf("nHalos = %llu\n",numHalos);
+  if(numHalos != numHaloFromPartFile || numHalos != numHaloFromProfFile)
     {
       printf("Number of halos don't match\nExit()\n");
       exit(1);
