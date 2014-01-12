@@ -13,6 +13,7 @@ void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
 void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
 
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
+m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos);
 
 #ifdef READPROFILES
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *fpprof, int domain, m_halo_wrapper_t mhalo);
@@ -506,7 +507,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       ReadFloat(fphalo, &(ahf_halo.cNFW),         swap);    // cNFW(43)
 
 
-      mhalo.mhalos[counthalo].ID = mhalo.snapid*pow(10,15)+domain*pow(10,10)+i+1;
+      mhalo.mhalos[counthalo].ID = ahf_halo.ID; //mhalo.snapid*pow(10,15)+domain*pow(10,10)+i+1;
       mhalo.mhalos[counthalo].refID = counthalo;
       mhalo.mhalos[counthalo].oriID = ahf_halo.ID;
       mhalo.mhalos[counthalo].domainID = domain;
@@ -539,7 +540,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	{
 	  printf("redshift: %3.3f\n",mhalo.redshift);
 	  printf("domain %d\n",domain);
-	  printf("haloid:%llu no:%ld local:%ld\n",mhalo.mhalos[counthalo].oriID, counthalo, counthalo_local);
+	  printf("haloid:%llu no:%ld local:%ld\n",mhalo.mhalos[counthalo].ID, counthalo, counthalo_local);
 	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,ahf_halo.npart);
 	  printf("Xc:%f, Yc:%f, Zc:%f\n",mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
 	  flag = 1;
@@ -609,12 +610,44 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       counthalo++;
       counthalo_local++;
     } // for(numHalos)
+  /* Relabel  HostID */
+  if(numHalos > 0)
+    mhalo = sussexbigrun_find_hostHalo_mt(mhalo,maphalo,numHalos);
 
   memmgr_free(maphalo,numHalos*sizeof(order_uint64_t),"Maphalo");
   return mhalo;
 }
 
-
+m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
+{
+  order_uint64_t *maphalo_sorted;
+  uint64_t i,hostid_unique_el,startid,stopid;
+  startid = maphalo_unsorted[0].id;
+  stopid = maphalo_unsorted[numHalos-1].id;
+  qsort(maphalo_unsorted, numHalos, sizeof(order_uint64_t), compare_order_uint64_t_by_ref);
+  maphalo_sorted = maphalo_unsorted; 	/* This is just to be easy to remember. */
+  for(i=startid;i<=stopid;i++)
+    { 
+ 
+      if(chalo.chalos[i].hostHalo != NULLPOINT)
+	{
+	  hostid_unique_el = search_order_unint64_t_for_ref(mhalo.mhalos[i].hostHalo, numHalos, maphalo_sorted);
+	  if(hostid_unique_el != NULLPOINT)
+	    {
+	      mhalo.mhalos[i].hostHalo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].ID;
+	      mhalo.mhalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
+	      mhalo.mhalos[i].NextHalo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
+	      mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = mhalo.mhalos[i].refID;
+	    }
+	  else
+	    { 
+	      /* Set hosthalo = 0 for subhalos of mainhalos which are in AHF buffer */
+	      chalo.chalos[i].hostHalo = 0;
+	    }
+	}
+    }
+  return chalo;
+}
 
 m_halo_wrapper_t sussexbigrun_read_AHF_binary_Watson(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo)
 {
@@ -1391,6 +1424,8 @@ void close_cubep3m_for_writing(int ndomains)
   free(cubep3m_save_profiles_file);
   free(cubep3m_save_particles_file);
 }
+
+
 
 /* Open AHF files and add headers */
 void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_contained)

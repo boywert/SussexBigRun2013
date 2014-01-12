@@ -1,5 +1,4 @@
 #ifndef INC_MAIN_H
-
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,5 +14,17 @@
 #include "mpi.h"
 #include "descendant.h"
 #include "common.h"
+
+
+/* Force trigger some options */
+
+#ifdef OUTPUTDMDT
+#define TOPLEVELONLY
+#endif
+
+
+
 #define INC_MAIN_H
+
+
 #endif
