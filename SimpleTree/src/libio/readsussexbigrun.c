@@ -1428,7 +1428,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
       if((cubep3m_save_halos_file[ifile] = fopen(sbuf,"w+")) != NULL)
 	{
 	  /* write header */
-	  fprintf(cubep3m_save_halos_file[ifile],"#HEADER\n")
+	  fprintf(cubep3m_save_halos_file[ifile],"#HEADER\n");
 	}
       
       else
@@ -1460,7 +1460,7 @@ void open_cubep3m_for_writing(int ndomains, float redshift, int *domain_containe
       if((cubep3m_save_profiles_file[ifile] = fopen(sbuf,"w+")) != NULL)
 	{
 	  /* write header */
-	  fprintf(cubep3m_save_profiles_file[ifile],"#HEADER\n")
+	  fprintf(cubep3m_save_profiles_file[ifile],"#HEADER\n");
 	}
       else
 	{
