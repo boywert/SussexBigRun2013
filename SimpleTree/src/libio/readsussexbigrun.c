@@ -432,7 +432,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       printf("Number of halos don't match\nExit()\n");
       exit(1);
     }
-  printf("rank %d has %llu halos\n",mpi_rank,numHalos);
+  //printf("rank %d has %llu halos\n",mpi_rank,numHalos);
   sprintf(memmgr_buff,"Halo Array");
 
   counthalo = mhalo.nHalos;
@@ -538,7 +538,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	{
 	  printf("redshift: %3.3f\n",mhalo.redshift);
 	  printf("domain %d\n",domain);
-	  printf("haloid:%llu no:%ld local:%ld\n",mhalo.mhalos[counthalo].ID, counthalo, counthalo_local);
+	  printf("haloid:%llu no:%ld local:%ld\n",mhalo.mhalos[counthalo].oriID, counthalo, counthalo_local);
 	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,halo.npart);
 	  printf("Xc:%f, Yc:%f, Zc:%f\n",mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
 	  flag = 1;
