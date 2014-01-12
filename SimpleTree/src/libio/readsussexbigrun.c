@@ -1358,6 +1358,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wr
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain)
 {
   int ifile;
+#ifndef AHFASCII
   for(ifile=0;ifile<ndomains;ifile++)
     {
       /* halos */
@@ -1372,6 +1373,7 @@ void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain)
       fseek (cubep3m_save_particles_file[ifile] , sizeof(int32_t) , SEEK_SET );
       fwrite(&(nhalos_per_domain[ifile]),sizeof(uint64_t),1,cubep3m_save_particles_file[ifile]);
     }
+#endif
 }
 
 /* Close AHF files */
@@ -1580,6 +1582,7 @@ void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile)
       fprintf(fpprof,"%f\t",Profile->Ecz[ibin]);
       fprintf(fpprof,"%f\t",Profile->Ekin[ibin]);
       fprintf(fpprof,"%f\t",Profile->Epot[ibin]);
+      fprintf(fpprof,"\n");
     }
 #endif
 }
@@ -1587,6 +1590,7 @@ void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile)
 /* write halo properties to file */
 void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
 {
+#ifndef AHFASCII
   fwrite(&(halo->ID),           sizeof(uint64_t), 1, fphalo);       // ID(1)
   fwrite(&(halo->hostHalo),     sizeof(uint64_t), 1, fphalo);       // hostHalo(2)
   fwrite(&(halo->numSubStruct), sizeof(uint32_t), 1, fphalo);       // numSubStruct(3)
@@ -1630,6 +1634,52 @@ void write_AHF_halos(FILE *fphalo, make_catalogue_halo_t *halo)
   fwrite(&(halo->SurfP),        sizeof(float),    1, fphalo);       // SurfP(41)
   fwrite(&(halo->Phi0),         sizeof(float),    1, fphalo);       // Phi0(42)
   fwrite(&(halo->cNFW),         sizeof(float),    1, fphalo);       // cNFW(43)
+#else
+  fprintf(fphalo,"%llu\t",(long long unsigned)halo->ID);
+  fprintf(fphalo,"%llu\t",(long long unsigned)halo->hostHalo);
+  fprintf(fphalo,"%u\t",(int unsigned)halo->numSubStruct);
+  fprintf(fphalo,"%f\t",halo->Mvir);
+  fprintf(fphalo,"%u\t",(int unsigned)halo->npart);
+  fprintf(fphalo,"%f\t",halo->Xc);
+  fprintf(fphalo,"%f\t",halo->Yc);
+  fprintf(fphalo,"%f\t",halo->Zc);
+  fprintf(fphalo,"%f\t",halo->VXc);
+  fprintf(fphalo,"%f\t",halo->VYc);
+  fprintf(fphalo,"%f\t",halo->VZc);
+  fprintf(fphalo,"%f\t",halo->Rvir);
+  fprintf(fphalo,"%f\t",halo->Rmax);
+  fprintf(fphalo,"%f\t",halo->r2);
+  fprintf(fphalo,"%f\t",halo->mbp_offset);
+  fprintf(fphalo,"%f\t",halo->com_offset);
+  fprintf(fphalo,"%f\t",halo->Vmax);
+  fprintf(fphalo,"%f\t",halo->v_esc);
+  fprintf(fphalo,"%f\t",halo->sigV);
+  fprintf(fphalo,"%f\t",halo->lambda);
+  fprintf(fphalo,"%f\t",halo->lambdaE);
+  fprintf(fphalo,"%f\t",halo->Lx);
+  fprintf(fphalo,"%f\t",halo->Ly);
+  fprintf(fphalo,"%f\t",halo->Lz);
+  fprintf(fphalo,"%f\t",halo->b);
+  fprintf(fphalo,"%f\t",halo->c);
+  fprintf(fphalo,"%f\t",halo->Eax);
+  fprintf(fphalo,"%f\t",halo->Eay);
+  fprintf(fphalo,"%f\t",halo->Eaz);
+  fprintf(fphalo,"%f\t",halo->Ebx);
+  fprintf(fphalo,"%f\t",halo->Eby);
+  fprintf(fphalo,"%f\t",halo->Ebz);
+  fprintf(fphalo,"%f\t",halo->Ecx);
+  fprintf(fphalo,"%f\t",halo->Ecy);
+  fprintf(fphalo,"%f\t",halo->Ecz);
+  fprintf(fphalo,"%f\t",halo->ovdens);
+  fprintf(fphalo,"%u\t",(int unsigned)halo->nbins);
+  fprintf(fphalo,"%f\t",halo->fMhires);
+  fprintf(fphalo,"%f\t",halo->Ekin);
+  fprintf(fphalo,"%f\t",halo->Epot);
+  fprintf(fphalo,"%f\t",halo->SurfP);
+  fprintf(fphalo,"%f\t",halo->Phi0);
+  fprintf(fphalo,"%f\t",halo->cNFW);
+  fprintf(fphalo,"\n");
+#endif
 }
 
 /* This function is for transfering Profiles between MPI ranks - It would make my life more complicate without this function - Boyd */
