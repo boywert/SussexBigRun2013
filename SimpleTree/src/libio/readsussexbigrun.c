@@ -555,7 +555,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       for(ipart=0; ipart<mhalo.mhalos[counthalo].npart; ipart++) 
 	{
 	  ReadULong(fppart, &(pid_buff[ipart].ID), swap);
-	  ReadFloat(fppart, &(pid_buff[ipart].energy), swap);
+	  //ReadFloat(fppart, &(pid_buff[ipart].energy), swap);
 	  if(flag == 3)
 	    {
 	      printf("p: %llu \t %f\n",pid_buff[ipart].ID,pid_buff[ipart].energy);
@@ -565,7 +565,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       for(ipart=0; ipart<mhalo.mhalos[counthalo].npart; ipart++) 
 	{
 	  mhalo.mhalos[counthalo].Particles[ipart].ID = pid_buff[ipart].ID;
-	  mhalo.mhalos[counthalo].Particles[ipart].energy = pid_buff[ipart].energy;
+	  //mhalo.mhalos[counthalo].Particles[ipart].energy = pid_buff[ipart].energy;
 	}
       memmgr_free(pid_buff,mhalo.mhalos[counthalo].npart*sizeof(struct particle_buffer),memmgr_buff);
 
