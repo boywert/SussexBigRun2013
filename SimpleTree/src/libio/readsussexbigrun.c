@@ -518,7 +518,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VXc = ahf_halo.VXc;
       mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
-
+      mhalo.mhalos[counthalo].npart = ahf_halo.npart;
+      mhalo.mhalos[counthalo].nbins = ahf_halo.nbins;
       if(ahf_halo.hostHalo == 0)
 	mhalo.mhalos[counthalo].host_halo = NULLPOINT;
       else
@@ -539,7 +540,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 	  printf("redshift: %3.3f\n",mhalo.redshift);
 	  printf("domain %d\n",domain);
 	  printf("haloid:%llu no:%ld local:%ld\n",mhalo.mhalos[counthalo].oriID, counthalo, counthalo_local);
-	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,halo.npart);
+	  printf("npart mismatch p:%d, h:%d\n",mhalo.mhalos[counthalo].npart,ahf_halo.npart);
 	  printf("Xc:%f, Yc:%f, Zc:%f\n",mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
 	  flag = 1;
 	  global_error = 1;
