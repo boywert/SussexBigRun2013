@@ -28,6 +28,7 @@ CCCSRCS += $(SRCS)
 OPT = 
 OPT += -DCUBEP3M #enable domains in cubep3m
 OPT += -DOUTPUTDMDT
+OPT += -DAHFASCII
 #OPT += -DTOPLEVELONLY #use only toplevel halos
 
 CFLAGS += $(OPT)
