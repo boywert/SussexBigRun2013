@@ -1512,10 +1512,10 @@ void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particle
       fwrite(&(Particles[ipart].ID), sizeof(uint64_t), 1, fppart);
     }
 #else
-  fprintf(fppart,"%llu\n",(long long unsigned)nparts)
+  fprintf(fppart,"%llu\n",(long long unsigned)nparts);
   for(ipart=0;ipart<nparts;ipart++)
     {
-      fprintf(fppart,"%llu\n",(long long unsigned)Particles[ipart].ID)
+      fprintf(fppart,"%llu\n",(long long unsigned)Particles[ipart].ID);
     }
 #endif
 
