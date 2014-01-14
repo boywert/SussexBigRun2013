@@ -105,29 +105,26 @@ int main(int argc,char **argv)
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 
 	      /* Allocate memory for halo catalogues*/
-	      //halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");
-	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");	      
-	      halocatB[0].snapid = i;
-	      //halocatA[0].snapid = i-1;
-	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);
-	      for(ihalo=0;ihalo<halocatB[0].nHalos;ihalo++)
+	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");
+	      //halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");	      
+	      //halocatB[0].snapid = i;
+	      halocatA[0].snapid = i-1;
+	      //halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);
+
+	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
+	      for(ihalo=0;ihalo<halocatA[0].nHalos;ihalo++)
 		{
-		  printf("in main before readA: %llu npart:%llu\n",halocatB[0].mhalos[ihalo].ID,halocatB[0].mhalos[ihalo].npart);
-		}
-	      //halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
-	      for(ihalo=0;ihalo<halocatB[0].nHalos;ihalo++)
-		{
-		  printf("in main after readA: %llu npart:%llu\n",halocatB[0].mhalos[ihalo].ID,halocatB[0].mhalos[ihalo].npart);
+		  printf("in main after readA: %llu npart:%llu\n",halocatA[0].mhalos[ihalo].ID,halocatA[0].mhalos[ihalo].npart);
 		}
 	      //make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
-	      //free_m_halo_wrapper(halocatA);
+	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
 	      //if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 	      //sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 #endif
-	      free_m_halo_wrapper(halocatB);
+	      //free_m_halo_wrapper(halocatB);
 	    }
 	}
       MPI_Barrier(MPI_COMM_WORLD);
