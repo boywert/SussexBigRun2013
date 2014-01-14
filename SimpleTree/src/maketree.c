@@ -112,17 +112,14 @@ int main(int argc,char **argv)
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);
 
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
-	      for(ihalo=0;ihalo<halocatB[0].nHalos;ihalo++)
-		{
-		  printf("in main after readA: %llu npart:%llu\n",halocatB[0].mhalos[ihalo].ID,halocatB[0].mhalos[ihalo].npart);
-		}
+
 	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
 	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
 	      //if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-	      //sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
+	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 #endif
 	      free_m_halo_wrapper(halocatB);
 	    }
