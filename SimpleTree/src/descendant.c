@@ -161,6 +161,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   free(merit_prog);
 
+  /* Calculate dM/dt  */
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
@@ -174,6 +175,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
+  for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
+    {
+      printf("%llu -> %llu\n",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
+    }
+  
   
 }
 
