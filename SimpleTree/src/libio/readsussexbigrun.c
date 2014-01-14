@@ -23,7 +23,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 #endif
 
 m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo);
-void copy_halo_t();
+void copy_halo_t(halo_t* src, halo_t* target);
 
 FILE **cubep3m_save_halos_file;
 FILE **cubep3m_save_profiles_file;
@@ -31,8 +31,46 @@ FILE **cubep3m_save_particles_file;
 /* End private function */
 
 /* Funtion to copy mhalo information */
-void copy_halo_t()
+void copy_halo_t(halo_t* src, halo_t* target)
 {
+  pid_t ip;
+  target->ID = src->ID;
+  target->oriID = src->ID;
+  target->refID = src->refID;
+  target->globalRefID = src->globalRefID;
+  target->redshift = src->redshift;
+#ifdef CUBEP3M
+  target->domainID = src->domainID;
+#endif
+  target->npart = src->npart;
+  target->Mvir = src->Mvir;
+  target->Rvir = src->Rvir;
+  target->Xc = src->Xc;
+  target->Yc = src->Yc;
+  target->Zc = src->Zc;
+  target->Xc = src->VXc;
+  target->Yc = src->VYc;
+  target->Zc = src->VZc; 
+  target->Particles = memmgr_malloc(target->npart*sizeof(particlelist_t),"Particle: Halo Array");
+  for(ip=0;ip<target->npart;ip++)
+    {
+      target->Particles[ip] = src->Particles[ip];
+    }
+  /* ####################### */
+  target->main_progenitor = src->main_progenitor;
+  target->next_progenitor = src->next_progenitor;
+  target->descendant = src->descendant;
+  target->host_halo = src->host_halo;
+  target->nprogs = src->nprogs;
+  target->merit_embed = src->merit_embed;
+  /* ####################### */
+  target->FirstDownHalo = src->FirstDownHalo;
+  target->NextHalo = src->NextHalo;
+  target->UpHalo = src->UpHalo;
+
+  /* ####################### */
+  target->dm_dt = src->dm_dt;
+  target->used = src->used;
 }
 
 m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
@@ -168,9 +206,15 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
-      mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
+      copy_halo_t(&(mhalo.mhalos[ihalo-mhalo_ori.nHalos]), &(mhalo_ori.mhalos[ihalo]));
+      //mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
   mhalo_ori.nHalos = tot_halos;
+  for(ihalo=0; ihalo<mhalo.nHalos; ihalo++)
+    {
+      memmgr_free(mhalo.mhalos[ihalo].Particles, mhalo.mhalos[ihalo].npart*sizeof(particlelist_t), "Particle: Halo Array");
+    }
+  memmgr_free(mhalo.mhalos, mhalo.nHalos*sizeof(m_halo_t), "Halo Array");
   //mhalo.mhalos = memmgr_realloc(mhalo.mhalos,0,mhalo.nHalos*sizeof(m_halo_t), memmgr_buff);
   return mhalo_ori;
 }
