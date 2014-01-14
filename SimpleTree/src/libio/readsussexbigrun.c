@@ -551,11 +551,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
-
-      if(ahf_halo.hostHalo == 0)
-	mhalo.mhalos[counthalo].host_halo = NULLPOINT;
-      else
-	mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
+      mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
 
       printf("ID:%llu npart:%llu\n",mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].npart);
  
