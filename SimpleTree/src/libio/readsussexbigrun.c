@@ -339,6 +339,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
       printf("cannot open %s\n",partfile);
       exit(1);
     }
+
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
 
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
@@ -369,6 +370,7 @@ m_halo_wrapper_t sussexbigrun_filterhalos_and_particles(m_halo_wrapper_t mhalo)
 	break;
       else
 	{
+	  printf("in toplevel filter: %llu npart:%llu\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].npart);
 	  tot_halos++;
 	}
     }
