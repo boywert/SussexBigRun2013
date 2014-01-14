@@ -32,6 +32,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       tmppartB[0].mparticle = memmgr_realloc(tmppartB[0].mparticle,sizeof(m_particle_t)*tmppartB[0].npart,sizeof(m_particle_t)*(tmppartB[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
       for(ipart=0;ipart<haloB->mhalos[ihalo].npart;ipart++)
   	{
+	  printf("p:%llu => %llu\n",ipart,haloB->mhalos[ihalo].Particles[ipart].ID);
     	  tmppartB[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
   	  tmppartB[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
   	  countpart++;
