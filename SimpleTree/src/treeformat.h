@@ -84,6 +84,7 @@ typedef struct m_halo
   hid_t ID;
   hid_t oriID;
   hid_t refID;
+  hid_t globalRefID;
   float redshift;
 #ifdef CUBEP3M
   uint32_t domainID;
