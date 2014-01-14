@@ -207,6 +207,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
+      printf("copy halo %llu->%llu\n",ihalo-mhalo_ori.nHalos,ihalo);
       copy_halo_t(&(mhalo.mhalos[ihalo-mhalo_ori.nHalos]), &(mhalo_ori.mhalos[ihalo]));
       //mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
