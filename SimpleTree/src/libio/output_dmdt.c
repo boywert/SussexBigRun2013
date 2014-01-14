@@ -1,4 +1,4 @@
-#inculde 'output_dmdt.h'
+#include 'output_dmdt.h'
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
