@@ -105,8 +105,8 @@ int main(int argc,char **argv)
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 
 	      /* Allocate memory for halo catalogues*/
-	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);
-	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),memmgr_buff);	      
+	      halocatA = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");
+	      halocatB = memmgr_malloc(1*sizeof(m_halo_wrapper_t),"Halo wrapper");	      
 	      halocatB[0].snapid = i;
 	      halocatA[0].snapid = i-1;
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);

@@ -481,6 +481,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   new = old + numHalos*sizeof(m_halo_t);
   mhalo.nHalos += numHalos;
   new = mhalo.nHalos*sizeof(m_halo_t);
+  mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old,memmgr_buff);
   
   flag = 0;
 
