@@ -636,7 +636,7 @@ m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uin
   for(i=startid;i<=stopid;i++)
     { 
  
-      if(chalo.chalos[i].host_halo != NULLPOINT)
+      if(mhalo.mhalos[i].host_halo != NULLPOINT)
 	{
 	  hostid_unique_el = search_order_unint64_t_for_ref(mhalo.mhalos[i].host_halo, numHalos, maphalo_sorted);
 	  if(hostid_unique_el != NULLPOINT)
