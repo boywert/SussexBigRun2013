@@ -106,11 +106,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   free(merit);
 
+
+  memmgr_free(tmppartB[0].mparticle,tmppartB[0].npart*sizeof(m_particle_t),"Particle inside wrapper: Hash");
+  memmgr_free(tmppartB,sizeof(m_particle_wrapper_t),"Particle Wrapper: Hash");
+
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
     }
+
+
   ihid = NULLPOINT;
   max_id = NULLPOINT;
   max_Mvir = 0.;
@@ -153,6 +159,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].Mvir = haloA->mhalos[ihalo].Mvir;
   	}
     }
+  free(merit_prog);
 
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
@@ -167,6 +174,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
+  
 }
 
 
