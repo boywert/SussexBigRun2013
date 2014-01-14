@@ -124,10 +124,10 @@ int main(int argc,char **argv)
 	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
-	      if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
-	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
+	      //if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
+	      //sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 #endif
-	      free_m_halo_wrapper(halocatB);
+	      //free_m_halo_wrapper(halocatB);
 	    }
 	}
       MPI_Barrier(MPI_COMM_WORLD);
