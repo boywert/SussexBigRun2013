@@ -23,14 +23,17 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
 #endif
 
 m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo);
+void copy_halo_t();
 
 FILE **cubep3m_save_halos_file;
 FILE **cubep3m_save_profiles_file;
 FILE **cubep3m_save_particles_file;
 /* End private function */
 
+/* Funtion to copy mhalo information */
 void copy_halo_t()
-
+{
+}
 
 m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
 {
