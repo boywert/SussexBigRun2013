@@ -5,7 +5,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
-  hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog;
+  hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id;
   double max_Mvir;
   uint64_t old,new;
   merit_t *merit,*merit_prog;
@@ -177,7 +177,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
-      printf("%llu -> %llu\n",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
+      printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
+      next_id = haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].next_progenitor;
+      while(next_id < NULLPOINT)
+	{
+	  printf(" -> %llu",next_id);
+	  next_id = haloA->mhalos[next_id].next_progenitor;
+	}
+      printf("\n");
     }
   
   
