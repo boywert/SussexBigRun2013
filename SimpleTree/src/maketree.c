@@ -78,7 +78,7 @@ int main(int argc,char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
 
   /* Main part for linking snapshots */
-  for(i=start_snap;i<=tot_Snap && snaplist[i]>=0.0;i++)
+  for(i=start_snap;i<=tot_Snap;i++)
     {
       redshiftused[0] = snaplist[i-1];
       redshiftused[1] = snaplist[i];
