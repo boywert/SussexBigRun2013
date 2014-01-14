@@ -70,7 +70,7 @@ m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
   order_uint64_t *maphalo;
   hid_t ihalo;
   
-  maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
+  maphalo = memmgr_malloc(mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
             /* maphalo */
