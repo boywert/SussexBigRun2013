@@ -116,7 +116,7 @@ int main(int argc,char **argv)
 		{
 		  printf("in main after readA: %llu npart:%llu\n",halocatA[0].mhalos[ihalo].ID,halocatA[0].mhalos[ihalo].npart);
 		}
-	      //make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
 	      free_m_halo_wrapper(halocatA);
 

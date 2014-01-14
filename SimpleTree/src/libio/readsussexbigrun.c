@@ -207,7 +207,6 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
-      printf("copy halo %llu->%llu\n",ihalo-mhalo_ori.nHalos,ihalo);
       copy_halo_t(&(mhalo.mhalos[ihalo-mhalo_ori.nHalos]), &(mhalo_ori.mhalos[ihalo]));
       //mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
@@ -554,7 +553,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
 
-      printf("ID:%llu npart:%llu\n",mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].npart);
  
       /* Set structure tree to default (no relationship) */
       mhalo.mhalos[counthalo].UpHalo = -1;
