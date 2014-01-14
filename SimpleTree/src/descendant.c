@@ -25,6 +25,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
+      printf("%llu : %llu\n",ihalo,haloB->mhalos[ihalo].ID);
       haloB->mhalos[ihalo].ID = ihalo;
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
       tmppartB[0].npart += haloB->mhalos[ihalo].npart;
