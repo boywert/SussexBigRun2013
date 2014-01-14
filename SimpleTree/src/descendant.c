@@ -12,7 +12,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   char memmgr_buff[memmgr_max_str];
 
   /* [Boyd] Make the catalogue B exclusive table */
-
+  for(ihalo=0;ihalo<haloB->nHalos;ihalo++)
+    {
+      printf("before sorting: %llu npart:%llu\n",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].npart);
+    }
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
   tmppartB = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
   tmppartB[0].npart = 0;
