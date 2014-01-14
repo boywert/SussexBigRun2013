@@ -8,6 +8,7 @@
 #include "libmemmgr/memmgr.h"
 #include "libio/readsussexbigrun.h"
 #include "libio/common_io.h"
+#include "libio/output_dmdt.h"
 #include "cosmology.h"
 #include "MPI_distribute.h"
 #include <math.h>
