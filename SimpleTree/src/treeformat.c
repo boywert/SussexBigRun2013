@@ -6,7 +6,7 @@ void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
   char buff[memmgr_max_str];
   for(j=0;j<1;j++)
     {
-      printf("free mhalos with %llu halos\n",ptr[j].nHalos);
+      
       sprintf(buff,"Particle: Halo Array");
       for(i=0;i<ptr[j].nHalos;i++)
 	{
