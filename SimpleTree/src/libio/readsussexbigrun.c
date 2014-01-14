@@ -43,6 +43,7 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->domainID = src->domainID;
 #endif
   target->npart = src->npart;
+  printf("src: %llu target:%llu\n",src->npart,target->npart);
   target->Mvir = src->Mvir;
   target->Rvir = src->Rvir;
   target->Xc = src->Xc;
