@@ -21,7 +21,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
   countpart = 0;
 
-
+  for(ihalo=0;ihalo<haloB->nHalos;ihalo++)
+    {
+      printf("after sorting: %llu npart:%llu\n",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].npart);
+    }
 
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {

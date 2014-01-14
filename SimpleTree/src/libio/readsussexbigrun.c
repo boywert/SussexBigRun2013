@@ -339,15 +339,9 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
       printf("cannot open %s\n",partfile);
       exit(1);
     }
-  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
-    {
-      printf("before: %llu npart:%llu\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].npart);
-    }
+
   mhalo = sussexbigrun_filterhalos_and_particles(mhalo);
-  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
-    {
-      printf("after: %llu npart:%llu\n",mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].npart);
-    }
+
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
       mhalo.mhalos[ihalo].used = 1;
