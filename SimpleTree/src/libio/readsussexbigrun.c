@@ -465,8 +465,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   
   flag = 0;
 
-  /* use maphalo to map local IDs to Unique IDs */
-  maphalo = memmgr_malloc(numHalos*sizeof(order_uint64_t),"Maphalo");
   for(i=0; i<numHalos; i++) 
     {
       /* Read halo properties from AHF_halos */
