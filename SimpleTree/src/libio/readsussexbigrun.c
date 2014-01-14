@@ -198,8 +198,9 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
-      &(mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
+      mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
+  mhalo_ori.nHalos = tot_halos;
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,0,mhalo.nHalos*sizeof(m_halo_t), memmgr_buff);
   return mhalo_ori;
 }
