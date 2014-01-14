@@ -928,7 +928,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo
       maphalo[i].id = counthalo;
 
       /* Make unique ID */
-      chalo.chalos[counthalo].ID = (uint64_t)chalo.snapid*pow(10,15)+(uint64_t)chunk*pow(10,10)+(uint64_t)partition*pow(10,7)+i+(uint64_t)1;
+      chalo.chalos[counthalo].ID = (uint64_t)chalo.snapid*pow(10,15)+(uint64_t)chunk*pow(10,10)+(uint64_t)partition*pow(10,7)+i;
       printf("i:%llu UID: %llu , snap:%d, chunk:%d, partition:%d\n",i,chalo.chalos[counthalo].ID,chalo.snapid,chunk,partition);
       ReadULong(fphalo, &(chalo.chalos[counthalo].hostHalo),     swap);    // hostHalo(2)
       /* point to (long long unsigned)-1 if hosthalo = 0 */
