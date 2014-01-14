@@ -110,6 +110,10 @@ int main(int argc,char **argv)
 	      halocatB[0].snapid = i;
 	      halocatA[0].snapid = i-1;
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[1],l);
+	      for(ihalo=0;ihalo<halocatB[0].nHalos;ihalo++)
+		{
+		  printf("in main: %llu npart:%llu\n",halocatB[0].mhalos[ihalo].ID,halocatB[0]mhalos[ihalo].npart);
+		}
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	      make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
