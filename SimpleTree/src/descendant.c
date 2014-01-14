@@ -51,7 +51,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       if(tmppartB[0].mparticle[ipart].ID == ref)
   	{
-	  printf("pid:%llu Mvir:%f->%f\n",tmppartB[0].mparticle[ipart].ID,haloB->mhalos[tmppartB[0].mparticle[ipart].haloID].Mvir,haloB->mhalos[tmppartB[0].mparticle[ipart-1].haloID].Mvir);
+	  if(haloB->mhalos[tmppartB[0].mparticle[ipart].haloID].Mvir < haloB->mhalos[tmppartB[0].mparticle[ipart-1].haloID].Mvi)
+	    printf("pid:%llu Mvir:%f->%f\n",tmppartB[0].mparticle[ipart].ID,haloB->mhalos[tmppartB[0].mparticle[ipart].haloID].Mvir,haloB->mhalos[tmppartB[0].mparticle[ipart-1].haloID].Mvir);
   	  tmppartB[0].mparticle[ipart].ID = NULLPOINT;
   	}
       else
