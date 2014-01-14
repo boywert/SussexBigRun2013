@@ -121,7 +121,7 @@ int main(int argc,char **argv)
 		}
 	      //make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 
-	      //free_m_halo_wrapper(halocatA);
+	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
 	      //if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
