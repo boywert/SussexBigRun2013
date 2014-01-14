@@ -21,7 +21,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   tmppartB[0].npart = 0;
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
   tmppartB[0].mparticle = memmgr_malloc(0,memmgr_buff);
-  qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
+  if(haloB->nHalos > 1)
+    qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
   countpart = 0;
 
   for(ihalo=0;ihalo<haloB->nHalos;ihalo++)
