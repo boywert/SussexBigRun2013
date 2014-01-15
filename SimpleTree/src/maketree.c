@@ -99,6 +99,7 @@ int main(int argc,char **argv)
       /* Use all nodes to link particles in their specified domains */
       for(l=0;l<pow3(param_domain_per_dim);l++)
 	{
+	  printf("Start domain: %d\n",l);
 	  if(l%mpi_nodes == mpi_rank)
 	    {
 	      //printf("\treading domain %d by rank:%d\n",l,mpi_rank);
@@ -124,6 +125,7 @@ int main(int argc,char **argv)
 #endif
 	      free_m_halo_wrapper(halocatB);
 	    }
+	  printf("Finish domain: %d\n",l);
 	}
       MPI_Barrier(MPI_COMM_WORLD);
       if(mpi_rank==0)
