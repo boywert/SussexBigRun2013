@@ -249,7 +249,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   	      x = (domain_per_dim + block_x + i)%domain_per_dim;
   	      y = (domain_per_dim + block_y + j)%domain_per_dim;
   	      z = (domain_per_dim + block_z + k)%domain_per_dim;
-  	      if(i != 0 && j != 0 && k != 0)
+  	      if(!(i == 0 && j == 0 && k == 0))
   		{
   		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
   		  if(i==1)
