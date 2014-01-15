@@ -113,18 +113,18 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   memmgr_free(tmppartB[0].mparticle,tmppartB[0].npart*sizeof(m_particle_t),"Particle inside wrapper: Hash");
   memmgr_free(tmppartB,sizeof(m_particle_wrapper_t),"Particle Wrapper: Hash");
 
-  for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
-    {
-      printf("BEFORE SORT=> ID:%llu -> %llu\n",ihalo,haloA->mhalos[ihalo].oriID);
-    }
 
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
+
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
-      printf("RELABEL=> ID:%llu -> %llu\n",ihalo,haloA->mhalos[ihalo].oriID);
+      printf("RELABEL A=> ID:%llu -> %llu\n",ihalo,haloA->mhalos[ihalo].oriID);
     }
-
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+    {
+      printf("RELABEL B=> ID:%llu -> %llu\n",ihalo,haloB->mhalos[ihalo].oriID);
+    }
 
   ihid = NULLPOINT;
   max_id = NULLPOINT;
