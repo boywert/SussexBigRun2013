@@ -183,7 +183,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       next_id = haloB->mhalos[ihalo].main_progenitor;
       while(next_id < NULLPOINT)
   	{
-	  printf(":%f",haloA->mhalos[next_id].Mvir);
+	  printf(":%d",haloA->mhalos[next_id].npart);
   	  next_id = haloA->mhalos[next_id].next_progenitor;
   	  printf(" -> %llu",next_id);
   	}
