@@ -14,7 +14,7 @@ void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particle
 
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
 m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos);
-m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain);
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain,int snapid);
 
 #ifdef READPROFILES
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *fpprof, int domain, m_halo_wrapper_t mhalo);
@@ -233,8 +233,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
-  mhalo.snapid = snapid;
-  mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain);
+  mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain,snapid);
 
   for(i=-1;i<=1;i++)
     {
@@ -270,7 +269,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
 
   return mhalo;
 }
-m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain )
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain ,int snapid)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -280,7 +279,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(c
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
-
+  mhalo.snapid = snapid;
   i = domain;
   if(mpi_rank == 0) printf("redshift = %3.3f\n",redshift);
   sprintf(halofile,"%s/z_%3.3f/%3.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,redshift,i);
