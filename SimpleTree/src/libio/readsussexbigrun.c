@@ -129,7 +129,10 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
       exit(1);
     }
 
-
+  for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++)
+    {
+      printf("position:%d ID:%llu\n",position,mhalo.mhalos[ihalo].ID);
+    }
   block_z = (int) (domain/(domain_per_dim*domain_per_dim));
   block_y = (int)((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
@@ -207,9 +210,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   mhalo_ori.mhalos = memmgr_realloc(mhalo_ori.mhalos,new,old, memmgr_buff);
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
-      printf("original: %f ",mhalo.mhalos[ihalo-mhalo_ori.nHalos].Xc);
       copy_halo_t(&(mhalo.mhalos[ihalo-mhalo_ori.nHalos]), &(mhalo_ori.mhalos[ihalo]));
-      printf("copy: %f -> %f\n",mhalo.mhalos[ihalo-mhalo_ori.nHalos].Xc,mhalo_ori.mhalos[ihalo].Xc);
       //mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
   mhalo_ori.nHalos = tot_halos;
