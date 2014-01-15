@@ -51,8 +51,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       if(tmppartB[0].mparticle[ipart].ID == ref)
   	{
-	  if(haloB->mhalos[tmppartB[0].mparticle[ipart].haloID].Mvir < haloB->mhalos[tmppartB[0].mparticle[ipart-1].haloID].Mvir)
-	    printf("pid:%llu Mvir:%f->%f\n",tmppartB[0].mparticle[ipart].ID,haloB->mhalos[tmppartB[0].mparticle[ipart].haloID].Mvir,haloB->mhalos[tmppartB[0].mparticle[ipart-1].haloID].Mvir);
   	  tmppartB[0].mparticle[ipart].ID = NULLPOINT;
   	}
       else
@@ -179,17 +177,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
-  /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
-  /*   { */
-  /*     printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor); */
-  /*     next_id = haloB->mhalos[ihalo].main_progenitor; */
-  /*     while(next_id < NULLPOINT) */
-  /* 	{ */
-  /* 	  next_id = haloA->mhalos[next_id].next_progenitor; */
-  /* 	  printf(" -> %llu",next_id); */
-  /* 	} */
-  /*     printf("\n"); */
-  /*   } */
+  for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
+    {
+      printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
+      next_id = haloB->mhalos[ihalo].main_progenitor;
+      while(next_id < NULLPOINT)
+  	{
+  	  next_id = haloA->mhalos[next_id].next_progenitor;
+  	  printf(" -> %llu",next_id);
+  	}
+      printf("\n");
+    }
   
   
 }
