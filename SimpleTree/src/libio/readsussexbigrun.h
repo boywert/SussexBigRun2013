@@ -193,9 +193,9 @@ struct particle_buffer
 /* extern void     alloc_profile                     (uint64_t, halo_profile_t *); */
 /* extern void     free_profile                      (halo_profile_t *); */
 extern m_halo_wrapper_t  sussexbigrun_load_halo_catalogue_binary(char *folder, float redshift, int tot_domain );
-extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain );
+extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain ,int snapid);
 
-extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(char *folder, float redshift, int domain, int domain_per_dim, double domain_width, double dx);
+extern m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(char *folder, float redshift, int domain, int snapid, int domain_per_dim, double domain_width, double dx);
 extern make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chunk(char *folder, float redshift, int snapid, int chunk);
 extern make_catalogue_halo_wrapper_t sussexbigrun_read_AHF_binary_from_raw(FILE *fphalo, FILE *fppart,FILE *fpprof, int chunk, int partition, make_catalogue_halo_wrapper_t chalo);
 extern make_catalogue_halo_wrapper_t sussexbigrun_output_cubep3m(make_catalogue_halo_wrapper_t chalo, int chunk);

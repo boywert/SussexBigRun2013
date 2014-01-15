@@ -220,7 +220,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
 }
 
 
-m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(char *folder, float redshift, int domain, int domain_per_dim, double domain_width, double dx)
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(char *folder, float redshift, int domain, int snapid, int domain_per_dim, double domain_width, double dx)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -233,6 +233,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
+  mhalo.snapid = snapid;
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain);
 
   for(i=-1;i<=1;i++)
@@ -308,7 +309,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(c
 }
 
 
-m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain )
+m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *folder, float redshift, int domain ,int snapid)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -317,6 +318,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
   hid_t ihalo;
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
+  mhalo.snapid = snapid;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
 
   i = domain;
