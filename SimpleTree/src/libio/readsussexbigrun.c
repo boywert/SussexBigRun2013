@@ -229,7 +229,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   int i,j,k,x,y,z,block,position,block_x,block_y,block_z;
   hid_t ihalo;
   double fixed_buffer = 400.0; //400 kpc/h buffer
-  
+
   block_z = (int) (domain/(domain_per_dim*domain_per_dim));
   block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
@@ -263,7 +263,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		    position = 5;
   		  if(k==-1)
   		    position = 6;
-  		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+  		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, block, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
   		}
   	    }
   	}
