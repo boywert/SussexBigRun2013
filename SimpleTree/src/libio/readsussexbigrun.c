@@ -134,11 +134,10 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
       printf("position:%d domain:%d ID:%llu %f %f %f\n",position,domain,mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].Xc,mhalo.mhalos[ihalo].Yc,mhalo.mhalos[ihalo].Zc);
     }
   block_z = (int) (domain/(domain_per_dim*domain_per_dim));
-  block_y = (int)((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
-  block_x = (int)(domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
+  block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
+  block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
   min_x = block_x*domain_width+buffer_width;
-
   max_x = (block_x+1)*domain_width-buffer_width;
   min_y = block_y*domain_width+buffer_width;
   max_y = (block_y+1)*domain_width-buffer_width;
@@ -237,7 +236,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
-  printf("Block : %d:%d:%d\n",block_x,block_y,block_z);
+  printf("Block:%d => %d:%d:%d\n",domain,block_x,block_y,block_z);
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain,snapid);
   for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
     {
