@@ -564,7 +564,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
-      printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
+      //printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
  
       /* Set structure tree to default (no relationship) */
       mhalo.mhalos[counthalo].UpHalo = -1;
