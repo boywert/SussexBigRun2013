@@ -41,12 +41,13 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     	}
   
     }
+  /* Sort particles by PID  */
   qsort(tmppartB[0].mparticle,tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   ref = NULLPOINT;
   countpart = 0;
   sprintf(memmgr_buff,"TMP particles: Hash");
   
-  
+  /* Remove all duplicated PID, use only the first one in the set (from the lowest Mvir) */
   for(ipart=0;ipart<tmppartB[0].npart;ipart++)
     {
       if(tmppartB[0].mparticle[ipart].ID == ref)
