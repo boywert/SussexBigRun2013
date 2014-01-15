@@ -189,12 +189,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
       next_id = haloB->mhalos[ihalo].main_progenitor;
-      /* while(next_id < NULLPOINT) */
-      /* 	{ */
-      /* 	  //printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart); */
-      /* 	  next_id = haloA->mhalos[next_id].next_progenitor; */
-      /* 	  //printf(" -> %llu",next_id); */
-      /* 	} */
+      while(next_id < NULLPOINT)
+      	{
+      	  //printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart);
+      	  next_id = haloA->mhalos[next_id].next_progenitor;
+      	  //printf(" -> %llu",next_id);
+      	}
       printf("\n");
     }
   
