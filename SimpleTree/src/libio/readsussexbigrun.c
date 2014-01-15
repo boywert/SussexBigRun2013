@@ -268,6 +268,10 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		    position = 6;
 		  printf("%d:%d:%d  block = %d\n",x,y,z,block);
   		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, block, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+		  for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
+		    {
+		      printf("summarise => ID:%llu -> %llu:%llu  %f %f %f\n",ihalo,mhalo.mhalos[ihalo].oriID,mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].globalRefID,mhalo.mhalos[ihalo].Xc,mhalo.mhalos[ihalo].Yc,mhalo.mhalos[ihalo].Zc);
+		    }
   		}
   	    }
   	}
