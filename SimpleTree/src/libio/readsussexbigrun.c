@@ -235,7 +235,10 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain,snapid);
-
+  for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
+    {
+      printf("central => ID:%llu -> %llu\n",ihalo,mhalo.mhalos[ihalo].oriID);
+    }
   for(i=-1;i<=1;i++)
     {
       for(j=-1;j<=1;j++)
@@ -261,6 +264,10 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		  if(k==-1)
   		    position = 6;
   		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+		  for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
+		    {
+		      printf("position:%d => ID:%llu -> %llu\n",position,ihalo,mhalo.mhalos[ihalo].oriID);
+		    }
   		}
   	    }
   	}
