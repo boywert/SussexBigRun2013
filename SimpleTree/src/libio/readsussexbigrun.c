@@ -234,6 +234,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   block_y = (int) ((domain - block_z*(domain_per_dim * domain_per_dim))/domain_per_dim);
   block_x = (int) (domain - block_z*(domain_per_dim*domain_per_dim) - block_y*domain_per_dim);
   
+  printf("Block : %d:%d:%d\n",block_x,block_y,block_z);
   mhalo = sussexbigrun_load_halo_catalogue_binary_single_domain_private(folder,redshift,domain,snapid);
   for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
     {
