@@ -119,6 +119,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
+      printf("A: %llu\n",haloA->mhalos[ihalo].ID)
+    }
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+    {
+      printf("B: %llu\n",haloB->mhalos[ihalo].ID)
     }
 
 
