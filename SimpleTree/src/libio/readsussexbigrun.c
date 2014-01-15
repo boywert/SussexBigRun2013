@@ -21,7 +21,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *
 #else
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 #endif
-
+m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, int snapid, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo_ori);
 m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo);
 void copy_halo_t(m_halo_t* src, m_halo_t* target);
 
@@ -94,7 +94,7 @@ m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
 }
 
 
-m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo_ori)
+m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, int snapid, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo_ori)
 {
   FILE *fphalo,*fppart;
   char halofile[MAXSTRING],partfile[MAXSTRING];
@@ -108,6 +108,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   //tot_domain = 10;
   mhalo.nHalos = 0;
   mhalo.redshift = redshift;
+  mhalo.snapid = snapid;
   mhalo.mhalos= memmgr_malloc(0,"Halo Array");
   i = domain;
   sprintf(halofile,"%s/z_%3.3f/%3.3f_AHF_halos_cubepm_domain_%d_halos.dat_bin",folder,redshift,redshift,i);
@@ -259,7 +260,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		    position = 5;
   		  if(k==-1)
   		    position = 6;
-  		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
+  		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, domain, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
   		}
   	    }
   	}
