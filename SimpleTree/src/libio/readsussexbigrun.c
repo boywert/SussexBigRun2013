@@ -273,7 +273,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   
   for(ihalo=0; ihalo < mhalo.nHalos; ihalo++)
     {
-      printf("AFTER READ IN=> ID:%llu -> %llu  %f %f %f\n",ihalo,mhalo.mhalos[ihalo].oriID,mhalo.mhalos[ihalo].Xc,mhalo.mhalos[ihalo].Yc,mhalo.mhalos[ihalo].Zc);
+      printf("AFTER READ IN=> ID:%llu -> %llu:%llu  %f %f %f\n",ihalo,mhalo.mhalos[ihalo].oriID,ihalo,mhalo.mhalos[ihalo].globalRefID,mhalo.mhalos[ihalo].Xc,mhalo.mhalos[ihalo].Yc,mhalo.mhalos[ihalo].Zc);
     }
   return mhalo;
 }
