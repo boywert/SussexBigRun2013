@@ -115,17 +115,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
 
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
-  printf("haloA %llu halos\n",haloA->nHalos);
+  //printf("haloA %llu halos\n",haloA->nHalos);
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
-      printf("A: %llu\n",haloA->mhalos[ihalo].ID);
+      //printf("A: %llu\n",haloA->mhalos[ihalo].ID);
     }
-  printf("haloB %llu halos\n",haloB->nHalos);
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-    {
-      printf("B: %llu\n",haloB->mhalos[ihalo].ID);
-    }
+  //printf("haloB %llu halos\n",haloB->nHalos);
+  /* for(ihalo=0; ihalo < haloB->nHalos; ihalo++) */
+  /*   { */
+  /*     printf("B: %llu\n",haloB->mhalos[ihalo].ID); */
+  /*   } */
 
 
   ihid = NULLPOINT;
@@ -153,11 +153,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
   	      if(merit_prog,haloB->mhalos[ihid].nprogs > 1)
   		{
-		  printf("print halo list\n");
-		  for(loophalo=0;loophalo<haloA->nHalos;loophalo++)
-		    {
-		      printf("TEST=> ID:%llu -> %llu\n",loophalo,haloA->mhalos[loophalo].oriID);
-		    }
+		  /* //printf("print halo list\n"); */
+		  /* for(loophalo=0;loophalo<haloA->nHalos;loophalo++) */
+		  /*   { */
+		  /*     printf("TEST=> ID:%llu -> %llu\n",loophalo,haloA->mhalos[loophalo].oriID); */
+		  /*   } */
   		  for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
   		    {
   		      haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
@@ -191,18 +191,18 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
-  /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
-  /*   { */
-  /*     printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor); */
-  /*     next_id = haloB->mhalos[ihalo].main_progenitor; */
-  /*     while(next_id < NULLPOINT) */
-  /*     	{ */
-  /*     	  //printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart); */
-  /*     	  next_id = haloA->mhalos[next_id].next_progenitor; */
-  /*     	  //printf(" -> %llu",next_id); */
-  /*     	} */
-  /*     printf("\n"); */
-  /*   } */
+  for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
+    {
+      printf("%llu -> %llu",haloB->mhalos[ihalo].ID,haloB->mhalos[ihalo].main_progenitor);
+      next_id = haloB->mhalos[ihalo].main_progenitor;
+      while(next_id < NULLPOINT)
+      	{
+      	  //printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart);
+      	  next_id = haloA->mhalos[next_id].next_progenitor;
+      	  //printf(" -> %llu",next_id);
+      	}
+      printf("\n");
+    }
   
   
 }
