@@ -263,6 +263,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		    position = 5;
   		  if(k==-1)
   		    position = 6;
+		  printf("block = %d\n",block);
   		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, block, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
   		}
   	    }
