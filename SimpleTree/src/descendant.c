@@ -117,6 +117,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
+      printf("RELABEL=> ID:%llu -> %llu\n",ihalo,haloA->mhalos[ihalo].oriID);
     }
 
 
