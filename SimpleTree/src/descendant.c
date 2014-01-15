@@ -119,12 +119,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
-      printf("RELABEL A=> ID:%llu -> %llu\n",ihalo,haloA->mhalos[ihalo].oriID);
     }
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-    {
-      printf("RELABEL B=> ID:%llu -> %llu\n",ihalo,haloB->mhalos[ihalo].oriID);
-    }
+
 
   ihid = NULLPOINT;
   max_id = NULLPOINT;
