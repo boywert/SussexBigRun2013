@@ -48,9 +48,9 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->Xc = src->Xc;
   target->Yc = src->Yc;
   target->Zc = src->Zc;
-  target->Xc = src->VXc;
-  target->Yc = src->VYc;
-  target->Zc = src->VZc; 
+  target->VXc = src->VXc;
+  target->VYc = src->VYc;
+  target->VZc = src->VZc; 
   target->Particles = memmgr_malloc(target->npart*sizeof(particlelist_t),"Particle: Halo Array");
   for(ip=0;ip<target->npart;ip++)
     {
