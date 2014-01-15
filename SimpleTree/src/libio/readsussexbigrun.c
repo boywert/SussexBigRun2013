@@ -549,7 +549,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].ID = ahf_halo.ID; 
       mhalo.mhalos[counthalo].refID = counthalo;
       mhalo.mhalos[counthalo].globalRefID = mhalo.snapid*(uint64_t)pow(10,15)+domain*(uint64_t)pow(10,10)+i+1; //mhalo.snapid*(uint64_t)pow(10,15)+domain*(uint64_t)pow(10,10)+i+1; 
-      printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
       mhalo.mhalos[counthalo].oriID = ahf_halo.ID;
       mhalo.mhalos[counthalo].domainID = domain;
       mhalo.mhalos[counthalo].Mvir = ahf_halo.Mvir;
@@ -562,7 +561,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
-
+      printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
  
       /* Set structure tree to default (no relationship) */
       mhalo.mhalos[counthalo].UpHalo = -1;
