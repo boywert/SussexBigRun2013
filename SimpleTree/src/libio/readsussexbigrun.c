@@ -48,7 +48,6 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->Xc = src->Xc;
   target->Yc = src->Yc;
   target->Zc = src->Zc;
-  printf("cp %f,%f,%f => %f,%f,%f\n",src->Xc,src->Yc,src->Zc,target->Xc,target->Yc,target->Zc);
   target->Xc = src->VXc;
   target->Yc = src->VYc;
   target->Zc = src->VZc; 
@@ -209,6 +208,7 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   for(ihalo = mhalo_ori.nHalos; ihalo < tot_halos; ihalo++)
     {
       copy_halo_t(&(mhalo.mhalos[ihalo-mhalo_ori.nHalos]), &(mhalo_ori.mhalos[ihalo]));
+      printf("%llu -> %llu\n",mhalo.mhalos[ihalo-mhalo_ori.nHalos].ID,mhalo_ori.mhalos[ihalo].ID);
       //mhalo_ori.mhalos[ihalo] = mhalo.mhalos[ihalo-mhalo_ori.nHalos];
     }
   mhalo_ori.nHalos = tot_halos;
