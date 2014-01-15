@@ -10,7 +10,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   uint64_t old,new;
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
-
+  hid_t loophalo;
   /* [Boyd] Make the catalogue B exclusive table */
 
   
@@ -145,6 +145,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
   	      if(merit_prog,haloB->mhalos[ihid].nprogs > 1)
   		{
+		  printf("print halo list\n");
+		  for(loophalo=0;loophalo<haloA->nHalos;loophalo++)
+		    {
+		      printf("TEST=> ID:%llu -> %llu\n",loophalo,haloA->mhalos[loophalo].oriID);
+		    }
   		  for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
   		    {
   		      haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
