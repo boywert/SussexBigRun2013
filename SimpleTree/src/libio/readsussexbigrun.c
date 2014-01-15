@@ -48,6 +48,7 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->Xc = src->Xc;
   target->Yc = src->Yc;
   target->Zc = src->Zc;
+  printf("cp %f,%f,%f => %f,%f,%f\n",src->Xc,src->Yc,src->Zc,target->Xc,target->Yc,target->Zc);
   target->Xc = src->VXc;
   target->Yc = src->VYc;
   target->Zc = src->VZc; 
