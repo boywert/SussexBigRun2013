@@ -31,5 +31,8 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
       /* } */
     }
   fclose(fp);
+}
 
+void Lgalaxy_outputs(m_halo_wrapper_t* halo, char* outputfolder, int domainid)
+{
 }
