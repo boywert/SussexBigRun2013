@@ -15,7 +15,6 @@ void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
 	}
       sprintf(buff,"Halo Array");
       memmgr_free(ptr[j].mhalos,ptr[j].nHalos*sizeof(m_halo_t),buff);
-)
     }
   sprintf(buff,"Halo wrapper");
   memmgr_free(ptr,sizeof(m_halo_wrapper_t),buff);
