@@ -24,7 +24,7 @@ void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
 	  printf("free particle[%llu]\n",i);
 	  memmgr_free(ptr[j].mhalos[i].Particles,ptr[j].mhalos[i].npart*sizeof(particlelist_t),buff);
 	  printf("free proglist[%llu]\n",i);
-	  free(ptr[j].mhalos[i].proglist);
+	  ptr[j].mhalos[i].proglist = realloc(ptr[j].mhalos[i].proglist,0);
 	}
       sprintf(buff,"Halo Array");
       memmgr_free(ptr[j].mhalos,ptr[j].nHalos*sizeof(m_halo_t),buff);
