@@ -31,6 +31,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       /* Set main_progenitor to -1 */
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
       haloB->mhalos[ihalo].nprogs = 0;
+      haloB->mhalos[ihid].proglist = malloc(0);
       /* Increase the particle in tmppartB */
       tmppartB[0].npart += haloB->mhalos[ihalo].npart;
       tmppartB[0].mparticle = memmgr_realloc(tmppartB[0].mparticle,sizeof(m_particle_t)*tmppartB[0].npart,sizeof(m_particle_t)*(tmppartB[0].npart-haloB->mhalos[ihalo].npart),memmgr_buff);
@@ -121,15 +122,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       haloA->mhalos[ihalo].ID = ihalo;
       haloA->mhalos[ihalo].next_progenitor = NULLPOINT;
+      /* Allocate 0 memory in order to free later */
+      haloA->mhalos[ihid].proglist = malloc(0);
       //printf("A: %llu\n",haloA->mhalos[ihalo].oriID);
     }
   //printf("haloB %llu halos\n",haloB->nHalos);
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      haloB->mhalos[ihalo].ID = ihalo;
-      haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
-      haloB->mhalos[ihid].nprogs = 0;
-      haloB->mhalos[ihid].proglist = malloc(0);
+      haloB->mhalos[ihalo].ID = ihalo
       printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
     }
 
