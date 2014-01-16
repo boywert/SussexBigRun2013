@@ -138,9 +138,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   ihid = NULLPOINT;
   max_Mvir = 0.;
   merit_prog = malloc(0);
-  for(ihalo = 0; ihalo < MIN(haloA->nHalos,max_id) ; ihalo++)
+  for(ihalo = 0; ihalo < max_id ; ihalo++)
     {
-      //printf("ihalo = %llu\n",ihalo);
+      printf("ihalo = %llu\n",ihalo);
       if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
 	{
 	  break;
