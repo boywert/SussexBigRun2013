@@ -148,7 +148,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
-	  printf("realloc merit_prog[%llu]\n",ihid);
+	  //printf("realloc merit_prog[%llu]\n",ihid);
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_delucia2007 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
@@ -171,6 +171,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID;
   		  haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
   		}
+	      haloB->mhalos[ihid].proglist = realloc(haloB->mhalos[ihid].proglist,haloB->mhalos[ihid].nprogs*sizeof(hid_t));
+	      for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++)
+	      	{
+	      	  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
+	      	}
   	    }
   	  ihid = haloA->mhalos[ihalo].descendant;
   	  haloB->mhalos[ihid].nprogs = 1;
@@ -197,23 +202,23 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
-  for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
-    {
-      printf("realloc haloB[%llu]\n",ihalo);
-      haloB->mhalos[ihalo].proglist = realloc(haloB->mhalos[ihalo].proglist,haloB->mhalos[ihalo].nprogs*sizeof(hid_t));
-      /* for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++) */
-      /* 	{ */
-      /* 	  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID; */
-      /* 	} */
-      next_id = haloB->mhalos[ihalo].main_progenitor;
-      while(next_id < NULLPOINT)
-      	{
-      	  printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart);
-      	  next_id = haloA->mhalos[next_id].next_progenitor;
-      	  printf(" -> %llu",next_id);
-      	}
-      printf("\n");
-    }
+  /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
+  /*   { */
+  /*     printf("realloc haloB[%llu]\n",ihalo); */
+  /*     haloB->mhalos[ihalo].proglist = realloc(haloB->mhalos[ihalo].proglist,haloB->mhalos[ihalo].nprogs*sizeof(hid_t)); */
+  /*     /\* for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++) *\/ */
+  /*     /\* 	{ *\/ */
+  /*     /\* 	  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID; *\/ */
+  /*     /\* 	} *\/ */
+  /*     next_id = haloB->mhalos[ihalo].main_progenitor; */
+  /*     while(next_id < NULLPOINT) */
+  /*     	{ */
+  /*     	  printf(":%llu:%d",haloA->mhalos[next_id].oriID,haloA->mhalos[next_id].npart); */
+  /*     	  next_id = haloA->mhalos[next_id].next_progenitor; */
+  /*     	  printf(" -> %llu",next_id); */
+  /*     	} */
+  /*     printf("\n"); */
+  /*   } */
 
 }
 

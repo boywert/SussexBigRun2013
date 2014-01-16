@@ -22,12 +22,12 @@ void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
       sprintf(buff,"Particle: Halo Array");
       for(i=0;i<ptr[j].nHalos;i++)
 	{
-	  printf("free particle[%llu]\n",i);
+	  //printf("free particle[%llu]\n",i);
 	  memmgr_free(ptr[j].mhalos[i].Particles,ptr[j].mhalos[i].npart*sizeof(particlelist_t),buff);
-	  printf("free proglist[%llu]\n",i);
+	  //printf("free proglist[%llu]\n",i);
 	  free(ptr[j].mhalos[i].proglist);
 	}
-      printf("free mhalos\n");
+      //printf("free mhalos\n");
       sprintf(buff,"Halo Array");
       memmgr_free(ptr[j].mhalos,ptr[j].nHalos*sizeof(m_halo_t),buff);
     }
