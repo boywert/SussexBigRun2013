@@ -129,7 +129,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   //printf("haloB %llu halos\n",haloB->nHalos);
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      haloB->mhalos[ihalo].ID = ihalo
+      haloB->mhalos[ihalo].ID = ihalo;
       printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
     }
 
