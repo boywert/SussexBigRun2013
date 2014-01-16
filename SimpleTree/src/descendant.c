@@ -138,7 +138,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   max_id = NULLPOINT;
   max_Mvir = 0.;
   merit_prog = malloc(0);
-  for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
+  for(ihalo = 0; ihalo < haloA->nHalos,haloA->mhalos[ihalo].descendant < NULLPOINT ; ihalo++)
     {
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
@@ -171,10 +171,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 		  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
 		}
   	    }
-	  if(haloA->mhalos[ihalo].descendant == NULLPOINT)
-	    {
-	      break;
-	    }
+
   	  ihid = haloA->mhalos[ihalo].descendant;
   	  haloB->mhalos[ihid].nprogs = 1;
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
