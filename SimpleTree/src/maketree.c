@@ -119,7 +119,9 @@ int main(int argc,char **argv)
 	      allocate_proglist(halocatB);
 
 	      if(halocatB[0].nHalos > 0)
-		make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+		{
+		  //make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
+		}
 	      printf("free haloA\n");
 	      free_m_halo_wrapper(halocatA);
 
