@@ -124,7 +124,7 @@ int main(int argc,char **argv)
 	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
-	      //if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
+	      if(mpi_rank==0) printf("Saving dM/dt ASCII outputs z = %3.3f\n",halocatB[0].redshift);
 	      sussexbigrun_dm_outputs(&(halocatB[0]),outputfolder,l);
 #endif
 	      /* write (internal) mtaux files to make life easier to create full merger trees */
