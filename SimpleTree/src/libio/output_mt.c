@@ -33,7 +33,7 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
   fclose(fp);
 }
 
-void internalaux_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
+void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo,whalo;
   FILE *fp;
@@ -58,6 +58,10 @@ void internalaux_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, char*
     }
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
+      for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++)
+	{
+	  fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	}
     }
   fclose(fp);
 }
