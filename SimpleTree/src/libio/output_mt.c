@@ -48,7 +48,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   sprintf(filename,"%s/%3.3f/mtaux_%d.dat",outputfolder,haloB->redshift,domainid);
   sprintf(command,"rm -f %s",filename);
   system(command);
- 
+  
   fp = fopen(filename, "wb+");
   if(fp != NULL)
     {
