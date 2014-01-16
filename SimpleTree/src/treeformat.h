@@ -104,7 +104,8 @@ typedef struct m_halo
   hid_t next_progenitor;
   hid_t descendant;
   hid_t host_halo;
-  hid_t nprogs;
+  uint32_t nprogs;
+  hid_t *proglist;
   merit_t merit_embed;
   /* ####################### */
   hid_t FirstDownHalo;
@@ -112,7 +113,7 @@ typedef struct m_halo
   hid_t UpHalo;
   /* ####################### */
   double dm_dt;
-  int used;
+  //int used;
 } m_halo_t;
 
 

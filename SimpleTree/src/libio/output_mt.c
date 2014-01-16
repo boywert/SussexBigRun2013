@@ -33,6 +33,31 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
   fclose(fp);
 }
 
-void Lgalaxy_outputs(m_halo_wrapper_t* halo, char* outputfolder, int domainid)
+void internalaux_outputs(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
+  hid_t ihalo,whalo;
+  FILE *fp;
+  char filename[1024], foldername[1024];
+  char command[1024];
+  int l;
+  int ih;
+  
+  sprintf(foldername,"%s/%3.3f",outputfolder,haloB->redshift);
+  sprintf(command,"mkdir -p %s", foldername);
+  system(command);
+  sprintf(filename,"%s/%3.3f/mtaux_%d.dat",outputfolder,haloB->redshift,domainid);
+  sprintf(command,"rm -f %s",filename);
+  system(command);
+ 
+  fp = fopen(filename, "wb+");
+
+  fwrite(&(haloB->nHalos),sizeof(hid_t),1,fp);
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+    {
+      fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+    }
+  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+    {
+    }
+  fclose(fp);
 }

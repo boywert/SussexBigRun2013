@@ -5,7 +5,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
-  hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id;
+  hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id,proghalo;
   double max_Mvir;
   uint64_t old,new;
   merit_t *merit,*merit_prog;
@@ -158,11 +158,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
   	      if(merit_prog,haloB->mhalos[ihid].nprogs > 1)
   		{
-		  /* //printf("print halo list\n"); */
-		  /* for(loophalo=0;loophalo<haloA->nHalos;loophalo++) */
-		  /*   { */
-		  /*     printf("TEST=> ID:%llu -> %llu\n",loophalo,haloA->mhalos[loophalo].oriID); */
-		  /*   } */
+
   		  for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
   		    {
   		      haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
@@ -170,6 +166,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID;
   		  haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
   		}
+	      malloc(haloB->mhalos[ihid].proglist,haloB->mhalos[ihid].nprogs*sizeof(hid_t));
+	      for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++)
+		{
+		  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
+		}
   	    }
   	  ihid = haloA->mhalos[ihalo].descendant;
   	  haloB->mhalos[ihid].nprogs = 1;
