@@ -55,17 +55,16 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       fwrite(&(haloB->nHalos),sizeof(hid_t),1,fp);
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  printf("writing nprog = %d\n",haloB->mhalos[ihalo].nprogs);
-	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
-	    {
-	      printf("writing proglist[%llu] = %llu\n",whalo, haloB->mhalos[ihalo].proglist[whalo]);
-	      //fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
-	    }
-	  //fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+	  //printf("writing nprog = %d\n",haloB->mhalos[ihalo].nprogs);
+	  fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
 	}
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-
+	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
+	    {
+	      //printf("writing proglist[%llu] = %llu\n",whalo, haloB->mhalos[ihalo].proglist[whalo]);
+	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	    }
 	}
       fclose(fp);
     }
