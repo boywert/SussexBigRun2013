@@ -130,7 +130,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
       haloB->mhalos[ihid].nprogs = 0;
       haloB->mhalos[ihid].proglist = malloc(0);
-      //printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
+      printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
     }
 
 
