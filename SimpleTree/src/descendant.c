@@ -120,9 +120,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
-      haloA->mhalos[ihalo].main_progenitor = NULLPOINT;
       haloA->mhalos[ihalo].next_progenitor = NULLPOINT;
-      
       //printf("A: %llu\n",haloA->mhalos[ihalo].oriID);
     }
   //printf("haloB %llu halos\n",haloB->nHalos);
@@ -130,7 +128,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     {
       haloB->mhalos[ihalo].ID = ihalo;
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
-      haloB->mhalos[ihalo].next_progenitor = NULLPOINT;
       haloB->mhalos[ihid].nprogs = 0;
       haloB->mhalos[ihid].proglist = malloc(0);
       //printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
