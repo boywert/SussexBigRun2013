@@ -120,7 +120,7 @@ int main(int argc,char **argv)
 
 	      if(halocatB[0].nHalos > 0)
 		make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
-
+	      printf("free haloA\n");
 	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
@@ -129,6 +129,7 @@ int main(int argc,char **argv)
 #endif
 	      /* write (internal) mtaux files to make life easier to create full merger trees */
 	      internalaux_outputs(&(halocatB[0]),outputfolder,l);
+	      printf("free haloB\n");
 	      free_m_halo_wrapper(halocatB);
 	    }
 	  printf("Finish domain: %d\n",l);
