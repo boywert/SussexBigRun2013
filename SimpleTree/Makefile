@@ -7,7 +7,7 @@ HEADERS =
 
 LIBSRC = $(SRCDIR)/libio/common_io.h $(SRCDIR)/libio/common_io.c
 LIBSRC += $(SRCDIR)/libio/readsussexbigrun.h $(SRCDIR)/libio/readsussexbigrun.c
-LIBSRC += $(SRCDIR)/libio/output_dmdt.h $(SRCDIR)/libio/output_dmdt.c
+LIBSRC += $(SRCDIR)/libio/output_mt.h $(SRCDIR)/libio/output_mt.c
 LIBSRC += $(SRCDIR)/libmemmgr/memmgr.h $(SRCDIR)/libmemmgr/memmgr.c
 LIBSRC += $(SRCDIR)/libhash/hash.h $(SRCDIR)/libhash/hash.c
 
