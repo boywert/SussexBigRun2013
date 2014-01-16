@@ -118,26 +118,27 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
 
   //printf("haloA %llu halos\n",haloA->nHalos);
+  max_id = 0;
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
     {
       haloA->mhalos[ihalo].ID = ihalo;
       haloA->mhalos[ihalo].next_progenitor = NULLPOINT;
-
-      printf("A: %llu\n",haloA->mhalos[ihalo].oriID);
+      if(haloA->mhalos[ihalo].descendant < NULLPOINT)
+	max_id++;
+      //printf("A: %llu\n",haloA->mhalos[ihalo].oriID);
     }
   //printf("haloB %llu halos\n",haloB->nHalos);
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-    {
-      //haloB->mhalos[ihalo].ID = ihalo;
-      printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
-    }
+  /* for(ihalo=0; ihalo < haloB->nHalos; ihalo++) */
+  /*   { */
+  /*     //haloB->mhalos[ihalo].ID = ihalo; */
+  /*     //printf("B: %llu\n",haloB->mhalos[ihalo].oriID); */
+  /*   } */
 
 
   ihid = NULLPOINT;
-  max_id = NULLPOINT;
   max_Mvir = 0.;
   merit_prog = malloc(0);
-  for(ihalo = 0; ihalo < haloA->nHalos ; ihalo++)
+  for(ihalo = 0; ihalo < MIN(haloA->nHalos,max_id) ; ihalo++)
     {
       //printf("ihalo = %llu\n",ihalo);
       if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
