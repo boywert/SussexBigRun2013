@@ -7,7 +7,7 @@ void allocate_proglist(m_halo_wrapper_t* ptr)
     {
       for(i=0;i<ptr[j].nHalos;i++)
 	{
-	  ptr[j].mhalos[i].proglist = malloc(0);
+	  ptr[j].mhalos[i].proglist = malloc(sizeof(uint64_t));
 	}
 
     }
