@@ -50,18 +50,26 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   system(command);
  
   fp = fopen(filename, "wb+");
-
-  fwrite(&(haloB->nHalos),sizeof(hid_t),1,fp);
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+  if(fp != NULL)
     {
-      fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
-    }
-  for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-    {
-      for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++)
+      fwrite(&(haloB->nHalos),sizeof(hid_t),1,fp);
+      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+      
+	  fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
 	}
+      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+	{
+	  for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++)
+	    {
+	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	    }
+	}
+      fclose(fp);
     }
-  fclose(fp);
+  else
+    {
+      printf("Cannot open file %s\nExiting...\n",filename);
+      exit(1);
+    }
 }
