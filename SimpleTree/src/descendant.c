@@ -195,7 +195,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       else
   	{
   	  haloB->mhalos[ihalo].dm_dt = haloB->mhalos[ihalo].Mvir/dt;
-  	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
+  	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
   /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
