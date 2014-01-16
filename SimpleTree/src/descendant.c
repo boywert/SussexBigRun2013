@@ -140,6 +140,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_prog = malloc(0);
   for(ihalo = 0; ihalo < haloA->nHalos,haloA->mhalos[ihalo].descendant < NULLPOINT ; ihalo++)
     {
+      printf("ihalo = %llu\n",ihalo);
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
