@@ -143,6 +143,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
+	  printf("realloc merit_prog[%llu]\n",ihid);
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].merit_delucia2007 = haloA->mhalos[ihalo].merit_embed.merit_delucia2007;
