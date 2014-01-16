@@ -197,7 +197,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
-      printf("realloc haloB[%llu]\n",ihid);
+      printf("realloc haloB[%llu]\n",ihalo);
       haloB->mhalos[ihalo].proglist = realloc(haloB->mhalos[ihalo].proglist,haloB->mhalos[ihalo].nprogs*sizeof(hid_t));
       /* for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++) */
       /* 	{ */
