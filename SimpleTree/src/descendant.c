@@ -122,6 +122,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       haloA->mhalos[ihalo].ID = ihalo;
       haloA->mhalos[ihalo].main_progenitor = NULLPOINT;
       haloA->mhalos[ihalo].next_progenitor = NULLPOINT;
+      
       //printf("A: %llu\n",haloA->mhalos[ihalo].oriID);
     }
   //printf("haloB %llu halos\n",haloB->nHalos);
@@ -130,6 +131,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       haloB->mhalos[ihalo].ID = ihalo;
       haloB->mhalos[ihalo].main_progenitor = NULLPOINT;
       haloB->mhalos[ihalo].next_progenitor = NULLPOINT;
+      haloB->mhalos[ihid].nprogs = 0;
+      haloB->mhalos[ihid].proglist = malloc(0);
       //printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
     }
 
@@ -165,7 +168,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID;
   		  haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
   		}
-	      haloB->mhalos[ihid].proglist = malloc(haloB->mhalos[ihid].nprogs*sizeof(hid_t));
+	      haloB->mhalos[ihid].proglist = realloc(haloB->mhalos[ihid].proglist,haloB->mhalos[ihid].nprogs*sizeof(hid_t));
 	      for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++)
 		{
 		  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
