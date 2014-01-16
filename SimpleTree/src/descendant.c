@@ -140,6 +140,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo = 0; ihalo < haloA->nHalos ; ihalo++)
     {
       //printf("ihalo = %llu\n",ihalo);
+      if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
+	{
+	  break;
+	}
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
@@ -167,10 +171,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
   		}
   	    }
-	  if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
-	    {
-	      break;
-	    }
   	  ihid = haloA->mhalos[ihalo].descendant;
   	  haloB->mhalos[ihid].nprogs = 1;
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
