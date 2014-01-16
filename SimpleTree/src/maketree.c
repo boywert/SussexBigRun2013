@@ -115,6 +115,9 @@ int main(int argc,char **argv)
 
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, halocatA[0].snapid,param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	      printf("haloA: %llu haloB: %llu\n",halocatA[0].nHalos,halocatB[0].nHalos);
+	      allocate_proglist(halocatA);
+	      allocate_proglist(halocatB);
+
 	      if(halocatB[0].nHalos > 0)
 		make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 

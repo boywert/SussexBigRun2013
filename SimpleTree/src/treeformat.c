@@ -1,5 +1,17 @@
 #include "treeformat.h"
 
+void allocate_proglist(m_halo_wrapper_t* ptr)
+{
+  hid_t i,j;
+  for(j=0;j<1;j++)
+    {
+      for(i=0;i<ptr[j].nHalos;i++)
+	{
+	  ptr[j].mhalos[i].proglist = malloc(0);
+	}
+
+    }
+}
 void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
 {
   hid_t i,j;
@@ -11,8 +23,7 @@ void free_m_halo_wrapper(m_halo_wrapper_t* ptr)
       for(i=0;i<ptr[j].nHalos;i++)
 	{
 	  memmgr_free(ptr[j].mhalos[i].Particles,ptr[j].mhalos[i].npart*sizeof(particlelist_t),buff);
-	  if(ptr[j].mhalos[i].proglist != NULL)
-	    free(ptr[j].mhalos[i].proglist);
+	  free(ptr[j].mhalos[i].proglist);
 	}
       sprintf(buff,"Halo Array");
       memmgr_free(ptr[j].mhalos,ptr[j].nHalos*sizeof(m_halo_t),buff);

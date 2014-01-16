@@ -126,5 +126,7 @@ typedef struct m_halo_wrapper
   m_halo_t *mhalos;
 } m_halo_wrapper_t;
 
+
+extern void allocate_proglist(m_halo_wrapper_t* ptr);
 extern void free_m_halo_wrapper(m_halo_wrapper_t* ptr);
 #endif
