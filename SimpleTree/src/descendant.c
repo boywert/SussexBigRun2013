@@ -140,27 +140,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_prog = malloc(0);
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
-      if(haloA->mhalos[ihalo].descendant == NULLPOINT)
-	{
-	  qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
-	  haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
-	  if(merit_prog,haloB->mhalos[ihid].nprogs > 1)
-	    {
-
-	      for(iprog = haloB->mhalos[ihid].nprogs-2; iprog>0; iprog--)
-		{
-		  haloA->mhalos[merit_prog[iprog+1].haloID].next_progenitor = merit_prog[iprog].haloID;
-		}
-	      haloA->mhalos[merit_prog[1].haloID].next_progenitor = merit_prog[0].haloID;
-	      haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
-	    }
-	  haloB->mhalos[ihid].proglist = malloc(haloB->mhalos[ihid].nprogs*sizeof(hid_t));
-	  for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++)
-	    {
-	      haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
-	    }
-	  break;
-	}
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
@@ -192,6 +171,10 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 		  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
 		}
   	    }
+	  if(haloA->mhalos[ihalo].descendant == NULLPOINT)
+	    {
+	      break;
+	    }
   	  ihid = haloA->mhalos[ihalo].descendant;
   	  haloB->mhalos[ihid].nprogs = 1;
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
