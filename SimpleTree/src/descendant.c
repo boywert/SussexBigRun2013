@@ -132,7 +132,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       haloB->mhalos[ihalo].ID = ihalo;
-      printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
+      //printf("B: %llu\n",haloB->mhalos[ihalo].oriID);
     }
 
 
@@ -142,7 +142,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_prog = malloc(0);
   for(ihalo = 0; ihalo < haloA->nHalos ; ihalo++)
     {
-      printf("ihalo = %llu\n",ihalo);
+      //printf("ihalo = %llu\n",ihalo);
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
   	  haloB->mhalos[ihid].nprogs += 1;
@@ -195,12 +195,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
   	{
   	  haloB->mhalos[ihalo].dm_dt = (haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir)/dt;
-  	   printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
+	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
   	}
       else
   	{
   	  haloB->mhalos[ihalo].dm_dt = haloB->mhalos[ihalo].Mvir/dt;
-  	  printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
+  	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
   /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
