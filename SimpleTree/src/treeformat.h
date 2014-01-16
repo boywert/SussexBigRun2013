@@ -113,7 +113,7 @@ typedef struct m_halo
   hid_t UpHalo;
   /* ####################### */
   double dm_dt;
-  //int used;
+  int used;
 } m_halo_t;
 
 
