@@ -685,7 +685,7 @@ m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uin
 	      mhalo.mhalos[i].host_halo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].ID;
 	      mhalo.mhalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
 	      mhalo.mhalos[i].NextHalo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
-	      mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = mhalo.mhalos[i].refID;
+	      mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = mhalo.mhalos[i].ID;
 	    }
 	  else
 	    { 

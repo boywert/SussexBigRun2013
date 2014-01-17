@@ -1,6 +1,7 @@
 #include "output_mt.h"
 
 void internalaux_read(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
+void create_subfind_substruct(m_halo_wrapper_t* haloB);
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -35,6 +36,48 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
   fclose(fp);
 }
 
+/*  */
+/* Need haloB->mhalos[x].ID = x */
+void create_subfind_substruct(m_halo_wrapper_t* haloB)
+{
+  hid_t ihalo;
+  hid_t upperhost,hosthalo,ref,cursub,curid;
+
+  for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
+    {
+      hosthalo = haloB->mHalo[ihalo].host_halo;
+      upperhost = haloB->mHalo[ihalo].host_halo;
+      ref = upperhost;
+      while(upperhost < NULLPOINT)
+	{
+	  ref = upperhost;
+	  upperhost = haloB->mhalos[upperhost].host_halo;
+	}
+      if(hosthalo != ref)
+	{
+	  hosthalo = ref;
+	}
+      haloB->mhalos[ihalo].UpHalo = hosthalo;
+      if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
+	{
+	  cursub = haloB->mhalos[ihalo].UpHalo;
+	  while(cursub < NULLPOINT)
+	    {
+	      curid = haloB->mhalos[cursub].ID;
+	      cursub = haloB->mhalos[cursub].NextHalo;
+	    }
+	  haloB->mhalos[curid].NextHalo = ihalo;
+	}
+    }
+
+  /* rename everything to globalRefID */
+  for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
+    {
+      haloB->mhalos[curid].NextHalo = haloB->mhalos[haloB->mhalos[curid].NextHalo].globalRefID;
+      haloB->mhalos[curid].UpHalo = haloB->mhalos[haloB->mhalos[curid].UpHalo].globalRefID;	
+    }
+} 
+
 void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo,whalo;
@@ -45,9 +88,10 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   int ih;
   float Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
   long long MostBoundID;
-  struct Lgalaxy_halo_data lgal;
 
-  
+
+ 
+  create_subfind_substruct(haloB);
 
   sprintf(foldername,"%s/%3.3f",outputfolder,haloB->redshift);
   sprintf(command,"mkdir -p %s", foldername);

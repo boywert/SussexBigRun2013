@@ -25,7 +25,6 @@ Msun2Gadget = 1.e-10
 kg2Msun = 1.989e-30
 #change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
 G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
-
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LHaloTree"
