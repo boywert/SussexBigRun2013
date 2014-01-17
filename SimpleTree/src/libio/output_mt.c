@@ -73,8 +73,10 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
   /* rename everything to globalRefID */
   for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
     {
-      haloB->mhalos[curid].NextHalo = haloB->mhalos[haloB->mhalos[curid].NextHalo].globalRefID;
-      haloB->mhalos[curid].UpHalo = haloB->mhalos[haloB->mhalos[curid].UpHalo].globalRefID;	
+      if(haloB->mhalos[curid].NextHalo < NULLPOINT)
+	haloB->mhalos[curid].NextHalo = haloB->mhalos[haloB->mhalos[curid].NextHalo].globalRefID;
+      if(haloB->mhalos[curid].UpHalo < NULLPOINT)
+	haloB->mhalos[curid].UpHalo = haloB->mhalos[haloB->mhalos[curid].UpHalo].globalRefID;	
     }
 } 
 
