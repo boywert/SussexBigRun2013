@@ -2,7 +2,7 @@
 
 const double speed_of_light = 299792458.; /* m/s */
 //const double G = 6.67384e-11; // m^3/(kgs^2);
-G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
+//G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 const uint64_t NULLPOINT = (uint64_t)-1;
 const uint64_t MAXUSEABLE = (uint64_t)-2;
 const double max_part_speed_in_c = 0.01;
