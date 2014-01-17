@@ -52,7 +52,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
       upperhost = haloB->mhalos[ihalo].host_halo;
       ref = upperhost;
       if(hosthalo < NULLPOINT)
-	printf("0 %llu host = %llu\n",ihalo,hosthalo);
+	printf("0 %llu host = %llu -> %llu\n",ihalo,hosthalo,haloB->mhalos[ihalo].oriID);
       while(upperhost < NULLPOINT)
 	{
 	  ref = upperhost;
