@@ -23,7 +23,6 @@ extern const double max_part_speed_in_c;
 
 /* conversions */
 extern const double kpc2m;
-extern const double kpc2Mpc;
 extern const double m2Mpc;
 extern const double m2km;
 extern const double kpc2Mpc;
