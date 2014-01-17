@@ -80,21 +80,6 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
 	{
 	  fwrite(&(haloB->mhalos[ihalo].globalRefID),sizeof(hid_t),1,fp);
 	}
-      /* write Descendant globalRefID */
-      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-	{
-	  fwrite(&(haloB->mhalos[ihalo].descendant),sizeof(hid_t),1,fp);
-	}
-      /* write FirstProgenitor globalRefID */
-      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-	{
-	  fwrite(&(haloB->mhalos[ihalo].main_progenitor),sizeof(hid_t),1,fp);
-	}   
-      /* write NextProgenitor globalRefID */
-      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
-	{
-	  fwrite(&(haloB->mhalos[ihalo].next_progenitor),sizeof(hid_t),1,fp);
-	}   
       /* write FirstFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{

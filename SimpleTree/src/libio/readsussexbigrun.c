@@ -22,7 +22,6 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, FILE *
 m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int domain, m_halo_wrapper_t mhalo);
 #endif
 m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshift, int domain, int snapid, double domain_width, int domain_per_dim, double buffer_width, int position, m_halo_wrapper_t mhalo_ori);
-m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo);
 void copy_halo_t(m_halo_t* src, m_halo_t* target);
 
 FILE **cubep3m_save_halos_file;
@@ -86,7 +85,7 @@ m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
   maphalo = memmgr_malloc(mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
-            /* maphalo */
+      /* maphalo */
       maphalo[ihalo].ref = mhalo.mhalos[ihalo].ID;
       maphalo[ihalo].id = ihalo;
     }
@@ -690,8 +689,8 @@ m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uin
 	    }
 	  else
 	    { 
-	      /* Set hosthalo = 0 for subhalos of mainhalos which are in AHF buffer */
-	      mhalo.mhalos[i].host_halo = 0;
+	      /* Set host_halo = -1 if cannot find the host */
+	      mhalo.mhalos[i].host_halo = NULLPOINT;
 	    }
 	}
     }
