@@ -98,6 +98,11 @@ typedef struct m_halo
   float VXc;
   float VYc;
   float VZc;
+  float SpinX;
+  float SpinY;
+  float SpinZ;
+  float Vmax;
+  float sigV;
   particlelist_t *Particles;
   /* ####################### */
   hid_t main_progenitor;

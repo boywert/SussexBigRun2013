@@ -51,6 +51,11 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->VXc = src->VXc;
   target->VYc = src->VYc;
   target->VZc = src->VZc; 
+  target->SpinX = src->SpinX;
+  target->SpinY = src->SpinY;
+  target->SpinZ = src->SpinZ;
+  target->Vmax = src->Vmax;
+  target->sigV = src->sigV;
   target->Particles = memmgr_malloc(target->npart*sizeof(particlelist_t),"Particle: Halo Array");
   for(ip=0;ip<target->npart;ip++)
     {
@@ -431,6 +436,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   int      swap=0,flag;
   halo_t   halo;
   ptid_t ipart,npart;
+  float total_energy,J;
   
   size_t old,new;
   char memmgr_buff[memmgr_max_str];
@@ -563,6 +569,14 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VXc = ahf_halo.VXc;
       mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
+      total_energy = fabs((ahf_halo.Ekin + ahf_halo.Epot)*Msun2Gadget);
+      J = ahf_halo.lambdaE*G*(ahf_halo.Mvir*Msun2Gadget)**(3./2.)/sqrt(total_energy);
+      mhalo.mhalos[counthalo].SpinX = J*ahf_halo.Lx;
+      mhalo.mhalos[counthalo].SpinY = J*ahf_halo.Ly;
+      mhalo.mhalos[counthalo].SpinZ = J*ahf_halo.Lz;
+
+
+
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
       //printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
