@@ -567,17 +567,19 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VXc = ahf_halo.VXc;
       mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
+     
       total_energy = fabs((ahf_halo.Ekin + ahf_halo.Epot)*Msun2Gadget);
       J = ahf_halo.lambdaE*G*pow3(sqrt(ahf_halo.Mvir*Msun2Gadget)) /sqrt(total_energy);
       mhalo.mhalos[counthalo].SpinX = J*ahf_halo.Lx;
       mhalo.mhalos[counthalo].SpinY = J*ahf_halo.Ly;
       mhalo.mhalos[counthalo].SpinZ = J*ahf_halo.Lz;
 
-      if(mhalo.mhalos[counthalo].host_halo < NULLPOINT)
-	printf("Just read: host %llu\n",mhalo.mhalos[counthalo].host_halo);
 
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
+
+      if(mhalo.mhalos[counthalo].host_halo < NULLPOINT)
+	printf("Just read: host %llu\n",mhalo.mhalos[counthalo].host_halo);
       //printf("READ ID %llu:%llu  %f %f %f\n",counthalo,mhalo.mhalos[counthalo].ID,mhalo.mhalos[counthalo].Xc,mhalo.mhalos[counthalo].Yc,mhalo.mhalos[counthalo].Zc);
  
       /* Set structure tree to default (no relationship) */
