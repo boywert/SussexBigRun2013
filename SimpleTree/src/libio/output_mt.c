@@ -59,7 +59,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	  hosthalo = ref;
 	}
       haloB->mhalos[ihalo].UpHalo = hosthalo;
-      printf("%llu hosthalo = %llu\n",ihalo,hosthalo);
+      printf("1 %llu hosthalo = %llu\n",ihalo,hosthalo);
       if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
 	{
 	  cursub = haloB->mhalos[ihalo].UpHalo;
@@ -71,6 +71,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	  haloB->mhalos[curid].NextHalo = ihalo;
 	  printf("   nexthalo = %llu\n",ihalo);
 	}
+      printf("2 %llu hosthalo = %llu\n",ihalo,hosthalo);
     }
   printf("finish linking struct\n");
   /* rename everything to globalRefID */
