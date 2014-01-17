@@ -44,14 +44,15 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
   hid_t upperhost,hosthalo,ref,cursub,curid;
 
   maphalo_to_host_mt(haloB);
-  printf("Generate Subfind structure\n");
+  //printf("Generate Subfind structure\n");
 
   for(ihalo=0;ihalo<haloB->nHalos; ihalo++)
     {
       hosthalo = haloB->mhalos[ihalo].host_halo;
       upperhost = haloB->mhalos[ihalo].host_halo;
       ref = upperhost;
-      printf("0 %llu host = %llu\n",ihalo,hosthalo);
+      if(hosthalo < NULLPOINT)
+	printf("0 %llu host = %llu\n",ihalo,hosthalo);
       while(upperhost < NULLPOINT)
 	{
 	  ref = upperhost;
@@ -62,7 +63,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	  hosthalo = ref;
 	}
       haloB->mhalos[ihalo].UpHalo = hosthalo;
-      printf("1 %llu hosthalo = %llu\n",ihalo,hosthalo);
+      //printf("1 %llu hosthalo = %llu\n",ihalo,hosthalo);
       if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
 	{
 	  cursub = haloB->mhalos[ihalo].UpHalo;
@@ -72,11 +73,11 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	      cursub = haloB->mhalos[cursub].NextHalo;
 	    }
 	  haloB->mhalos[curid].NextHalo = ihalo;
-	  printf("   nexthalo = %llu\n",ihalo);
+	  //printf("   nexthalo = %llu\n",ihalo);
 	}
-      printf("2 %llu hosthalo = %llu\n",ihalo,hosthalo);
+      //printf("2 %llu hosthalo = %llu\n",ihalo,hosthalo);
     }
-  printf("finish linking struct\n");
+  //printf("finish linking struct\n");
   /* rename everything to globalRefID */
   for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
     {
@@ -85,7 +86,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
       if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
 	haloB->mhalos[ihalo].UpHalo = haloB->mhalos[haloB->mhalos[ihalo].UpHalo].globalRefID;	
     }
-  printf("finish relabel struct\n");
+  //printf("finish relabel struct\n");
 } 
 
 void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
