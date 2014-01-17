@@ -42,8 +42,8 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 {
   hid_t ihalo;
   hid_t upperhost,hosthalo,ref,cursub,curid;
-  m_halo_wrapper_t temp;
-  *haloB = maphalo_to_host_mt(*haloB);
+
+  maphalo_to_host_mt(haloB);
   printf("Generate Subfind structure\n");
 
   for(ihalo=0;ihalo<haloB->nHalos; ihalo++)
