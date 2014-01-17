@@ -570,7 +570,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].VYc = ahf_halo.VYc;
       mhalo.mhalos[counthalo].VZc = ahf_halo.VZc;
       total_energy = fabs((ahf_halo.Ekin + ahf_halo.Epot)*Msun2Gadget);
-      J = ahf_halo.lambdaE*G*(ahf_halo.Mvir*Msun2Gadget)**(3./2.)/sqrt(total_energy);
+      J = ahf_halo.lambdaE*G*pow3(sqrt(ahf_halo.Mvir*Msun2Gadget)) /sqrt(total_energy);
       mhalo.mhalos[counthalo].SpinX = J*ahf_halo.Lx;
       mhalo.mhalos[counthalo].SpinY = J*ahf_halo.Ly;
       mhalo.mhalos[counthalo].SpinZ = J*ahf_halo.Lz;
