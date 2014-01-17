@@ -36,7 +36,6 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
   fclose(fp);
 }
 
-/*  */
 /* Need haloB->mhalos[x].ID = x */
 void create_subfind_substruct(m_halo_wrapper_t* haloB)
 {
@@ -46,7 +45,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
   maphalo_to_host_mt(haloB);
   //printf("Generate Subfind structure\n");
 
-  for(ihalo=0;ihalo<haloB->nHalos; ihalo++)
+  for(ihalo=0;ihalo<haloB->nHalos;ihalo++)
     {
       hosthalo = haloB->mhalos[ihalo].host_halo;
       upperhost = haloB->mhalos[ihalo].host_halo;
