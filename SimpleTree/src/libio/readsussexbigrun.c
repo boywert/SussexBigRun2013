@@ -573,7 +573,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].SpinY = J*ahf_halo.Ly;
       mhalo.mhalos[counthalo].SpinZ = J*ahf_halo.Lz;
 
-
+      if(mhalo.mhalos[counthalo].host_halo < NULLPOINT)
+	printf("Just read: host %llu\n",mhalo.mhalos[counthalo].host_halo);
 
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
