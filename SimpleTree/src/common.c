@@ -10,7 +10,6 @@ const double kpc2m = 3.08567758e19;
 const double kpc2Mpc = 0.001;
 const double m2Mpc = 1./3.08567758e22;
 const double m2km = 0.001;
-const double kpc2Mpc = 0.001;
 const double Msun2Gadget = 1.e-10;
 #ifdef GADGETKPC
 const double kpc2Gadget = 1.0;
