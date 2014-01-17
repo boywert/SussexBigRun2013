@@ -11,11 +11,7 @@ const double kpc2Mpc = 0.001;
 const double m2Mpc = 1./3.08567758e22;
 const double m2km = 0.001;
 const double Msun2Gadget = 1.e-10;
-#ifdef GADGETKPC
-double kpc2Gadget = 1.0;
-#else
-double kpc2Gadget = kpc2Mpc;
-#endif
+double kpc2Gadget;
 const double kg2Msun = 1.989e-30;
 
 
@@ -23,6 +19,11 @@ const double kg2Msun = 1.989e-30;
 int global_error;
 int mpi_rank,mpi_nodes;
 
+#ifdef GADGETKPC
+kpc2Gadget = 1.0;
+#else
+kpc2Gadget = kpc2Mpc;
+#endif
 void initialise_MPI(int* argc, char ***argv )
 {
   MPI_Init  (argc,argv);
