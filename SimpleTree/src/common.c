@@ -12,9 +12,9 @@ const double m2Mpc = 1./3.08567758e22;
 const double m2km = 0.001;
 const double Msun2Gadget = 1.e-10;
 #ifdef GADGETKPC
-const double kpc2Gadget = 1.0;
+double kpc2Gadget = 1.0;
 #else
-const double kpc2Gadget = kpc2Mpc;
+double kpc2Gadget = kpc2Mpc;
 #endif
 const double kg2Msun = 1.989e-30;
 
