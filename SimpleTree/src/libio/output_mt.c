@@ -69,7 +69,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	  haloB->mhalos[curid].NextHalo = ihalo;
 	}
     }
-
+  printf("finish linking struct\n");
   /* rename everything to globalRefID */
   for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
     {
@@ -78,6 +78,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
       if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
 	haloB->mhalos[ihalo].UpHalo = haloB->mhalos[haloB->mhalos[ihalo].UpHalo].globalRefID;	
     }
+  printf("finish relabel struct\n");
 } 
 
 void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
