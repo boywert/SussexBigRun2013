@@ -43,7 +43,8 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
   hid_t ihalo;
   hid_t upperhost,hosthalo,ref,cursub,curid;
   printf("Generate Subfind structure\n");
-  for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
+
+  for(ihalo=0;ihalo<haloB->nHalos; ihalo++)
     {
       hosthalo = haloB->mhalos[ihalo].host_halo;
       upperhost = haloB->mhalos[ihalo].host_halo;
@@ -58,6 +59,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	  hosthalo = ref;
 	}
       haloB->mhalos[ihalo].UpHalo = hosthalo;
+      printf("hosthalo = %llu\n",hosthalo);
       if(haloB->mhalos[ihalo].UpHalo < NULLPOINT)
 	{
 	  cursub = haloB->mhalos[ihalo].UpHalo;
@@ -67,6 +69,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	      cursub = haloB->mhalos[cursub].NextHalo;
 	    }
 	  haloB->mhalos[curid].NextHalo = ihalo;
+	  printf("nexthalo = %llu\n",ihalo);
 	}
     }
   printf("finish linking struct\n");
