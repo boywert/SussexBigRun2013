@@ -42,7 +42,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 {
   hid_t ihalo;
   hid_t upperhost,hosthalo,ref,cursub,curid;
-
+  printf("Generate Subfind structure\n");
   for(ihalo=0;ihalo< haloB->nHalos; ihalo++)
     {
       hosthalo = haloB->mhalos[ihalo].host_halo;
