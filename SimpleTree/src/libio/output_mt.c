@@ -46,10 +46,10 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 
   for(ihalo=0;ihalo<haloB->nHalos; ihalo++)
     {
-      printf("0 %llu\n",ihalo);
       hosthalo = haloB->mhalos[ihalo].host_halo;
       upperhost = haloB->mhalos[ihalo].host_halo;
       ref = upperhost;
+      printf("0 %llu host = %llu\n",ihalo,hosthalo);
       while(upperhost < NULLPOINT)
 	{
 	  ref = upperhost;
