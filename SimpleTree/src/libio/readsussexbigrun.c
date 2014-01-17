@@ -13,7 +13,7 @@ void write_AHF_profiles(FILE *fpprof, int nbins, halo_profile_t *Profile);
 void write_AHF_particles(FILE *fppart, uint64_t nparts, particlelist_t *Particles);
 
 void alter_domain_nhalos(int ndomains, uint64_t *nhalos_per_domain);
-m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos);
+void sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t *mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos);
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain,int snapid);
 
 #ifdef READPROFILES
@@ -77,21 +77,21 @@ void copy_halo_t(m_halo_t* src, m_halo_t* target)
   target->used = src->used;
 }
 
-m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
+void maphalo_to_host_mt(m_halo_wrapper_t *mhalo)
 {
   order_uint64_t *maphalo;
   hid_t ihalo;
   
-  maphalo = memmgr_malloc(mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
-  for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
+  maphalo = memmgr_malloc(mhalo->nHalos*sizeof(order_uint64_t),"Maphalo");
+  for(ihalo=0;ihalo<mhalo->nHalos;ihalo++)
     {
       /* maphalo */
       maphalo[ihalo].ref = mhalo.mhalos[ihalo].ID;
       maphalo[ihalo].id = ihalo;
     }
     /* Relabel  HostID */
-  if(mhalo.nHalos > 0)
-    mhalo = sussexbigrun_find_hostHalo_mt(mhalo,maphalo,mhalo.nHalos);
+  if(mhalo->nHalos > 0)
+    sussexbigrun_find_hostHalo_mt(mhalo,maphalo,mhalo->nHalos);
 
   memmgr_free(maphalo,mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
   return mhalo;
@@ -666,7 +666,7 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
   return mhalo;
 }
 
-m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
+void sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t *mhalo, order_uint64_t *maphalo_unsorted, uint64_t numHalos)
 {
   order_uint64_t *maphalo_sorted;
   uint64_t i,hostid_unique_el,startid,stopid;
@@ -677,24 +677,23 @@ m_halo_wrapper_t sussexbigrun_find_hostHalo_mt(m_halo_wrapper_t mhalo, order_uin
   for(i=startid;i<=stopid;i++)
     { 
  
-      if(mhalo.mhalos[i].host_halo != NULLPOINT)
+      if(mhalo->mhalos[i].host_halo != NULLPOINT)
 	{
-	  hostid_unique_el = search_order_unint64_t_for_ref(mhalo.mhalos[i].host_halo, numHalos, maphalo_sorted);
+	  hostid_unique_el = search_order_unint64_t_for_ref(mhalo->mhalos[i].host_halo, numHalos, maphalo_sorted);
 	  if(hostid_unique_el != NULLPOINT)
 	    {
-	      mhalo.mhalos[i].host_halo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].ID;
-	      mhalo.mhalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
-	      mhalo.mhalos[i].NextHalo = mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
-	      mhalo.mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = mhalo.mhalos[i].ID;
+	      mhalo->mhalos[i].host_halo = mhalo->mhalos[maphalo_sorted[hostid_unique_el].id].ID;
+	      mhalo->mhalos[i].UpHalo = maphalo_sorted[hostid_unique_el].id;
+	      mhalo->mhalos[i].NextHalo = mhalo->mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo;
+	      mhalo->mhalos[maphalo_sorted[hostid_unique_el].id].FirstDownHalo = mhalo->mhalos[i].ID;
 	    }
 	  else
 	    { 
 	      /* Set host_halo = -1 if cannot find the host */
-	      mhalo.mhalos[i].host_halo = NULLPOINT;
+	      mhalo->mhalos[i].host_halo = NULLPOINT;
 	    }
 	}
     }
-  return mhalo;
 }
 
 
