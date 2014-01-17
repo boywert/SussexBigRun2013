@@ -86,7 +86,7 @@ void maphalo_to_host_mt(m_halo_wrapper_t *mhalo)
   for(ihalo=0;ihalo<mhalo->nHalos;ihalo++)
     {
       /* maphalo */
-      maphalo[ihalo].ref = mhalo->mhalos[ihalo].ID;
+      maphalo[ihalo].ref = mhalo->mhalos[ihalo].oriID;
       maphalo[ihalo].id = ihalo;
     }
     /* Relabel  HostID */
