@@ -94,7 +94,6 @@ m_halo_wrapper_t maphalo_to_host_mt(m_halo_wrapper_t mhalo)
     mhalo = sussexbigrun_find_hostHalo_mt(mhalo,maphalo,mhalo.nHalos);
 
   memmgr_free(maphalo,mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
-  return mhalo;
 }
 
 
