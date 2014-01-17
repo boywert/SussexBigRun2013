@@ -75,7 +75,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	      printf("curid = %llu -> %llu\n",curid,cursub);
 	    }
 	  haloB->mhalos[curid].NextHalo = ihalo;
-	  //printf("   nexthalo = %llu\n",ihalo);
+	  printf("   nexthalo of %llu = %llu\n",curid,ihalo);
 	}
       //printf("2 %llu hosthalo = %llu\n",ihalo,hosthalo);
     }
