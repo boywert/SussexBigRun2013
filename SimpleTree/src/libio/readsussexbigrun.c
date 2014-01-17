@@ -86,15 +86,14 @@ void maphalo_to_host_mt(m_halo_wrapper_t *mhalo)
   for(ihalo=0;ihalo<mhalo->nHalos;ihalo++)
     {
       /* maphalo */
-      maphalo[ihalo].ref = mhalo.mhalos[ihalo].ID;
+      maphalo[ihalo].ref = mhalo->mhalos[ihalo].ID;
       maphalo[ihalo].id = ihalo;
     }
     /* Relabel  HostID */
   if(mhalo->nHalos > 0)
     sussexbigrun_find_hostHalo_mt(mhalo,maphalo,mhalo->nHalos);
 
-  memmgr_free(maphalo,mhalo.nHalos*sizeof(order_uint64_t),"Maphalo");
-  return mhalo;
+  memmgr_free(maphalo,mhalo->nHalos*sizeof(order_uint64_t),"Maphalo");
 }
 
 
