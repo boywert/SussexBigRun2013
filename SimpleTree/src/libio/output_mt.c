@@ -50,8 +50,6 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
       hosthalo = haloB->mhalos[ihalo].host_halo;
       upperhost = haloB->mhalos[ihalo].host_halo;
       ref = upperhost;
-      if(hosthalo < NULLPOINT)
-      	printf("0 %llu host = %llu\n",ihalo,hosthalo);
       while(upperhost < NULLPOINT)
 	{
 	  ref = upperhost;
@@ -71,10 +69,8 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	    {
 	      curid = haloB->mhalos[cursub].ID;
 	      cursub = haloB->mhalos[cursub].NextHalo;
-	      printf("curid = %llu -> %llu\n",curid,cursub);
 	    }
 	  haloB->mhalos[curid].NextHalo = ihalo;
-	  printf("   nexthalo of %llu = %llu\n",curid,ihalo);
 	}
       //printf("2 %llu hosthalo = %llu\n",ihalo,hosthalo);
     }
