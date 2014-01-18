@@ -149,7 +149,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
 	  haloB->mhalos[ihalo].Mvir *= Msun2Gadget;
-	  printf("M200: %llu\n",haloB->mhalos[ihalo].Mvir);
+	  printf("M200: %f\n",haloB->mhalos[ihalo].Mvir);
 	  fwrite(&(haloB->mhalos[ihalo].Mvir),sizeof(float),1,fp);
 	}
       /* write Pos[3] */
