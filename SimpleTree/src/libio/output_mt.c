@@ -54,7 +54,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 	{
 	  ref = upperhost;
 	  upperhost = haloB->mhalos[upperhost].host_halo;
-	  printf("ref = %llu\n",ref);
+	  //printf("ref = %llu\n",ref);
 	}
       if(hosthalo != ref)
 	{
@@ -130,21 +130,26 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
+	  printf("globalRefID: %llu\n",haloB->mhalos[ihalo].globalRefID);
 	  fwrite(&(haloB->mhalos[ihalo].globalRefID),sizeof(hid_t),1,fp);
 	}
       /* write FirstFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
+	  printf("FirstFOF: %llu\n",haloB->mhalos[ihalo].UpHalo);
 	  fwrite(&(haloB->mhalos[ihalo].UpHalo),sizeof(hid_t),1,fp);
 	}  
       /* write NextFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
+	  printf("NextFOF: %llu\n",haloB->mhalos[ihalo].NextHalo);
 	  fwrite(&(haloB->mhalos[ihalo].NextHalo),sizeof(hid_t),1,fp);
 	}  
       /* write M200 */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
+	  haloB->mhalos[ihalo].Mvir *= Msun2Gadget;
+	  printf("M200: %llu\n",haloB->mhalos[ihalo].Mvir);
 	  fwrite(&(haloB->mhalos[ihalo].Mvir),sizeof(float),1,fp);
 	}
       /* write Pos[3] */
