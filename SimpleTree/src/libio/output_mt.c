@@ -94,7 +94,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   char command[1024];
   int l;
   int ih;
-  float Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
+  float M200,Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
   long long MostBoundID;
 
 
@@ -148,9 +148,9 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write M200 */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  haloB->mhalos[ihalo].Mvir *= Msun2Gadget;
-	  printf("M200: %f\n",haloB->mhalos[ihalo].Mvir);
-	  fwrite(&(haloB->mhalos[ihalo].Mvir),sizeof(float),1,fp);
+	  M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
+	  printf("M200: %f\n",M200);
+	  fwrite(&(haloB->M200),sizeof(float),1,fp);
 	}
       /* write Pos[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
