@@ -7,7 +7,7 @@ void generate_lgal_output(char* outputfolder, float *snaplist, int nSnaps, int t
 {
   clgal_aux_data_wrapper_t aux_data[nSnaps][totaldomains];
   int i,j;
-  for(i=0;i<nSnaps;i++)
+  for(i=1;i<nSnaps;i++)
     {
       for(j=0;j<totaldomains;j++)
 	{
