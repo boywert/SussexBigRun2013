@@ -16,7 +16,7 @@ void generate_lgal_output(char* outputfolder, int nSnaps, int totaldomains)
 	  aux_data[i][j].redshift = 0.0;
 	  aux_data[i][j].snapid = i;
 	  aux_data[i][j].domainid = j;
-	  internalaux_read(&(aux_data[i][j]), outputfolder)
+	  internalaux_read(&(aux_data[i][j]), outputfolder);
 	}
     }
 }
