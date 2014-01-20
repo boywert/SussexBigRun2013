@@ -166,7 +166,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write M200 */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  //M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
+	  M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
 	  printf("M200: %f\n",M200);
 	  fwrite(&(M200),sizeof(float),1,fp);
 	}
