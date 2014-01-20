@@ -3,7 +3,7 @@
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
 void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
 
-void generate_lgal_output(char* outputfolder, int nSnaps, int totaldomains)
+void generate_lgal_output(char* outputfolder, float snaplist, int nSnaps, int totaldomains)
 {
   clgal_aux_data_wrapper_t aux_data[nSnaps][totaldomains];
   int i,j;
@@ -13,7 +13,7 @@ void generate_lgal_output(char* outputfolder, int nSnaps, int totaldomains)
 	{
 	  /* Set up snapshot info */
 	  aux_data[i][j].already_read = 0;
-	  aux_data[i][j].redshift = 0.0;
+	  aux_data[i][j].redshift = snaplist[i];
 	  aux_data[i][j].snapid = i;
 	  aux_data[i][j].domainid = j;
 	  internalaux_read(&(aux_data[i][j]), outputfolder);

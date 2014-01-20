@@ -144,7 +144,7 @@ int main(int argc,char **argv)
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
-  generate_lgal_output(outputfolder, tot_Snap, pow3(param_domain_per_dim));
+  generate_lgal_output(outputfolder,snaplist,tot_Snap, pow3(param_domain_per_dim));
   MPI_Barrier(MPI_COMM_WORLD);
   finalise_MPI();
   return 0;
