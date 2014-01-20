@@ -17,7 +17,8 @@ void generate_lgal_output(char* outputfolder, float *snaplist, int nSnaps, int t
 	  aux_data[i][j].snapid = i;
 	  aux_data[i][j].domainid = j;
 	  printf("reading z=%f : %d\n",aux_data[i][j].redshift,aux_data[i][j].domainid);
-	  internalaux_read(&(aux_data[i][j]), outputfolder);
+	  if(aux_data[i][j].already_read == 0)
+	    internalaux_read(&(aux_data[i][j]), outputfolder);
 	}
     }
 }
@@ -239,6 +240,9 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
   int l;
   int ih;
   
+  /* return if read */
+  if(aux_data->already_read == 1)
+    return;
   
   sprintf(filename,"%s/%3.3f/mtaux_%d.dat_bin",outputfolder,aux_data->redshift,aux_data->domainid);
 
@@ -283,7 +287,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200),sizeof(float),1,fp);
-	  printf("M200 = %f\n",aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
+	  //printf("M200 = %f\n",aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
 	}
       /* read Len */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
@@ -321,6 +325,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
 	}    
       fclose(fp);
+      aux_data->already_read = 1;
     }
   else
     {
