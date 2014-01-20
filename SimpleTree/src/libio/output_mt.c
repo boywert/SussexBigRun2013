@@ -2,6 +2,10 @@
 
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
 void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
+int compare_clgal_aux_data_t_by_globalRefID(const void *v1, const void *v2);
+uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
+
+
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
@@ -332,6 +336,8 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
 	}    
       fclose(fp);
+      qsort();
+      qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t), compare_clgal_aux_data_t_by_globalRefID);
       aux_data->already_read = 1;
     }
   else
@@ -341,3 +347,47 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
     }
 
 }
+
+int compare_clgal_aux_data_t_by_globalRefID(const void *v1, const void *v2)
+{
+    const clgal_aux_data_t *u1 = v1;
+    const clgal_aux_data_t *u2 = v2;
+    int ret;
+    if(u1->globalRefID < u2->globalRefID)
+      ret =  -1;
+    else if(u1->globalRefID > u2->globalRefID)
+      ret = 1;
+    else if(u1->globalRefID == u2->globalRefID)
+      ret = 0;
+    return ret;
+}
+
+uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array )
+{
+  uint64_t middle,low,high,ipart;
+  clgal_aux_data_t *pool = (clgal_aux_data_t *) Array;
+
+  low = 0;
+  high = n_array-1;
+
+  while ( low <= high && high < NULLPOINT) 
+    {
+      middle = ( low + high ) / 2;
+      //      printf("%llu : %llu < %llu : %llu < %llu : %llu\n",low,pool[low].ID,middle,pool[middle].ID,high,pool[high].ID);
+      if ( searchID == pool[ middle ].globalRefID)
+	{
+	  return middle;
+	}
+      else if ( searchID < pool[ middle ].globalRefID)
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  return NULLPOINT;
+}
+
+
