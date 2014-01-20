@@ -1,8 +1,7 @@
 #include "output_mt.h"
 
-void internalaux_read(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
-
+void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
@@ -93,7 +92,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   char filename[1024], foldername[1024];
   char command[1024];
   int l;
-  int ih;
+  int ih,len;
   float M200,Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
   long long MostBoundID;
 
@@ -104,7 +103,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   sprintf(foldername,"%s/%3.3f",outputfolder,haloB->redshift);
   sprintf(command,"mkdir -p %s", foldername);
   system(command);
-  sprintf(filename,"%s/%3.3f/mtaux_%d.dat",outputfolder,haloB->redshift,domainid);
+  sprintf(filename,"%s/%3.3f/mtaux_%d.dat_bin",outputfolder,haloB->redshift,domainid);
   sprintf(command,"rm -f %s",filename);
   system(command);
 
@@ -130,27 +129,33 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  printf("globalRefID: %llu\n",haloB->mhalos[ihalo].globalRefID);
+	  //printf("globalRefID: %llu\n",haloB->mhalos[ihalo].globalRefID);
 	  fwrite(&(haloB->mhalos[ihalo].globalRefID),sizeof(hid_t),1,fp);
 	}
       /* write FirstFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  printf("FirstFOF: %llu\n",haloB->mhalos[ihalo].UpHalo);
+	  //printf("FirstFOF: %llu\n",haloB->mhalos[ihalo].UpHalo);
 	  fwrite(&(haloB->mhalos[ihalo].UpHalo),sizeof(hid_t),1,fp);
 	}  
       /* write NextFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  printf("NextFOF: %llu\n",haloB->mhalos[ihalo].NextHalo);
+	  //printf("NextFOF: %llu\n",haloB->mhalos[ihalo].NextHalo);
 	  fwrite(&(haloB->mhalos[ihalo].NextHalo),sizeof(hid_t),1,fp);
 	}  
       /* write M200 */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
+	  //M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
 	  printf("M200: %f\n",M200);
 	  fwrite(&(M200),sizeof(float),1,fp);
+	}
+      /* write len */
+      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+	{
+	  len = haloB->mhalos[ihalo].npart;
+	  fwrite(&(len),sizeof(float),1,fp);
 	}
       /* write Pos[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
@@ -192,7 +197,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
 	  MostBoundID = haloB->mhalos[ihalo].Particles[0].ID;
-	  fwrite(&(MostBoundID),sizeof(float),3,fp);
+	  fwrite(&(MostBoundID),sizeof(long long),1,fp);
 	}    
       fclose(fp);
     }
@@ -204,32 +209,96 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
 }
 
 
-void internalaux_read(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
+void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 {
-  hid_t ihalo,whalo,nhalos;
+
+  hid_t ihalo,whalo;
   FILE *fp;
-  char filename[1024];
+  char filename[1024], foldername[1024];
+  char command[1024];
   int l;
   int ih;
   
-  sprintf(filename,"%s/%3.3f/mtaux_%d.dat",outputfolder,haloB->redshift,domainid);
+  
+  sprintf(filename,"%s/%3.3f/mtaux_%d.dat_bin",outputfolder,aux_data->redshift,aux_data->domainid);
 
-  //printf("start output internalaux\n");
   fp = fopen(filename, "rb");
   if(fp != NULL)
     {
-      fread(&(nhalos),sizeof(hid_t),1,fp);
-      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+      /* read  total halo number */
+      fread(&(aux_data->nHalos),sizeof(hid_t),1,fp);
+      aux_data->lgal_aux_halos = calloc(sizeof(aux_data->nHalos,sizeof(clgal_aux_data_t)));
+      /* read nprogs */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
-	  fread(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+	  fread(&(aux_data->lgal_aux_halos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+	  aux_data->lgal_aux_halos[ihalo].proglist = calloc(aux_data->lgal_aux_halos[ihalo].nprogs,sizeof(hid_t));
 	}
-      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+      /* read proglist */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
-	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
+	  for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
 	    {
-	      fread(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	      fread(&(aux_data->lgal_aux_halos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
 	    }
 	}
+
+      /* write globalRefID */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].globalRefID),sizeof(hid_t),1,fp);
+	}
+      /* read FirstFOF globalRefID */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].FirstFOF),sizeof(hid_t),1,fp);
+	}  
+      /* read NextFOF globalRefID */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].NextFOF),sizeof(hid_t),1,fp);
+	}  
+      /* read M200 */
+      
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200),sizeof(float),1,fp);
+	}
+      /* read Len */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Len),sizeof(int),1,fp);
+	}
+      /* read Pos[3] */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Pos,sizeof(float),3,fp);
+	}
+      /* write Vel[3] */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Vel,sizeof(float),3,fp);
+	}
+      /* write VelDisp */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.VelDisp),sizeof(float),1,fp);
+	}     
+      /* write Vmax */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Vmax),sizeof(float),1,fp);
+	}    
+      /* write Spin[3] */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Spin,sizeof(float),3,fp);
+	}    
+      /* write MostBoundID */
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
+	}    
       fclose(fp);
     }
   else
@@ -237,4 +306,5 @@ void internalaux_read(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
       printf("Cannot open file %s\nExiting...\n",filename);
       exit(1);
     }
+
 }
