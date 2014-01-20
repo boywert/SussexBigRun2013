@@ -38,6 +38,6 @@ typedef struct clgal_aux_data_wrapper
 
 extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
 extern void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
-extern void generate_lgal_output(char* outputfolder);
+extern void generate_lgal_output(char* outputfolder, int nSnaps, int totaldomains);
 #define OUTPUT_MT_H
 #endif
