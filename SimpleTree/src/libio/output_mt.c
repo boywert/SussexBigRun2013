@@ -283,6 +283,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200),sizeof(float),1,fp);
+	  printf("M200 = %f\n",(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
 	}
       /* read Len */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
