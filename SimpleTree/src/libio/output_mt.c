@@ -3,6 +3,24 @@
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
 void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
 
+void generate_lgal_output(char* outputfolder, int nSnaps, int totaldomains)
+{
+  clgal_aux_data_wrapper_t aux_data[nSnaps][totaldomains];
+  int i,j;
+  for(i=0;i<nSnaps;i++)
+    {
+      for(j=0;j<totaldomains;j++)
+	{
+	  /* Set up snapshot info */
+	  aux_data[i][j].already_read = 0;
+	  aux_data[i][j].redshift = 0.0;
+	  aux_data[i][j].snapid = i;
+	  aux_data[i][j].domainid = j;
+	  internalaux_read(&(aux_data[i][j]), outputfolder)
+	}
+    }
+}
+
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
