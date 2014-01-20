@@ -228,7 +228,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
     {
       /* read  total halo number */
       fread(&(aux_data->nHalos),sizeof(hid_t),1,fp);
-      aux_data->lgal_aux_halos = calloc(sizeof(aux_data->nHalos,sizeof(clgal_aux_data_t)));
+      aux_data->lgal_aux_halos = calloc(aux_data->nHalos,sizeof(clgal_aux_data_t));
       /* read nprogs */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
