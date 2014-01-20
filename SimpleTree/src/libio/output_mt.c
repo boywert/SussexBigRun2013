@@ -16,6 +16,7 @@ void generate_lgal_output(char* outputfolder, float *snaplist, int nSnaps, int t
 	  aux_data[i][j].redshift = snaplist[i];
 	  aux_data[i][j].snapid = i;
 	  aux_data[i][j].domainid = j;
+	  printf("reading z=%f : %d\n",aux_data[i][j].redshift,aux_data[i][j].domainid);
 	  internalaux_read(&(aux_data[i][j]), outputfolder);
 	}
     }
