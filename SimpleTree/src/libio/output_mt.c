@@ -1,7 +1,8 @@
 #include "output_mt.h"
 
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
-void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
+void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
+
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo;
