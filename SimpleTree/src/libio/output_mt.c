@@ -336,8 +336,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
 	}    
       fclose(fp);
-      qsort();
-      qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t), compare_clgal_aux_data_t_by_globalRefID);
+      qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t),compare_clgal_aux_data_t_by_globalRefID);
       aux_data->already_read = 1;
     }
   else
