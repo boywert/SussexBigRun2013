@@ -23,8 +23,7 @@ typedef struct id_component
 id_component_t extract_id_component(hid_t hid);
 
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
-void complete_clgal_aux(clgal_aux_data_wrapper_t **aux_data);
-
+void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
@@ -61,7 +60,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /* Set up merger_tree - root level */
   fulltree = malloc(aux_data[nSnaps][localdomain].nHalos*sizeof(struct full_tree *));
   nHalosinTree = calloc(aux_data[nSnaps][localdomain].nHalos,sizeof(hid_t));
-  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
+  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain].nHalos;ihalo++)
     {
       complete_clgal_aux(aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, outputfolder);
       /* /\* set to 1 element *\/ */
