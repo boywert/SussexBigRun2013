@@ -166,12 +166,12 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   progid = aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor;
   if(progid < NULLPOINT)
     {
-      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree, outputfolder);
+      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
     }
   nextprog = aux_data[snapid][domainid].lgal_aux_halos[localid].NextProgenitor;
   if(progid < NULLPOINT)
     {
-      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree, outputfolder);
+      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
     }
   
 }
