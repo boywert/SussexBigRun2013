@@ -2,9 +2,28 @@
 
 void create_subfind_substruct(m_halo_wrapper_t* haloB);
 void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
+
+
 int compare_clgal_aux_data_t_by_globalRefID(const void *v1, const void *v2);
 uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
 
+
+typedef struct full_tree
+{
+  hid_t intreeid,globalRefID;
+} full_tree_t;
+
+typedef struct id_component
+{
+  int snapid;
+  int domainid;
+  hid_t localid;
+} id_component_t;
+
+id_component_t extract_id_component(hid_t hid);
+
+void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
+void complete_clgal_aux(clgal_aux_data_wrapper_t **aux_data);
 
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
@@ -13,10 +32,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   int i,j;
   hid_t ihalo;
   hid_t *nHalosinTree;
-  struct full_tree
-  {
-    hid_t intreeid,globalRefID;
-  } **fulltree;
+  struct full_tree **fulltree;
   /* struct merger_tree  */
   /* { */
   /*   int snapid; */
@@ -47,12 +63,12 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   nHalosinTree = calloc(aux_data[nSnaps][localdomain].nHalos,sizeof(hid_t));
   for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
     {
-      /* set to 1 element */
-      nHalosinTree[ihalo] += 1;
-      fulltree[ihalo] = malloc(sizeof(hid_t));
-      fulltree[ihalo][0].intreeid = 0;
-      fulltree[ihalo][0].globalRefID = aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID;
-      aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].RootID = ihalo;
+      complete_clgal_aux(aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, outputfolder);
+      /* /\* set to 1 element *\/ */
+      /* nHalosinTree[ihalo] += 1; */
+      /* fulltree[ihalo] = malloc(sizeof(full_tree_t)); */
+      /* fulltree[ihalo][0].globalRefID = aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID; */
+      /* aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].RootID = ihalo; */
     }
   
   for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
@@ -63,19 +79,85 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   free(nHalosinTree);
 }
 
-void treeclowler()
+/* fill in FirstProgenitors,NextProgenitor,Descendant */
+void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder)
+{
+  hid_t ihalo;
+  int snapid,domainid;
+  hid_t localid;
+  hid_t progid,nextprog,previd,curid;
+  int i;
+  id_component_t local_snap_data;
+  snapid = hid/(uint64_t)pow(10,15);
+  domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
+  localid = hid%(uint64_t)pow(10,10);
 
-def treecrowler(hid,halocat,treenr,fulltree):
-    halocat[hid]["TreeNr"] = treenr
-    halocat[hid]["HaloNr"] = len(fulltree[treenr])
-    fulltree[treenr].append(hid)
-    progid = halocat[hid]["FirstProgenitor"]
-    if progid > -1:
-        (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
-    nextprog = halocat[hid]["NextProgenitor"]
-    if nextprog > -1:
-        (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
-    return (halocat,fulltree)
+  /* make sure to read the current catalogue */
+  internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
+
+  for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
+    {
+      if(i==0)
+	{
+	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
+	  complete_clgal_aux(curid, aux_data, outputfolder);
+	  local_snap_data = extract_id_component(curid);
+	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder,outputfolder);
+	  aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor = curid;
+	  previd = curid;
+	}
+      else
+	{
+	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
+	  complete_clgal_aux(curid, aux_data, outputfolder);
+	  local_snap_data = extract_id_component(curid);
+	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder,outputfolder);
+	  local_snap_data = extract_id_component(previd);
+	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].NextProgenitor = curid;
+	}
+    }
+}
+
+id_component_t extract_id_component(hid_t hid)
+{
+  id_component_t extract;
+  extract.snapid = hid/(uint64_t)pow(10,15);
+  extract.domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
+  extract.localid = hid%(uint64_t)pow(10,10);
+  return extract;
+}
+
+
+void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree)
+{
+  int snapid,domainid;
+  hid_t localid;
+  hid_t progid,nextprog;
+  snapid = hid/(uint64_t)pow(10,15);
+  domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
+  localid = hid%(uint64_t)pow(10,10);
+  //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
+  aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
+  aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
+
+
+  /* add hid to fulltree */
+  nHalosinTree[treenr]++;
+  fulltree[treenr] = realloc(fulltree[treenr],nHalosinTree[treenr]*sizeof(full_tree_t));
+  fulltree[treenr][nHalosinTree[treenr]-1].globalRefID = hid;
+
+  progid = aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor;
+  if(progid < NULLPOINT)
+    {
+      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree, outputfolder);
+    }
+  nextprog = aux_data[snapid][domainid].lgal_aux_halos[localid].NextProgenitor;
+  if(progid < NULLPOINT)
+    {
+      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree, outputfolder);
+    }
+  
+}
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -379,7 +461,14 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
 	}    
       fclose(fp);
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  aux_data->lgal_aux_halos[ihalo].FirstProgenitor = NULLPOINT;
+	  aux_data->lgal_aux_halos[ihalo].NextProgenitor = NULLPOINT;
+	  aux_data->lgal_aux_halos[ihalo].Descendant = NULLPOINT;
+	}
       qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t),compare_clgal_aux_data_t_by_globalRefID);
+
       aux_data->already_read = 1;
     }
   else

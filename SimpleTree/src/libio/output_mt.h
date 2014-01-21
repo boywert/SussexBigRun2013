@@ -20,7 +20,11 @@ typedef struct clgal_aux_data
   hid_t globalRefID;
   hid_t FirstFOF;
   hid_t NextFOF;
-  hid_t RootID;
+  hid_t FirstProgenitor;
+  hid_t NextProgenitor;
+  hid_t Descendant;
+  int TreeNr;
+  int hidTree; 
   uint32_t nprogs;
   hid_t *proglist;
   struct Lgalaxy_halo_data lgal_halo_data;
