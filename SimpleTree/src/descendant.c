@@ -145,7 +145,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       /* else */
       /* 	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant); */
 
-      if(ihalo == max_id)
+      if(ihalo == max_id && ihid < NULLPOINT)
 	{
 	  qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
 	  haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
