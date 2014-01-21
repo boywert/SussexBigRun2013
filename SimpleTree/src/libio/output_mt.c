@@ -77,6 +77,10 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
     }
 
 
+  /* Group trees into bushes */
+
+
+
 
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
@@ -119,21 +123,12 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
 
-  /* printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid); */
-  /* for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++) */
-  /*   { */
-  /*     for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++) */
-  /* 	{ */
-  /* 	  printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo); */
-  /* 	} */
-  /*   } */
 
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
     {
       if(i==0)
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  //printf("firstprog <= hid : %llu <=%llu  .... p:%d/%d\n",curid,hid,i,aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
@@ -144,7 +139,6 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       else
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  //printf("nextprog <= hid : %llu <=%llu  .... p:%d\n",curid,hid,i);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
@@ -176,7 +170,7 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
 
-  printf("hid = %llu\n",hid);
+  //printf("hid = %llu\n",hid);
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
@@ -188,13 +182,13 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   fulltree[treenr][nHalosinTree[treenr]-1].globalRefID = hid;
 
   progid = aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor;
-  printf("firstprog: %llu => %llu\n",hid,progid);
+  //printf("firstprog: %llu => %llu\n",hid,progid);
   if(progid < NULLPOINT)
     {
       treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
     }
   nextprog = aux_data[snapid][domainid].lgal_aux_halos[localid].NextProgenitor;
-  printf("nextprog: %llu => %llu\n",hid,nextprog);
+  //printf("nextprog: %llu => %llu\n",hid,nextprog);
   if(nextprog < NULLPOINT)
     {
       treecrawler(nextprog, aux_data, treenr, fulltree, nHalosinTree);
@@ -516,6 +510,9 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  aux_data->lgal_aux_halos[ihalo].FirstProgenitor = NULLPOINT;
 	  aux_data->lgal_aux_halos[ihalo].NextProgenitor = NULLPOINT;
 	  aux_data->lgal_aux_halos[ihalo].Descendant = NULLPOINT;
+	  aux_data->lgal_aux_halos[ihalo].TreeNr = -1;
+	  aux_data->lgal_aux_halos[ihalo].hidTree = -1;
+	  aux_data->lgal_aux_halos[ihalo].redshift = aux_data->redshift;
 	}
       qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t),compare_clgal_aux_data_t_by_globalRefID);
 
