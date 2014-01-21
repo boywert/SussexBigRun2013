@@ -315,13 +315,12 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write proglist */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
+	  printf("Just write in : %llu --- %d\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].nprogs);
 	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
-	    {
-	      if(haloB->mhalos[ihalo].globalRefID == haloB->mhalos[ihalo].proglist[whalo])
-		{
-		  printf("curid = hid : %llu  .... p:%llu\n",haloB->mhalos[ihalo].globalRefID,whalo);
-		  exit(1);
-		}
+	    {	      
+	      for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++)
+		printf("%llu: prog  ----> %llu\n",whalo,haloB->mhalos[ihalo].proglist[whalo]);
+
 	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
 	    }
 	}
