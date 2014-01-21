@@ -107,7 +107,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   id_component_t local_snap_data;
   snapid = hid/(uint64_t)pow(10,15);
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
-  localid = hid%(uint64_t)pow(10,10);
+  localid = hid%(uint64_t)pow(10,10)-1;
 
   /* make sure to read the current catalogue */
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
@@ -152,7 +152,7 @@ id_component_t extract_id_component(hid_t hid)
   id_component_t extract;
   extract.snapid = hid/(uint64_t)pow(10,15);
   extract.domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
-  extract.localid = hid%(uint64_t)pow(10,10);
+  extract.localid = hid%(uint64_t)pow(10,10)-1;
   return extract;
 }
 
