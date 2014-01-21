@@ -140,14 +140,17 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_prog = malloc(0);
   for(ihalo = 0; ihalo < max_id ; ihalo++)
     {
-      //printf("ihalo = %llu\n",ihalo);
+      if(haloA->mhalos[ihalo].descendant < NULLPOINT)
+	printf("ihalo = %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID);
+      else
+	printf("ihalo = %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant);
       if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
 	{
 	  break;
 	}
       if(haloA->mhalos[ihalo].descendant == ihid)
   	{
-  	  haloB->mhalos[ihid].nprogs += 1;
+  	  haloB->mhalos[ihid].nprogs++;
 	  //printf("realloc merit_prog[%llu]\n",ihid);
   	  merit_prog = realloc(merit_prog,haloB->mhalos[ihid].nprogs*sizeof(merit_t));
   	  merit_prog[haloB->mhalos[ihid].nprogs-1].haloID = ihalo;
