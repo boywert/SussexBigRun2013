@@ -72,6 +72,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
+      fulltree[ihalo] = malloc(0);
       treecrawler(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, (int)ihalo, fulltree, nHalosinTree);
     }
 
