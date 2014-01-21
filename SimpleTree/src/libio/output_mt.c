@@ -307,6 +307,11 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
 	{
 	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
 	    {
+	      if(haloB->mhalos[ihalo].globalRefID == haloB->mhalos[ihalo].proglist[whalo])
+		{
+		  printf("curid = hid : %llu  .... p:%llu\n",haloB->mhalos[ihalo].globalRefID,whalo);
+		  exit(1);
+		}
 	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
 	    }
 	}
