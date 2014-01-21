@@ -11,11 +11,27 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 {
   clgal_aux_data_wrapper_t aux_data[nSnaps][totaldomains];
   int i,j;
+  hid_t ihalo;
+  hid_t *nHalosinTree;
+  struct full_tree
+  {
+    hid_t intreeid,globalRefID;
+  } **fulltree;
+  /* struct merger_tree  */
+  /* { */
+  /*   int snapid; */
+  /*   int domainid; */
+  /*   hid_t localid; */
+  /*   hid_t descendant; */
+  /*   hid_t firstprogenitor; */
+  /*   hid_t nextprogenitor; */
+  /*   hid_t rootid; */
+  /* } m_trees; */
+  /* Set up snapshot info */
   for(i=1;i<nSnaps;i++)
     {
       for(j=0;j<totaldomains;j++)
 	{
-	  /* Set up snapshot info */
 	  aux_data[i][j].already_read = 0;
 	  aux_data[i][j].redshift = snaplist[i];
 	  aux_data[i][j].snapid = i;
@@ -23,16 +39,43 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	}
     }
 
-  for(i=1;i<nSnaps;i++)
+  /* Read in last snapshot data */
+  internalaux_read(&(aux_data[nSnaps][localdomain]), outputfolder);
+  
+  /* Set up merger_tree - root level */
+  fulltree = malloc(aux_data[nSnaps][localdomain].nHalos*sizeof(struct full_tree *));
+  nHalosinTree = calloc(aux_data[nSnaps][localdomain].nHalos,sizeof(hid_t));
+  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
     {
-      for(j=0;j<totaldomains;j++)
-	{
-	  printf("reading z=%f : %d\n",aux_data[i][j].redshift,aux_data[i][j].domainid);
-	  if(aux_data[i][j].already_read == 0)
-	    internalaux_read(&(aux_data[i][j]), outputfolder);
-	}
+      /* set to 1 element */
+      nHalosinTree[ihalo] += 1;
+      fulltree[ihalo] = malloc(sizeof(hid_t));
+      fulltree[ihalo][0].intreeid = 0;
+      fulltree[ihalo][0].globalRefID = aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID;
+      aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].RootID = ihalo;
     }
+  
+  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
+    {
+      free(fulltree[ihalo]);
+    }  
+  free(mtree);
+  free(nHalosinTree);
 }
+
+void treeclowler()
+
+def treecrowler(hid,halocat,treenr,fulltree):
+    halocat[hid]["TreeNr"] = treenr
+    halocat[hid]["HaloNr"] = len(fulltree[treenr])
+    fulltree[treenr].append(hid)
+    progid = halocat[hid]["FirstProgenitor"]
+    if progid > -1:
+        (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
+    nextprog = halocat[hid]["NextProgenitor"]
+    if nextprog > -1:
+        (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
+    return (halocat,fulltree)
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
@@ -180,7 +223,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
 	  M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
-	  printf("M200: %f\n",M200);
+	  //printf("M200: %f\n",M200);
 	  fwrite(&(M200),sizeof(float),1,fp);
 	}
       /* write len */
