@@ -119,7 +119,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	{
 	  for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
 	    {
-	      printf("%llu ---> %llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo]);
+	      printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
 	    }
 	}
     }
