@@ -99,7 +99,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 /* fill in FirstProgenitors,NextProgenitor,Descendant */
 void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder)
 {
-  hid_t ihalo;
+  hid_t ihalo,whalo;
   int snapid,domainid;
   hid_t localid;
   hid_t progid,nextprog,previd,curid;
@@ -113,6 +113,18 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
+
+  for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++)
+    {
+      for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
+	{
+	  if(aux_data[snapid][domainid].gal_aux_halos[ihalo].globalRefID == aux_data[snapid][domainid].gal_aux_halos[ihalo].proglist[whalo])
+	    {
+	      printf("before loop: curid = hid : %llu  .... p:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
+	      exit(1);
+	    }
+	}
+    }
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
     {
       if(i==0)
