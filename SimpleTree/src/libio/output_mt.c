@@ -132,6 +132,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
 	  aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor = curid;
+	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].Descendant = hid;
 	  previd = curid;
 	}
       else
@@ -143,6 +144,8 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
 	  local_snap_data = extract_id_component(previd);
 	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].NextProgenitor = curid;
+	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].Descendant = hid;
+	  previd = curid;
 	}
     }
 }
