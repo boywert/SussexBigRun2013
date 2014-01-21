@@ -520,7 +520,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	    {
 	      printf("read in : %llu --- %d : M:%f\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].nprogs,aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
 	      for(whalo=1;whalo<=aux_data->lgal_aux_halos[ihalo].nprogs;whalo++)
-		printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].prog[whalo]);
+		printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].proglist[whalo]);
 	      //printf("read in : %llu ---> %llu:%llu/%d\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo,aux_data->lgal_aux_halos[ihalo].nprogs);
 
 	    }
