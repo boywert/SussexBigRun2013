@@ -110,11 +110,11 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   localid = hid%(uint64_t)pow(10,10);
 
   /* make sure to read the current catalogue */
-  printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
-  if(snapid == 22)
+  if(snapid == 22 && domainid == 1)
     {
+      printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
       for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++)
 	{
 	  for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
