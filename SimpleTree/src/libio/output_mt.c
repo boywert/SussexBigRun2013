@@ -315,11 +315,11 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       /* write proglist */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  printf("Just write in : %llu --- %d\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].nprogs);
+	  //printf("Just write in : %llu --- %d\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].nprogs);
 	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
 	    {	      
-	      for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++)
-		printf("%llu: prog  ----> %llu\n",whalo,haloB->mhalos[ihalo].proglist[whalo]);
+	      /* for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++) */
+	      /* 	printf("%llu: prog  ----> %llu\n",whalo,haloB->mhalos[ihalo].proglist[whalo]); */
 
 	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
 	    }
@@ -465,9 +465,9 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200),sizeof(float),1,fp);
-	  printf("Just read in : %llu --- %d : M:%f\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].nprogs,aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
-	  for(whalo=0;whalo<aux_data->lgal_aux_halos[ihalo].nprogs;whalo++)
-	    printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].proglist[whalo]);
+	  /* printf("Just read in : %llu --- %d : M:%f\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].nprogs,aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200); */
+	  /* for(whalo=0;whalo<aux_data->lgal_aux_halos[ihalo].nprogs;whalo++) */
+	  /*   printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].proglist[whalo]); */
 	  //printf("M200 = %f\n",aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
 	}
       /* read Len */
@@ -516,17 +516,17 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 
       aux_data->already_read = 1;
 
-      if(aux_data->snapid > 0)
-	{
-	  for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
-	    {
-	      printf("read in : %llu --- %d : M:%f\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].nprogs,aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200);
-	      for(whalo=0;whalo<aux_data->lgal_aux_halos[ihalo].nprogs;whalo++)
-		printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].proglist[whalo]);
-	      //printf("read in : %llu ---> %llu:%llu/%d\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo,aux_data->lgal_aux_halos[ihalo].nprogs);
+      /* if(aux_data->snapid > 0) */
+      /* 	{ */
+      /* 	  for(ihalo=0; ihalo < aux_data->nHalos; ihalo++) */
+      /* 	    { */
+      /* 	      printf("read in : %llu --- %d : M:%f\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].nprogs,aux_data->lgal_aux_halos[ihalo].lgal_halo_data.M_Crit200); */
+      /* 	      for(whalo=0;whalo<aux_data->lgal_aux_halos[ihalo].nprogs;whalo++) */
+      /* 		printf("%llu: prog  ----> %llu\n",whalo,aux_data->lgal_aux_halos[ihalo].proglist[whalo]); */
+      /* 	      //printf("read in : %llu ---> %llu:%llu/%d\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo,aux_data->lgal_aux_halos[ihalo].nprogs); */
 
-	    }
-	}
+      /* 	    } */
+      /* 	} */
     }
   else
     {
