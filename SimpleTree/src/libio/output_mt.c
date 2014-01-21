@@ -345,7 +345,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
 	  len = haloB->mhalos[ihalo].npart;
-	  fwrite(&(len),sizeof(float),1,fp);
+	  fwrite(&(len),sizeof(int),1,fp);
 	}
       /* write Pos[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
