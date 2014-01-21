@@ -72,7 +72,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
       /* aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].RootID = ihalo; */
     }
   
-  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain];ihalo++)
+  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain].nHalos;ihalo++)
     {
       free(fulltree[ihalo]);
     }  
