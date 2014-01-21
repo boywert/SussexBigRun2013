@@ -187,11 +187,13 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   fulltree[treenr][nHalosinTree[treenr]-1].globalRefID = hid;
 
   progid = aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor;
+  printf("%llu => %llu\n",hid,progid);
   if(progid < NULLPOINT)
     {
       treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
     }
   nextprog = aux_data[snapid][domainid].lgal_aux_halos[localid].NextProgenitor;
+  printf("%llu => %llu\n",hid,nextprog);
   if(progid < NULLPOINT)
     {
       treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
