@@ -514,14 +514,17 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 
       aux_data->already_read = 1;
 
-      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+      if(aux_data->snapid == 22)
 	{
-	  for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
+	  for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	    {
-	      if(aux_data->lgal_aux_halos[ihalo].globalRefID == aux_data->lgal_aux_halos[ihalo].proglist[whalo])
+	      for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
 		{
-		  printf("after read: curid = hid : %llu  .... p:%llu\n",aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
-		  exit(1);
+		  if(aux_data->lgal_aux_halos[ihalo].globalRefID == aux_data->lgal_aux_halos[ihalo].proglist[whalo])
+		    {
+		      printf("read in : %llu ---> %llu:%llu\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
+		    }
+
 		}
 	    }
 	}
