@@ -118,6 +118,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       if(i==0)
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
+	  printf("%llu <= %llu\n",curid,hid);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
@@ -127,6 +128,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       else
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
+	  printf("%llu <= %llu\n",curid,hid);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
