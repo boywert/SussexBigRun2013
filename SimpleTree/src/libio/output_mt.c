@@ -414,7 +414,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
     return;
   
   sprintf(filename,"%s/%3.3f/mtaux_%d.dat_bin",outputfolder,aux_data->redshift,aux_data->domainid);
-
+  printf("reading %s\n",filename);
   fp = fopen(filename, "rb");
   if(fp != NULL)
     {
