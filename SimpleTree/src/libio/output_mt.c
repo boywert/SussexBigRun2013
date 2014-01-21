@@ -120,7 +120,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
 	  if(curid == hid)
 	    {
-	      printf("curid = hid : %llu\n",hid);
+	      printf("curid = hid : %llu  .... p:%d\n",hid,i);
 	      exit(1);
 	    }
 	  complete_clgal_aux(curid, aux_data, outputfolder);
@@ -134,7 +134,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
 	  if(curid == hid)
 	    {
-	      printf("curid = hid : %llu\n",hid);
+	      printf("curid = hid : %llu .... p:%d\n",hid,i);
 	      exit(1);
 	    }
 	  complete_clgal_aux(curid, aux_data, outputfolder);
