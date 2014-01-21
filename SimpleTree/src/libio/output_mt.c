@@ -440,6 +440,15 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].globalRefID),sizeof(hid_t),1,fp);
+	  for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
+	    {
+	      fread(&(aux_data->lgal_aux_halos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	      if(aux_data->lgal_aux_halos[ihalo].globalRefID == aux_data->lgal_aux_halos[ihalo].proglist[whalo])
+		{
+		  printf("read: curid = hid : %llu  .... p:%llu\n",aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
+		  exit(1);
+		}
+	    }
 	}
       /* read FirstFOF globalRefID */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
