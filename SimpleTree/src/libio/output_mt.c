@@ -31,7 +31,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   int i,j;
   hid_t ihalo;
   hid_t *nHalosinTree;
-  struct full_tree **fulltree;
+  full_tree_t **fulltree;
   /* struct merger_tree  */
   /* { */
   /*   int snapid; */
@@ -67,8 +67,8 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
   
   /* Set up merger_tree - root level */
-  fulltree = malloc(aux_data[nSnaps][localdomain].nHalos*sizeof(struct full_tree *));
-  nHalosinTree = calloc(aux_data[nSnaps][localdomain].nHalos,sizeof(hid_t));
+  fulltree = malloc(aux_data[nSnaps-1][localdomain].nHalos*sizeof(full_tree_t *));
+  nHalosinTree = calloc(aux_data[nSnaps-1][localdomain].nHalos,sizeof(hid_t));
 
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
