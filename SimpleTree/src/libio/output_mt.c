@@ -440,14 +440,6 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].globalRefID),sizeof(hid_t),1,fp);
-	  for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
-	    {
-	      if(aux_data->lgal_aux_halos[ihalo].globalRefID == aux_data->lgal_aux_halos[ihalo].proglist[whalo])
-		{
-		  printf("read: curid = hid : %llu  .... p:%llu\n",aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
-		  exit(1);
-		}
-	    }
 	}
       /* read FirstFOF globalRefID */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
@@ -511,6 +503,18 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t),compare_clgal_aux_data_t_by_globalRefID);
 
       aux_data->already_read = 1;
+
+      for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
+	{
+	  for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
+	    {
+	      if(aux_data->lgal_aux_halos[ihalo].globalRefID == aux_data->lgal_aux_halos[ihalo].proglist[whalo])
+		{
+		  printf("after read: curid = hid : %llu  .... p:%llu\n",aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
+		  exit(1);
+		}
+	    }
+	}
     }
   else
     {
