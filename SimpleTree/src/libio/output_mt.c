@@ -112,17 +112,16 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   /* make sure to read the current catalogue */
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
-  if(snapid == 22 && domainid == 1)
+
+  printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
+  for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++)
     {
-      // printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
-      for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++)
+      for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
 	{
-	  for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
-	    {
-	      //printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
-	    }
+	  printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
 	}
     }
+
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
     {
       if(i==0)
