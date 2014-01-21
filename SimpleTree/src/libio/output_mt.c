@@ -150,6 +150,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
 	  local_snap_data = extract_id_component(previd);
 	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].NextProgenitor = curid;
+	  local_snap_data = extract_id_component(curid);
 	  aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid].Descendant = hid;
 	  previd = curid;
 	}
@@ -194,9 +195,9 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
     }
   nextprog = aux_data[snapid][domainid].lgal_aux_halos[localid].NextProgenitor;
   printf("nextprog: %llu => %llu\n",hid,nextprog);
-  if(progid < NULLPOINT)
+  if(nextprog < NULLPOINT)
     {
-      treecrawler(progid, aux_data, treenr, fulltree, nHalosinTree);
+      treecrawler(nextprog, aux_data, treenr, fulltree, nHalosinTree);
     }
   
 }
