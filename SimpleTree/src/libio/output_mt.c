@@ -173,7 +173,7 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   hid_t progid,nextprog;
   snapid = hid/(uint64_t)pow(10,15);
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
-  localid = hid%(uint64_t)pow(10,10);
+  localid = hid%(uint64_t)pow(10,10)-1;
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
