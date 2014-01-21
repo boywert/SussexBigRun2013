@@ -138,13 +138,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   ihid = NULLPOINT;
   max_Mvir = 0.;
   merit_prog = malloc(0);
-  for(ihalo = 0; ihalo < max_id ; ihalo++)
+  for(ihalo = 0; ihalo <= max_id ; ihalo++)
     {
-      if(haloA->mhalos[ihalo].descendant < NULLPOINT)
-	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID);
-      else
-	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant);
-      if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
+      /* if(haloA->mhalos[ihalo].descendant < NULLPOINT) */
+      /* 	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID); */
+      /* else */
+      /* 	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant); */
+
+      if(ihalo == max_id)
 	{
 	  qsort(merit_prog,haloB->mhalos[ihid].nprogs,sizeof(merit_t),compare_merit_t_by_Mvir);
 	  haloB->mhalos[ihid].main_progenitor = merit_prog[haloB->mhalos[ihid].nprogs-1].haloID;
