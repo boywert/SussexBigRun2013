@@ -113,21 +113,21 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
 
-  printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid);
-  for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++)
-    {
-      for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
-	{
-	  printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
-	}
-    }
+  /* printf("hid:%llu s:%d d:%d id:%llu\n",hid,snapid,domainid,localid); */
+  /* for(ihalo=0; ihalo < aux_data[snapid][domainid].nHalos; ihalo++) */
+  /*   { */
+  /*     for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++) */
+  /* 	{ */
+  /* 	  printf("%llu ---> %llu:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo); */
+  /* 	} */
+  /*   } */
 
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
     {
       if(i==0)
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  printf("firstprog <= hid : %llu <=%llu  .... p:%d/%d\n",curid,hid,i,aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs);
+	  //printf("firstprog <= hid : %llu <=%llu  .... p:%d/%d\n",curid,hid,i,aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
@@ -137,7 +137,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       else
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  printf("nextprog <= hid : %llu <=%llu  .... p:%d\n",curid,hid,i);
+	  //printf("nextprog <= hid : %llu <=%llu  .... p:%d\n",curid,hid,i);
 	  complete_clgal_aux(curid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
