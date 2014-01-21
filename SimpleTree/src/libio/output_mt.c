@@ -118,11 +118,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
     {
       for(whalo=0; whalo < aux_data[snapid][domainid].lgal_aux_halos[ihalo].nprogs; whalo++)
 	{
-	  if(aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID == aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo])
-	    {
-	      printf("before loop: curid = hid : %llu  .... p:%llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo],whalo);
-	      exit(1);
-	    }
+	  printf("%llu ---> %llu\n",aux_data[snapid][domainid].lgal_aux_halos[ihalo].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[ihalo].proglist[whalo]);
 	}
     }
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
