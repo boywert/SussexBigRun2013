@@ -172,9 +172,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  haloA->mhalos[merit_prog[0].haloID].next_progenitor = NULLPOINT;
   		}
 	      haloB->mhalos[ihid].proglist = realloc(haloB->mhalos[ihid].proglist,haloB->mhalos[ihid].nprogs*sizeof(hid_t));
+	      printf("calculated: %llu ---- %d\n",haloB->mhalos[ihid].globalRefID,haloB->mhalos[ihid].nprogs)
 	      for(proghalo=0;proghalo<haloB->mhalos[ihid].nprogs;proghalo++)
 	      	{
 	      	  haloB->mhalos[ihid].proglist[proghalo] = haloA->mhalos[merit_prog[haloB->mhalos[ihid].nprogs-proghalo-1].haloID].globalRefID;
+		  printf("%llu: prog  ----> %llu\n",proghalo,haloB->mhalos[ihid].proglist[proghalo]);
 	      	}
   	    }
   	  ihid = haloA->mhalos[ihalo].descendant;
