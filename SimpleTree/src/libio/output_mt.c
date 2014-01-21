@@ -60,15 +60,15 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   internalaux_read(&(aux_data[nSnaps-1][localdomain]), outputfolder);
   
 
-  /* for(ihalo=0;ihalo<aux_data[nSnaps][localdomain].nHalos;ihalo++) */
-  /*   { */
-  /*     complete_clgal_aux(aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, outputfolder); */
+  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain].nHalos;ihalo++)
+    {
+      complete_clgal_aux(aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, outputfolder);
   /*     /\* /\\* set to 1 element *\\/ *\/ */
   /*     /\* nHalosinTree[ihalo] += 1; *\/ */
   /*     /\* fulltree[ihalo] = malloc(sizeof(full_tree_t)); *\/ */
   /*     /\* fulltree[ihalo][0].globalRefID = aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].globalRefID; *\/ */
   /*     /\* aux_data[nSnaps][localdomain].lgal_aux_halos[ihalo].RootID = ihalo; *\/ */
-  /*   } */
+    }
   /*   /\* Set up merger_tree - root level *\/ */
   /* fulltree = malloc(aux_data[nSnaps][localdomain].nHalos*sizeof(struct full_tree *)); */
   /* nHalosinTree = calloc(aux_data[nSnaps][localdomain].nHalos,sizeof(hid_t)); */
