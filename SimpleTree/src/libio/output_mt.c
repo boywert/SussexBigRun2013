@@ -521,7 +521,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	      for(whalo=0; whalo < aux_data->lgal_aux_halos[ihalo].nprogs; whalo++)
 		{
 	
-		  printf("read in : %llu ---> %llu:%llu\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo);
+		  printf("read in : %llu ---> %llu:%llu/%d\n",aux_data->lgal_aux_halos[ihalo].globalRefID,aux_data->lgal_aux_halos[ihalo].proglist[whalo],whalo,aux_data->lgal_aux_halos[ihalo].nprogs);
 		   
 
 		}
