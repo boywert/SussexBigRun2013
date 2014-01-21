@@ -29,19 +29,11 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 {
   clgal_aux_data_wrapper_t **aux_data;
   int i,j,itree,total_trees;
-  hid_t ihalo,curid;
+  hid_t ihalo,curid,checkid;
   hid_t *nHalosinTree;
   full_tree_t **fulltree;
-  /* struct merger_tree  */
-  /* { */
-  /*   int snapid; */
-  /*   int domainid; */
-  /*   hid_t localid; */
-  /*   hid_t descendant; */
-  /*   hid_t firstprogenitor; */
-  /*   hid_t nextprogenitor; */
-  /*   hid_t rootid; */
-  /* } m_trees; */
+  id_component_t local_snap_data;
+
   /* Set up snapshot info */
   aux_data = malloc(nSnaps*sizeof(clgal_aux_data_wrapper_t*));
   for(i=1;i<nSnaps;i++)
@@ -84,7 +76,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
-	  
+	  local_snap_data = extract_id_component(curid);
 	}
     }
 
