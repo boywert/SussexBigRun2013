@@ -141,9 +141,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo = 0; ihalo < max_id ; ihalo++)
     {
       if(haloA->mhalos[ihalo].descendant < NULLPOINT)
-	printf("ihalo = %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID);
+	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID);
       else
-	printf("ihalo = %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant);
+	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant);
       if(haloA->mhalos[ihalo].descendant == NULLPOINT && ihid < NULLPOINT)
 	{
 	  break;
