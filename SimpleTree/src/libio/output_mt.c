@@ -27,7 +27,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
-  clgal_aux_data_wrapper_t aux_data[nSnaps][totaldomains];
+  clgal_aux_data_wrapper_t **aux_data;
   int i,j;
   hid_t ihalo;
   hid_t *nHalosinTree;
@@ -43,8 +43,10 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /*   hid_t rootid; */
   /* } m_trees; */
   /* Set up snapshot info */
+  aux_data = malloc(nSnaps*sizeof(clgal_aux_data_wrapper_t*));
   for(i=1;i<nSnaps;i++)
     {
+      aux_data[i] = malloc(totaldomains*sizeof(clgal_aux_data_wrapper_t));
       for(j=0;j<totaldomains;j++)
 	{
 	  aux_data[i][j].already_read = 0;
@@ -74,8 +76,24 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
     {
       free(fulltree[ihalo]);
     }  
-  free(mtree);
+  free(fulltree);
   free(nHalosinTree);
+
+  for(i=1;i<nSnaps;i++)
+    {
+      for(j=0;j<totaldomains;j++)
+	{
+	  if(aux_data[i][j].already_read == 1)
+	    {
+	      for(ihalo=0;ihalo<aux_data[i][j].nHalos;ihalo++)
+		{
+		  free(aux_data[i][j].lgal_aux_halos[ihalo].proglist);
+		}
+	    }  
+	}
+      free(aux_data[i]);     
+    }
+  free(aux_data);
 }
 
 /* fill in FirstProgenitors,NextProgenitor,Descendant */
