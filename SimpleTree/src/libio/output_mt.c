@@ -66,18 +66,13 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
     }
 
   
-  /* Set up merger_tree - root level */
+  /* Set up merger_tree - from root level */
   fulltree = malloc(aux_data[nSnaps-1][localdomain].nHalos*sizeof(full_tree_t *));
   nHalosinTree = calloc(aux_data[nSnaps-1][localdomain].nHalos,sizeof(hid_t));
 
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
-      /* set to 1 element */
-      nHalosinTree[ihalo] = 1;
-      fulltree[ihalo] = malloc(sizeof(full_tree_t));
-      fulltree[ihalo][0].globalRefID = aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID;
-      aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].TreeNr = ihalo;
-      aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].hidTree = 0;
+      treecrawler(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, (int)ihalo, fulltree, nHalosinTree);
     }
 
 
