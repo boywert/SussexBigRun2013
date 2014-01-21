@@ -514,7 +514,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 
       aux_data->already_read = 1;
 
-      if(aux_data->snapid == 22)
+      if(aux_data->snapid > 0)
 	{
 	  for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	    {
