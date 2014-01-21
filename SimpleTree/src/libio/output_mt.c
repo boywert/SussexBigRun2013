@@ -57,7 +57,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
     }
 
   /* Read in last snapshot data */
-  internalaux_read(&(aux_data[nSnaps][localdomain]), outputfolder);
+  internalaux_read(&(aux_data[nSnaps-1][localdomain]), outputfolder);
   
   /* Set up merger_tree - root level */
   fulltree = malloc(aux_data[nSnaps][localdomain].nHalos*sizeof(struct full_tree *));
