@@ -82,7 +82,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
 
 
-  for(ihalo=0;ihalo<aux_data[nSnaps][localdomain].nHalos;ihalo++)
+  for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
       free(fulltree[ihalo]);
     }
