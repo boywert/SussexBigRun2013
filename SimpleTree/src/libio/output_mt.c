@@ -533,6 +533,10 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
       fclose(fp);
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
+	  if(aux_data->lgal_aux_halos[ihalo].FirstFOF == NULLPOINT)
+	    {
+	      aux_data->lgal_aux_halos[ihalo].FirstFOF = aux_data->lgal_aux_halos[ihalo].globalRefID;
+	    }
 	  aux_data->lgal_aux_halos[ihalo].FirstProgenitor = NULLPOINT;
 	  aux_data->lgal_aux_halos[ihalo].NextProgenitor = NULLPOINT;
 	  aux_data->lgal_aux_halos[ihalo].Descendant = NULLPOINT;
