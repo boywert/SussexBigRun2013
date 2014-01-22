@@ -42,7 +42,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 {
   clgal_aux_data_wrapper_t **aux_data;
   int i,j,itree,total_trees;
-  hid_t ihalo,curid,checkid;
+  hid_t ihalo,curid,cur_fof_id;
   hid_t *nHalosinTree;
   full_tree_t **fulltree;
   id_component_t local_snap_data;
