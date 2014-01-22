@@ -205,7 +205,7 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   /*   } */
   if(hid == 35001830000001676)
     {
-      printf("35001830000001676 %d -> %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr);
+      printf("35001830000001676 %d -> %d | < %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant);
     }
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
