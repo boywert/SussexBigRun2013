@@ -94,7 +94,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	  cur_fof_id = cur_aux_data->FirstFOF;
 	  while(cur_fof_id < NULLPOINT)
 	    {
-	      printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
+	      //printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
 	      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(cur_fof_id,aux_data);
 	      if(cur_aux_data->TreeNr != itree)
 		{
