@@ -91,8 +91,13 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
-	  printf("id:%llu M:%f\n",cur_aux_data->globalRefID,cur_aux_data->lgal_halo_data.M_Crit200);
-	  
+	  cur_fof_id = cur_aux_data->FirstFOF;
+	  while(cur_fof_id < NULLPOINT)
+	    {
+	      printf("checking halo %llu\n",cur_fof_id);
+	      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(cur_fof_id,aux_data);
+	      cur_fof_id = cur_aux_data->FirstFOF;
+	    }
 	}
     }
 
