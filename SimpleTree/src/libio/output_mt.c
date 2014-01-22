@@ -24,6 +24,17 @@ id_component_t extract_id_component(hid_t hid);
 
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree);
 void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
+clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
+
+clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data)
+{
+  id_component_t local_snap_data;
+  clgal_aux_data_t* data;
+  local_snap_data = extract_id_component(hid);
+  data = &(aux_data[local_snap_data.snapid][local_snap_data.domainid].lgal_aux_halos[local_snap_data.localid]);
+  return data;
+}
+
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
@@ -77,6 +88,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  local_snap_data = extract_id_component(curid);
+	  
 	}
     }
 
