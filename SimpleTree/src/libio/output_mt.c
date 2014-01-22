@@ -147,6 +147,11 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
 
+  if(aux_data[snapid][domainid].lgal_aux_halos[localid].doneaux == 1)
+    {
+      printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
+    }
+
   /* make sure to read the current catalogue */
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
@@ -188,7 +193,6 @@ id_component_t extract_id_component(hid_t hid)
   return extract;
 }
 
-
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree)
 {
   int snapid,domainid;
@@ -198,6 +202,10 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
 
+  if(aux_data[snapid][domainid].lgal_aux_halos[localid].donetree == 1)
+    {
+      printf("%llu duplicated in treecrawler\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
+    }
   //printf("hid = %llu\n",hid);
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
   /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1) */
@@ -229,7 +237,7 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
     {
       treecrawler(nextprog, aux_data, treenr, fulltree, nHalosinTree);
     }
-  
+  aux_data[snapid][domainid].lgal_aux_halos[localid].donetree = 1;
 }
 
 void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
@@ -552,6 +560,8 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	  aux_data->lgal_aux_halos[ihalo].Descendant = NULLPOINT;
 	  aux_data->lgal_aux_halos[ihalo].TreeNr = -1;
 	  aux_data->lgal_aux_halos[ihalo].hidTree = -1;
+	  aux_data->lgal_aux_halos[ihalo].doneaux = 0;
+	  aux_data->lgal_aux_halos[ihalo].donetree = 0;
 	  aux_data->lgal_aux_halos[ihalo].redshift = aux_data->redshift;
 	}
       qsort(aux_data->lgal_aux_halos,aux_data->nHalos, sizeof(clgal_aux_data_t),compare_clgal_aux_data_t_by_globalRefID);
