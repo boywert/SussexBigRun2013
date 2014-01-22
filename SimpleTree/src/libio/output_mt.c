@@ -199,10 +199,10 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
 
   //printf("hid = %llu\n",hid);
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
-  /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1) */
-  /*   { */
-  /*     printf("id: %llu duplicated : original %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr); */
-  /*   } */
+  if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1)
+    {
+      printf("id: %llu duplicated : original %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr);
+    }
   if(hid == 35001830000001676)
     {
       printf("35001830000001676 %d -> %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr);
