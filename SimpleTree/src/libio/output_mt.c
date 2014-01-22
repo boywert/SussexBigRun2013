@@ -199,13 +199,13 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
 
   //printf("hid = %llu\n",hid);
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
-  if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1)
+  /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1) */
+  /*   { */
+  /*     printf("id: %llu duplicated : original %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr); */
+  /*   } */
+  if(hid == 35001830000001676)
     {
-      printf("id: %llu duplicated : original %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr);
-    }
-  if(hid == 15001840000000018)
-    {
-      printf("15001840000000018 %d -> %d | < %llu \n",aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant);
+      printf("35001830000001676 %d -> %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr);
     }
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
