@@ -182,6 +182,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
 	  previd = curid;
 	}
     }
+  aux_data[snapid][domainid].lgal_aux_halos[localid].doneaux = 1;
 }
 
 id_component_t extract_id_component(hid_t hid)
