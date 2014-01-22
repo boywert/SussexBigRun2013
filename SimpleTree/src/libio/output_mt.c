@@ -84,7 +84,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
 
   /* Group trees into bushes */
-  total_trees = ihalo<aux_data[nSnaps-1][localdomain].nHalos;
+  total_trees = aux_data[nSnaps-1][localdomain].nHalos;
   for(itree=0;itree<total_trees;itree++)
     {
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
