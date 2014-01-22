@@ -147,14 +147,14 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
 
-  if(aux_data[snapid][domainid].lgal_aux_halos[localid].doneaux == 1)
-    {
-      printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
-    }
 
   /* make sure to read the current catalogue */
   internalaux_read(&(aux_data[snapid][domainid]),outputfolder);
 
+  if(aux_data[snapid][domainid].lgal_aux_halos[localid].doneaux == 1)
+    {
+      printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
+    }
 
 
   for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
