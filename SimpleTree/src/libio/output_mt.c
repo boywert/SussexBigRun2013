@@ -99,6 +99,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
 	    }
+	  printf("checking halo %llu=>%llu",curid,cur_fof_id);
 	}
     }
 
