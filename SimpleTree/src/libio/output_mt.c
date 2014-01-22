@@ -90,13 +90,16 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
-	  printf("start with %llu\n",curid);
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  cur_fof_id = cur_aux_data->FirstFOF;
 	  while(cur_fof_id < NULLPOINT)
 	    {
 	      printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
 	      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(cur_fof_id,aux_data);
+	      if(cur_aux_data->TreeNr != itree)
+		{
+		  printf("moving %d => %d\n",cur_aux_data->TreeNr,itree);
+		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
 	    }
