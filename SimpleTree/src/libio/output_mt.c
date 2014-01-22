@@ -7,7 +7,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
 int compare_clgal_aux_data_t_by_globalRefID(const void *v1, const void *v2);
 uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
 
-
+int refdomain;
 typedef struct full_tree
 {
   hid_t intreeid,globalRefID;
@@ -50,6 +50,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
   /* Set up snapshot info */
   aux_data = malloc(nSnaps*sizeof(clgal_aux_data_wrapper_t*));
+  refdomain = localdomain;
   for(i=1;i<nSnaps;i++)
     {
       aux_data[i] = malloc(totaldomains*sizeof(clgal_aux_data_wrapper_t));
@@ -205,7 +206,7 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   /*   } */
   if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1)
     {
-      printf("%llu %d -> %d | < %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant);
+      printf("%llu %d -> %d | < %llu ... %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant,aux_data[38][refdomain].lgal_aux_halos[treenr].globalRefID);
     }
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
