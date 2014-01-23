@@ -157,7 +157,8 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
       printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,aux_data);
       printf("Desc: %llu=>%llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,cur_aux_data->FirstProgenitor);
-      printf("RefID : %llu\n",refid);
+      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data);
+      printf("RefID : %llu=>%llu\n",refid,cur_aux_data->proglist[0]);
       
     }
 
