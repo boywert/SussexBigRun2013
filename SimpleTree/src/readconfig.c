@@ -1,7 +1,7 @@
 #include "readconfig.h"
 
 long long unsigned param_npart_box;
-double  param_boxsize,param_buffer_size;
+double  param_boxsize,param_buffer_size,param_fixed_padding;
 int  param_domain_per_dim,param_chunk_per_dim,param_chunk_mpi,param_domain_per_chunk;
 char param_INPUTDIR[1024];
 char param_OUTPUTDIR[1024];
@@ -92,6 +92,11 @@ void readconfig()
   config[nconf].used = 0;
   nconf++;
 
+  config[nconf].type = 3;
+  config[nconf].pointer = &param_fixed_paddding;
+  sprintf(config[nconf].IDENTIFIER,"FIXED_PADDING");
+  config[nconf].used = 0;
+  nconf++;
   /* end define identifiers */
 
   fp = fopen("config","r");
