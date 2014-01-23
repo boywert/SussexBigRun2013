@@ -149,32 +149,32 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
 
   for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++ )
     {
-      if(position == 1) //-x
+      if(position == 1)      // upper x
 	{
 	  if(mhalo.mhalos[ihalo].Xc > min_x)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
 	}
-      else if(position == 2) //+x
+      else if(position == 2) // lower x
 	{
 	  if(mhalo.mhalos[ihalo].Xc < max_x)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
 	}
-      else if(position == 3) //-y
+      else if(position == 3) // upper y
 	{
 	  if(mhalo.mhalos[ihalo].Yc > min_y)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
 	}
-      else if(position == 4) //+y
+      else if(position == 4) // lower y
 	{
 	  if(mhalo.mhalos[ihalo].Yc < max_y)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
 	}
-      else if(position == 5) //-z
+      else if(position == 5) // upper z
 	{
 	  if(mhalo.mhalos[ihalo].Zc > min_z)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
 	}
-      else if(position == 6) //+z
+      else if(position == 6) // lower z
 	{
 	  if(mhalo.mhalos[ihalo].Zc > max_z)
 	    mhalo.mhalos[ihalo].ID = NULLPOINT;
