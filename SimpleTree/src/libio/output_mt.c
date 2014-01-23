@@ -208,20 +208,20 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
 
-  if(aux_data[snapid][domainid].lgal_aux_halos[localid].donetree == 1)
-    {
-      printf("%llu duplicated in treecrawler\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
-    }
+    /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].donetree == 1) */
+    /* { */
+    /*   printf("%llu duplicated in treecrawler\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID); */
+    /* } */
   //printf("hid = %llu\n",hid);
   //internalaux_read(&(aux_data[snapid][domainid]), outputfolder,outputfolder);
   /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1) */
   /*   { */
   /*     printf("id: %llu duplicated : original %d\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr); */
   /*   } */
-  if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1)
-    {
-      printf("%llu %d -> %d | < %llu ... %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant,aux_data[38][refdomain].lgal_aux_halos[treenr].globalRefID);
-    }
+  /* if(aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr > -1) */
+  /*   { */
+  /*     printf("%llu %d -> %d | < %llu ... %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID,aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr,treenr,aux_data[snapid][domainid].lgal_aux_halos[localid].Descendant,aux_data[38][refdomain].lgal_aux_halos[treenr].globalRefID); */
+  /*   } */
   aux_data[snapid][domainid].lgal_aux_halos[localid].TreeNr = treenr;
   aux_data[snapid][domainid].lgal_aux_halos[localid].hidTree = nHalosinTree[treenr];
 
@@ -520,7 +520,7 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
     return;
   
   sprintf(filename,"%s/%3.3f/mtaux_%d.dat_bin",outputfolder,aux_data->redshift,aux_data->domainid);
-  printf("reading %s\n",filename);
+  //printf("reading %s\n",filename);
   fp = fopen(filename, "rb");
   if(fp != NULL)
     {
