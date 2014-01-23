@@ -143,6 +143,7 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
   hid_t progid,nextprog,previd,curid;
   int i;
   id_component_t local_snap_data;
+  clgal_aux_data_t* cur_aux_data;
   snapid = hid/(uint64_t)pow(10,15);
   domainid = (hid%(uint64_t)pow(10,15))/(uint64_t)pow(10,10);
   localid = hid%(uint64_t)pow(10,10)-1;
@@ -154,7 +155,8 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
   if(aux_data[snapid][domainid].lgal_aux_halos[localid].doneaux == 1 && aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc != refid)
     {
       printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
-      printf("Desc: %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc);
+      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,aux_data);
+      printf("Desc: %llu=>%llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,cur_aux_data->FirstProgenitors);
       printf("RefID : %llu\n",refid);
       
     }
