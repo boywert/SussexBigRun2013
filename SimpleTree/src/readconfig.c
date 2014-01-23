@@ -93,7 +93,7 @@ void readconfig()
   nconf++;
 
   config[nconf].type = 3;
-  config[nconf].pointer = &param_fixed_paddding;
+  config[nconf].pointer = &param_fixed_padding;
   sprintf(config[nconf].IDENTIFIER,"FIXED_PADDING");
   config[nconf].used = 0;
   nconf++;
