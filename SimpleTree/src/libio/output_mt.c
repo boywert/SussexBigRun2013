@@ -69,7 +69,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /* Prepare other snapshots */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
-      complete_clgal_aux(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, NULLPOINT,s aux_data, outputfolder);
+      complete_clgal_aux(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, NULLPOINT, aux_data, outputfolder);
     }
 
   
