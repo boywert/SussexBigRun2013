@@ -155,6 +155,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
     {
       printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
       printf("Desc: %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc);
+      printf("current Desc: %llu\n",hid);
     }
 
 
