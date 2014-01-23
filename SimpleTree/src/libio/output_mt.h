@@ -27,6 +27,7 @@ typedef struct clgal_aux_data
   int hidTree;
   int doneaux;
   int donetree;
+  hid_t prevDesc;
   uint32_t nprogs;
   hid_t *proglist;
   struct Lgalaxy_halo_data lgal_halo_data;
