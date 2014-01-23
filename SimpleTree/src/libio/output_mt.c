@@ -261,18 +261,18 @@ void sussexbigrun_dm_outputs( m_halo_wrapper_t* haloB, char* outputfolder, int d
   fp = fopen(filename, "w+");
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
-      /* if(haloB->mhalos[ihalo].used == 1) */
-      /* 	{ */
-      fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
-	      haloB->mhalos[ihalo].Xc,
-	      haloB->mhalos[ihalo].Yc,
-	      haloB->mhalos[ihalo].Zc,
-	      haloB->mhalos[ihalo].Mvir,
-	      haloB->mhalos[ihalo].Rvir,
-	      haloB->mhalos[ihalo].dm_dt,
-	      haloB->mhalos[ihalo].oriID,
-	      haloB->mhalos[ihalo].domainID);
-      /* } */
+      if(haloB->mhalos[ihalo].used == 1)
+	{
+	  fprintf(fp,"%g\t%g\t%g\t%g\t%g\t%g\t%llu\t%d\n",
+		  haloB->mhalos[ihalo].Xc,
+		  haloB->mhalos[ihalo].Yc,
+		  haloB->mhalos[ihalo].Zc,
+		  haloB->mhalos[ihalo].Mvir,
+		  haloB->mhalos[ihalo].Rvir,
+		  haloB->mhalos[ihalo].dm_dt,
+		  haloB->mhalos[ihalo].oriID,
+		  haloB->mhalos[ihalo].domainID);
+	}
     }
   fclose(fp);
 }
@@ -337,7 +337,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   int ih,len;
   float M200,Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
   long long MostBoundID;
-
+  hid_t nHalos;
 
  
   create_subfind_substruct(haloB);
@@ -353,97 +353,145 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   if(fp != NULL)
     {
       /* write total halo number */
-      fwrite(&(haloB->nHalos),sizeof(hid_t),1,fp);
-      /* write nprogs */
+      nHalos = 0;
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      nHalos++;
+	    }
+	}
+      fwrite(&(nHalos),sizeof(hid_t),1,fp);
+      /* write nprogs */
+      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+	{	  
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      fwrite(&(haloB->mhalos[ihalo].nprogs),sizeof(uint32_t),1,fp);
+	    }
 	}
       /* write proglist */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
 	  //printf("Just write in : %llu --- %d\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].nprogs);
-	  for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
-	    {	      
-	      /* for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++) */
-	      /* 	printf("%llu: prog  ----> %llu\n",whalo,haloB->mhalos[ihalo].proglist[whalo]); */
-
-	      fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
+		{	      
+		  /* for(whalo=0;whalo<haloB->mhalos[ihalo].nprogs;whalo++) */
+		  /* 	printf("%llu: prog  ----> %llu\n",whalo,haloB->mhalos[ihalo].proglist[whalo]); */
+		  
+		  fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+		}
 	    }
 	}
+
 
       /* write globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  //printf("globalRefID: %llu\n",haloB->mhalos[ihalo].globalRefID);
-	  fwrite(&(haloB->mhalos[ihalo].globalRefID),sizeof(hid_t),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      //printf("globalRefID: %llu\n",haloB->mhalos[ihalo].globalRefID);
+	      fwrite(&(haloB->mhalos[ihalo].globalRefID),sizeof(hid_t),1,fp);
+	    }
 	}
       /* write FirstFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  //printf("FirstFOF: %llu\n",haloB->mhalos[ihalo].UpHalo);
-	  fwrite(&(haloB->mhalos[ihalo].UpHalo),sizeof(hid_t),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      //printf("FirstFOF: %llu\n",haloB->mhalos[ihalo].UpHalo);
+	      fwrite(&(haloB->mhalos[ihalo].UpHalo),sizeof(hid_t),1,fp);
+	    }
 	}  
       /* write NextFOF globalRefID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  //printf("NextFOF: %llu\n",haloB->mhalos[ihalo].NextHalo);
-	  fwrite(&(haloB->mhalos[ihalo].NextHalo),sizeof(hid_t),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      //printf("NextFOF: %llu\n",haloB->mhalos[ihalo].NextHalo);
+	      fwrite(&(haloB->mhalos[ihalo].NextHalo),sizeof(hid_t),1,fp);
+	    }
 	}  
       /* write M200 */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
-	  //printf("M200: %f\n",M200);
-	  fwrite(&(M200),sizeof(float),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      M200 = haloB->mhalos[ihalo].Mvir * Msun2Gadget;
+	      //printf("M200: %f\n",M200);
+	      fwrite(&(M200),sizeof(float),1,fp);
+	    }
 	}
       /* write len */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  len = haloB->mhalos[ihalo].npart;
-	  fwrite(&(len),sizeof(int),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      len = haloB->mhalos[ihalo].npart;
+	      fwrite(&(len),sizeof(int),1,fp);
+	    }
 	}
       /* write Pos[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  Pos[0] = haloB->mhalos[ihalo].Xc*kpc2Gadget;
-	  Pos[1] = haloB->mhalos[ihalo].Yc*kpc2Gadget;
-	  Pos[2] = haloB->mhalos[ihalo].Zc*kpc2Gadget;
-	  fwrite(Pos,sizeof(float),3,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      Pos[0] = haloB->mhalos[ihalo].Xc*kpc2Gadget;
+	      Pos[1] = haloB->mhalos[ihalo].Yc*kpc2Gadget;
+	      Pos[2] = haloB->mhalos[ihalo].Zc*kpc2Gadget;
+	      fwrite(Pos,sizeof(float),3,fp);
+	    }
 	}
       /* write Vel[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  Vel[0] = haloB->mhalos[ihalo].VXc;
-	  Vel[1] = haloB->mhalos[ihalo].VYc;
-	  Vel[2] = haloB->mhalos[ihalo].VZc;
-	  fwrite(Vel,sizeof(float),3,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      Vel[0] = haloB->mhalos[ihalo].VXc;
+	      Vel[1] = haloB->mhalos[ihalo].VYc;
+	      Vel[2] = haloB->mhalos[ihalo].VZc;
+	      fwrite(Vel,sizeof(float),3,fp);
+	    }
 	}
       /* write VelDisp */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  VelDisp = haloB->mhalos[ihalo].sigV;
-	  fwrite(&(VelDisp),sizeof(float),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      VelDisp = haloB->mhalos[ihalo].sigV;
+	      fwrite(&(VelDisp),sizeof(float),1,fp);
+	    }
 	}     
       /* write Vmax */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  Vmax = haloB->mhalos[ihalo].Vmax;
-	  fwrite(&(Vmax),sizeof(float),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      Vmax = haloB->mhalos[ihalo].Vmax;
+	      fwrite(&(Vmax),sizeof(float),1,fp);
+	    }
 	}    
       /* write Spin[3] */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  Spin[0] = haloB->mhalos[ihalo].SpinX;
-	  Spin[1] = haloB->mhalos[ihalo].SpinY;
-	  Spin[2] = haloB->mhalos[ihalo].SpinZ;
-	  fwrite(Spin,sizeof(float),3,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      Spin[0] = haloB->mhalos[ihalo].SpinX;
+	      Spin[1] = haloB->mhalos[ihalo].SpinY;
+	      Spin[2] = haloB->mhalos[ihalo].SpinZ;
+	      fwrite(Spin,sizeof(float),3,fp);
+	    }
 	}    
       /* write MostBoundID */
       for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
 	{
-	  MostBoundID = haloB->mhalos[ihalo].Particles[0].ID;
-	  fwrite(&(MostBoundID),sizeof(long long),1,fp);
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      MostBoundID = haloB->mhalos[ihalo].Particles[0].ID;
+	      fwrite(&(MostBoundID),sizeof(long long),1,fp);
+	    }
 	}    
       fclose(fp);
     }
