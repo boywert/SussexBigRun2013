@@ -23,7 +23,7 @@ typedef struct id_component
 id_component_t extract_id_component(hid_t hid);
 
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree);
-void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
+void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
 
 
@@ -69,7 +69,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /* Prepare other snapshots */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
-      complete_clgal_aux(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, outputfolder);
+      complete_clgal_aux(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, NULLPOINT,s aux_data, outputfolder);
     }
 
   
@@ -135,7 +135,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 }
 
 /* fill in FirstProgenitors,NextProgenitor,Descendant */
-void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder)
+void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder)
 {
   hid_t ihalo,whalo;
   int snapid,domainid;
@@ -155,11 +155,8 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
     {
       printf("%llu duplicated in complete aux\n",aux_data[snapid][domainid].lgal_aux_halos[localid].globalRefID);
       printf("Desc: %llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc);
-      printf("current Desc");
-      for(i=0;i<aux_data[snapid][domainid].lgal_aux_halos[localid].nprogs;i++)
-	{
-	  printf("list %d: %llu\n",i,aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i]);
-	}
+      printf("RefID : %llu\n",refid);
+      
     }
 
 
@@ -168,7 +165,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       if(i==0)
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  complete_clgal_aux(curid, aux_data, outputfolder);
+	  complete_clgal_aux(curid, hid, aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
 	  aux_data[snapid][domainid].lgal_aux_halos[localid].FirstProgenitor = curid;
@@ -179,7 +176,7 @@ void complete_clgal_aux(hid_t hid, clgal_aux_data_wrapper_t **aux_data, char* ou
       else
 	{
 	  curid = aux_data[snapid][domainid].lgal_aux_halos[localid].proglist[i];
-	  complete_clgal_aux(curid, aux_data, outputfolder);
+	  complete_clgal_aux(curid, hid,aux_data, outputfolder);
 	  local_snap_data = extract_id_component(curid);
 	  internalaux_read(&(aux_data[local_snap_data.snapid][local_snap_data.domainid]), outputfolder);
 	  local_snap_data = extract_id_component(previd);
