@@ -6,7 +6,7 @@ CUBEP3MDOMAINS	6
 # for making merger tree stuff
 INPUTDIR	/mnt/lustre/scratch/cs390/AHF_halos_fixed/cubepm_131025_6_1728_47Mpc_ext2/
 OUTPUTDIR	/mnt/lustre/scratch/cs390/AHF_halos_fixed/cubepm_131025_6_1728_47Mpc_ext2/mergertrees/
-FIXED_PADDING	4000.0		#kpc/h normally 2x(MAX)Rvir
+FIXED_PADDING	1000.0		#kpc/h normally 2x(MAX)Rvir
 
 # for convert chunks to cubep3m
 NCHUNKSPERDIM	3
