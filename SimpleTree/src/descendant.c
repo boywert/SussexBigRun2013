@@ -225,11 +225,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  haloB->mhalos[ihalo].dm_dt = (haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir)/dt;
 	  dx = 0.0;
 	  
-	  dx = haloB->mhalos[ihalo].Xc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Xc;
+	  dx = fabs(haloB->mhalos[ihalo].Xc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Xc);
 	  dx = min(dx,param_boxsize-dx);
-	  dy = haloB->mhalos[ihalo].Yc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Yc;
+	  dy = fabs(haloB->mhalos[ihalo].Yc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Yc);
 	  dy = min(dy,param_boxsize-dy);
-	  dz = haloB->mhalos[ihalo].Zc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc;
+	  dz = fabs(haloB->mhalos[ihalo].Zc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc);
 	  dz = min(dz,param_boxsize-dz);
 	  ds = sqrt(pow2(dx)+pow2(dy)+pow2(dz));
 	  printf("%llu : ds=%lf\n",haloB->mhalos[ihalo].globalRefID,ds);
