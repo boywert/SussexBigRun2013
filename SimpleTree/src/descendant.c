@@ -89,7 +89,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  ihid =  search_m_particle_t_for_ID(curpart,tmppartB[0].npart,&(tmppartB[0].mparticle[0]) );
   	  if(ihid < NULLPOINT)
   	    {
-  	      merit[ihid].merit_delucia2007 += pow((double)ipart,-2./3);
+  	      merit[ihid].merit_delucia2007 += pow((double)(ipart+1),-2./3);
   	      merit[ihid].NsharedPIDs += 1;
   	    }
   	}
@@ -98,7 +98,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  merit[jhalo].merit_knollman2009 = (double)merit[jhalo].NsharedPIDs*(double)merit[jhalo].NsharedPIDs/(double)haloA->mhalos[ihalo].npart/haloB->mhalos[jhalo].npart;
   	}
       qsort(merit,haloB->nHalos,sizeof(merit_t),compare_merit_t_by_merit_delucia2007);
-      if(merit[haloB->nHalos-1].merit_delucia2007 > 2.5)
+      if(merit[haloB->nHalos-1].merit_delucia2007 > 1.8)
   	{
   	  haloA->mhalos[ihalo].descendant = merit[haloB->nHalos-1].haloID;
   	  haloA->mhalos[ihalo].merit_embed.merit_delucia2007 = merit[haloB->nHalos-1].merit_delucia2007;
