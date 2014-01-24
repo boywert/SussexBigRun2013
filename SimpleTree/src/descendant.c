@@ -231,6 +231,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  dz = haloB->mhalos[ihalo].Zc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc;
 	  dz = min(dz,param_boxsize-dz);
 	  ds = sqrt(pow2(dx)+pow2(dy)+pow2(dz));
+	  printf("%llu : ds=%lf\n",haloB->mhalos[ihalo].globalRefID,ds);
 	  if(ds > 100.0)
 	    {
 	      printf("%llu moved too much @ %lf:%lf\n",haloB->mhalos[ihalo].globalRefID,dx,param_boxsize);
