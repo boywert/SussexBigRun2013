@@ -235,11 +235,13 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  printf("%llu : %llu ds=%lf\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].oriID,ds);
 	  if(ds > 100.0)
 	    {
-	      printf("A:%llu (%f,%f,%f) => B:%llu (%f,%f,%f)\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].globalRefID,
+	      printf("A:%llu:%llu (%f,%f,%f) => B:%llu:%llu (%f,%f,%f)\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].globalRefID,
+		     haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].oriID,
 		     haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Xc,
 		     haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Yc,
 		     haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc,
 		     haloB->mhalos[ihalo].globalRefID,
+		     haloB->mhalos[ihalo].oriID,
 		     haloB->mhalos[ihalo].Xc,
 		     haloB->mhalos[ihalo].Yc,
 		     haloB->mhalos[ihalo].Zc		     
