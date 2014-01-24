@@ -244,7 +244,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 		     haloB->mhalos[ihalo].Yc,
 		     haloB->mhalos[ihalo].Zc		     
 		     );
-	      printf("%llu moved too much @ %lf:%lf\n",haloB->mhalos[ihalo].globalRefID,ds,param_boxsize*sqrt(1.5));
+	      printf("%llu moved too much @ %lf:%lf\n",haloB->mhalos[ihalo].globalRefID,ds,param_boxsize*sqrt(0.75));
 	      printf("merit delucia %lf\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].merit_embed.merit_delucia2007);
 	      printf("merit knollman %lf\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].merit_embed.merit_knollman2009);
 	      for(i=0;i<haloB->mhalos[ihalo].npart;i++)
