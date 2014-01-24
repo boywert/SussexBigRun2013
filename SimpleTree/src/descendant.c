@@ -6,7 +6,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id,proghalo;
-  double max_Mvir;
+  double max_Mvir,dx;
   uint64_t old,new;
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
@@ -222,6 +222,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
   	{
   	  haloB->mhalos[ihalo].dm_dt = (haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir)/dt;
+	  dx = 0.0;
+	  
+	  dx += pow2(fmod(haloB->mhalos[ihalo].Xc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Xc+param_boxsize,param_boxsize));
+	  dx += pow2(fmod(haloB->mhalos[ihalo].Yc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Yc+param_boxsize,param_boxsize));
+	  dx += pow2(fmod(haloB->mhalos[ihalo].Zc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc+param_boxsize,param_boxsize));
+	  dx = sqrt(dx);
+	  if(dx > 100.0)
+	    printf("%llu moved too much @ %lf\n",haloB->mhalos[ihalo].globalRefID,dx);
 	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
   	}
       else
