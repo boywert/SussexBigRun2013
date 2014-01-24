@@ -240,11 +240,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	      printf("merit knollman %lf\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].merit_embed.merit_knollman2009);
 	      for(i=0;i<haloB->mhalos[ihalo].npart;i++)
 		{
-		  printf("B=>%d:%llu\n",haloB->mhalos[ihalo].Particle[i].ID);
+		  printf("B=>%d:%llu\n",haloB->mhalos[ihalo].Particles[i].ID);
 		}
 	      for(i=0;i<haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].npart;i++)
 		{
-		  printf("A=>%d:%llu\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Particle[i].ID);
+		  printf("A=>%d:%llu\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Particles[i].ID);
 		}	      
 	      exit(1);
 	    }
