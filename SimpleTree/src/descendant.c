@@ -11,6 +11,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
   hid_t loophalo;
+  int i;
   /* [Boyd] Make the catalogue B exclusive table */
 
   
@@ -237,6 +238,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	      printf("%llu moved too much @ %lf:%lf\n",haloB->mhalos[ihalo].globalRefID,ds,param_boxsize*sqrt(1.5));
 	      printf("merit delucia %lf\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].merit_embed.merit_delucia2007);
 	      printf("merit knollman %lf\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].merit_embed.merit_knollman2009);
+	      for(i=0;i<haloB->mhalos[ihalo].npart;i++)
+		{
+		  printf("B=>%d:%llu\n",haloB->mhalos[ihalo].Particle[i].ID);
+		}
+	      for(i=0;i<haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].npart;i++)
+		{
+		  printf("A=>%d:%llu\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Particle[i].ID);
+		}	      
 	      exit(1);
 	    }
 	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,haloB->mhalos[ihalo].main_progenitor,haloB->mhalos[ihalo].Mvir-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Mvir);
