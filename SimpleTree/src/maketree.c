@@ -146,9 +146,9 @@ int main(int argc,char **argv)
     }
   for(l=0;l<pow3(param_domain_per_dim);l++)
     {
-      printf("Recompose Lgalaxy format=> domain: %d\n",l);
       if(l%mpi_nodes == mpi_rank)
 	{
+	  printf("Recompose Lgalaxy format=> domain: %d\n",l);
 	  generate_lgal_output(outputfolder,l,snaplist,tot_Snap, pow3(param_domain_per_dim));
 	}
     }
