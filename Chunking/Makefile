@@ -5,14 +5,14 @@ FC=mpif90
 
 ifeq ($(SYSTEM), "Sisu+Intel")
 	CC         	=	cc -std=c99 -Wall -W -fopenmp
-	FC         	=	ftn
+	FC         	=	ftn -fpp -O3
 
 endif
 
 all: chunk
 
 chunk: 
-	$(FC) -cpp -O3 chunk_cubep3m_v1.5.f90 -o chunk 	
+	$(FC) chunk_cubep3m_v1.5.f90 -o chunk 	
 
 clean:
 	rm -f chunk
