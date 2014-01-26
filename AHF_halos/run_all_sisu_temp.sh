@@ -28,7 +28,8 @@ n_chunks_total=27
 last_chunk=26
 
 
-
+alias mpicc="cc"
+alias mpif90="ftn"
 
 base_folder="/wrk/pr1uboyd/code/cubepm_131212_6_1728_47Mpc_ext2"
 workspace="$base_folder/AHF_halos/"
@@ -61,6 +62,8 @@ make
 cd ${chunk_srcfolder}
 make clean
 make 
+
+exit
 
 last_redshift="1000.0"
 
