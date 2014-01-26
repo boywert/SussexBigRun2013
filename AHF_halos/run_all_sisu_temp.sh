@@ -108,7 +108,7 @@ do
 	this_ic_filename=$(printf '%s/z_%s/' $chunk_folder $redshift)
 
 	echo "#!/bin/bash" > $this_pbs
-	echo "#SBATCH -t 03:00:00" > $this_pbs
+	echo "#SBATCH -t 03:00:00" >> $this_pbs
 	echo "#SBATCH -J" $chunk_job_name >> $this_pbs
 	echo "#SBATCH -o ${chunk_job_name}.o%j" >> $this_pbs
 	echo "#SBATCH -e ${chunk_job_name}.e%j" >> $this_pbs
@@ -147,7 +147,7 @@ do
 	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
 
 	    echo "#!/bin/bash" > $this_pbs
-	    echo "#SBATCH -t 03:00:00"  > $this_pbs
+	    echo "#SBATCH -t 03:00:00"  >> $this_pbs
 	    echo "#SBATCH -J" $ahf_job_name >> $this_pbs
 	    echo "#SBATCH -o $ahf_job_name.o%j" >> $this_pbs
 	    echo "#SBATCH -e $ahf_job_name.e%j" >> $this_pbs
