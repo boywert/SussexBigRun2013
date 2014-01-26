@@ -53,6 +53,8 @@ snaplist="$base_folder/AHF_halos/snaplist"
 halofinds="$base_folder/AHF_halos/halofinds"
 lastsnap="$base_folder/AHF_halos/lastsnap"
 
+chunkjobid_file="chunk_jobid"
+
 qname="small"
 
 #compile things
@@ -121,8 +123,8 @@ do
 	echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
 	echo "rm -rf" $this_ic_filename >> $this_pbs
 	echo "aprun -n $mpi_chunk -d $openmp_threads_chunk -N $mpi_per_node_chunk -S 4 -ss -cc cpu"  $chunk_exec $this_chunk_param >> $this_pbs
-	cat $this_pbs
-	#qsub $this_pbs
+	#cat $this_pbs
+	sbatch $this_pbs | awk '{ print $4 }' >  chunkjobid_file
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
@@ -153,7 +155,7 @@ do
 	    echo "#SBATCH -e $ahf_job_name.e%j" >> $this_pbs
 	    echo "#SBATCH -p small" >> $this_pbs
 	    echo "#SBATCH -N" $node_ahf >> $this_pbs
-	    echo "#SBATCH -d" $chunk_job_name >> $this_pbs
+	    echo "#SBATCH --dependency=afterok:${chunkjobid}" $chunk_job_name >> $this_pbs
 	    echo "#SBATCH --ntasks-per-node=16" >> $this_pbs
 	    echo "#SBATCH --no-requeue" >> $this_pbs
 
@@ -166,8 +168,8 @@ do
 	    
 	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
 	    echo "echo $line > $lastsnap" >> $this_pbs
-	    cat $this_pbs
-	    #qsub $this_pbs
+	    #cat $this_pbs
+	    sbatch $this_pbs
 	   
 	done
 	
