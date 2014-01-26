@@ -161,7 +161,7 @@ do
 	    echo "module load PrgEnv-intel" >> $this_pbs
 	    echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
 	    echo "rm -f ${this_output_prefix}*" >> $this_pbs
-	    echo "aprun -n $mpi_ahf -d $openmp_threads_ahf -N $mpi_per_node_ahf -S 4 -ss -cc cpu"  $ahf_exec $this_ahf_config >> $this_pbs
+	    echo "aprun -n $mpi_ahf -d $openmp_threads_ahf -N $mpi_per_node_ahf -S 2 -ss -cc cpu"  $ahf_exec $this_ahf_config >> $this_pbs
 	 
 	    echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
 	    
