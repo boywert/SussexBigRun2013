@@ -155,8 +155,7 @@ do
 	    echo "#SBATCH --ntasks-per-node=16" >> $this_pbs
 	    echo "#SBATCH --no-requeue" >> $this_pbs
 
-
-	    echo "module add sge" >> $this_pbs
+	    echo "module load cp2k/2.4-gnu-mpich-6.0.2" >> $this_pbs
 	    echo "export OMP_NUM_THREADS=$openmp_threads_ahf}" >> $this_pbs
 	    echo "rm -f ${this_output_prefix}*" >> $this_pbs
 	    echo 'aprun -n ${mpi_ahf} -d ${openmp_threads_ahf} -N ${mpi_per_node_ahf} -S 4 -ss -cc cpu'  $ahf_exec $this_ahf_config >> $this_pbs
