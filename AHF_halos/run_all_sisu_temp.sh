@@ -117,7 +117,7 @@ do
 	echo "#SBATCH --ntasks-per-node=16" >> $this_pbs
 	echo "#SBATCH --no-requeue" >> $this_pbs
 
-	echo "module swap PrgEnv-cray PrgEnv-intel" >> $this_pbs
+	echo "module load PrgEnv-intel" >> $this_pbs
 	echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
 	echo "rm -rf" $this_ic_filename >> $this_pbs
 	echo "aprun -n $mpi_chunk -d $openmp_threads_chunk -N $mpi_per_node_chunk -S 4 -ss -cc cpu"  $chunk_exec $this_chunk_param >> $this_pbs
@@ -157,7 +157,7 @@ do
 	    echo "#SBATCH --ntasks-per-node=16" >> $this_pbs
 	    echo "#SBATCH --no-requeue" >> $this_pbs
 
-	    echo "module swap PrgEnv-cray PrgEnv-intel" >> $this_pbs
+	    echo "module load PrgEnv-intel" >> $this_pbs
 	    echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
 	    echo "rm -f ${this_output_prefix}*" >> $this_pbs
 	    echo "aprun -n $mpi_ahf -d $openmp_threads_ahf -N $mpi_per_node_ahf -S 4 -ss -cc cpu"  $ahf_exec $this_ahf_config >> $this_pbs
