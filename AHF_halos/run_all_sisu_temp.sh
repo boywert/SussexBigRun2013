@@ -63,7 +63,6 @@ cd ${chunk_srcfolder}
 make clean
 make 
 
-exit
 
 last_redshift="1000.0"
 
