@@ -31,10 +31,10 @@ last_chunk=26
 alias mpicc="cc"
 alias mpif90="ftn"
 
-base_folder="/wrk/pr1uboyd/code/cubepm_131212_6_1728_47Mpc_ext2"
+base_folder="/wrk/pr1uboyd/code/cubepm_131212_6_1728_47Mpc_ext2/"
 workspace="$base_folder/AHF_halos/"
 
-particle_folder="/wrk/pr1u3001/cubepm_131212_6_1728_47Mpc_ext2/results"
+particle_folder="/wrk/pr1u3001/cubepm_131212_6_1728_47Mpc_ext2/results/"
 
 ahf_folder="$base_folder/ahf-v1.0-056.SUSSEXBIGRUN/"
 
