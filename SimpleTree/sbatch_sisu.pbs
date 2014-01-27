@@ -9,4 +9,4 @@
 #SBATCH --no-requeue
 
 module load PrgEnv-intel
-aprun -n 27 -S 1 -ss -cc cpu $1
+aprun -n 27 -N 16 -d 1 -S 1 -ss -cc cpu $1
