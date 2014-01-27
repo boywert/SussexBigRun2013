@@ -17,7 +17,7 @@ struct config
 };
 
 
-void readconfig()
+void readconfig(char* configfile)
 {
   FILE* fp;
   char buffer[1024],ident[1024],value[1024];
