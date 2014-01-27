@@ -75,7 +75,7 @@ int main(int argc,char **argv)
     {
       fp = fopen("status","r");
       if(fp == NULL)
-	start_snap = 1;
+	start_snap = 0;
       else
 	{
 	  if (fgets(stringbuff , 10 , fp) != NULL )
