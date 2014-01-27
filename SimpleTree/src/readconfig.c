@@ -99,7 +99,7 @@ void readconfig()
   nconf++;
   /* end define identifiers */
 
-  fp = fopen("config","r");
+  fp = fopen(configfile,"r");
   if(fp == NULL) 
     {
       printf("Cannot open config file\nExit(1)\n");

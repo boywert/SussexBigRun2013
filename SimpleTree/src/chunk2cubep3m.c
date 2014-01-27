@@ -5,6 +5,7 @@ int main(int argc,char **argv)
 {   
   char folder[1024],outputfolder[1024],snaplistFile[1024];
   char command[1024],stringbuff[10];
+  char configfile[1024];
   make_catalogue_halo_wrapper_t *halocatA;
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snapid1;
@@ -17,9 +18,22 @@ int main(int argc,char **argv)
   FILE *fp;
   
   initialise_MPI(&argc, &argv);
+
+
+  if(argc < 1)
+    {
+      if(mpi_rank == 0)
+	{
+	  printf("Usage: ./chunk2cubep3m [configfile]\nExit..\n");
+	}
+      finalise_MPI();
+      exit(1);
+    }
   
+  strcpy(configfile,argv[1]);
+
   init_memmgr();
-  readconfig();
+  readconfig(&(configfile[0]));
   sprintf(folder, param_CHUNKDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
   sprintf(snaplistFile,"halofinds");
