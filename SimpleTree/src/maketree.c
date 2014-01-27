@@ -28,12 +28,13 @@ int main(int argc,char **argv)
       finalise_MPI();
       exit(1);
     }
+  strcpy(configfile,argv[1]);
   /* [Boyd] initialise memory menager (don't need to use this actually, but some parts of the codes 
      are still using this method to track the memory used) */
   init_memmgr();
 
   /* [Boyd] Read config files == TODO need to specify config file later */
-  readconfig();
+  readconfig(&(configfile[0]));
 
   sprintf(folder, param_INPUTDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
