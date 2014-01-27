@@ -232,7 +232,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  dz = fabs(haloB->mhalos[ihalo].Zc-haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].Zc);
 	  dz = min(dz,param_boxsize-dz);
 	  ds = sqrt(pow2(dx)+pow2(dy)+pow2(dz));
-	  printf("%llu : %llu ds=%lf\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].oriID,ds);
+	  //printf("%llu : %llu ds=%lf\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].oriID,ds);
 	  if(ds > 100.0)
 	    {
 	      printf("A:%llu:%llu (%f,%f,%f) => B:%llu:%llu (%f,%f,%f)\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].globalRefID,
