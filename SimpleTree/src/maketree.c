@@ -5,6 +5,7 @@ int main(int argc,char **argv)
 {   
   char folder[1024],outputfolder[1024],snaplistFile[1024];
   char command[1024],stringbuff[10];
+  char configfile[1024];
   m_halo_wrapper_t *halocatA,*halocatB;
   char memmgr_buff[memmgr_max_str];
   double dt,snap1,snap2;
