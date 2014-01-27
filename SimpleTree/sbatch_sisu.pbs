@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH -t 00:30:00
 #SBATCH -J boyd
-#SBATCH -o boyd.%j
-#SBATCH -e boyd.%j
+#SBATCH -o boyd.o%j
+#SBATCH -e boyd.e%j
 #SBATCH -p test
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=16
