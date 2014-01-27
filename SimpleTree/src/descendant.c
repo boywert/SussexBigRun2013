@@ -6,12 +6,15 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id,proghalo;
-  double max_Mvir,dx,dy,dz,ds;
+  double max_Mvir,dx,dy,dz,ds,buffer_size;
   uint64_t old,new;
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
   hid_t loophalo;
   int i;
+
+  /* make buffer_size to check some weird movement */
+  buffer_size = param_fixed_padding +  speed_of_light*dt*max_part_speed_in_c;
   /* [Boyd] Make the catalogue B exclusive table */
 
   
@@ -233,7 +236,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  dz = min(dz,param_boxsize-dz);
 	  ds = sqrt(pow2(dx)+pow2(dy)+pow2(dz));
 	  //printf("%llu : %llu ds=%lf\n",haloB->mhalos[ihalo].globalRefID,haloB->mhalos[ihalo].oriID,ds);
-	  if(ds > 100.0)
+	  if(ds > buffer_size)
 	    {
 	      printf("A:%llu:%llu (%f,%f,%f) => B:%llu:%llu (%f,%f,%f)\n",haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].globalRefID,
 		     haloA->mhalos[haloB->mhalos[ihalo].main_progenitor].oriID,
