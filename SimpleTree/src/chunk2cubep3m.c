@@ -34,6 +34,11 @@ int main(int argc,char **argv)
 
   init_memmgr();
   readconfig(&(configfile[0]));
+
+  if(mpi_nodes != pow3(param_domain_per_dim))
+    {
+      printf("The total MPI nodes must be %d but the current MPI nodes is %d\nExit..\n",pow3(param_domain_per_dim),mpi_nodes);
+    }
   sprintf(folder, param_CHUNKDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
   sprintf(snaplistFile,"halofinds");
