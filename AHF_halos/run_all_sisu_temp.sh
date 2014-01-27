@@ -123,7 +123,7 @@ do
 	echo "rm -rf" $this_ic_filename >> $this_pbs
 	echo "aprun -n $mpi_chunk -d $openmp_threads_chunk -N $mpi_per_node_chunk -S 4 -ss -cc cpu"  $chunk_exec $this_chunk_param >> $this_pbs
 	#cat $this_pbs
-	chunkjobid=$(sbatch $this_pbs | awk '{ print $4 }')
+	#chunkjobid=$(sbatch $this_pbs | awk '{ print $4 }')
 	# run AHF on every chunks
 	# cubep3m
 	this_cubep3m_info="cubep3m.info"
@@ -139,7 +139,7 @@ do
 	    # ahf input file
 	    cp ${ahf_template} ${this_ahf_config}
 	    this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
-	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s_' $ahfoutput_folder $redshift $drho $i $redshift)
+	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/ahf' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
@@ -154,7 +154,7 @@ do
 	    echo "#SBATCH -e $ahf_job_name.e%j" >> $this_pbs
 	    echo "#SBATCH -p small" >> $this_pbs
 	    echo "#SBATCH -N" $node_ahf >> $this_pbs
-	    echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
+	    #echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
 	    echo "#SBATCH --ntasks-per-node=16" >> $this_pbs
 	    echo "#SBATCH --no-requeue" >> $this_pbs
 
