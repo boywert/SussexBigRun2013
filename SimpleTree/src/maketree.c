@@ -18,6 +18,16 @@ int main(int argc,char **argv)
   /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
   
+  /* Check parameter file */
+  if(argc < 1)
+    {
+      if(mpi_rank == 0)
+	{
+	  printf("Usage: ./maketree [configfile]\nExit..\n");
+	}
+      finalise_MPI();
+      exit(1);
+    }
   /* [Boyd] initialise memory menager (don't need to use this actually, but some parts of the codes 
      are still using this method to track the memory used) */
   init_memmgr();
