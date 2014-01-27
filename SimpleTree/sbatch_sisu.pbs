@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -t 00:30:00
+#SBATCH -t 12:00:00
 #SBATCH -J boyd
 #SBATCH -o boyd.o%j
 #SBATCH -e boyd.e%j
-#SBATCH -p test
-#SBATCH -N 2
+#SBATCH -p small
+#SBATCH -N 14
 #SBATCH --ntasks-per-node=16
 #SBATCH --no-requeue
 
 module load PrgEnv-intel
-aprun -n $2  $1
+aprun -n 216  $1
