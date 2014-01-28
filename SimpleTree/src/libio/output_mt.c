@@ -99,7 +99,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(cur_fof_id,aux_data);
 	      if(cur_aux_data->TreeNr != itree)
 		{
-		  printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
+		  //printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
 		  printf("moving %d => %d\n",cur_aux_data->TreeNr,itree);
 		}
 	      curid = cur_fof_id;
@@ -158,8 +158,9 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,aux_data);
       printf("Desc: %llu=>%llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,cur_aux_data->proglist[0]);
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data);
-      printf("RefID : %llu=>%llu\n",refid,cur_aux_data->proglist[0]);
+      printf("RefID : %llu=>%llu\nExit..\n",refid,cur_aux_data->proglist[0]);
       
+      exit(1)
     }
 
 
