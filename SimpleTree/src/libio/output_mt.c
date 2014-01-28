@@ -120,7 +120,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 			}
 		      src_aux_data->TreeNr = target_tree;
 		      src_aux_data->hidTree += nShifted;
-		      fultree[target_tree][src_aux_data->hidTree].globalRefID = src_aux_data->globalRefID;
+		      fulltree[target_tree][src_aux_data->hidTree].globalRefID = src_aux_data->globalRefID;
 		    }
 		  nHalosinTree[src_tree] = 0;
 		  free(fulltree[src_tree]);
