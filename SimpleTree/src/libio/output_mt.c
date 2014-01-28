@@ -10,7 +10,8 @@ uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_
 int refdomain;
 typedef struct full_tree
 {
-  hid_t intreeid,globalRefID;
+  hid_t intreeid;
+  hid_t globalRefID;
 } full_tree_t;
 
 typedef struct id_component
@@ -41,12 +42,13 @@ clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_d
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
   clgal_aux_data_wrapper_t **aux_data;
-  int i,j,itree,total_trees;
-  hid_t ihalo,curid,cur_fof_id;
+  int i,j,itree,total_trees,src_tree,target_tree;
+  hid_t ihalo,curid,cur_fof_id,jhalo,khalo;
   hid_t *nHalosinTree;
+  hid_t nShifted;
   full_tree_t **fulltree;
   id_component_t local_snap_data;
-  clgal_aux_data_t* cur_aux_data;
+  clgal_aux_data_t *cur_aux_data, *src_aux_data;
 
   /* Set up snapshot info */
   aux_data = malloc(nSnaps*sizeof(clgal_aux_data_wrapper_t*));
@@ -86,26 +88,46 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 
   /* Group trees into bushes */
   total_trees = aux_data[nSnaps-1][localdomain].nHalos;
+  /* In each tree */
   for(itree=0;itree<total_trees;itree++)
     {
+      target_tree = itree;
+      /* Lopp for all halos */
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
+	  /* And find any relative if exists */
 	  cur_fof_id = cur_aux_data->FirstFOF;
 	  while(cur_fof_id < NULLPOINT)
 	    {
-	      //printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
 	      cur_aux_data = clgal_aux_data_pointer_from_globalRefID(cur_fof_id,aux_data);
-	      if(cur_aux_data->TreeNr != itree)
+	      if(cur_aux_data->TreeNr != itree && cur_aux_data->TreeNr != -1)
 		{
-		  //printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
+		  /* move all halos in srctree to target tree */
 		  printf("moving %d => %d\n",cur_aux_data->TreeNr,itree);
+		  src_tree = cur_aux_data->TreeNr;
+		  nShifted = nHalosinTree[target_tree];
+		  nHalosinTree[target_tree] += nHalosinTree[src_tree];
+		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
+		  for(jhalo=0;jhalo<nHalosinTree[src_tree];jhalo++)
+		    {
+		      src_aux_data = clgal_aux_data_pointer_from_globalRefID(fulltree[src_tree][jhalo].globalRefID,aux_data);
+		      if(jhalo != src_aux_data->hidTree)
+			{
+			  printf("jhalo != hidTree\nExit\n");
+			  exit(1);
+			}
+		      src_aux_data->TreeNr = target_tree;
+		      src_aux_data->hidTree += nShifted;
+		      fultree[target_tree][src_aux_data->hidTree].globalRefID = src_aux_data->globalRefID;
+		    }
+		  nHalosinTree[src_tree] = 0;
+		  free(fulltree[src_tree]);
 		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
 	    }
-	  //printf("checking halo %llu=>%llu\n",curid,cur_fof_id);
 	}
     }
 
