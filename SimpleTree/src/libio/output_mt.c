@@ -30,8 +30,7 @@ id_component_t extract_id_component(hid_t hid);
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree);
 void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
-
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int lastsnap, int domainid, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
 
 /* For God's sake, I need this function to point the pointer to an element of aux_data when I specify a globalRefID - Boyd */
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data)
@@ -197,7 +196,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	}
     }
 
-  write_lgal_data(aux_data, total_trees, fulltree, nHalosinTree, outputfolder);
+  write_lgal_data(aux_data, total_trees, (nSnaps-1), localdomain, fulltree, nHalosinTree, outputfolder);
   /* free all */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
@@ -223,26 +222,56 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   free(aux_data);
 }
 
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int lastsnap, int domainid, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
 {
   int *maptreenr;
-  int new_total_trees,itree;
+  int new_total_trees,itree,total_halos;
   hid_t ihalo,curid;
   clgal_aux_data_t* cur_aux_data;
+  FILE *fp_tree;
+  char foldername[1024];
+  int TreeNHalos;
+
+  sprintf(foldername,"%s/treedata",outputfolder,haloB->redshift);
+  sprintf(command,"mkdir -p %s", foldername);
+  system(command);
+  sprintf(filename,"%s/treedata/trees_%03d.%d",outputfolder,lastsnap,domainid);
+  sprintf(command,"rm -f %s",filename);
+  system(command);
+
   /* record trees which have nhalosintree > 0 */
   maptreenr = malloc(total_trees*sizeof(int));
   new_total_trees = 0;
+  total_halos = 0;
   for(itree=0;itree<total_trees;itree++)
     {
       maptreenr[itree] = -1;
+      total_halos += nHalosinTree[itree];
       if(nHalosinTree[itree] > 0)
 	{
 	  maptreenr[itree] = new_total_trees;
 	  new_total_trees++;
 	}
     }
+
+  fp_tree = fopen(filename, "wb+");
+
+  /* write Ntrees,totNHalos */
+  fwrite(&(new_total_trees),sizeof(int),1,fp_tree);
+  fwrite(&(total_halos),sizeof(int),1,fp_tree);
   
-    for(itree=0;itree<total_trees;itree++)
+  /* write TreeNHalos */
+  for(itree=0;itree<total_trees;itree++)
+    {
+      if(nHalosinTree[itree] > 0)
+	{
+	  TreeNHalos = nHalosinTree[itree];
+	  fwrite(&(TreeNHalos),sizeof(int),1,fp_tree);
+	}
+    }
+  
+  /* write lgal halo_data trees properties */
+  for(itree=0;itree<total_trees;itree++)
     {
       /* sort it back intreeid referenced */
       qsort(fulltree[itree],nHalosinTree[itree], sizeof(full_tree_t),compare_full_tree_t_by_intreeid);
@@ -250,41 +279,10 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
-	  printf("Tree: %d\n",itree);
-	  printf("\tID: %d\n",(int) ihalo);
-	  printf("\tDest: %d\n",cur_aux_data->lgal_halo_data.Descendant);
-	  printf("\tfProg: %d\n",cur_aux_data->lgal_halo_data.FirstProgenitor);
-	  printf("\tnProg: %d\n",cur_aux_data->lgal_halo_data.NextProgenitor);
-	  printf("\tfFOF: %d\n",cur_aux_data->lgal_halo_data.FirstHaloInFOFgroup);
-	  printf("\tnFOF: %d\n",cur_aux_data->lgal_halo_data.NextHaloInFOFgroup);
+	  fwrite(&(cur_aux_data->lgal_halo_data),sizeof(struct Lgalaxy_halo_data),1,fp_tree);
 	}
     }
-
-/* struct Lgalaxy_halo_data */
-/* { */
-/*   /\* merger tree pointers *\/ */
-/*   int Descendant; */
-/*   int FirstProgenitor; */
-/*   int NextProgenitor; */
-/*   int FirstHaloInFOFgroup; */
-/*   int NextHaloInFOFgroup; */
-
-/*   /\* properties of halo *\/ */
-/*   int Len; */
-/*   float M_Mean200, M_Crit200, M_TopHat; */
-/*   float Pos[3]; */
-/*   float Vel[3]; */
-/*   float VelDisp; */
-/*   float Vmax; */
-/*   float Spin[3]; */
-/*   long long MostBoundID; */
-
-/*   /\* original position in subfind output *\/ */
-/*   int SnapNum; */
-/*   int FileNr; */
-/*   int SubhaloIndex; */
-/*   float SubHalfMass; */
-/* }; */
+  fclose(fp_tree);
   free(maptreenr);
 }
 
