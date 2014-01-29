@@ -252,35 +252,36 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  printf("Tree: %d\n",itree);
 	  printf("\tID: %d\n",(int) ihalo);
-	  printf("\tDest: %d\n",(int) ihalo);
+	  printf("\tDest: %d\n",cur_aux_data->lgal_halo_data.Descendant);
+	  printf("\tfProg: %d\n",cur_aux_data->lgal_halo_data.FirstProgenitor);
 	}
     }
 
-struct Lgalaxy_halo_data
-{
-  /* merger tree pointers */
-  int Descendant;
-  int FirstProgenitor;
-  int NextProgenitor;
-  int FirstHaloInFOFgroup;
-  int NextHaloInFOFgroup;
+/* struct Lgalaxy_halo_data */
+/* { */
+/*   /\* merger tree pointers *\/ */
+/*   int Descendant; */
+/*   int FirstProgenitor; */
+/*   int NextProgenitor; */
+/*   int FirstHaloInFOFgroup; */
+/*   int NextHaloInFOFgroup; */
 
-  /* properties of halo */
-  int Len;
-  float M_Mean200, M_Crit200, M_TopHat;
-  float Pos[3];
-  float Vel[3];
-  float VelDisp;
-  float Vmax;
-  float Spin[3];
-  long long MostBoundID;
+/*   /\* properties of halo *\/ */
+/*   int Len; */
+/*   float M_Mean200, M_Crit200, M_TopHat; */
+/*   float Pos[3]; */
+/*   float Vel[3]; */
+/*   float VelDisp; */
+/*   float Vmax; */
+/*   float Spin[3]; */
+/*   long long MostBoundID; */
 
-  /* original position in subfind output */
-  int SnapNum;
-  int FileNr;
-  int SubhaloIndex;
-  float SubHalfMass;
-};
+/*   /\* original position in subfind output *\/ */
+/*   int SnapNum; */
+/*   int FileNr; */
+/*   int SubhaloIndex; */
+/*   float SubHalfMass; */
+/* }; */
   free(maptreenr);
 }
 
