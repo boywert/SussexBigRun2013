@@ -30,7 +30,7 @@ id_component_t extract_id_component(hid_t hid);
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree);
 void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
 
 
 /* For God's sake, I need this function to point the pointer to an element of aux_data when I specify a globalRefID - Boyd */
@@ -197,7 +197,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	}
     }
 
-  write_lgal_data(aux_data, fulltree, nHalosinTree, outputfolder);
+  write_lgal_data(aux_data, total_trees, fulltree, nHalosinTree, outputfolder);
   /* free all */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
@@ -221,10 +221,9 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
       free(aux_data[i]);     
     }
   free(aux_data);
-  free(maptreenr);
 }
 
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
 {
   int *maptreenr;
   int new_total_trees,itree;
