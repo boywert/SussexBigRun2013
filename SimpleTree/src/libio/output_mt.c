@@ -85,14 +85,13 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
       treecrawler(aux_data[nSnaps-1][localdomain].lgal_aux_halos[ihalo].globalRefID, aux_data, (int)ihalo, fulltree, nHalosinTree);
     }
 
-
-  /* Group trees into bushes */
+  /* group trees into bushes */
   total_trees = aux_data[nSnaps-1][localdomain].nHalos;
   /* In each tree */
   for(itree=0;itree<total_trees;itree++)
     {
       target_tree = itree;
-      /* Lopp for all halos */
+      /* Loop for all halos */
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
@@ -112,6 +111,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  for(jhalo=0;jhalo<nHalosinTree[src_tree];jhalo++)
 		    {
+		      printf("moving halo = %llu\n",fulltree[src_tree][jhalo].globalRefID);
 		      src_aux_data = clgal_aux_data_pointer_from_globalRefID(fulltree[src_tree][jhalo].globalRefID,aux_data);
 		      if(jhalo != src_aux_data->hidTree)
 			{
@@ -124,6 +124,14 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		    }
 		  nHalosinTree[src_tree] = 0;
 		  free(fulltree[src_tree]);
+		}
+	      else if( cur_aux_data->TreeNr == -1)
+		{
+		  nHalosinTree[target_tree]++;
+		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
+		  fulltree[target_tree][nHalosinTree[target_tree]-1].globalRefID = cur_fof_id;
+		  cur_aux_data->TreeNr = target_tree;
+		  cur_aux_data->hidTree = nHalosinTree[target_tree]-1;
 		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
