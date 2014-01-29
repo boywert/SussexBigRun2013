@@ -125,7 +125,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		      fulltree[target_tree][src_aux_data->hidTree].globalRefID = src_aux_data->globalRefID;
 		    }
 		  nHalosinTree[src_tree] = 0;
-		  free(fulltree[src_tree]);
+		  fulltree[src_tree] = realloc(fulltree[src_tree],0);
 		  printf("finish\n");
 		}
 	      else if( cur_aux_data->TreeNr == -1)
