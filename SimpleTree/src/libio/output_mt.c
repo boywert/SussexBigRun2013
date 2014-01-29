@@ -90,11 +90,13 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /* In each tree */
   for(itree=0;itree<total_trees;itree++)
     {
+      printf("start tree %d\n",itree);
       target_tree = itree;
       /* Loop for all halos */
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
+	  printf("start checking %llu\n",curid);
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  /* And find any relative if exists */
 	  cur_fof_id = cur_aux_data->FirstFOF;
@@ -140,6 +142,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	      cur_fof_id = cur_aux_data->NextFOF;
 	    }
 	}
+      printf("finish tree %d\n",itree);
     }
 
 
