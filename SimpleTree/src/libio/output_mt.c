@@ -7,6 +7,9 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder);
 int compare_clgal_aux_data_t_by_globalRefID(const void *v1, const void *v2);
 uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
 
+int compare_full_tree_t_by_globalRefID(const void *v1, const void *v2);
+uint64_t search_full_tree_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
+
 int refdomain;
 typedef struct full_tree
 {
@@ -127,18 +130,16 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		    }
 		  nHalosinTree[src_tree] = 0;
 		  fulltree[src_tree] = realloc(fulltree[src_tree],0);
-		  //printf("finish\n");
 		}
 	      /* Add non-descended halo to tree as well */
 	      else if( cur_aux_data->TreeNr == -1)
 		{
-		  printf("moving (no son) %d => %d\n",cur_aux_data->globalRefID,itree);
+		  printf("moving (no son) %llu => %d\n",cur_aux_data->globalRefID,itree);
 		  nHalosinTree[target_tree]++;
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  fulltree[target_tree][nHalosinTree[target_tree]-1].globalRefID = cur_fof_id;
 		  cur_aux_data->TreeNr = target_tree;
 		  cur_aux_data->hidTree = nHalosinTree[target_tree]-1;
-		  //printf("finish\n");
 		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
@@ -173,10 +174,16 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	    }
 	  fulltree[itree][ihalo].intreeid = ihalo;
 	}
+      qsort(fulltree[itree],nHalosinTree, sizeof(full_tree_t),compare_full_tree_t_by_globalRefID);
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
+	  cur_aux_data->lgal_halo_data.Descendant = fulltree[itree][search_full_tree_t_for_globalRefID(cur_aux_data->Descendant,nHalosinTree[itree],fulltree[itree])].intreeid;
+	  cur_aux_data->lgal_halo_data.FirstProgenitor = fulltree[itree][search_full_tree_t_for_globalRefID(cur_aux_data->FirstProgenitor,nHalosinTree[itree],fulltree[itree])].intreeid;;
+	  cur_aux_data->lgal_halo_data.NextProgenitor = fulltree[itree][search_full_tree_t_for_globalRefID(cur_aux_data->NextProgenitor,nHalosinTree[itree],fulltree[itree])].intreeid;;
+	  cur_aux_data->lgal_halo_data.FirstHaloInFOFgroup = fulltree[itree][search_full_tree_t_for_globalRefID(cur_aux_data->FirstFOF,nHalosinTree[itree],fulltree[itree])].intreeid;;
+	  cur_aux_data->lgal_halo_data.NextHaloInFOFgroup = fulltree[itree][search_full_tree_t_for_globalRefID(cur_aux_data->NextFOF,nHalosinTree[itree],fulltree[itree])].intreeid;;
 	}
     }
 
@@ -760,4 +767,53 @@ uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_
   return NULLPOINT;
 }
 
+int compare_full_tree_t_by_globalRefID(const void *v1, const void *v2)
+{
+    const full_tree_t *u1 = v1;
+    const full_tree_t *u2 = v2;
+    int ret;
+    if(u1->globalRefID < u2->globalRefID)
+      ret = -1;
+    else if(u1->globalRefID > u2->globalRefID)
+      ret = 1;
+    else if(u1->globalRefID == u2->globalRefID)
+      ret = 0;
+    return ret;
+}
 
+uint64_t search_full_tree_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array )
+{
+  uint64_t middle,low,high;
+  full_tree_t *pool = (full_tree_t *) Array;
+  //printf("start search\n");
+  /*&    for(i =0; i< n_array; i++)
+    {
+    printf("%llu\n",pool[i]);
+    }
+  */
+  low = 0;
+  high = n_array-1;
+
+  /* if(searchID < pool[0] || searchID > pool[n_array-1]) */
+  /*   { */
+  /*     return NULLPOINT; */
+  /*   } */
+  while ( low <= high && high < NULLPOINT) 
+    {
+      middle = ( low + high ) / 2;
+ 
+      if ( searchID == pool[ middle ].globalRefID )
+	{
+	  return middle;
+	}
+      else if ( searchID < pool[ middle ].globalRefID )
+	{
+	  high = middle - 1;
+	}
+      else
+	{
+	  low = middle + 1;
+	}
+    }
+  return NULLPOINT;
+}
