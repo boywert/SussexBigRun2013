@@ -254,6 +254,9 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees,full
 	  printf("\tID: %d\n",(int) ihalo);
 	  printf("\tDest: %d\n",cur_aux_data->lgal_halo_data.Descendant);
 	  printf("\tfProg: %d\n",cur_aux_data->lgal_halo_data.FirstProgenitor);
+	  printf("\tnProg: %d\n",cur_aux_data->lgal_halo_data.NextProgenitor);
+	  printf("\tfFOF: %d\n",cur_aux_data->lgal_halo_data.FirstHaloInFOFgroup);
+	  printf("\tnFOF: %d\n",cur_aux_data->lgal_halo_data.NextHaloInFOFgroup);
 	}
     }
 
