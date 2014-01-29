@@ -174,7 +174,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	    }
 	  fulltree[itree][ihalo].intreeid = ihalo;
 	}
-      qsort(fulltree[itree],nHalosinTree, sizeof(full_tree_t),compare_full_tree_t_by_globalRefID);
+      qsort(fulltree[itree],nHalosinTree[itree], sizeof(full_tree_t),compare_full_tree_t_by_globalRefID);
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
