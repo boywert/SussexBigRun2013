@@ -9,9 +9,8 @@ uint64_t search_clgal_aux_data_t_for_globalRefID( uint64_t searchID, uint64_t n_
 
 int compare_full_tree_t_by_globalRefID(const void *v1, const void *v2);
 int compare_full_tree_t_by_intreeid(const void *v1, const void *v2);
-
 uint64_t search_full_tree_t_for_globalRefID( uint64_t searchID, uint64_t n_array ,const void *Array );
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
+
 int refdomain;
 typedef struct full_tree
 {
@@ -31,6 +30,7 @@ id_component_t extract_id_component(hid_t hid);
 void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree);
 void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
 
 
 /* For God's sake, I need this function to point the pointer to an element of aux_data when I specify a globalRefID - Boyd */
@@ -197,7 +197,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	}
     }
 
-  write_lgal_data(aux_data, treenr, fulltree, nHalosinTree, outputfolder);
+  write_lgal_data(aux_data, fulltree, nHalosinTree, outputfolder);
   /* free all */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
     {
@@ -224,7 +224,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   free(maptreenr);
 }
 
-void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, int treenr, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
+void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder)
 {
   int *maptreenr;
   int new_total_trees,itree;
