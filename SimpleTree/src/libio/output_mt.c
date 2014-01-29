@@ -229,7 +229,7 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int
   hid_t ihalo,curid;
   clgal_aux_data_t* cur_aux_data;
   FILE *fp_tree;
-  char foldername[1024],filename[1024];
+  char foldername[1024],filename[1024],command[1024];
   int TreeNHalos;
 
   sprintf(foldername,"%s/treedata",outputfolder,haloB->redshift);
