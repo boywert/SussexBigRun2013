@@ -90,13 +90,13 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
   /* In each tree */
   for(itree=0;itree<total_trees;itree++)
     {
-      printf("start tree %d\n",itree);
+      //printf("start tree %d\n",itree);
       target_tree = itree;
       /* Loop for all halos */
       for(ihalo=0;ihalo<nHalosinTree[itree];ihalo++)
 	{
 	  curid = fulltree[itree][ihalo].globalRefID;
-	  printf("start checking %llu\n",curid);
+	  //printf("start checking %llu\n",curid);
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  /* And find any relative if exists */
 	  cur_fof_id = cur_aux_data->FirstFOF;
@@ -113,7 +113,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  for(jhalo=0;jhalo<nHalosinTree[src_tree];jhalo++)
 		    {
-		      printf("moving halo = %llu\n",fulltree[src_tree][jhalo].globalRefID);
+		      //printf("moving halo = %llu\n",fulltree[src_tree][jhalo].globalRefID);
 		      src_aux_data = clgal_aux_data_pointer_from_globalRefID(fulltree[src_tree][jhalo].globalRefID,aux_data);
 		      if(jhalo != src_aux_data->hidTree)
 			{
@@ -126,23 +126,23 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		    }
 		  nHalosinTree[src_tree] = 0;
 		  fulltree[src_tree] = realloc(fulltree[src_tree],0);
-		  printf("finish\n");
+		  //printf("finish\n");
 		}
 	      else if( cur_aux_data->TreeNr == -1)
 		{
-		  printf("moving (no son) %d => %d\n",cur_aux_data->globalRefID,itree);
+		  //printf("moving (no son) %d => %d\n",cur_aux_data->globalRefID,itree);
 		  nHalosinTree[target_tree]++;
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  fulltree[target_tree][nHalosinTree[target_tree]-1].globalRefID = cur_fof_id;
 		  cur_aux_data->TreeNr = target_tree;
 		  cur_aux_data->hidTree = nHalosinTree[target_tree]-1;
-		  printf("finish\n");
+		  //printf("finish\n");
 		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
 	    }
 	}
-      printf("finish tree %d\n",itree);
+      //printf("finish tree %d\n",itree);
     }
 
 
