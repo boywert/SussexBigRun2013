@@ -124,14 +124,17 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 		    }
 		  nHalosinTree[src_tree] = 0;
 		  free(fulltree[src_tree]);
+		  printf("finish\n");
 		}
 	      else if( cur_aux_data->TreeNr == -1)
 		{
+		  printf("moving (no son) %d => %d\n",cur_aux_data->globalRefID,itree);
 		  nHalosinTree[target_tree]++;
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  fulltree[target_tree][nHalosinTree[target_tree]-1].globalRefID = cur_fof_id;
 		  cur_aux_data->TreeNr = target_tree;
 		  cur_aux_data->hidTree = nHalosinTree[target_tree]-1;
+		  printf("finish\n");
 		}
 	      curid = cur_fof_id;
 	      cur_fof_id = cur_aux_data->NextFOF;
