@@ -1,0 +1,25 @@
+import pylab
+
+Mpc2m = 3.08567758e22
+m2Mpc = 1./Mpc2m
+Msun2kg = 1.959e30
+kg2Msun = 1./Msun2kg
+m2km = 0.001
+G = 6.67384e-11   # SI
+H0 = 100.0        #km/s / (Mpc/h)
+G = G * (m2km**2.) * (m2Mpc) / (kg2Msun)
+
+G = G*1e10   # (Mpc/h) (km/s)^2 / (1e10Msun/h)
+
+#info
+boxsize = 500.0    # Mpc/h
+npart = 2160      # per dim
+omegam = 0.25
+omegab = 0.045
+pi = pylab.pi
+
+rho_crit_0 = 3.* H0**2 / (8.*pi*G)
+
+pmass = omegam*rho_crit_0*boxsize**3./npart**3.
+print "rho_crit = ",rho_crit_0
+print "pmass = ", pmass
