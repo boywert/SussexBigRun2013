@@ -2,7 +2,7 @@ import pylab
 
 Mpc2m = 3.08567758e22
 m2Mpc = 1./Mpc2m
-Msun2kg = 1.959e30
+Msun2kg = 1.989e30
 kg2Msun = 1./Msun2kg
 m2km = 0.001
 G = 6.67384e-11   # SI
@@ -11,9 +11,9 @@ Msun2Gadget = 1e-10
 G = G * (m2km**2.) * (m2Mpc) / (kg2Msun * Msun2Gadget) # (Mpc/h) (km/s)^2 / (1e10Msun/h)
 
 #info
-boxsize = 500.0    # Mpc/h
-npart = 2160      # per dim
-omegam = 0.25
+boxsize = 47.0    # Mpc/h
+npart = 1728      # per dim
+omegam = 0.27
 omegab = 0.045
 pi = pylab.pi
 

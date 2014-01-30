@@ -576,6 +576,8 @@ m_halo_wrapper_t sussexbigrun_read_AHF_binary(FILE *fphalo, FILE *fppart, int do
       mhalo.mhalos[counthalo].SpinY = J*ahf_halo.Ly;
       mhalo.mhalos[counthalo].SpinZ = J*ahf_halo.Lz;
 
+      mhalo.mhalos[counthalo].sigV = ahf_halo.sigV;
+      mhalo.mhalos[counthalo].Vmax = ahf_halo.Vmax;
 
       mhalo.mhalos[counthalo].npart = ahf_halo.npart;
       mhalo.mhalos[counthalo].host_halo = ahf_halo.hostHalo;
