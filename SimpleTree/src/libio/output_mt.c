@@ -31,6 +31,8 @@ void treecrawler(hid_t hid, clgal_aux_data_wrapper_t **aux_data, int treenr, ful
 void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_data, char* outputfolder);
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data);
 void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int lastsnap, int domainid, full_tree_t **fulltree, hid_t *nHalosinTree, char* outputfolder);
+void write_zlist(float* snaplist,char* outputfolder);
+
 
 /* For God's sake, I need this function to point the pointer to an element of aux_data when I specify a globalRefID - Boyd */
 clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_data_wrapper_t **aux_data)
@@ -42,6 +44,30 @@ clgal_aux_data_t* clgal_aux_data_pointer_from_globalRefID(hid_t hid, clgal_aux_d
   return data;
 }
 
+void write_zlist(float* snaplist, int nSnaps, char* outputfolder)
+{
+  char filename[1024];
+  FILE *fp;
+  float a;
+  int i;
+  sprintf(filename,"%s/cubep3m_zlist",outputfolder);
+  fp = fopen(filename,"w+");
+  for(i=0;i<nSnaps;i++)
+    {
+      fprintf("%f\n",snaplist[i]);
+    }
+  fclose(fp);
+
+  sprintf(filename,"%s/treedata/lgal_zlist.txt",outputfolder);
+  fp = fopen(filename,"w+");
+  for(i=0;i<nSnaps;i++)
+    {
+      a = 1./(snaplist[i]+1.0);
+      fprintf("%f\n",a);
+    }
+  fclose(fp);
+  
+}
 
 void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, int nSnaps, int totaldomains)
 {
@@ -67,6 +93,12 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	  aux_data[i][j].snapid = i;
 	  aux_data[i][j].domainid = j;	  
 	}
+    }
+
+  /* output lgal zlist when localdomain = 0 => only once */
+  if(localdomain == 0)
+    {
+      write_zlist(snaplist,outputfolder);
     }
 
   /* Read in last snapshot data */

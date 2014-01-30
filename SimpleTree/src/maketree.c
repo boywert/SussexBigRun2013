@@ -156,6 +156,7 @@ int main(int argc,char **argv)
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
+#ifdef OUTPUTLGAL
   for(l=0;l<pow3(param_domain_per_dim);l++)
     {
       if(l%mpi_nodes == mpi_rank)
@@ -164,6 +165,7 @@ int main(int argc,char **argv)
 	  generate_lgal_output(outputfolder,l,snaplist,tot_Snap, pow3(param_domain_per_dim));
 	}
     }
+#endif
   MPI_Barrier(MPI_COMM_WORLD);
   finalise_MPI();
   return 0;
