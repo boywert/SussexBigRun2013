@@ -53,7 +53,7 @@ void write_zlist(float* snaplist, int nSnaps, char* outputfolder)
   fp = fopen(filename,"w+");
   for(i=0;i<nSnaps;i++)
     {
-      fprintf("%f\n",snaplist[i]);
+      fprintf(fp,"%f\n",snaplist[i]);
     }
   fclose(fp);
 
@@ -62,7 +62,7 @@ void write_zlist(float* snaplist, int nSnaps, char* outputfolder)
   for(i=0;i<nSnaps;i++)
     {
       a = 1./(snaplist[i]+1.0);
-      fprintf("%f\n",a);
+      fprintf(fp,"%f\n",a);
     }
   fclose(fp);
   
