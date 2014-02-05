@@ -765,27 +765,28 @@ void internalaux_read(clgal_aux_data_wrapper_t *aux_data, char* outputfolder)
 	{
 	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Pos,sizeof(float),3,fp);
 	}
-      /* write Vel[3] */
+      /* read Vel[3] */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Vel,sizeof(float),3,fp);
 	}
-      /* write VelDisp */
+      /* read VelDisp */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.VelDisp),sizeof(float),1,fp);
 	}     
-      /* write Vmax */
+      /* read Vmax */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Vmax),sizeof(float),1,fp);
+	  printf("vmax=%f\n",aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Vmax);
 	}    
-      /* write Spin[3] */
+      /* read Spin[3] */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.Spin,sizeof(float),3,fp);
 	}    
-      /* write MostBoundID */
+      /* read MostBoundID */
       for(ihalo=0; ihalo < aux_data->nHalos; ihalo++)
 	{
 	  fread(&(aux_data->lgal_aux_halos[ihalo].lgal_halo_data.MostBoundID),sizeof(long long),1,fp);
