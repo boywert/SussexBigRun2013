@@ -226,7 +226,6 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	    cur_aux_data->lgal_halo_data.NextHaloInFOFgroup = -1;	  
 	}
     }
-
   write_lgal_data(aux_data, total_trees, (nSnaps-1), localdomain, fulltree, nHalosinTree, outputfolder);
   /* free all */
   for(ihalo=0;ihalo<aux_data[nSnaps-1][localdomain].nHalos;ihalo++)
@@ -311,6 +310,7 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  fwrite(&(cur_aux_data->lgal_halo_data),sizeof(struct Lgalaxy_halo_data),1,fp_tree);
+	  printf("vmax = %f\n",cur_aux_data->lgal_halo_data.Vmax);
 	}
     }
   fclose(fp_tree);
