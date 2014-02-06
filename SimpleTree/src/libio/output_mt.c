@@ -310,7 +310,7 @@ void write_lgal_data(clgal_aux_data_wrapper_t **aux_data, hid_t total_trees, int
 	  curid = fulltree[itree][ihalo].globalRefID;
 	  cur_aux_data = clgal_aux_data_pointer_from_globalRefID(curid,aux_data);
 	  fwrite(&(cur_aux_data->lgal_halo_data),sizeof(struct Lgalaxy_halo_data),1,fp_tree);
-	  printf("vmax = %f\n",cur_aux_data->lgal_halo_data.Vmax);
+	  //printf("vmax = %f\n",cur_aux_data->lgal_halo_data.Vmax);
 	}
     }
   fclose(fp_tree);
