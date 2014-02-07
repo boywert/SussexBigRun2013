@@ -54,8 +54,8 @@ size=0
 END{
   if(size % 8 != 0)
   { 
-    print ", dummy : 0L $ "
+    print "('dummy','numpy.float32,1),"
   }
-  print "('filling','i4',0)"
+  print "('ending','i4',0)"
   print "])"
 }
