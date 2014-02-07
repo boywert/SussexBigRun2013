@@ -26,9 +26,9 @@ size=0
     }
     
     if(type == "float") {type= "numpy.float32"} 
-    else if(type == "int"){type= "numpy.int4"}
+    else if(type == "int"){type= "numpy.int32"}
     else if(type == "long" && name == "long") {
-    	type="numpy.int8"
+    	type="numpy.int64"
     	name=fields[3]
     }
     
