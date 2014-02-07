@@ -3,7 +3,7 @@ BEGIN{
 print "# numpy dtype for LGAL_GAL_STRUCT"
 ; define an LGalaxy struct
 print "import numpy"
-print "struct_dtype = numpy.dtype([
+print "struct_dtype = numpy.dtype(["
 n=0
 size=0
 }
