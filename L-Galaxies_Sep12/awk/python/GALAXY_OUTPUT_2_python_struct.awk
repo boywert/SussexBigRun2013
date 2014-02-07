@@ -1,7 +1,6 @@
 # from a cleaned list of variables defining the GALAXY_OUPUT C struct, define a default IDL struct definition
 BEGIN{
 print "# numpy dtype for LGAL_GAL_STRUCT"
-; define an LGalaxy struct
 print "import numpy"
 print "struct_dtype = numpy.dtype(["
 n=0
@@ -49,7 +48,7 @@ size=0
 		name=substr(name,0,ia-1)
 
 	size += arraysize * dsize
-	print "('" name "'," type "," arraysize ")"
+	print "('" name "'," type "," arraysize "),"
 	n+=1
 }
 END{
@@ -57,5 +56,6 @@ END{
   { 
     print ", dummy : 0L $ "
   }
+  print "('filling','i4',0)"
   print "])"
 }
