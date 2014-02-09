@@ -5,7 +5,7 @@ file_prefix = "SA_z7.66"
 firstfile = 0
 lastfile = 0
 
-filename = folder+file_prefix+"_"+firstfile
+filename = folder+file_prefix+"_"+"%d"%(firstfile)
 f = open(filename,"rb")
 dummy = numpy.fromfile(f,numpy.int32,1)
 nTrees = dummy[0]
