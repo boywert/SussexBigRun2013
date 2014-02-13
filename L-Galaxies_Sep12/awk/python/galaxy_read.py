@@ -1,6 +1,11 @@
 import LGalaxyStruct
 import numpy
 
+Properties_used = {}
+for el in LGalaxyStruct.struct_dtype.names:
+    Properties_used[el] = False
+
+
 folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
 file_prefix = "SA_z7.66"
 firstfile = 0
