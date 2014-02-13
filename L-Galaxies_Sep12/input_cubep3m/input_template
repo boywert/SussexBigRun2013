@@ -4,7 +4,7 @@
 %------------------------------------------
 
 FileNameGalaxies      SA
-FileWithOutputRedshifts   .
+FileWithOutputRedshifts   /mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist
 
 %PhotPrefix           M05_Chabrier ; BC03_Chabrier ; CB07_Chabrier
 PhotDir               ./PhotTables_2.0/
