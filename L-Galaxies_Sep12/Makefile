@@ -50,7 +50,7 @@ metadata:
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/GALAXY_OUTPUT_2_TypeString.awk > ./awk/L-Galaxies_Types.txt
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/GALAXY_OUTPUT_2_DDL.awk > ./awk/L-Galaxies_DDL.sql	
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/idl/GALAXY_OUTPUT_2_IDL_struct.awk >  ./awk/idl/LGalaxy.pro
-	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/python/GALAXY_OUTPUT_2_python_struct.awk >  ./awk/python/LGalaxy.py
+	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/python/GALAXY_OUTPUT_2_python_struct.awk >  ./awk/python/LGalaxyStruct.py
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/idl/GALAXY_OUTPUT_2_IDL_hists.awk > ./awk/idl/LGalaxy_plot.pro
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/idl/GALAXY_OUTPUT_2_IDL_testfloats.awk > ./awk/idl/LGalaxy_testfloats.pro
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/idl/GALAXY_OUTPUT_2_IDL_zerofloats.awk > ./awk/idl/LGalaxy_zerofloats.pro
