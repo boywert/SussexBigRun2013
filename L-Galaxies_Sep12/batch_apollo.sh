@@ -40,7 +40,7 @@ echo Running on file $i
 
 
 # Run jobs
-./L-Galaxies input_batch/input.500_$i
+
 
 
 inputfolder="input_cubep3m/"
