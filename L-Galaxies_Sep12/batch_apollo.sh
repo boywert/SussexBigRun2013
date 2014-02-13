@@ -23,8 +23,8 @@ umask 002
 # Say which queue you want to submit to
 #$ -q mps_amd.q
 # Define a task farm of jobs
-#$ -t 216
-# Limit to 50 concurrent jobs
+#$ -t 1-216
+# Limit to 216 concurrent jobs
 #$ -tc 216
 # Join standard error to standard out
 #$ -j y
@@ -54,3 +54,4 @@ echo "LastFile" $i >> $filename
 cat $template >> $filename
 
 $exec $filename
+
