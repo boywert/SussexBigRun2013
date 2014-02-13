@@ -24,8 +24,8 @@ umask 002
 #$ -q mps_amd.q
 # Define a task farm of jobs
 #$ -t 1-216
-# Limit to 216 concurrent jobs
-#$ -tc 216
+# Limit to 20 concurrent jobs
+#$ -tc 20
 # Join standard error to standard out
 #$ -j y
 # Give the job a name
@@ -40,8 +40,6 @@ echo Running on file $i
 
 
 # Run jobs
-
-
 
 inputfolder="input_cubep3m/"
 template="input_cubep3m/input_template"
