@@ -18,5 +18,5 @@ dummy = numpy.fromfile(f,numpy.int32,1)
 nHalos = dummy[0]
 nTreeHalos = numpy.fromfile(f,numpy.int32,nTrees)
 Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
-LGalaxyStruct.struct_dtype
+print LGalaxyStruct.struct_dtype
 f.close()
