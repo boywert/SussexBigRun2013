@@ -54,4 +54,7 @@ BEGIN{
 END{
     print "('ending','i4',0)"
     print "])"
+    print "properties_used = {}"
+    print "for el in LGalaxyStruct.struct_dtype.names:"
+    print "\tproperties_used[el] = False"
 }
