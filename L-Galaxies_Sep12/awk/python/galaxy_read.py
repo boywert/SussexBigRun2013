@@ -13,6 +13,10 @@ Sfr = 0.0
 BlackHoleMass = 0.0
 
 def readsnap(folder,file_prefix,firstfile,lastfile):
+    nTrees = 0
+    nHalos = 0
+    nTreeHalos = numpy.array([],dtype=numpy.int32)
+    Galaxy = numpy.array([],dtype=LGalaxyStruct.struct_dtype)
     for ifile in range(firstfile,lastfile+1):
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
