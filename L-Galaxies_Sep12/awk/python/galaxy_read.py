@@ -21,6 +21,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
+        print "Tree",dummy
         nTrees += dummy[0]
         dummy = numpy.fromfile(f,numpy.int32,1)
         nHalos += dummy[0]
