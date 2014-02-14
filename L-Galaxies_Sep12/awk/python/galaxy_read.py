@@ -56,6 +56,6 @@ for this_line in lines:
         #print "z",this_line.strip()
         file_prefix = "SA_z"+this_line.strip()
         (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
-        print StellarMass ,BlackHoleMass,Sfr
+        print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
