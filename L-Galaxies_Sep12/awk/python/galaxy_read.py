@@ -31,8 +31,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
         addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
-        output_addedGalaxy[:]["DiskMass"] = addedGalaxy[:]["DiskMass"]
-        output_Galaxy = numpy.append(output_Galaxy,output_addedGalaxy)
+        output_Galaxy = numpy.append(output_Galaxy,addedGalaxy[:]["DiskMass"])
         #Galaxy = numpy.append(Galaxy,addedGalaxy)
         #print nTrees,nHalos,len(Galaxy)
         f.close()
