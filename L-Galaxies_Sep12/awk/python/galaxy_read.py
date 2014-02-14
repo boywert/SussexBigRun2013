@@ -22,12 +22,14 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
-        nTrees += dummy[0]
+        this_nTrees =  dummy[0]
+        nTrees += this_nTrees
         dummy = numpy.fromfile(f,numpy.int32,1)
-        nHalos += dummy[0]
-        addednTreeHalos = numpy.fromfile(f,numpy.int32,nTrees)
+        this_nHalos = dummy[0]
+        nHalos += this_nHalos
+        addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
-        addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
+        addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
         print addedGalaxy
         Galaxy = numpy.append(Galaxy,addedGalaxy)
         print nTrees,nHalos,len(Galaxy)
