@@ -46,11 +46,13 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
 f = open(snaplist_file)
 lines = f.readlines()
 f.close()
-
+i=0
 for this_line in lines:
-    print "z",this_line.strip()
-    file_prefix = "SA_z"+this_line.strip()
-    (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
-    print StellarMass,BlackHoleMass,Sfr
+    i+=1
+    if(i != 1):
+        print "z",this_line.strip()
+        file_prefix = "SA_z"+this_line.strip()
+        (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
+        print StellarMass,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
