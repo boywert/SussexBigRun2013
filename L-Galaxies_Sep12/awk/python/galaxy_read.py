@@ -21,7 +21,10 @@ f.close()
 properties = LGalaxyStruct.properties_used
 properties['DiskMass'] = True
 out = numpy.dtype([])
-print out
-#for el in LGalaxyStruct.properties_used.keys():
-    #print el, LGalaxyStruct.properties_used[el]
+
+for el in LGalaxyStruct.properties_used.keys():
+    if(LGalaxyStruct.properties_used[el] is True):
+        print el, LGalaxyStruct.properties_used[el]
+        numpy.append(numpy.dtype([el,LGalaxyStruct.struct_dtype[el]]))
     
+print out
