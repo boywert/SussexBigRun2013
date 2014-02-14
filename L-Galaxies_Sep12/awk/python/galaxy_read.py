@@ -6,7 +6,7 @@ folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/me
 file_prefix = "SA_z7.66"
 firstfile = 0
 lastfile = 0
-output = 
+ 
 filename = folder+file_prefix+"_"+"%d"%(firstfile)
 f = open(filename,"rb")
 dummy = numpy.fromfile(f,numpy.int32,1)
