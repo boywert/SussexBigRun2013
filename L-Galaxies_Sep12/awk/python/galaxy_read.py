@@ -8,9 +8,7 @@ lastfile = 215
 
 
 file_prefix = "SA_z7.66"
-StellarMass = 0.0
-Sfr = 0.0
-BlackHoleMass = 0.0
+
 
 def readsnap(folder,file_prefix,firstfile,lastfile):
     nTrees = 0
@@ -18,6 +16,9 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
     nTreeHalos = numpy.array([],dtype=numpy.int32)
     Galaxy = numpy.array([],dtype=LGalaxyStruct.struct_dtype)
     output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
+    StellarMass = 0.0
+    Sfr = 0.0
+    BlackHoleMass = 0.0
     for ifile in range(firstfile,lastfile+1):
         print "File:",ifile
         filename = folder+file_prefix+"_"+"%d"%(ifile)
@@ -31,18 +32,19 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
         addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
-        this_addedGalaxy = numpy.array(addedGalaxy[:]["DiskMass"],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
-        output_Galaxy = numpy.append(output_Galaxy,this_addedGalaxy)
+        StellarMass += numpy.sum(addedGalaxy[:]["DiskMass"]) + numpy.sum(addedGalaxy[:]["BulgeMass"])
+        Sfr += numpy.sum(addedGalaxy[:]["Sfr"])
+        BlackHoleMass += numpy.sum(addedGalaxy[:]["BlackHoleMass"])
+        #this_addedGalaxy = numpy.array(addedGalaxy[:]["DiskMass"],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
+        #output_Galaxy = numpy.append(output_Galaxy,this_addedGalaxy)
         #Galaxy = numpy.append(Galaxy,addedGalaxy)
         #print nTrees,nHalos,len(Galaxy)
         f.close()
-    return (nTrees,nHalos,nTreeHalos,output_Galaxy)
+    return (StellarMass ,BlackHoleMass,Sfr)
 
 
-(nTrees,nHalos,nTreeHalos,Galaxy) = readsnap(folder,file_prefix,firstfile,lastfile)
-StellarMass += numpy.sum(Galaxy[:]["DiskMass"])
-#BlackHoleMass += numpy.sum(Galaxy[:]["BlackHoleMass"])
-#Sfr += numpy.sum(Galaxy[:]["Sfr"])
-print StellarMass #,BlackHoleMass,Sfr
+(StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
+
+print StellarMass,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
