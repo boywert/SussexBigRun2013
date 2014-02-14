@@ -17,7 +17,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
     nHalos = 0
     nTreeHalos = numpy.array([],dtype=numpy.int32)
     Galaxy = numpy.array([],dtype=LGalaxyStruct.struct_dtype)
-    output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32])))
+    output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32)])
     for ifile in range(firstfile,lastfile+1):
         print "File:",ifile
         filename = folder+file_prefix+"_"+"%d"%(ifile)
