@@ -17,7 +17,7 @@ for ifile in range(firstfile,lastfile+1):
     nTreeHalos = numpy.fromfile(f,numpy.int32,nTrees)
     Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
     f.close()
-    for type in Galaxy[:]["Type"]:
-        print type
+    print numpy.sum(Galaxy[:]["BulgeMass"]):
+        
 
  
