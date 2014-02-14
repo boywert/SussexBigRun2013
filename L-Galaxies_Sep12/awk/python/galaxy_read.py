@@ -18,6 +18,6 @@ for ifile in range(firstfile,lastfile+1):
     Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
     f.close()
     StellarMass += numpy.sum(Galaxy[:]["BulgeMass"]) + numpy.sum(Galaxy[:]["DiskMass"])
-        
+print StellarMass
 
  
