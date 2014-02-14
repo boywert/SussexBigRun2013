@@ -3,11 +3,12 @@ import numpy
 
 
 folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
+snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
 firstfile = 0
 lastfile = 215
 
 
-file_prefix = "SA_z7.66"
+
 
 
 def readsnap(folder,file_prefix,firstfile,lastfile):
@@ -42,9 +43,14 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         f.close()
     return (StellarMass ,BlackHoleMass,Sfr)
 
+f = open(snaplist_file)
+lines = f.readlines()
+f.close()
 
-(StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
-
-print StellarMass,BlackHoleMass,Sfr
+for this_line in lines:
+    print "z",this_line
+    file_prefix = "SA_z"+this_line
+    (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
+    print StellarMass,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
