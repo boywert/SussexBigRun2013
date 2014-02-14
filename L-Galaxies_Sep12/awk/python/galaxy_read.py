@@ -29,6 +29,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         nTreeHalos = numpy.concatenate((nTreeHalos,addednTreeHalos))
         addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
         Galaxy = numpy.concatenate((Galaxy,addedGalaxy))
+        print len(Galaxy)
         f.close()
     return (nTrees,nHalos,nTreeHalos,Galaxy)
 
