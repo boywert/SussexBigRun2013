@@ -25,6 +25,6 @@ out = numpy.dtype([])
 for el in LGalaxyStruct.properties_used.keys():
     if(LGalaxyStruct.properties_used[el] is True):
         print el, LGalaxyStruct.properties_used[el]
-        numpy.append(out,[el,LGalaxyStruct.struct_dtype[el]])
+        numpy.append(out,numpy.dtype([el,LGalaxyStruct.struct_dtype[el]]))
     
 print out
