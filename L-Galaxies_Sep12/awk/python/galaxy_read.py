@@ -17,6 +17,6 @@ for ifile in range(firstfile,lastfile+1):
     nTreeHalos = numpy.fromfile(f,numpy.int32,nTrees)
     Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
     f.close()
-    print Galaxy[:]["Type"]
+    print len(Galaxy[:]["Type"])
 
  
