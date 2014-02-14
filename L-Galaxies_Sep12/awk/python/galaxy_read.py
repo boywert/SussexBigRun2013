@@ -7,7 +7,7 @@ file_prefix = "SA_z7.66"
 firstfile = 0
 lastfile = 0
 StellarMass = 0.0
-for ifile in range(firstfile,lastfile):
+for ifile in range(firstfile,lastfile+1):
     filename = folder+file_prefix+"_"+"%d"%(ifile)
     f = open(filename,"rb")
     dummy = numpy.fromfile(f,numpy.int32,1)
