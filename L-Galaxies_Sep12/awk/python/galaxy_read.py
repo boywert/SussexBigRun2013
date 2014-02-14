@@ -15,12 +15,13 @@ dummy = numpy.fromfile(f,numpy.int32,1)
 nHalos = dummy[0]
 nTreeHalos = numpy.fromfile(f,numpy.int32,nTrees)
 Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
-print LGalaxyStruct.struct_dtype
+#print LGalaxyStruct.struct_dtype
 f.close()
 
 properties = LGalaxyStruct.properties_used
 properties['DiskMass'] = True
 out = numpy.dtype([])
+print out
 #for el in LGalaxyStruct.properties_used.keys():
     #print el, LGalaxyStruct.properties_used[el]
     
