@@ -20,7 +20,7 @@ f.close()
 
 properties = LGalaxyStruct.properties_used
 properties['DiskMass'] = True
-
+out = numpy.dtype()
 #for el in LGalaxyStruct.properties_used.keys():
     #print el, LGalaxyStruct.properties_used[el]
     
