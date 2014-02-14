@@ -7,6 +7,8 @@ file_prefix = "SA_z7.66"
 firstfile = 0
 lastfile = 215
 StellarMass = 0.0
+Sfr = 0.0
+BlackHoleMass = 0.0
 for ifile in range(firstfile,lastfile+1):
     filename = folder+file_prefix+"_"+"%d"%(ifile)
     f = open(filename,"rb")
@@ -18,6 +20,8 @@ for ifile in range(firstfile,lastfile+1):
     Galaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,nHalos)
     f.close()
     StellarMass += numpy.sum(Galaxy[:]["BulgeMass"]) + numpy.sum(Galaxy[:]["DiskMass"])
-print StellarMass
+    BlackHoleMass += numpy.sum(Galaxy[:]["BlackHoleMass"])
+    Sfr += numpy.sum(Galaxy[:]["Sfr"])
+print StellarMass,BlackHoleMass,Sfr
 print LGalaxyStruct.struct_dtype
  
