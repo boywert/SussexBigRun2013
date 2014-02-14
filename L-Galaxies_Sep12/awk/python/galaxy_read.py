@@ -21,6 +21,6 @@ f.close()
 properties = LGalaxyStruct.properties_used
 properties['DiskMass'] = True
 
-for el in properties.keys():
-    print el, properties[el]
+for el in LGalaxyStruct.properties_used.keys():
+    print el, LGalaxyStruct.properties_used[el]
     
