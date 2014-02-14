@@ -18,10 +18,10 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
     nTreeHalos = numpy.array([],dtype=numpy.int32)
     Galaxy = numpy.array([],dtype=LGalaxyStruct.struct_dtype)
     for ifile in range(firstfile,lastfile+1):
+        print "File:",ifile
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
-        print "Tree",dummy
         nTrees += dummy[0]
         dummy = numpy.fromfile(f,numpy.int32,1)
         nHalos += dummy[0]
