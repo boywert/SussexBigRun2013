@@ -48,8 +48,8 @@ lines = f.readlines()
 f.close()
 
 for this_line in lines:
-    print "z",this_line
-    file_prefix = "SA_z"+this_line
+    print "z",this_line.strip()
+    file_prefix = "SA_z"+this_line.strip()
     (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
     print StellarMass,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
