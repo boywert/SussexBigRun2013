@@ -21,7 +21,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
     Sfr = 0.0
     BlackHoleMass = 0.0
     for ifile in range(firstfile,lastfile+1):
-        print "File:",ifile
+        #print "File:",ifile
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
