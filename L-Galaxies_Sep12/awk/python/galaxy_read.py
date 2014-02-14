@@ -19,5 +19,5 @@ for ifile in range(firstfile,lastfile+1):
     f.close()
     StellarMass += numpy.sum(Galaxy[:]["BulgeMass"]) + numpy.sum(Galaxy[:]["DiskMass"])
 print StellarMass
-
+print LGalaxyStruct.struct_dtype
  
