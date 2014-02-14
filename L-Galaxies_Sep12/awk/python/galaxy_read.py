@@ -53,7 +53,7 @@ BlackHoleMass_list = []
 for this_line in lines:
     i+=1
     if(i != 1):
-        print "z",this_line.strip()
+        #print "z",this_line.strip()
         file_prefix = "SA_z"+this_line.strip()
         (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
         print StellarMass ,BlackHoleMass,Sfr
