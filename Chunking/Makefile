@@ -1,7 +1,7 @@
 #SYSTEM =	"Sisu+Intel"
 
 CC=mpicc
-FC=mpif90
+FC=mpif90 -fpp
 
 ifeq ($(SYSTEM), "Sisu+Intel")
 	CC         	=	cc -std=c99 -Wall -W -fopenmp
