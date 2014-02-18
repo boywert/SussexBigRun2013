@@ -1,4 +1,4 @@
-SYSTEM =	"Sisu+Intel"
+#SYSTEM =	"Sisu+Intel"
 
 CC=mpicc
 FC=mpif90
