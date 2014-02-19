@@ -176,7 +176,7 @@ do
 	    #sbatch $this_pbs
 	   
 	done
-	sbatch $this_pbs
+#	sbatch $this_pbs
     fi
 done < $halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
