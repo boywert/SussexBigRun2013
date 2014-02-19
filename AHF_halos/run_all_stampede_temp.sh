@@ -157,7 +157,7 @@ do
 	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
 	    echo "echo $line > $lastsnap" >> $this_pbs
 	    #cat $this_pbs
-	    sbatch $this_pbs
+	    #sbatch $this_pbs
 	   
 	done
 	
