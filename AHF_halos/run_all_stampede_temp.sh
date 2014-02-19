@@ -4,9 +4,12 @@
 
 mpi_chunk=216
 mpi_ahf=8
+total_mpi_ahf=216
+ahf_procs=32
 
 node_chunk=27
 node_ahf=4
+total_node_ahf=108
 
 mpi_per_node_chunk=8
 mpi_per_node_ahf=2
@@ -122,45 +125,58 @@ do
 	this_cubep3m_info="cubep3m.info"
 	cp $cubep3minfo $this_cubep3m_info
 	
-
+	this_pbs=$(printf 'ahf_%s.pbs' $redshift)
+	
+	ahf_job_name=$(printf 'ahf_%s' $redshift)
+	echo "#!/bin/bash" > $this_pbs
+	echo "#SBATCH -t 03:00:00"  >> $this_pbs
+	echo "#SBATCH -J" $ahf_job_name >> $this_pbs
+	echo "#SBATCH -o $ahf_job_name.o%j" >> $this_pbs
+	echo "#SBATCH -p normal" >> $this_pbs
+	echo "#SBATCH -N" $total_node_ahf "-n" $total_mpi_ahf >> $this_pbs
+	echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
+	echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
 	for i in $(seq 0 $last_chunk)
 	do
 	    cd $this_workspace
-	    this_pbs=$(printf 'ahf_chunk_%d' $i)
-	    this_ahf_config=$(printf 'ahf_config_%d' $i)
 	    
 	    # ahf input file
+	    this_ahf_config=$(printf 'ahf_config_%d' $i)
 	    cp ${ahf_template} ${this_ahf_config}
 	    this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/ahf' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
-	    # pbs file
-	    this_pbs=$(printf 'ahf_%s_%d.pbs' $redshift $i)
-	    ahf_job_name=$(printf 'ahf_%s_%d' $redshift $i)
-
-	    echo "#!/bin/bash" > $this_pbs
-	    echo "#SBATCH -t 03:00:00"  >> $this_pbs
-	    echo "#SBATCH -J" $ahf_job_name >> $this_pbs
-	    echo "#SBATCH -o $ahf_job_name.o%j" >> $this_pbs
-	    echo "#SBATCH -p normal" >> $this_pbs
-	    echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
-	    echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
-
-	    echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
+	    
+            # pbs file
 	    echo "rm -f ${this_output_prefix}*" >> $this_pbs
-	    echo "ibrun tacc_affinity"  $ahf_exec $this_ahf_config >> $this_pbs
+
 	 
 	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
 	    
-	    echo "echo $redshift $i >> $snaplist" >> $this_pbs
-	    echo "echo $line > $lastsnap" >> $this_pbs
+	    #echo "echo $redshift $i >> $snaplist" >> $this_pbs
+	    #echo "echo $line > $lastsnap" >> $this_pbs
 	    #cat $this_pbs
 	    #sbatch $this_pbs
 	   
 	done
-	
+	for i in $(seq 0 $last_chunk)
+	do
+	    cd $this_workspace
+	    this_ahf_config=$(printf 'ahf_config_%d' $i)
+
+	    echo "ibrun -np " $ahf_procs " tacc_affinity "  $ahf_exec $this_ahf_config " &" >> $this_pbs
+	 
+	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
+	    
+	    #echo "echo $redshift $i >> $snaplist" >> $this_pbs
+	    #echo "echo $line > $lastsnap" >> $this_pbs
+	    #cat $this_pbs
+	    #sbatch $this_pbs
+	   
+	done
+	sbatch $this_pbs
     fi
 done < $halofinds
 ##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
