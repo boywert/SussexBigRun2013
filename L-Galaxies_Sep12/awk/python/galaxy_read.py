@@ -5,7 +5,7 @@ import numpy
 folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
 snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
 firstfile = 0
-lastfile = 215
+lastfile = 0
 
 
 
@@ -38,10 +38,11 @@ def readsnap(folder,file_prefix,firstfile,lastfile):
         BlackHoleMass += numpy.sum(addedGalaxy[:]["BlackHoleMass"])
         #this_addedGalaxy = numpy.array(addedGalaxy[:]["DiskMass"],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
         #output_Galaxy = numpy.append(output_Galaxy,this_addedGalaxy)
-        #Galaxy = numpy.append(Galaxy,addedGalaxy)
+        Galaxy = numpy.append(Galaxy,addedGalaxy)
         #print nTrees,nHalos,len(Galaxy)
         f.close()
-    return (StellarMass ,BlackHoleMass,Sfr)
+    return Galaxy
+    #return (StellarMass ,BlackHoleMass,Sfr)
 
 f = open(snaplist_file)
 lines = f.readlines()
