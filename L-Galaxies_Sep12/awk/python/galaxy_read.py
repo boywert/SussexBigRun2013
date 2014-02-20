@@ -37,7 +37,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
         for prop in LGalaxyStruct.struct_dtype.names:
             if(filter_arr[prop] is True):
                 print this_addedGalaxy[prop]
-                #addedGalaxy[:][prop] = this_addedGalaxy[:][prop]
+                addedGalaxy[prop] = this_addedGalaxy[prop]
         output_Galaxy = numpy.append(output_Galaxy,addedGalaxy)
        
       
