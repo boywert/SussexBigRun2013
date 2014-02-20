@@ -16,7 +16,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
     nHalos = 0
     nTreeHalos = numpy.array([],dtype=numpy.int32)
     filter_tuple = []
-    for prop in LGalaxyStruct.struct_dtype.names():
+    for prop in LGalaxyStruct.struct_dtype.names:
         if(filter_arr[prop] is True):
             filter_tuple.append((prop,LGalaxyStruct.struct_dtype[prop]))
     filter_dtype = numpy.dtype(filter_tuple)
@@ -34,7 +34,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
         this_addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
         addedGalaxy = numpy.array([],dtype=filter_dtype)
-        for prop in LGalaxyStruct.struct_dtype.names():
+        for prop in LGalaxyStruct.struct_dtype.names:
             if(filter_arr[prop] is True):
                 addedGalaxy[:][prop] = this_addedGalaxy[:][prop]
         output_Galaxy = numpy.append(output_Galaxy,addedGalaxy)
