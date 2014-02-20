@@ -54,6 +54,7 @@ i=0
 
 filter = LGalaxyStruct.properties_used
 filter['Mvir'] = True
+filter['Mag'] = True
 for this_line in lines:
     i+=1
     if(i != 1):
