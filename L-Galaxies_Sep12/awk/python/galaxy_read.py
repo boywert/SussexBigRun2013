@@ -51,7 +51,7 @@ def example():
         if(i == 57):
             file_prefix = "SA_z"+this_line.strip()
             (nTrees,nHalos,nTreeHalos,gal) = readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
-            print gal
+            print gal['MagDust'][:][]
             #help(gal)
       
  
