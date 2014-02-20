@@ -55,6 +55,6 @@ def example():
             file_prefix = "SA_z"+this_line.strip()
             (nTrees,nHalos,nTreeHalos,gal) = readsnap(folder,file_prefix,firstfile,lastfile,filter)
             print gal['MagDust']
-            help(gal)
+            #help(gal)
       
  
