@@ -41,7 +41,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
        
       
         f.close()
-    return output_galaxy
+    return output_Galaxy
     #return (StellarMass ,BlackHoleMass,Sfr)
 
 f = open(snaplist_file)
