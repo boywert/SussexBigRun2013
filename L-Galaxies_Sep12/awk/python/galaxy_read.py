@@ -11,52 +11,55 @@ lastfile = 0
 
 
 
-def readsnap(folder,file_prefix,firstfile,lastfile):
+def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
     nTrees = 0
     nHalos = 0
     nTreeHalos = numpy.array([],dtype=numpy.int32)
     Galaxy = numpy.array([],dtype=LGalaxyStruct.struct_dtype)
-    output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
-    StellarMass = 0.0
-    Sfr = 0.0
-    BlackHoleMass = 0.0
-    for ifile in range(firstfile,lastfile+1):
-        #print "File:",ifile
-        filename = folder+file_prefix+"_"+"%d"%(ifile)
-        f = open(filename,"rb")
-        dummy = numpy.fromfile(f,numpy.int32,1)
-        this_nTrees =  dummy[0]
-        nTrees += this_nTrees
-        dummy = numpy.fromfile(f,numpy.int32,1)
-        this_nHalos = dummy[0]
-        nHalos += this_nHalos
-        addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
-        nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
-        addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
-        StellarMass += numpy.sum(addedGalaxy[:]["DiskMass"]) + numpy.sum(addedGalaxy[:]["BulgeMass"])
-        Sfr += numpy.sum(addedGalaxy[:]["Sfr"])
-        BlackHoleMass += numpy.sum(addedGalaxy[:]["BlackHoleMass"])
-        #this_addedGalaxy = numpy.array(addedGalaxy[:]["DiskMass"],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
-        #output_Galaxy = numpy.append(output_Galaxy,this_addedGalaxy)
-        Galaxy = numpy.append(Galaxy,addedGalaxy)
-        #print nTrees,nHalos,len(Galaxy)
-        f.close()
-    return Galaxy
-    #return (StellarMass ,BlackHoleMass,Sfr)
+    filter_tuple = []
+    for prop in filter_arr.keys():
+        if(filter_arr[prop] is True):
+            filter_tuple.append((prop,LGalaxyStruct.struct_dtype['prop']))
+    filter_dtype = numpy.dtype(filter_tuple)
+    print filter_dtype
+    # output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
+    # for ifile in range(firstfile,lastfile+1):
+    #     #pr
+    #     filename = folder+file_prefix+"_"+"%d"%(ifile)
+    #     f = open(filename,"rb")
+    #     dummy = numpy.fromfile(f,numpy.int32,1)
+    #     this_nTrees =  dummy[0]
+    #     nTrees += this_nTrees
+    #     dummy = numpy.fromfile(f,numpy.int32,1)
+    #     this_nHalos = dummy[0]
+    #     nHalos += this_nHalos
+    #     addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
+    #     nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
+    #     addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
+    #     StellarMass += numpy.sum(addedGalaxy[:]["DiskMass"]) + numpy.sum(addedGalaxy[:]["BulgeMass"])
+    #     Sfr += numpy.sum(addedGalaxy[:]["Sfr"])
+    #     BlackHoleMass += numpy.sum(addedGalaxy[:]["BlackHoleMass"])
+    #     #this_addedGalaxy = numpy.array(addedGalaxy[:]["DiskMass"],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
+    #     #output_Galaxy = numpy.append(output_Galaxy,this_addedGalaxy)
+    #     Galaxy = numpy.append(Galaxy,addedGalaxy)
+    #     #print nTrees,nHalos,len(Galaxy)
+    #     f.close()
+    # return Galaxy
+    # #return (StellarMass ,BlackHoleMass,Sfr)
 
 f = open(snaplist_file)
 lines = f.readlines()
 f.close()
 i=0
-StellarMass_list = []
-Sfr_list = []
-BlackHoleMass_list = []
-# for this_line in lines:
-#     i+=1
-#     if(i != 1):
-#         #print "z",this_line.strip()
-#         file_prefix = "SA_z"+this_line.strip()
-#         (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
-#         print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
-# #print LGalaxyStruct.struct_dtype
+
+filter = LGalaxyStruct.properties_used
+filter['Mvir'] = True
+for this_line in lines:
+    i+=1
+    if(i != 1):
+        #print "z",this_line.strip()
+        file_prefix = "SA_z"+this_line.strip()
+        readsnap(folder,file_prefix,firstfile,lastfile,filter)
+        #print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
+#print LGalaxyStruct.struct_dtype
  
