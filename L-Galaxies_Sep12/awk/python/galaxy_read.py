@@ -31,7 +31,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
        
       
         f.close()
-    return (nTree,nHalos,nTreeHalos,output_Galaxy)
+    return (nTrees,nHalos,nTreeHalos,output_Galaxy)
 
 def example():
 
