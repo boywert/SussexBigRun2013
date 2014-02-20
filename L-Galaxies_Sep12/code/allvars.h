@@ -39,7 +39,7 @@
 #define  CORRECTDBFLOAT(x) x
 #endif
 
-#define  NMAG 5 		/* Number of filters */
+#define  NMAG 15 		/* Number of filters */
 
 #define  NIDX 10
 
