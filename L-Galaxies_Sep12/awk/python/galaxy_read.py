@@ -60,6 +60,7 @@ for this_line in lines:
         file_prefix = "SA_z"+this_line.strip()
         gal = readsnap(folder,file_prefix,firstfile,lastfile,filter)
         print gal['MagDust']
+        help(gal)
         #print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
