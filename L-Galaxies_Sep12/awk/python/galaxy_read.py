@@ -53,7 +53,7 @@ def example():
         i+=1
         if(i == 57):
             file_prefix = "SA_z"+this_line.strip()
-            gal = readsnap(folder,file_prefix,firstfile,lastfile,filter)
+            (nTrees,nHalos,nTreeHalos,gal) = readsnap(folder,file_prefix,firstfile,lastfile,filter)
             print gal['MagDust']
             help(gal)
       
