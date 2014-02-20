@@ -36,9 +36,8 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
         addedGalaxy = numpy.zeros(this_nHalos,dtype=filter_dtype)
         for prop in LGalaxyStruct.struct_dtype.names:
             if(filter_arr[prop] is True):
-                print this_addedGalaxy[prop]
                 addedGalaxy[prop] = this_addedGalaxy[prop]
-        #output_Galaxy = numpy.append(output_Galaxy,addedGalaxy)
+        output_Galaxy = numpy.append(output_Galaxy,addedGalaxy)
        
       
         f.close()
@@ -59,7 +58,8 @@ for this_line in lines:
     if(i == 57):
         #print "z",this_line.strip()
         file_prefix = "SA_z"+this_line.strip()
-        readsnap(folder,file_prefix,firstfile,lastfile,filter)
+        gal = readsnap(folder,file_prefix,firstfile,lastfile,filter)
+        print gal
         #print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
 #print LGalaxyStruct.struct_dtype
  
