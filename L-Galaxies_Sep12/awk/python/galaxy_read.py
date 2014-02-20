@@ -19,7 +19,7 @@ def readsnap(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.prop
     filter_tuple = []
     for prop in filter_arr.keys():
         if(filter_arr[prop] is True):
-            filter_tuple.append((prop,LGalaxyStruct.struct_dtype['prop']))
+            filter_tuple.append((prop,LGalaxyStruct.struct_dtype[prop]))
     filter_dtype = numpy.dtype(filter_tuple)
     print filter_dtype
     # output_Galaxy = numpy.array([],dtype=numpy.dtype([("DiskMass",numpy.float32)]))
