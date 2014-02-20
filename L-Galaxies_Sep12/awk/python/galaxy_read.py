@@ -56,7 +56,7 @@ filter['Mag'] = False
 filter['MagDust'] = True
 for this_line in lines:
     i+=1
-    if(i == 2):
+    if(i == 57):
         #print "z",this_line.strip()
         file_prefix = "SA_z"+this_line.strip()
         readsnap(folder,file_prefix,firstfile,lastfile,filter)
