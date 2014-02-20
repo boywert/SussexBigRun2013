@@ -51,12 +51,12 @@ i=0
 StellarMass_list = []
 Sfr_list = []
 BlackHoleMass_list = []
-for this_line in lines:
-    i+=1
-    if(i != 1):
-        #print "z",this_line.strip()
-        file_prefix = "SA_z"+this_line.strip()
-        (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
-        print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
-#print LGalaxyStruct.struct_dtype
+# for this_line in lines:
+#     i+=1
+#     if(i != 1):
+#         #print "z",this_line.strip()
+#         file_prefix = "SA_z"+this_line.strip()
+#         (StellarMass ,BlackHoleMass,Sfr) = readsnap(folder,file_prefix,firstfile,lastfile)
+#         print 1./(float(this_line.strip())+1.), StellarMass ,BlackHoleMass,Sfr
+# #print LGalaxyStruct.struct_dtype
  
