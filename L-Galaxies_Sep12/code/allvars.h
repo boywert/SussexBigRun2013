@@ -47,7 +47,7 @@
 #define  MAXSNAPS  68     /* Number of snapshots in the dark matter simulation */
 #else
 //#define  MAXSNAPS  64
-#define  MAXSNAPS  62
+#define  MAXSNAPS  58
 #endif
 
 #define  MAXGALFAC 2.3 /*1.5/2.3 - maximum fraction of satellite without a halo (for memory allocation)*/
