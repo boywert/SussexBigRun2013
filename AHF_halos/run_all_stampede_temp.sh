@@ -68,115 +68,88 @@ make
 last_redshift="1000.0"
 
 echo '' > $snaplist
+
+cd $workspace
+mkdir -p log
+
+nsnap=0
+nchunk=0
+chunk_workspace=$(printf '%s/chunking/' $workspace)
+mkdir -p $chunk_workspace
+cd $chunk_workspace
 while read line
 do
     redshift=$(printf '%3.3f' $line)
     echo "redshift = " $redshift
     firstfile=$(printf '%s/%sxv0.dat' $particle_folder $redshift)
-    #make folder prepared for chunking
-    this_workspace=$(printf '%s/z_%s_%d/' $workspace $redshift $drho)
-    mkdir -p $this_workspace
-    for i in $(seq 0 $last_chunk)
-    do
-	this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
-	mkdir -p $this_chunkfolder
-	this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/' $ahfoutput_folder $redshift $drho $i)
-	mkdir -p $this_output_prefix
-	rm -rf $this_output_prefix/*
-    done
- 
-    cd ${this_workspace}
-    rm -rf *
-    this_chunk_param=$(printf 'chunk_param_%s' $redshift)
-
-    echo ${redshift} > ${this_chunk_param}
-    echo "dummy" >>  $this_chunk_param
-    echo $particle_folder >> $this_chunk_param
-    echo $chunk_folder >> $this_chunk_param
-    echo $cubep3m_boxsize >> $this_chunk_param
-    echo $cubep3m_node >> $this_chunk_param
-    echo $cubep3m_mesh >> $this_chunk_param
-    echo $pid_flag >> $this_chunk_param
-    echo $buffer_size >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
-    echo $n_chunks_pd >> $this_chunk_param
     if [ -e $firstfile ] 
     then
-	# Chunk cubep3m
-	this_pbs=$(printf 'chunking_%s.pbs' $redshift)
-	chunk_job_name=$(printf 'chunking_%s' $redshift)
-	this_ic_filename=$(printf '%s/z_%s/' $chunk_folder $redshift)
-
-	echo "#!/bin/bash" > $this_pbs
-	echo "#SBATCH -t 03:00:00" >> $this_pbs
-	echo "#SBATCH -J" $chunk_job_name >> $this_pbs
-	echo "#SBATCH -o ${chunk_job_name}.o%j" >> $this_pbs
-	echo "#SBATCH -p normal" >> $this_pbs
-	echo "#SBATCH -N" $node_chunk "-n" $mpi_chunk >> $this_pbs
-
-	echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
-	#echo "rm -rf" $this_ic_filename >> $this_pbs
-	echo "ibrun tacc_affinity"  $chunk_exec $this_chunk_param >> $this_pbs
-	#cat $this_pbs
-	chunkjobid=$(sbatch $this_pbs | awk 'END{ print $4 }')
-	# run AHF on every chunks
-	# cubep3m
-	this_cubep3m_info="cubep3m.info"
-	cp $cubep3minfo $this_cubep3m_info
-	
-	this_pbs=$(printf 'ahf_%s.pbs' $redshift)
-	
-	ahf_job_name=$(printf 'ahf_%s' $redshift)
-	echo "#!/bin/bash" > $this_pbs
-	echo "#SBATCH -t 03:00:00"  >> $this_pbs
-	echo "#SBATCH -J" $ahf_job_name >> $this_pbs
-	echo "#SBATCH -o $ahf_job_name.o%j" >> $this_pbs
-	echo "#SBATCH -p normal" >> $this_pbs
-	echo "#SBATCH -N" $total_node_ahf "-n" $total_mpi_ahf >> $this_pbs
-	echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
-	echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
+	redshift_list[$nsnap]=$redshift
+	nsnap=$(($nsnap+1))
 	for i in $(seq 0 $last_chunk)
 	do
-	    cd $this_workspace
-	    
+	    this_chunkfolder=$(printf '%s/z_%s/chunk_%d/' $chunk_folder $redshift $i)
+	    mkdir -p $this_chunkfolder
+	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/' $ahfoutput_folder $redshift $drho $i)
+	    mkdir -p $this_output_prefix
+	done
+	this_chunk_param=$(printf 'chunk_param_%d' $nsnap)
+	echo ${redshift} > $this_chunk_param
+	echo "dummy" >>  $this_chunk_param
+	echo $particle_folder >> $this_chunk_param
+	echo $chunk_folder >> $this_chunk_param
+	echo $cubep3m_boxsize >> $this_chunk_param
+	echo $cubep3m_node >> $this_chunk_param
+	echo $cubep3m_mesh >> $this_chunk_param
+	echo $pid_flag >> $this_chunk_param
+	echo $buffer_size >> $this_chunk_param
+	echo $n_chunks_pd >> $this_chunk_param
+	echo $n_chunks_pd >> $this_chunk_param
+	echo $n_chunks_pd >> $this_chunk_param
+	for i in $(seq 0 $last_chunk)
+	do
+	    nchunk=$(($nchunk+1))
 	    # ahf input file
-	    this_ahf_config=$(printf 'ahf_config_%d' $i)
+	    this_ahf_config=$(printf 'ahf_config_%d' $nchunk)
 	    cp ${ahf_template} ${this_ahf_config}
 	    this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/ahf' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
-	    
-            # pbs file
-	    echo "rm -f ${this_output_prefix}*" >> $this_pbs
-
-	 
-	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
-	    
-	    #echo "echo $redshift $i >> $snaplist" >> $this_pbs
-	    #echo "echo $line > $lastsnap" >> $this_pbs
-	    #cat $this_pbs
-	    #sbatch $this_pbs
-	   
+	    #clear the old results
+	    rm -f ${this_output_prefix}*
 	done
-	for i in $(seq 0 $last_chunk)
-	do
-	    cd $this_workspace
-	    this_ahf_config=$(printf 'ahf_config_%d' $i)
-
-	    echo "ibrun -np " $ahf_procs " tacc_affinity "  $ahf_exec $this_ahf_config " &" >> $this_pbs
-	 
-	    #echo "rm -rf ${chunk_folder}/z_${redshift}/chunk_$i/*" >> $this_pbs
-	    
-	    #echo "echo $redshift $i >> $snaplist" >> $this_pbs
-	    #echo "echo $line > $lastsnap" >> $this_pbs
-	    #cat $this_pbs
-	    #sbatch $this_pbs
-	   
-	done
-#	sbatch $this_pbs
     fi
+    
 done < $halofinds
-##mpirun -np 8 ../bin/AHF-v1.0-056 AHF.input-template2
+# Chunk cubep3m
+this_pbs="chunking_all.pbs"
+
+echo "#!/bin/bash" > $this_pbs
+echo "#SBATCH -t 24:00:00" >> $this_pbs
+echo "#SBATCH -J chunking_all" >> $this_pbs
+echo "#SBATCH -o chunking_all.o%a" >> $this_pbs
+echo "#SBATCH -p normal" >> $this_pbs
+echo "#SBATCH --array=1-${nsnap}" >> $this_pbs
+echo "#SBATCH -N" $node_chunk "-n" $mpi_chunk >> $this_pbs
+
+echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
+echo "ibrun tacc_affinity"  $chunk_exec "chunk_param_${SLURM_ARRAY_TASK_ID}"  >> $this_pbs
+
+chunkjobid=$(sbatch $this_pbs | awk 'END{ print $4 }')
+
+this_pbs="ahf_all.pbs"
+echo "#!/bin/bash" > $this_pbs
+echo "#SBATCH -t 12:00:00" >> $this_pbs
+echo "#SBATCH -J ahf_all" >> $this_pbs
+echo "#SBATCH -o ahf_all.o%a" >> $this_pbs
+echo "#SBATCH -p normal" >> $this_pbs
+echo "#SBATCH --array=1-${nchunk}" >> $this_pbs
+echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
+echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
+
+echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
+echo "ibrun tacc_affinity" $ahf_exec "ahf_config_${SLURM_ARRAY_TASK_ID}"  >> $this_pbs
+
+sbatch $this_pbs
