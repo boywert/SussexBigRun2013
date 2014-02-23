@@ -135,7 +135,7 @@ echo "#SBATCH --array=1-${nsnap}" >> $this_pbs
 echo "#SBATCH -N" $node_chunk "-n" $mpi_chunk >> $this_pbs
 
 echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
-echo "ibrun tacc_affinity"  $chunk_exec "chunk_param_${SLURM_ARRAY_TASK_ID}"  >> $this_pbs
+echo "ibrun tacc_affinity"  $chunk_exec "chunk_param_\$\{SLURM_ARRAY_TASK_ID\}"  >> $this_pbs
 
 chunkjobid=$(sbatch $this_pbs | awk 'END{ print $4 }')
 
@@ -150,6 +150,6 @@ echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
 echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
 
 echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
-echo "ibrun tacc_affinity" $ahf_exec "ahf_config_${SLURM_ARRAY_TASK_ID}"  >> $this_pbs
+echo "ibrun tacc_affinity" $ahf_exec "ahf_config_\$\{SLURM_ARRAY_TASK_ID\}"  >> $this_pbs
 
-sbatch $this_pbs
+#sbatch $this_pbs
