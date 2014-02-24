@@ -113,7 +113,7 @@ do
 	    this_ahf_config=$(printf 'ahf_config_%d' $nchunk)
 	    cp ${ahf_template} ${this_ahf_config}
 	    this_ic_filename=$(printf '%s/z_%s/chunk_%d/%sxv_chunk_%d_' $chunk_folder $redshift $i $redshift $i)
-	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/ahf' $ahfoutput_folder $redshift $drho $i $redshift)
+	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
