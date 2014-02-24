@@ -145,11 +145,18 @@ echo "#SBATCH -t 12:00:00" >> $this_pbs
 echo "#SBATCH -J ahf_all" >> $this_pbs
 echo "#SBATCH -o ahf_all.o%a" >> $this_pbs
 echo "#SBATCH -p normal" >> $this_pbs
-echo "#SBATCH --array=1-${nchunk}" >> $this_pbs
+echo "#SBATCH --array=1-${nsnap}" >> $this_pbs
 echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
 #echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
 
 echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
-echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${SLURM_ARRAY_TASK_ID}'  >> $this_pbs
-
+chunkid=0
+for i in $(seq 1 $nsnap)
+do
+    for j in $(seq 0 $nchunk)
+    do
+	chunkid=$(($chunkid+1))
+	echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${chunkid}'  >> $this_pbs
+    done
+done
 sbatch $this_pbs
