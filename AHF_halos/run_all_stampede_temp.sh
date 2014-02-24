@@ -153,7 +153,7 @@ echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
 #echo "#SBATCH --dependency=afterok:${chunkjobid}" >> $this_pbs
 
 echo "export OMP_NUM_THREADS=$openmp_threads_ahf" >> $this_pbs
-
+echo "n_chunks_total=${n_chunks_total}" >> $this_pbs
 echo 'snapid=$(echo "$SLURM_ARRAY_TASK_ID - 1" | bc)' >> $this_pbs
 echo 'offset=$(echo "$snapid * $n_chunks_total" | bc)' >> $this_pbs
 for j in $(seq 1 $n_chunks_total)
