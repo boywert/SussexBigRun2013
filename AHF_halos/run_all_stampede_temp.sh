@@ -152,9 +152,9 @@ echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
 echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
 
 snapid=$(${SLURM_ARRAY_TASK_ID})
-for j in $(seq 0 $nchunk)
+for j in $(seq 0 $last_chunk)
 do
-    chunkid=$(($(($snapid*$nchunk-$nchunk))+$j))
+    chunkid=$(($(($snapid*$n_chunks_total-$n_chunks_total))+$j))
     echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${chunkid}'  >> $this_pbs
 done
 
