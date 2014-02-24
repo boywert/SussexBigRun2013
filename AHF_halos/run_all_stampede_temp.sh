@@ -159,4 +159,4 @@ do
     echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${chunkid}'  >> $this_pbs
 done
 
-#sbatch $this_pbs
+sbatch $this_pbs
