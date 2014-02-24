@@ -159,6 +159,7 @@ echo 'offset=$(echo "$snapid * $n_chunks_total" | bc)' >> $this_pbs
 for j in $(seq 1 $n_chunks_total)
 do
     echo 'chunkid=$(($offset+' $j '))' >> $this_pbs
+    echo 'echo "doing" $chunkid' >> $this_pbs
     echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${chunkid}'  >> $this_pbs
 done
 
