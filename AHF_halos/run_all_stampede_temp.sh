@@ -117,6 +117,8 @@ do
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
+
+	    cp $cubep3minfo cubep3m.info
 	    #clear the old results
 	    #rm -f ${this_output_prefix}*
 	done
