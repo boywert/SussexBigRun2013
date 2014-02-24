@@ -117,7 +117,7 @@ do
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
-	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
+	    echo 'NcpuReading= 1' >> $this_ahf_config
 
 	    #clear the old results
 	    #rm -f ${this_output_prefix}*
