@@ -151,7 +151,7 @@ echo "#SBATCH -N" $node_ahf "-n" $mpi_ahf >> $this_pbs
 
 echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
 
-snapid=$(${SLURM_ARRAY_TASK_ID}-1)
+snapid=$((${SLURM_ARRAY_TASK_ID}-1))
 for j in $(seq 1 $n_chunks_total)
 do
     offset=$(echo "$snapid * $n_chunks_total" | bc)
