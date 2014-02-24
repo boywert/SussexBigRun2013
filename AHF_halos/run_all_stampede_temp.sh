@@ -154,9 +154,9 @@ echo "export OMP_NUM_THREADS=$openmp_threads_chunk" >> $this_pbs
 snapid=$(${SLURM_ARRAY_TASK_ID}-1)
 for j in $(seq 1 $n_chunks_total)
 do
-    offset=$(expr $snapid \* $n_chunks_total)
+    offset=$(echo "$snapid * $n_chunks_total" | bc)
     chunkid=$(($offset+$j))
     echo "ibrun tacc_affinity" $ahf_exec 'ahf_config_${chunkid}'  >> $this_pbs
 done
 
-sbatch $this_pbs
+#sbatch $this_pbs
