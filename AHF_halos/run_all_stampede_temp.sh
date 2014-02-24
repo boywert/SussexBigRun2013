@@ -8,14 +8,14 @@ total_mpi_ahf=216
 ahf_procs=32
 
 node_chunk=27
-node_ahf=4
+node_ahf=8
 total_node_ahf=108
 
 mpi_per_node_chunk=8
-mpi_per_node_ahf=2
+mpi_per_node_ahf=1
 
 openmp_threads_chunk=2
-openmp_threads_ahf=8
+openmp_threads_ahf=16
 
 
 #mem_need_ahf=60
@@ -119,7 +119,6 @@ do
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
 	    echo 'NcpuReading=' $mpi_ahf >> $this_ahf_config
 
-	    
 	    #clear the old results
 	    #rm -f ${this_output_prefix}*
 	done
