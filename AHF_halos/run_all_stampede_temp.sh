@@ -3,12 +3,12 @@
 # This one is to run Chunking -> AHF  on Sisu (SLURM)
 
 mpi_chunk=216
-mpi_ahf=8
+mpi_ahf=16
 total_mpi_ahf=216
 ahf_procs=32
 
 node_chunk=27
-node_ahf=8
+node_ahf=16
 total_node_ahf=108
 
 mpi_per_node_chunk=8
@@ -117,7 +117,7 @@ do
 	    this_output_prefix=$(printf '%s/z_%s_%d/chunk_%d/%s' $ahfoutput_folder $redshift $drho $i $redshift)
 	    echo 'ic_filename=' $this_ic_filename  >> $this_ahf_config
 	    echo 'outfile_prefix=' $this_output_prefix >> $this_ahf_config
-	    echo 'NcpuReading= 1' >> $this_ahf_config
+	    echo 'NcpuReading= ' $mpi_ahf >> $this_ahf_config
 
 	    #clear the old results
 	    #rm -f ${this_output_prefix}*
