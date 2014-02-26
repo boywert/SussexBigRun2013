@@ -1,6 +1,8 @@
 import LGalaxyStruct
 import numpy
 
+# This function return (nTrees,nHalos,nTreeHalos,Galaxy)
+# The input are (folder,file_prefix,firstfile,lastfile [,filter_arr])
 def readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
     nTrees = 0
     nHalos = 0
