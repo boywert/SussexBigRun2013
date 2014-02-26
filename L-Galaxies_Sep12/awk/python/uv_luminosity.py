@@ -6,6 +6,7 @@ def uv_l_z8():
     boxsize = 47.0
     folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
     snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
+    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_131212_6_1728_47Mpc_ext2/observed_UVL/"
     firstfile = 0
     lastfile = 215
     f = open(snaplist_file)
@@ -31,5 +32,9 @@ def uv_l_z8():
     fig = pylab.figure()
     ax = fig.add_subplot(111)
     ax.plot(lgal_hist_x,lgal_hist_y)
+
+    bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
+    bouwens2011_z8 = pylab.fromfile(bouwens2011_file)
+    print bouwens2011_z8
     ax.set_yscale("log")
     pylab.show()
