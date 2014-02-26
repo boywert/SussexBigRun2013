@@ -1,4 +1,5 @@
 import pylab
+import numpy
 import read_lgal
 import LGalaxyStruct
 
@@ -34,7 +35,7 @@ def uv_l_z8():
     ax.plot(lgal_hist_x,lgal_hist_y)
 
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
-    bouwens2011_z8 = pylab.fromfile(bouwens2011_file)
+    bouwens2011 = numpy.fromfile(bouwens2011_file)
     print bouwens2011_z8
     ax.set_yscale("log")
-    pylab.show()
+    #pylab.show()
