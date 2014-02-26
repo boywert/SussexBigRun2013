@@ -3,6 +3,7 @@ import read_lgal
 import LGalaxyStruct
 
 def uv_l_z8():
+    boxsize = 47.0
     folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
     snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
     firstfile = 0
@@ -24,5 +25,8 @@ def uv_l_z8():
     lgal_hist_x = []
     for i in range(len(lgal_hist_y)):
         lgal_hist_x.append((lgal_hist[1][i]+lgal_hist[1][i+1])/2.)
-    print lgal_hist_y
+    
+    lgal_hist_y /= boxsize**3. * (lgal_hist_x[1]-lgal_hist_x[0])
+    
     print lgal_hist_x
+    print lgal_hist_y
