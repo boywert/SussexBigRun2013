@@ -31,4 +31,5 @@ def uv_l_z8():
     fig = pylab.figure()
     ax = fig.add_subplot(111)
     ax.plot(lgal_hist_x,lgal_hist_y)
+    ax.set_yscale("log")
     pylab.show()
