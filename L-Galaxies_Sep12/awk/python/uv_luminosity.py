@@ -36,6 +36,6 @@ def uv_l_z8():
 
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
     bouwens2011 = numpy.fromfile(bouwens2011_file)
-    print bouwens2011_z8
+    print bouwens2011
     ax.set_yscale("log")
     #pylab.show()
