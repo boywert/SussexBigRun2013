@@ -22,7 +22,7 @@ def uv_l_z8():
 
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
-    lgal_hist = pylab.histogram(gal['MagDust'][:,5],range=(-21.5,0.))
+    lgal_hist = pylab.histogram(gal['MagDust'][:,5],range=(-23.0,-16.0))
     
     lgal_hist_y = lgal_hist[0]
     print lgal_hist
