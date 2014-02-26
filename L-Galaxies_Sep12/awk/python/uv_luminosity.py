@@ -19,6 +19,6 @@ def uv_l():
         i+=1
         if(i == 57):
             file_prefix = "SA_z"+this_line.strip()
-            (nTrees,nHalos,nTreeHalos,gal) = readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
+            (nTrees,nHalos,nTreeHalos,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
             print gal['MagDust'][:,5]
             #help(gal)
