@@ -17,12 +17,12 @@ def uv_l_z8():
     i=0
     filter = LGalaxyStruct.properties_used
     filter['Mvir'] = False
-    filter['Mag'] = True
+    filter['Mag'] = Fals
     filter['MagDust'] = True
 
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
-    lgal_hist = pylab.histogram(gal['Mag'][:,5],range=(-23.0,-16.0))
+    lgal_hist = pylab.histogram(gal['MagDust'][:,5],range=(-21.5,0.))
     
     lgal_hist_y = lgal_hist[0]
     print lgal_hist
