@@ -43,5 +43,5 @@ def uv_l_z8():
 
     ax.scatter(bouwens2011_x,bouwens2011_y)
     ax.set_yscale("log")
-    print nGals
+    print nGals, len(gal)
     pylab.show()
