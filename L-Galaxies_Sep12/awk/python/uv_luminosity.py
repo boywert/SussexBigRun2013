@@ -20,4 +20,4 @@ def uv_l_z8():
     (nTrees,nHalos,nTreeHalos,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
     lgal_hist = pylab.histogram(gal['MagDust'][:,5])
     
-    lgal_hist
+    print lgal_hist
