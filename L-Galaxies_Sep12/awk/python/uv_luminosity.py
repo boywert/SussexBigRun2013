@@ -29,7 +29,7 @@ def uv_l_z8():
     
     lgal_hist_metal_y = lgal_hist_metal[0]
     lgal_hist_metal_x = []
-    for i in range(len(lgal_hist_y)):
+    for i in range(len(lgal_hist_metal_y)):
         lgal_hist_metal_x.append((lgal_hist_metal[1][i]+lgal_hist_metal[1][i+1])/2.)
     
     lgal_hist_metal_x = lgal_hist_metal_x - 5.*numpy.log10(hubble_h)
