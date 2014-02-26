@@ -5,6 +5,7 @@ import LGalaxyStruct
 
 def uv_l_z8():
     boxsize = 47.0
+    hubble_h = 0.7
     folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
     snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
     observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_131212_6_1728_47Mpc_ext2/observed_UVL/"
@@ -36,6 +37,9 @@ def uv_l_z8():
 
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
     bouwens2011 = numpy.loadtxt(bouwens2011_file)
-    print bouwens2011
+    bouwens2011_x = bouwens2011[:,0]-5.*numpy.log10(hubble_h)
+    bouwens2011_y = (10.**bouwens2011[:,1])/hubble_h**3.
+
+    ax.scatter(bouwens2011_x,bouwens2011_y)
     ax.set_yscale("log")
     #pylab.show()
