@@ -25,6 +25,7 @@ def uv_l_z8():
     lgal_hist = pylab.histogram(gal['MagDust'][:,5],bins=10,range=(-21.5,-15.))
     
     lgal_hist_y = lgal_hist[0]
+    print lgal_hist_y
     lgal_hist_x = []
     for i in range(len(lgal_hist_y)):
         lgal_hist_x.append((lgal_hist[1][i]+lgal_hist[1][i+1])/2.)
