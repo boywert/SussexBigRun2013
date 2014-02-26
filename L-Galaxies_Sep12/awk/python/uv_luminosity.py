@@ -27,6 +27,8 @@ def uv_l_z8():
         lgal_hist_x.append((lgal_hist[1][i]+lgal_hist[1][i+1])/2.)
     
     lgal_hist_y = lgal_hist_y / (boxsize**3. * (lgal_hist_x[1]-lgal_hist_x[0]))
-    
-    print lgal_hist_x
-    print lgal_hist_y
+    pylab.rc('text', usetex=True)
+    fig = pylab.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(lgal_hist_x,lgal_hist_y)
+    fig.show()
