@@ -93,6 +93,7 @@ def galaxy_stellar_massftn():
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
     mass = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
+    print mass
     #print stellarmass
     # massftn_y = stellarmass[0]
     # massftn_x = []
