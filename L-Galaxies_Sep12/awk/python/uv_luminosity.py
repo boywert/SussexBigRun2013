@@ -73,6 +73,7 @@ def uv_l_z8():
 
 
 def galaxy_stellar_massftn():
+    gadget2msun=10.e10.
     boxsize = 47.0
     max_mag=-16.
     min_mag = -23.
@@ -91,8 +92,8 @@ def galaxy_stellar_massftn():
 
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
-    stellarmass= pylab.histogram(numpy.log10(gal['DiskMass']+gal['BulgeMass']))
-    print stellarmass
+    print numpy.log10(gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass'])
+    #print stellarmass
     # massftn_y = stellarmass[0]
     # massftn_x = []
     # for i in range(len(stellarmass[0])):
