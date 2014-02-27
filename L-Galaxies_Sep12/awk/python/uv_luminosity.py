@@ -92,7 +92,7 @@ def galaxy_stellar_massftn():
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
     stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BulgeMass'][:]))
-    print gal['DiskMass'] 
+    print gal['DiskMass']+ gal['BulgeMass']
     # massftn_y = stellarmass[0]
     # massftn_x = []
     # for i in range(len(stellarmass[0])):
