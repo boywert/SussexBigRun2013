@@ -73,7 +73,7 @@ def uv_l_z8():
 
 
 def galaxy_stellar_massftn():
-    gadget2msun=10.e10.
+    gadget2msun=10.e10
     boxsize = 47.0
     max_mag=-16.
     min_mag = -23.
