@@ -92,23 +92,23 @@ def galaxy_stellar_massftn():
     file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
     stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BulgeMass'][:]))
-    print gal
-    massftn_y = stellarmass[0]
-    massftn_x = []
-    for i in range(len(stellarmass[0])):
-        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+    print gal['DiskMass'] 
+    # massftn_y = stellarmass[0]
+    # massftn_x = []
+    # for i in range(len(stellarmass[0])):
+    #     massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
 
-    pylab.rc('text', usetex=True)
-    fig = pylab.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y,'r-')
-    file_prefix = "SA_z8.06"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
-    stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BulgeMass'][:]))
-    massftn_y = stellarmass[0]
-    massftn_x = []
-    for i in range(len(stellarmass[0])):
-        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-    ax.plot(massftn_x,massftn_y,'b-')
-    ax.set_yscale("log")
-    pylab.show()
+    # pylab.rc('text', usetex=True)
+    # fig = pylab.figure()
+    # ax = fig.add_subplot(111)
+    # ax.plot(massftn_x,massftn_y,'r-')
+    # file_prefix = "SA_z8.06"    
+    # (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
+    # stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BulgeMass'][:]))
+    # massftn_y = stellarmass[0]
+    # massftn_x = []
+    # for i in range(len(stellarmass[0])):
+    #     massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+    # ax.plot(massftn_x,massftn_y,'b-')
+    # ax.set_yscale("log")
+    # pylab.show()
