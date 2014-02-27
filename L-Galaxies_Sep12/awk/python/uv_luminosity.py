@@ -72,6 +72,7 @@ def uv_l_z8():
     leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
     leg.get_frame().set_linewidth(0)
     print nGals, len(gal)
+    ax.set_xlabel(r"log$_{10}$(Stellar Mass/$h^{-1}M_\odot$)")
     pylab.show()
 
 
