@@ -55,8 +55,8 @@ def uv_l_z8():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-')
-    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-')
+    #ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-')
+    #ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-')
     ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--')
     ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--')
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
