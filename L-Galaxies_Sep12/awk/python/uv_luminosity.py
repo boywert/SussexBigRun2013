@@ -55,10 +55,10 @@ def uv_l_z8():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-',label="Mag(Okamoto)")
-    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="MagDust(Okamoto)")
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="Mag(No Reionisation)")
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--',label="MagDust(No Reionisation)")
+    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-',label="MagDust(Okamoto)")
+    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="Mag(Okamoto)")
+    ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="MagDust(No Reionisation)")
+    ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--',label="Mag(No Reionisation)")
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
     bouwens2011 = numpy.loadtxt(bouwens2011_file)
     bouwens2011_x = bouwens2011[:,0]-5.*numpy.log10(hubble_h)
@@ -74,6 +74,7 @@ def uv_l_z8():
     print nGals, len(gal)
     ax.set_xlabel(r"log$_{10}$(Stellar Mass/$h^{-1}M_\odot$)")
     ax.set_ylabel(r"$\phi$(Galaxies$h^{3}$Mpc^{-3}$mags$^{-1}$)")
+    ax.subtitle("GFUV z~8")
     pylab.show()
 
 
