@@ -55,10 +55,10 @@ def uv_l_z8():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-')
-    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-')
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--')
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--')
+    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-',label="Mag(Okamoto)")
+    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="MagDust(Okamoto)")
+    ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="Mag(No Reionisation)")
+    ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--'.label="MagDust(No Reionisation)")
     bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
     bouwens2011 = numpy.loadtxt(bouwens2011_file)
     bouwens2011_x = bouwens2011[:,0]-5.*numpy.log10(hubble_h)
@@ -66,8 +66,11 @@ def uv_l_z8():
 
     bouwens2011_errorup = (10.**(bouwens2011[:,1] + bouwens2011[:,5]) - 10.**bouwens2011[:,1])/hubble_h**3.
     bouwens2011_errordown = (10.**bouwens2011[:,1] - 10.**(bouwens2011[:,1] + bouwens2011[:,4]))/hubble_h**3.
-    ax.errorbar(bouwens2011_x,bouwens2011_y,yerr=bouwens2011_y/10., fmt='o')
+    ax.errorbar(bouwens2011_x,bouwens2011_y,yerr=bouwens2011_y/10., fmt='o',label="Bouwens et al. (2011)")
     ax.set_yscale("log")
+    
+    leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+    leg.get_frame().set_linewidth(0)
     print nGals, len(gal)
     pylab.show()
 
