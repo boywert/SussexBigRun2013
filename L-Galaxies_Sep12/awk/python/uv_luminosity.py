@@ -94,24 +94,32 @@ def galaxy_stellar_massftn():
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
     mass = [i for i in massf if i > 10.e6]
-    print mass
-    #print stellarmass
-    # massftn_y = stellarmass[0]
-    # massftn_x = []
-    # for i in range(len(stellarmass[0])):
-    #     massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+    mass = numpy.log10(mass)
+    stellarmass = pylab.histogram(mass)
+    print stellarmass
+    massftn_y = stellarmass[0]
+    massftn_x = []
+    for i in range(len(stellarmass[0])):
+        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
 
-    # pylab.rc('text', usetex=True)
-    # fig = pylab.figure()
-    # ax = fig.add_subplot(111)
-    # ax.plot(massftn_x,massftn_y,'r-')
-    # file_prefix = "SA_z8.06"    
-    # (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
-    # stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BulgeMass'][:]))
-    # massftn_y = stellarmass[0]
-    # massftn_x = []
-    # for i in range(len(stellarmass[0])):
-    #     massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-    # ax.plot(massftn_x,massftn_y,'b-')
-    # ax.set_yscale("log")
-    # pylab.show()
+    pylab.rc('text', usetex=True)
+    fig = pylab.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(massftn_x,massftn_y,'r-')
+
+
+    file_prefix = "SA_z8.06"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
+    massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
+    mass = [i for i in massf if i > 10.e6]
+    mass = numpy.log10(mass)
+    stellarmass = pylab.histogram(mass)
+    print stellarmass
+    massftn_y = stellarmass[0]
+    massftn_x = []
+    for i in range(len(stellarmass[0])):
+        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+
+    ax.plot(massftn_x,massftn_y,'b-')
+    ax.set_yscale("log")
+    pylab.show()
