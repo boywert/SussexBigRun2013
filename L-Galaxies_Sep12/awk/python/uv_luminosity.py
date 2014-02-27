@@ -73,6 +73,7 @@ def uv_l_z8():
     leg.get_frame().set_linewidth(0)
     print nGals, len(gal)
     ax.set_xlabel(r"log$_{10}$(Stellar Mass/$h^{-1}M_\odot$)")
+    ax.set_ylabel(r"$\phi$(Galaxies$h^{3}$Mpc^{-3}$mags$^{-1}$)")
     pylab.show()
 
 
