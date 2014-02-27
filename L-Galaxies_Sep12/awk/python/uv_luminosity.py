@@ -70,3 +70,44 @@ def uv_l_z8():
     ax.set_yscale("log")
     print nGals, len(gal)
     pylab.show()
+
+
+def galaxy_stellar_massftn():
+    boxsize = 47.0
+    max_mag=-16.
+    min_mag = -23.
+    nbins=14
+    hubble_h = 0.7
+    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
+    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs_nore/"
+    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
+    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_131212_6_1728_47Mpc_ext2/observed_UVL/"
+    firstfile = 0
+    lastfile = 215
+
+    filter = LGalaxyStruct.properties_used
+    filter['DiskMass'] = True
+    filter['BulgeMass'] = True
+
+    file_prefix = "SA_z8.06"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
+    stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BuldgeMass']))
+    massftn_y = stellarmass[0]
+    massftn_x = []
+    for i in range(len(stellarmass[0])):
+        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+
+    pylab.rc('text', usetex=True)
+    fig = pylab.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(massftn_x,massftn_y,'r-')
+    file_prefix = "SA_z8.06"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
+    stellarmass= pylab.histogram(numpy.log10(gal['DiskMass'][:]+gal['BuldgeMass']))
+    massftn_y = stellarmass[0]
+    massftn_x = []
+    for i in range(len(stellarmass[0])):
+        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+        ax.plot(massftn_x,massftn_y,'b-')
+    ax.set_yscale("log")
+    pylab.show()
