@@ -48,7 +48,7 @@ def uv_l_z8():
 
     bouwens2011_errorup = (10.**(bouwens2011[:,1] + bouwens2011[:,5]) - 10.**bouwens2011[:,1])/hubble_h**3.
     bouwens2011_errordown = (10.**bouwens2011[:,1] - 10.**(bouwens2011[:,1] - bouwens2011[:,4]))/hubble_h**3.
-    ax.errorbar(bouwens2011_x,bouwens2011_y,yerr=[bouwens2011_errorup,bouwens2011_errordown], fmt='o')
+    ax.errorbar(bouwens2011_x,bouwens2011_y,yerr=[bouwens2011_errordown,bouwens2011_errorup], fmt='--o')
     ax.set_yscale("log")
     print nGals, len(gal)
     pylab.show()
