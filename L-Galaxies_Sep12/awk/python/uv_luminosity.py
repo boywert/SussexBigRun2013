@@ -108,6 +108,6 @@ def galaxy_stellar_massftn():
     massftn_x = []
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-        ax.plot(massftn_x,massftn_y,'b-')
+    ax.plot(massftn_x,massftn_y,'b-')
     ax.set_yscale("log")
     pylab.show()
