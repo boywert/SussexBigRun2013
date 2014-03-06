@@ -724,9 +724,9 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
   chalo.chalos= memmgr_malloc(0,"Halo Array");
   for(i=0;i<param_chunk_mpi;i++)
     {
-      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
-      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
-      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift);
+      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift);
       fphalo = fopen(halofile,"rb");
       
       fppart = fopen(partfile,"rb");  
@@ -743,12 +743,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 
 	  if(mpi_rank == 0)
 	    {
-	      printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift);
-	      printf("Try to read %s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift+0.001);
+	      printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift);
+	      printf("Try to read %s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift+0.001);
 	    }
-	  sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
-	  sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
-	  sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift+0.001); 
+	  sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
+	  sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift+0.001);
+	  sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift+0.001); 
 	  fphalo = fopen(halofile,"rb");    
 	  fppart = fopen(partfile,"rb");  
 	  fpprof = fopen(proffile,"rb"); 
@@ -763,12 +763,12 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 	    {
 	      if(mpi_rank == 0)
 		{
-		  printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift+0.001);
-		  printf("Try to read %s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift-0.001);
+		  printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift+0.001);
+		  printf("Try to read %s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift-0.001);
 		}
-	      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
-	      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
-	      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
+	      sprintf(partfile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_particles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
+	      sprintf(halofile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_halos_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
+	      sprintf(proffile,"%s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_profiles_bin",folder,redshift,chunk,redshift,i,redshift-0.001);
 	      fphalo = fopen(halofile,"rb");
 	      fppart = fopen(partfile,"rb");  
 	      fpprof = fopen(proffile,"rb"); 
@@ -783,7 +783,7 @@ make_catalogue_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_chu
 		{
 		  if(mpi_rank == 0)
 		    {
-		      printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f_.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift-0.001);
+		      printf("Can not read %s/z_%2.3f_200/chunk_%d/%2.3f.%04d.z%2.3f.AHF_* files\n",folder,redshift,chunk,redshift,i,redshift-0.001);
 		      printf("Exit...\n");
 		    }
 		  exit(1);
