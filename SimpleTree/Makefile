@@ -1,4 +1,4 @@
-CC =  cc
+CC =  mpicc
 CFLAGS = -g -O3 -openmp 
 
 SRCDIR = src
