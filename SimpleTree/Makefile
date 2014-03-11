@@ -28,6 +28,7 @@ TESTSRCS += $(SRCS)
 CCCSRCS += $(SRCS)
 OPT = 
 OPT += -DCUBEP3M #enable domains in cubep3m
+OPT += -DOUTPUTLGAL
 #OPT += -DOUTPUTDMDT
 #OPT += -DAHFASCII   #out put chunk2cubep3m in ASCII
 #OPT += -DTOPLEVELONLY #use only toplevel halos
