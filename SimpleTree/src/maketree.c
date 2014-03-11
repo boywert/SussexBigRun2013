@@ -111,9 +111,9 @@ int main(int argc,char **argv)
       /* Use all nodes to link particles in their specified domains */
       for(l=0;l<pow3(param_domain_per_dim);l++)
 	{
-	  printf("Start domain: %d\n",l);
 	  if(l%mpi_nodes == mpi_rank)
 	    {
+	      printf("Start domain: %d\n",l);
 	      //printf("\treading domain %d by rank:%d\n",l,mpi_rank);
 	      //printf("\tNode %d is making link AB: %3.3f=>%3.3f in domain %d\n",mpi_rank,snap1,snap2,l);
 
@@ -143,7 +143,7 @@ int main(int argc,char **argv)
 #endif
 	      /* write (internal) mtaux files to make life easier to create full merger trees */
 	      internalaux_outputs(&(halocatB[0]),outputfolder,l);
-	      printf("free haloB\n");
+	      //printf("free haloB\n");
 	      free_m_halo_wrapper(halocatB);
 	    }
 	  printf("Finish domain: %d\n",l);
