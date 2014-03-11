@@ -156,6 +156,7 @@ int main(int argc,char **argv)
 	}
       MPI_Barrier(MPI_COMM_WORLD);
     }
+  MPI_Barrier(MPI_COMM_WORLD);
 #ifdef OUTPUTLGAL
   for(l=0;l<pow3(param_domain_per_dim);l++)
     {
