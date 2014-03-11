@@ -49,11 +49,11 @@ void write_zlist(float* snaplist, int nSnaps, char* outputfolder)
   FILE *fp;
   float a;
   int i;
-  sprintf(filename,"%s/cubep3m_zlist",outputfolder);
+  sprintf(filename,"%s/treedata/zlist.txt",outputfolder);
   fp = fopen(filename,"w+");
   for(i=0;i<nSnaps;i++)
     {
-      fprintf(fp,"%f\n",snaplist[i]);
+      fprintf(fp,"%3.2f\n",snaplist[i]);
     }
   fclose(fp);
 
