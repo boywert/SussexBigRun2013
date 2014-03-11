@@ -134,7 +134,7 @@ int main(int argc,char **argv)
 		{
 		  make_link_AB(&(halocatA[0]),&(halocatB[0]), dt*kpc2m);
 		}
-	      printf("free haloA\n");
+	      //printf("free haloA\n");
 	      free_m_halo_wrapper(halocatA);
 
 #ifdef OUTPUTDMDT
@@ -145,8 +145,8 @@ int main(int argc,char **argv)
 	      internalaux_outputs(&(halocatB[0]),outputfolder,l);
 	      //printf("free haloB\n");
 	      free_m_halo_wrapper(halocatB);
+	      printf("Finish domain: %d\n",l);
 	    }
-	  printf("Finish domain: %d\n",l);
 	}
       MPI_Barrier(MPI_COMM_WORLD);
       if(mpi_rank==0)
