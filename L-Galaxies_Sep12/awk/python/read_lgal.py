@@ -22,6 +22,7 @@ def readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nHalos = dummy[0]
         nHalos += this_nHalos
+        print "File" ifile " nGals = " this_nHalos
         addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
         this_addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
