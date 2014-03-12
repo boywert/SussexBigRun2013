@@ -46,6 +46,7 @@ tidy:
 # then calls awk scripts from ./awk/ folder to extract cleand-up version of GALAXY_OUTPUT struct
 # and generate different representations of use for post-processing the result 	
 metadata:
+	mkdir -p python
 	${CC_MD} ${OPT} ${CFLAGS} -E ./code/allvars.h -o ./code/allvars.i
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/GALAXY_OUTPUT_2_TypeString.awk > ./awk/L-Galaxies_Types.txt
 	awk -f ./awk/extractGALAXY_OUTPUT.awk ./code/allvars.i |awk -f ./awk/GALAXY_OUTPUT_2_DDL.awk > ./awk/L-Galaxies_DDL.sql	
