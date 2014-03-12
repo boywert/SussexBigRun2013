@@ -75,7 +75,7 @@ def uv_l_z8():
     leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
     leg.get_frame().set_linewidth(0)
     print nGals, len(gal)
-    ax.set_xlabel(r"log$_{10}$(Stellar Mass/$h^{-1}M_\odot$)")
+    ax.set_xlabel(r"Mag$_UV$")
     ax.set_ylabel(r"$\phi$ (Galaxies $h^{3}$ Mpc$^{-3}$ mags$^{-1}$)")
     fig.suptitle("GFUV z~8")
     pylab.savefig('uv_l_z8.pdf',bbox_inches='tight')
