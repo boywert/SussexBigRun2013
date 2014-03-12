@@ -5,14 +5,17 @@ import LGalaxyStruct
 
 def uv_l_z8():
     boxsize = 47.0
-    max_mag=-16.
+    max_mag=-10.
     min_mag = -23.
-    nbins=14
+    nbins=25
     hubble_h = 0.7
-    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
-    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs_nore/"
-    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
-    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_131212_6_1728_47Mpc_ext2/observed_UVL/"
+    
+    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_fullre/"
+    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_nore/"
+    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/treedata/zlist.txt"
+    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_130315_6_1728_47Mpc_ext2/observed_UVL/"
+
+
     firstfile = 0
     lastfile = 215
     f = open(snaplist_file)
