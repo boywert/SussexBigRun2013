@@ -1,0 +1,28 @@
+;=========================================================================
+;  Script to read in L-galaxies snapshot data
+@'/mnt/lustre/scratch/virgo/SAM_output/Hen12_uv/snap_template.pro'
+;-------------------------------------------------------------------------
+DirName =  '/mnt/lustre/scratch/virgo/SAM_output/Hen12_uv/snapdir_019/'
+FileName = 'SA_z4.89'
+ModelName = DirName + FileName
+FirstFile = 1
+LastFile = 511
+;-------------------------------------------------------------------------------
+; read in data
+if n_elements(Galstruct) eq 0 then read_lgal,ModelName,Template,G $
+         ,FileNr=FileNr,TreeNr=TreeNr,NGalsPerTree=NGalsPerTree $
+         ,FirstFile=FirstFile,LastFile=LastFile ;,/swap_endian
+;------------------------------------------------------------------------------
+redshift='z4.89'
+set_plot, 'PS'
+device, filename = redshift+'.ps', xsize = 12, ysize = 11, /color, $
+        xoffset=1, $
+        yoffset=5
+
+x=(g.bulgemass+g.diskmass)*1.0e10 ;stellar mass
+y1=(g.metalscoldgas/g.coldgas) ;metallicity from gas
+y2=(g.metalsbulgemass+g.metalsdiskmass)/(g.bulgemass+g.diskmass)
+
+plot, alog10(x),y1,title=redshift , xtitle='log(M!D*!N/M!Dsol!N)', ytitle='Z!Dgas', psym=3, xrange=[8.5,11.5]
+device, /close_file
+set_plot,'x'

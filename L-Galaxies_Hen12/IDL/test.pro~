@@ -1,0 +1,7 @@
+x=5
+y=10
+
+if (x<5) then begin
+   print, 'IDL IS FUN'
+
+print, 'test'
