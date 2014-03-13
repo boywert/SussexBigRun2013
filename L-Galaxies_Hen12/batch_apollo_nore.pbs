@@ -50,7 +50,7 @@ SimulationDir=/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext
 ReionizationOn=0
 lastsnap=75
 mkdir -p $OutputDir
-
+mkdir -p $inputfolder
 filename="${inputfolder}/input_${i}"
 
 
