@@ -17,7 +17,8 @@
 #newgrp fs-virgo
 # Created files will have rw permission for the group and r for the world
 umask 002
-
+mkdir -p logs
+rm logs/*
 # Set pathnames below relative to the current working directory
 #$ -cwd
 # Say which queue you want to submit to
