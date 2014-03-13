@@ -51,7 +51,7 @@ ReionizationOn=1
 lastsnap=75
 mkdir -p $OutputDir
 
-filename="${inputfolder}/input_${i}"
+filename="${inputfolder}/input_fr_${i}"
 
 
 echo "FirstFile" $i > $filename
