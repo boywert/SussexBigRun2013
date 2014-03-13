@@ -55,7 +55,7 @@
  *  (int). */
 void load_tree_table(int filenr)
 {
-  int i, n, totNHalos;
+  int i,j, n, totNHalos;
   char buf[1000];
 
 #ifdef LOADIDS
@@ -112,7 +112,13 @@ void load_tree_table(int filenr)
   myfread(TreeNHalos, Ntrees, sizeof(int), tree_file);
 
   if(Ntrees)
-    TreeFirstHalo[0] = 0;
+    {
+      TreeFirstHalo[0] = 0;
+      for(j=0;j<Ntrees;j++)
+	{
+	  printf("Tree:%d => %d halos\n",j,TreeNHalos[j]);
+	}
+    }
   /*Define a variable containing the number you have to jump to
    * get from one firshalo to the next. */
   for(i = 1; i < Ntrees; i++)
@@ -122,6 +128,37 @@ void load_tree_table(int filenr)
   Halo_Data = mymalloc("Halo_Data", sizeof(struct halo_data) * totNHalos);
   myfseek(tree_file, sizeof(int) * (2 + Ntrees), SEEK_SET);
   myfread(Halo_Data, totNHalos, sizeof(struct halo_data), tree_file);
+#ifdef BOYDDEBUG
+  printf("struct's size = %d\n",sizeof(struct halo_data));
+  for(j=0;j<totNHalos;j++)
+    {
+      printf("ID:%d\n",j);
+      printf("\t Descendant:%d\n",Halo_Data[j].Descendant);
+      printf("\t FirstProgenitor:%d\n",Halo_Data[j].FirstProgenitor);
+      printf("\t NextProgenitor:%d\n",Halo_Data[j].NextProgenitor);
+      printf("\t FirstHaloInFOFgroup:%d\n",Halo_Data[j].FirstHaloInFOFgroup);
+      printf("\t NextHaloInFOFgroup:%d\n",Halo_Data[j].NextHaloInFOFgroup);
+      printf("\t Len:%d\n",Halo_Data[j].Len);
+      printf("\t M_Mean200:%f\n",Halo_Data[j].M_Mean200);
+      printf("\t M_Crit200:%f\n",Halo_Data[j].M_Crit200);
+      printf("\t M_TopHat:%f\n",Halo_Data[j].M_TopHat);
+      printf("\t Pos:%f,%f,%f\n",Halo_Data[j].Pos[0],Halo_Data[j].Pos[1],Halo_Data[j].Pos[2]);
+      printf("\t Vel:%f,%f,%f\n",Halo_Data[j].Vel[0],Halo_Data[j].Vel[1],Halo_Data[j].Vel[2]);
+      printf("\t VelDisp:%f\n",Halo_Data[j].VelDisp);
+      printf("\t Vmax:%f\n",Halo_Data[j].Vmax);
+      printf("\t Spin:%f,%f,%f\n",Halo_Data[j].Spin[0],Halo_Data[j].Spin[1],Halo_Data[j].Spin[2]);
+      printf("\t MostBoundID:%lld\n",Halo_Data[j].MostBoundID);
+      printf("\t SnapNum:%d\n",Halo_Data[j].SnapNum);
+      printf("\t FileNr:%d\n",Halo_Data[j].FileNr);
+      printf("\t SubhaloIndex:%d\n",Halo_Data[j].SubhaloIndex);
+      printf("\t SubHalfMass:%f\n",Halo_Data[j].SubHalfMass);
+      if(Halo_Data[j].M_Crit200 < 0.0)
+	{
+	  printf("Mcrit = %f\nExit\n",Halo_Data[j].M_Crit200);
+	  exit(1);
+	}
+    }
+#endif
 #ifdef PARALLEL
   printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
 #endif
@@ -129,6 +166,22 @@ void load_tree_table(int filenr)
   HaloIDs_Data = mymalloc("HaloIDs_Data", sizeof(struct halo_ids_data) * totNHalos); 
   myfseek(treedbids_file, 0, SEEK_SET);
   myfread(HaloIDs_Data, totNHalos, sizeof(struct halo_ids_data), treedbids_file);
+#ifdef BOYDDEBUG
+  /* for(j=0;j<totNHalos;j++) */
+  /*   { */
+  /*     printf("ID:%d\n",j); */
+  /*     printf("\t HaloID: %ld\n",HaloIDs_Data[j].HaloID); */
+  /*     printf("\t FileTreeNr: %ld\n",HaloIDs_Data[j].FileTreeNr); */
+  /*     printf("\t FirstProgenitor:%ld\n",HaloIDs_Data[j].FirstProgenitor); */
+  /*     printf("\t NextProgenitor:%ld\n",HaloIDs_Data[j].NextProgenitor); */
+  /*     printf("\t LastProgenitor:%ld\n",HaloIDs_Data[j].LastProgenitor); */
+  /*     printf("\t Descendant:%ld\n",HaloIDs_Data[j].Descendant); */
+  /*     printf("\t FirstHaloInFOFgroup:%ld\n",HaloIDs_Data[j].FirstHaloInFOFgroup); */
+  /*     printf("\t NextHaloInFOFgroup:%ld\n",HaloIDs_Data[j].NextHaloInFOFgroup);   */
+  /*     printf("\t Redshift:%lf\n",HaloIDs_Data[j].Redshift); */
+  /*     printf("\t PeanoKey:%d\n",HaloIDs_Data[j].PeanoKey); */
+  /*   } */
+#endif
 #ifdef PARALLEL
   printf("\nTask %d done loading tree_dbids_%d\n", ThisTask, filenr);
 #endif
