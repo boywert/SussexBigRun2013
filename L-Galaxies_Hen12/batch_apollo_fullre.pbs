@@ -29,7 +29,7 @@ umask 002
 # Join standard error to standard out
 #$ -j y
 # Give the job a name
-#$ -N Lgalaxy
+#$ -N Lgalaxy_fullre
 # Name and location of the output file
 # SGE will only substitute certain variables here
 #$ -o logs/$JOB_NAME_$TASK_ID.log
