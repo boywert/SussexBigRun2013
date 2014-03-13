@@ -39,7 +39,7 @@
 #define  CORRECTDBFLOAT(x) x
 #endif
 
-#define  NMAG 5 		/* Number of filters */
+#define  NMAG 15 		/* Number of filters */
 
 #define  NIDX 10
 
@@ -48,6 +48,10 @@
 #else
 //#define  MAXSNAPS  64
 #define  MAXSNAPS  62
+#endif
+
+#ifdef CUBEP3M
+#define MAXSNAPS 76
 #endif
 
 #define  MAXGALFAC 2.3 /*1.5/2.3 - maximum fraction of satellite without a halo (for memory allocation)*/

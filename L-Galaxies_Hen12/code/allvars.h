@@ -51,6 +51,7 @@
 #endif
 
 #ifdef CUBEP3M
+#undef MASSNAPS
 #define MAXSNAPS 76
 #endif
 
