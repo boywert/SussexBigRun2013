@@ -27,7 +27,7 @@ def uv_l_z8():
     filter['Mag'] = True
     filter['MagDust'] = True
 
-    file_prefix = "SA_z6.00"    
+    file_prefix = "SA_z8.06"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
     lgal_hist_metal = pylab.histogram(gal['MagDust'][:,5],bins=nbins,range=(min_mag,max_mag))
     
