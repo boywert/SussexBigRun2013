@@ -30,13 +30,13 @@ CoolFunctionsDir      /mnt/lustre/scratch/virgo/L-Galaxies/CoolFunctions/
 %LastDarkMatterSnapShot    58
 ScalePos            1.
 ScaleMass           1.
-PartMass            0.093639456
+PartMass            0.000150746587577
 Omega        	    0.27 
 OmegaLambda  	    0.73 
 BaryonFrac   	    0.167
 Hubble_h     	    0.70
 BoxSize             47.
-PartMass_OriginalCosm     0.093639456
+PartMass_OriginalCosm     0.000150746587577
 Omega_OriginalCosm        0.27
 OmegaLambda_OriginalCosm  0.73
 Hubble_h_OriginalCosm     0.70
