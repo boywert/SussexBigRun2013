@@ -7,11 +7,12 @@ FileNameGalaxies      SA
 %FileWithOutputRedshifts   /mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out
 
 %PhotPrefix           M05_Chabrier ; BC03_Chabrier ; CB07_Chabrier
-PhotDir               ./PhotTables_2.0/
+PhotDir               /mnt/lustre/scratch/virgo/L-Galaxies/PhotTables_2.0/
 PhotPrefix            M05_Chabrier
 FileWithFilterNames   ./input/Filter_uv.txt
 McFile		      ./input/Mc.txt
-CoolFunctionsDir      ./CoolFunctions/
+CoolFunctionsDir      /mnt/lustre/scratch/virgo/L-Galaxies/CoolFunctions/
+
 
 %-------------------------------------------------
 %----- Simulation input/output files  ------------
