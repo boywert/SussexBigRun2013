@@ -43,7 +43,7 @@ echo Running on file $i
 
 inputfolder="input_cubep3m/"
 mkdir -p $inputfolder
-template="input_template"
+template="input/input_template"
 exec=./L-Galaxies
 OutputDir=/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_fullre/
 SimulationDir=/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/

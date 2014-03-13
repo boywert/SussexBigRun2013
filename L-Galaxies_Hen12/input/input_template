@@ -125,8 +125,8 @@ TrackDiskInstability		1	;allow bulges to form when the stellar disks become unst
 %------------------------------------------
 
 %% Reionization
-Reionization_z0	            8.0     ;These parameter choices give the best fit to Genedin (2000)
-Reionization_zr	            7.0	    ;using the analytic fit of Kravtsov et al. 2004 
+Reionization_z0	            50.0     ;These parameter choices give the best fit to Genedin (2000)
+Reionization_zr	            40.0	    ;using the analytic fit of Kravtsov et al. 2004 
 
 %% IMF
 Yield			    0.03    ;fraction of metals instantaneously returned after SF (produced by short lived massive stars)
