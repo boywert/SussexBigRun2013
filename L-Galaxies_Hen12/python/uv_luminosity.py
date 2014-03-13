@@ -5,9 +5,9 @@ import LGalaxyStruct
 
 def uv_l_z8():
     boxsize = 47.0
-    max_mag=-10.
+    max_mag=-16.
     min_mag = -23.
-    nbins=25
+    nbins=14
     hubble_h = 0.7
     
     model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_fullre/"
