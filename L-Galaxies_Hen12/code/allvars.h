@@ -50,6 +50,10 @@
 #define  MAXSNAPS  62
 #endif
 
+#ifdef CUBEP3M
+#define MAXSNAPS 76
+#endif
+
 #define  MAXGALFAC 2.3 /*1.5/2.3 - maximum fraction of satellite without a halo (for memory allocation)*/
 
 #define  STEPS 20		/* Number of integration intervals between two snapshots */

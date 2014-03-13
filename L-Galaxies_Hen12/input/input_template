@@ -1,49 +1,49 @@
+
 %------------------------------------------
 %----- SA model output files --------------
 %------------------------------------------
 
 FileNameGalaxies      SA
-FileWithOutputRedshifts   ./input/desired_output_redshifts.txt
+%FileWithOutputRedshifts   /mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out
 
 %PhotPrefix           M05_Chabrier ; BC03_Chabrier ; CB07_Chabrier
-PhotDir               /mnt/lustre/scratch/virgo/L-Galaxies/PhotTables_2.0/
+PhotDir               ./PhotTables_2.0/
 PhotPrefix            M05_Chabrier
 FileWithFilterNames   ./input/Filter_uv.txt
 McFile		      ./input/Mc.txt
-CoolFunctionsDir      /mnt/lustre/scratch/virgo/L-Galaxies/CoolFunctions/
+CoolFunctionsDir      ./CoolFunctions/
 
 %-------------------------------------------------
 %----- Simulation input/output files  ------------
 %-------------------------------------------------
 
-% Note: full path is needed or Apollo gets confused by the symbolic links
-OutputDir           /mnt/lustre/scratch/phys/sc558/L-Galaxies/output/
-SimulationDir       /mnt/lustre/scratch/virgo/Trees/MR7/
-
+%OutputDir           /mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/
+%SimulationDir       /mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
 %----------- Unscaled MS-7 -----------------------
 %-------------------------------------------------
 
-FileWithZList    ./input/zlist_MR7.txt 
-FileWithZList_OriginalCosm ./input/zlist_MR7.txt
-LastDarkMatterSnapShot    61
+%FileWithZList    ../SimpleTree/lgal_zlist.txt
+%FileWithZList_OriginalCosm ../SimpleTree/lgal_zlist.txt
+%LastDarkMatterSnapShot    58
 ScalePos            1.
 ScaleMass           1.
 PartMass            0.093639456
-Omega        	    0.272 
-OmegaLambda  	    0.728 
+Omega        	    0.27 
+OmegaLambda  	    0.73 
 BaryonFrac   	    0.167
-Hubble_h     	    0.704
-BoxSize             500.
+Hubble_h     	    0.70
+BoxSize             47.
 PartMass_OriginalCosm     0.093639456
-Omega_OriginalCosm        0.272
-OmegaLambda_OriginalCosm  0.728
-Hubble_h_OriginalCosm     0.704
-BoxSize_OriginalCosm      500.
+Omega_OriginalCosm        0.27
+OmegaLambda_OriginalCosm  0.73
+Hubble_h_OriginalCosm     0.70
+BoxSize_OriginalCosm      47.
 
 % Bits and bobs -------------------------------------
 Hashbits    8        ; needed for Peano hilbert key with the GALAXYTREE option
+MaxMemSize  1500
 
 %------------------------------------------------------------------
 %-----  Physical model recipe choices -----------------------------
@@ -89,12 +89,12 @@ MetallicityOption               1	;Photometric tables from SPS models / There mi
                                   % 0 -- only solar metallicity, 
                                   %*1 -- range of metallicities; 
 
-ReIncorporationRecipe           2       ;reincorporation time scale
+ReIncorporationRecipe           1       ;reincorporation time scale
 				  % 0 -- Delucia2007, 
 				  %*1 -- Guo2010 (suppression in small halos)
                                   % 2 -- Henriques2012 (Mdot_eject=-gama_ej*M_ejected*M_vir)
 
-ReionizationOn          	2	;
+%ReionizationOn          	2	;
                                   % 0 -- no reionization, 
                                   % 1 -- Gnedin reionization (Delucia2007), 
 				  %*2 -- Okamoto 2008 (Guo2010)
@@ -128,14 +128,12 @@ Reionization_z0	            8.0     ;These parameter choices give the best fit t
 Reionization_zr	            7.0	    ;using the analytic fit of Kravtsov et al. 2004 
 
 %% IMF
-%Yield			    0.03    ;fraction of metals instantaneously returned after SF (produced by short lived massive stars)
-Yield			    0.047   ;Hen12
+Yield			    0.03    ;fraction of metals instantaneously returned after SF (produced by short lived massive stars)
 RecycleFraction             0.43    ;0.43 fraction of SF mass instantaneously recycled back to cold - IMF dependent
 
 %% Star formation
-%SfrEfficiency              0.02    ;WMAP-1 efficiency of SF 0.03 Ori/ SN/ and SN2/ and 0.01 in SFR/
-%SfrEfficiency        	    0.173   ;WMAP-7
-SfrEfficiency               0.055   ;Hen12
+%SfrEfficiency               0.02    ;WMAP-1 efficiency of SF 0.03 Ori/ SN/ and SN2/ and 0.01 in SFR/
+SfrEfficiency              0.173   ;WMAP-7
 SfrLawPivotVelocity         1000.0
 SfrLawSlope                 0.0
 
@@ -152,43 +150,34 @@ EtaSN			    8.0e-3
 FracZtoHot                  0.0	    ;fraction of metals returned to hot component
 % Introduced by Guo 10, the following 2 parameters limit star-formation in dwarfs.
 %ReheatPreVelocity	    70.     ;WMAP-1 normalization of SN feedback
-%ReheatPreVelocity	    16.1    ;WMAP-7
-ReheatPreVelocity	    405.    ;Hen12
+ReheatPreVelocity	    16.1    ;WMAP-7
 %ReheatSlope		    3.5	    ;WMAP-1 slope of the dependence of  SN feedback on Vvir 
-%ReheatSlope		    6.1	    ;WMAP-7
-ReheatSlope		    0.921   ;Hen12
+ReheatSlope		    6.1	    ;WMAP-7
 % Heating of cold gas to hot
 %FeedbackReheatingEpsilon    6.5	    ;WMAP-1 mass of cold gas reheated due to SF (see Martin 1999) 
-%FeedbackReheatingEpsilon    7.2	    ;WMAP-7
-FeedbackReheatingEpsilon    2.12	    ;Hen12
+FeedbackReheatingEpsilon    7.2	    ;WMAP-7
 % Ejection of gas from halo
 %EjectPreVelocity	    70.		;WMAP-1 normalization of total SN 
-%EjectPreVelocity	    107.	;WMAP-7
-EjectPreVelocity	    336.	;Hen12
+EjectPreVelocity	    107.	;WMAP-7
 %EjectSlope		    3.5		;WMAP-1 slope of total SN
-%EjectSlope		    5.4		;WMAP-7 
-EjectSlope		    0.46	;Hen12
-%FeedbackEjectionEfficiency 0.32	;WMAP-1 fraction of energy available for ejection of gas
-%FeedbackEjectionEfficiency 0.19	;WMAP-7
-FeedbackEjectionEfficiency  0.645	;Hen12
+EjectSlope		    5.4		;WMAP-7 
+%FeedbackEjectionEfficiency  0.32	;WMAP-1 fraction of energy available for ejection of gas
+FeedbackEjectionEfficiency  0.19	;WMAP-7
 
 %% Black-hole growth
 %BlackHoleGrowthRate	    0.03    ;WMAP-1 fraction of cold gas added to the BH during mergers (AGNrecipeOn=1)
-%BlackHoleGrowthRate	    0.017   ;WMAP-7
-BlackHoleGrowthRate	    0.0146   ;Hen12
+BlackHoleGrowthRate	    0.017   ;WMAP-7
 BlackHoleSeedMass           1e-7    ; 1000 Msun/h
 BlackHoleAccretionRate      3.      ; fraction of M_BH/t_Edd.  If Eddington limited then = (1-e)/e where e is radiation efficiency.
 BlackHoleCutoffVelocity     280.
 
 %% AGN Feedback
-%AgnEfficiency              1.5e-5   ;WMAP-1 Passive accretion and cooling flow reheating
-%AgnEfficiency              4.8e-4   ;WMAP-7
-AgnEfficiency		    3.23e-5  ;Hen12
+%AgnEfficiency               1.5e-5  ;WMAP-1 Passive accretion and cooling flow reheating
+AgnEfficiency               4.8e-4  ;WMAP-7
 
 %% Reincorporation of ejected material
 %ReIncorporationFactor	    0.30	;WMAP-1 fraction of ejected mass reincorporated per dynamical time to hot
-%ReIncorporationFactor	    1.58	;WMAP-7
-ReIncorporationFactor	    1.81e10	;Hen12
+ReIncorporationFactor	    1.58	;WMAP-7
 %% I don't think that the following two are used - PAT
 ReincZpower                 2.1
 ReincVelocitypower          2.7
