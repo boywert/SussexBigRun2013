@@ -141,7 +141,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	      if(cur_aux_data->TreeNr != itree && cur_aux_data->TreeNr != -1)
 		{
 		  /* move all halos in srctree to target tree */
-		  printf("moving %d => %d\n",cur_aux_data->TreeNr,itree);
+		  //printf("moving %d => %d\n",cur_aux_data->TreeNr,itree);
 		  src_tree = cur_aux_data->TreeNr;
 		  nShifted = nHalosinTree[target_tree];
 		  nHalosinTree[target_tree] += nHalosinTree[src_tree];
@@ -165,7 +165,7 @@ void generate_lgal_output(char* outputfolder, int localdomain,float *snaplist, i
 	      /* Add non-descended halo to tree as well */
 	      else if( cur_aux_data->TreeNr == -1)
 		{
-		  printf("moving (no son) %llu => %d\n",cur_aux_data->globalRefID,itree);
+		  //printf("moving (no son) %llu => %d\n",cur_aux_data->globalRefID,itree);
 		  nHalosinTree[target_tree]++;
 		  fulltree[target_tree] = realloc(fulltree[target_tree],sizeof(full_tree_t)*nHalosinTree[target_tree]);
 		  fulltree[target_tree][nHalosinTree[target_tree]-1].globalRefID = cur_fof_id;
