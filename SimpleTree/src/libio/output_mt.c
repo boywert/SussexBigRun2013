@@ -342,23 +342,31 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
       /* printf("Desc: %llu=>%llu\n",aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,cur_aux_data->proglist[0]); */
       /* cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data); */
       /* printf("RefID : %llu=>%llu\nExit..\n",refid,cur_aux_data->proglist[0]); */
-      printf("Conflict occur!!!\nThe halo have been used before.\n HID = %llu  POS = %f,%f,%f\n",
+      printf("Conflict occur!!!\nThe halo have been used before.\nHID = %llu  POS = %f,%f,%f\n",
 	     hid,
 	     aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0],
 	     aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1],
 	     aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]);
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,aux_data);
-      printf("Previously registered Desc: HID = %llu   POS = %f,%f,%f\n",
+      printf("Previously registered Desc: HID = %llu   POS = %f,%f,%f  dX = %f Mpc/h\n",
 	     aux_data[snapid][domainid].lgal_aux_halos[localid].prevDesc,
 	     cur_aux_data->lgal_halo_data.Pos[0],
 	     cur_aux_data->lgal_halo_data.Pos[1],
-	     cur_aux_data->lgal_halo_data.Pos[2]);
+	     cur_aux_data->lgal_halo_data.Pos[2],
+	     sqrt((aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0]-cur_aux_data->lgal_halo_data.Pos[0])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0]-cur_aux_data->lgal_halo_data.Pos[0]) +
+		  (aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1]-cur_aux_data->lgal_halo_data.Pos[1])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1]-cur_aux_data->lgal_halo_data.Pos[1]) +
+		  (aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]-cur_aux_data->lgal_halo_data.Pos[2])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]-cur_aux_data->lgal_halo_data.Pos[2]))
+	     );
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data);
-      printf("Duplicated add: HID =%llu   POS=%f,%f,%f\n",
+      printf("Duplicated add: HID =%llu   POS=%f,%f,%f  dX = %f Mpc/h\n",
 	     refid,
 	     cur_aux_data->lgal_halo_data.Pos[0],
 	     cur_aux_data->lgal_halo_data.Pos[1],
-	     cur_aux_data->lgal_halo_data.Pos[2]);
+	     cur_aux_data->lgal_halo_data.Pos[2],
+	     sqrt((aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0]-cur_aux_data->lgal_halo_data.Pos[0])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0]-cur_aux_data->lgal_halo_data.Pos[0]) +
+		  (aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1]-cur_aux_data->lgal_halo_data.Pos[1])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1]-cur_aux_data->lgal_halo_data.Pos[1]) +
+		  (aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]-cur_aux_data->lgal_halo_data.Pos[2])*(aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]-cur_aux_data->lgal_halo_data.Pos[2]))
+	     );
       
       
       //exit(1);
