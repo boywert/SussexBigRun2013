@@ -343,7 +343,7 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data);
       printf("RefID : %llu=>%llu\nExit..\n",refid,cur_aux_data->proglist[0]);
       
-      exit(1);
+      //exit(1);
     }
 
 

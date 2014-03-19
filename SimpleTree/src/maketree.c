@@ -25,6 +25,7 @@ int main(int argc,char **argv)
       if(mpi_rank == 0)
 	{
 	  printf("Usage: ./maketree [configfile]\nExit..\n");
+
 	}
       finalise_MPI();
       exit(1);
