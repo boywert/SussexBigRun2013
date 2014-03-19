@@ -343,6 +343,7 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
       /* cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data); */
       /* printf("RefID : %llu=>%llu\nExit..\n",refid,cur_aux_data->proglist[0]); */
       printf("Conflict occur!!!\nThe halo have been used before.\n HID = %llu  POS = %f,%f,%f\n",
+	     hid,
 	     hid,aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[0],
 	     hid,aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[1],
 	     hid,aux_data[snapid][domainid].lgal_aux_halos[localid].lgal_halo_data.Pos[2]);
@@ -354,6 +355,7 @@ void complete_clgal_aux(hid_t hid, hid_t refid, clgal_aux_data_wrapper_t **aux_d
 	     cur_aux_data->lgal_halo_data.Pos[2]);
       cur_aux_data = clgal_aux_data_pointer_from_globalRefID(refid,aux_data);
       printf("Duplicated add: HID =%llu   POS=%f,%f,%f\n",
+	     refid,
 	     cur_aux_data->lgal_halo_data.Pos[0],
 	     cur_aux_data->lgal_halo_data.Pos[1],
 	     cur_aux_data->lgal_halo_data.Pos[2]);
