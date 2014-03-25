@@ -7,6 +7,7 @@ char param_INPUTDIR[1024];
 char param_OUTPUTDIR[1024];
 char param_CHUNKDIR[1024];
 char param_CUBEP3MOUT[1024];
+char param_logfolder[1024];
 
 struct config
 {

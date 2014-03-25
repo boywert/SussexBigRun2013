@@ -9,7 +9,7 @@ G = 6.67384e-11   # SI
 H0 = 100.0        # km/s / (Mpc/h)
 Msun2Gadget = 1e-10
 G = G * (m2km**2.) * (m2Mpc) / (kg2Msun * Msun2Gadget) # (Mpc/h) (km/s)^2 / (1e10Msun/h)
-
+print G
 #info
 boxsize = 47.0    # Mpc/h
 npart = 1728      # per dim

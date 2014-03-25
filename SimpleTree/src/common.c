@@ -15,10 +15,10 @@ const double m2km = 0.001;
 const double Msun2Gadget = 1.e-10;
 #ifdef GADGETKPC
 const double kpc2Gadget = 1.0;
-const double G = 10874.0283879; // (kpc/h) (km/s)^2 / (1e10Msun/h)
+const double G = 43018.9720599; // (kpc/h) (km/s)^2 / (1e10Msun/h)
 #else
 const double kpc2Gadget = 0.001;
-const double G = 10.8740283879; // (Mpc/h) (km/s)^2 / (1e10Msun/h)
+const double G = 43.0189720599; // (Mpc/h) (km/s)^2 / (1e10Msun/h)
 #endif
 
 const double kg2Msun = 1.989e-30;
