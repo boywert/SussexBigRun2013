@@ -120,10 +120,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   memmgr_free(tmppartB[0].mparticle,tmppartB[0].npart*sizeof(m_particle_t),"Particle inside wrapper: Hash");
   memmgr_free(tmppartB,sizeof(m_particle_wrapper_t),"Particle Wrapper: Hash");
 
-
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
-
- 
 
   //printf("haloA %llu halos\n",haloA->nHalos);
   max_id = 0;
