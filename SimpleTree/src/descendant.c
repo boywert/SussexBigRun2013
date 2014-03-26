@@ -70,12 +70,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   qsort(tmppartB[0].mparticle, tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
   old = tmppartB[0].npart*sizeof(m_particle_t);
   new = countpart*sizeof(m_particle_t);
+
   tmppartB[0].mparticle = memmgr_realloc(tmppartB[0].mparticle,new,old,memmgr_buff);
   tmppartB[0].npart = countpart;
 
   /* Make exclusive PIDs lists and correct npart */
 
   /* Finish making catalogue B exclusive table */
+
 
   merit = malloc(haloB->nHalos*sizeof(merit_t));
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
@@ -121,6 +123,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
 
+ 
+
   //printf("haloA %llu halos\n",haloA->nHalos);
   max_id = 0;
   for(ihalo=0; ihalo < haloA->nHalos; ihalo++)
@@ -137,7 +141,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /*     //haloB->mhalos[ihalo].ID = ihalo; */
   /*     //printf("B: %llu\n",haloB->mhalos[ihalo].oriID); */
   /*   } */
-
+  
+  
+  MPI_Barrier(MPI_COMM_WORLD);
 
   ihid = NULLPOINT;
   max_Mvir = 0.;

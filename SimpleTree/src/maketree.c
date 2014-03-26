@@ -18,7 +18,8 @@ int main(int argc,char **argv)
 
   /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
-  
+  init_logging();
+
   /* Check parameter file */
   if(argc < 1)
     {
@@ -169,6 +170,7 @@ int main(int argc,char **argv)
     }
 #endif
   MPI_Barrier(MPI_COMM_WORLD);
+  finalise_logging()
   finalise_MPI();
   return 0;
 }

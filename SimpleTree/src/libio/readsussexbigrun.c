@@ -294,18 +294,18 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
 		  /* encrypt the position of the block */
 		  position = (k+1)*pow(3,2) + (j+1)*3 + (i+1);
-  		  if(i==1)
-  		    position = 1;
-  		  if(i==-1)
-  		    position = 2;
-  		  if(j==1)
-  		    position = 3;
-  		  if(j==-1)
-  		    position = 4;
-  		  if(k==1)
-  		    position = 5;
-  		  if(k==-1)
-  		    position = 6;
+  		  /* if(i==1) */
+  		  /*   position = 1; */
+  		  /* if(i==-1) */
+  		  /*   position = 2; */
+  		  /* if(j==1) */
+  		  /*   position = 3; */
+  		  /* if(j==-1) */
+  		  /*   position = 4; */
+  		  /* if(k==1) */
+  		  /*   position = 5; */
+  		  /* if(k==-1) */
+  		  /*   position = 6; */
 		  /* printf("%d:%d:%d  block = %d\n",x,y,z,block); */
   		  mhalo = sussexbigrun_add_halo_buffer_binary(folder, redshift, block, snapid, domain_width, domain_per_dim, dx+fixed_buffer, position, mhalo);
 		  /* for(ihalo=0; ihalo < mhalo.nHalos; ihalo++) */

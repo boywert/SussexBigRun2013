@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdint.h>
+#include "common.h"
 
 FILE* mpi_log_fp;
 

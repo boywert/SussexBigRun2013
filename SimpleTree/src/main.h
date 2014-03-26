@@ -15,6 +15,7 @@
 #include "mpi.h"
 #include "descendant.h"
 #include "common.h"
+#include "logging.h"
 
 
 /* Force trigger some options */
