@@ -11,6 +11,9 @@ void logging(char* str)
 void init_logging()
 {
   char logfile[1024];
+  char command[1024];
+  sprintf(command,"mkdir -p %s",param_logfolder);
+  system(command);
   sprintf(logfile,"%s/status_%d.log",param_logfolder,mpi_rank);
   mpi_log_fp = fopen(logfile, "w+");
 }
