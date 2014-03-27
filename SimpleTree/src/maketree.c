@@ -18,7 +18,6 @@ int main(int argc,char **argv)
 
   /* [Boyd] initialise MPI and some aux variables needed */
   initialise_MPI(&argc, &argv);
-  init_logging();
 
   /* Check parameter file */
   if(argc < 1)
@@ -39,6 +38,7 @@ int main(int argc,char **argv)
   /* [Boyd] Read config files == TODO need to specify config file later */
   readconfig(&(configfile[0]));
 
+  init_logging();
   sprintf(folder, param_INPUTDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
 
