@@ -13,5 +13,6 @@ extern char param_INPUTDIR[1024];
 extern char param_OUTPUTDIR[1024];
 extern char param_CHUNKDIR[1024];
 extern char param_CUBEP3MOUT[1024];
+extern char param_logfolder[1024];
 extern void readconfig(char* configfile);
 #endif

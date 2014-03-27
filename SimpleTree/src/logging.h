@@ -7,7 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "common.h"
+#include "readconfig.h"
 
-FILE* mpi_log_fp;
+extern FILE* mpi_log_fp;
 
 #endif

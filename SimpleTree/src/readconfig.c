@@ -51,6 +51,12 @@ void readconfig(char* configfile)
   config[nconf].used = 0;
   nconf++;
   
+  config[nconf].type = 4;
+  config[nconf].pointer = &(param_logfolder[0]);
+  sprintf(config[nconf].IDENTIFIER,"LOGDIR");
+  config[nconf].used = 0;
+  nconf++;
+
   config[nconf].type = 1;
   config[nconf].pointer = &param_domain_per_dim;
   sprintf(config[nconf].IDENTIFIER,"CUBEP3MDOMAINS");
