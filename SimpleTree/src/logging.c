@@ -12,6 +12,7 @@ void init_logging()
 {
   char logfile[1024];
   char command[1024];
+  printf("start logging\n");
   sprintf(command,"mkdir -p %s",param_logfolder);
   system(command);
   sprintf(logfile,"%s/status_%d.log",param_logfolder,mpi_rank);
