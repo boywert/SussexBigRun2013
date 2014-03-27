@@ -10,5 +10,8 @@
 #include "readconfig.h"
 
 extern FILE* mpi_log_fp;
+extern void logging(char* str);
+extern void init_logging();
+extern void finalise_logging();
 
 #endif

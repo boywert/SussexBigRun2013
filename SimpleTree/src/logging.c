@@ -16,6 +16,10 @@ void init_logging()
   system(command);
   sprintf(logfile,"%s/status_%d.log",param_logfolder,mpi_rank);
   mpi_log_fp = fopen(logfile, "w+");
+  if(mpi_log_fp == NULL)
+    {
+      printf("ERROR: cannot open logfile %s/status_%d.log",param_logfolder,mpi_rank);
+    }
 }
 
 void finalise_logging()
