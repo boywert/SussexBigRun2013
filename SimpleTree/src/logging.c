@@ -22,6 +22,7 @@ void init_logging()
   if(mpi_log_fp == NULL)
     {
       printf("ERROR: cannot open logfile %s/status_%d.log",param_logfolder,mpi_rank);
+      exit(1);
     }
   fprintf(mpi_log_fp,"#################################################\n");
   fprintf(mpi_log_fp,"Start SimpleTree\n\n");
