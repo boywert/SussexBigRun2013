@@ -2,6 +2,7 @@
 
 FILE* mpi_log_fp;
 
+
 void logging(char* str)
 {
   fprintf(mpi_log_fp,str);
@@ -22,7 +23,12 @@ void init_logging()
     {
       printf("ERROR: cannot open logfile %s/status_%d.log",param_logfolder,mpi_rank);
     }
+  fprintf(mpi_log_fp,"#################################################\n");
+  fprintf(mpi_log_fp,"Start SimpleTree\n\n")
+  fprintf(mpi_log_fp,"#################################################\n\n");
 }
+
+
 
 void finalise_logging()
 {

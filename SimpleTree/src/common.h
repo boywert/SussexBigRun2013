@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include <omp.h>
 #include "mpi.h"
 #include "readconfig.h"
 #define MAXSTRING 1024

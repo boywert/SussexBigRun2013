@@ -270,6 +270,10 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   int i,j,k,x,y,z,block,position,block_x,block_y,block_z;
   hid_t ihalo;
   double fixed_buffer;
+  double start_time,stop_time;
+  char text[2048];
+
+  start_time = omp_get_wtime();
 
 
   fixed_buffer = param_fixed_padding;
@@ -323,6 +327,8 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   /*   { */
   /*     printf("AFTER READ IN=> ID:%llu -> %llu:%llu  %f %f %f\n",ihalo,mhalo.mhalos[ihalo].oriID,mhalo.mhalos[ihalo].ID,mhalo.mhalos[ihalo].globalRefID,mhalo.mhalos[ihalo].Xc,mhalo.mhalos[ihalo].Yc,mhalo.mhalos[ihalo].Zc); */
   /*   } */
+  stop_time = omp_get_wtime();
+  sprintf(text,"Use %f s to read z=%f\n",(float)(stop_time-start_time),redshift);
   return mhalo;
 }
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain ,int snapid)
