@@ -329,6 +329,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   /*   } */
   stop_time = omp_get_wtime();
   sprintf(text,"Use %f s to read z=%f\n",(float)(stop_time-start_time),redshift);
+  logging(text);
   return mhalo;
 }
 m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_private(char *folder, float redshift, int domain ,int snapid)
