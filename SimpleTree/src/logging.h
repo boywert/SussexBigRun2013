@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include "common.h"
 #include "readconfig.h"
-
+#include "mpi.h"
 extern FILE* mpi_log_fp;
 extern void logging(char* str);
 extern void init_logging();
