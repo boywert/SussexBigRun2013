@@ -28,7 +28,10 @@ void log_print(char* filename, int line, char *fmt,...)
     fp = fopen (logfile,"a+");
   else
     fp = fopen (logfile,"w");
-    
+  if(fp == NULL)
+    {
+      printf("ERROR: Cannot open log file: %s\n",logfile);
+    }
   fprintf(fp,"%s ",print_time());
   va_start( list, fmt );
 
