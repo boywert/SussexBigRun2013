@@ -32,7 +32,7 @@ void log_print(char* filename, int line, char *fmt,...)
     {
       printf("ERROR: Cannot open log file: %s\n",logfile);
     }
-  fprintf(fp,"%s ",print_time());
+  fprintf(fp,"%s:=> ",print_time());
   va_start( list, fmt );
 
   for ( p = fmt ; *p ; ++p )
