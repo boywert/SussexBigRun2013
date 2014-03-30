@@ -64,14 +64,14 @@ void log_print(char* filename, int line, char *fmt,...)
 	      }
             case 'f':
 	      {
-                e = va_arg( list, int );
+                e = va_arg( list, float );
 
                 fprintf(fp,"%f", e);
                 continue;
 	      }
             case 'lf':
 	      {
-                e = va_arg( list, int );
+                e = va_arg( list, double );
 
                 fprintf(fp,"%lf", e);
                 continue;
