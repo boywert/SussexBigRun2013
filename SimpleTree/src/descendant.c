@@ -32,7 +32,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   countpart = 0;
 
-
+  start_time = omp_get_wtime();
   for(ihalo=0;ihalo < haloB->nHalos; ihalo++)
     {
       /* Redefine ID to the order by Mvir */
@@ -83,7 +83,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
   /* Finish making catalogue B exclusive table */
 
-
+  stop_time = omp_get_wtime();
+  LOG_PRINT("Make exclusive haloB: %f s",stop_time-start_time);
   merit = malloc(haloB->nHalos*sizeof(merit_t));
   for(ihalo = 0; ihalo < haloA->nHalos; ihalo++)
     {
