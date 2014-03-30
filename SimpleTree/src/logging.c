@@ -69,7 +69,7 @@ void log_print(char* filename, int line, char *fmt,...)
         }
     }
   va_end( list );
-  fprintf(fp," [%s][line: %d] ",filename,line);
+  fprintf(fp,"  [%s][line: %d] ",filename,line);
   fputc( '\n', fp );
   SESSION_TRACKER++;
   fclose(fp);
