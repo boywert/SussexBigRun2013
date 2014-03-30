@@ -270,7 +270,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   int i,j,k,x,y,z,block,position,block_x,block_y,block_z;
   hid_t ihalo;
   double fixed_buffer;
-  float start_time,stop_time;
+  double start_time,stop_time;
   char text[2048];
 
   start_time = omp_get_wtime();
