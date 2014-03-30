@@ -1,9 +1,9 @@
 #include "logging.h"
 
-FILE* mpi_log_fp;
 char logfile[1024];
 static int SESSION_TRACKER;
 FILE *fp;
+char* print_time();
 
 char* print_time()
 {
@@ -81,18 +81,7 @@ void init_logging()
   printf("%s\n",command);
   system(command);
   sprintf(logfile,"%s/status_%d.log",param_logfolder,mpi_rank);
-  mpi_log_fp = fopen(logfile, "w");
-  if(mpi_log_fp == NULL)
-    {
-      printf("ERROR: cannot open logfile %s/status_%d.log",param_logfolder,mpi_rank);
-      exit(1);
-    }
   LOG_PRINT("Start SimpleTree");
 }
 
 
-
-void finalise_logging()
-{
-  fclose(mpi_log_fp);
-}
