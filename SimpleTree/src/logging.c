@@ -77,7 +77,6 @@ void log_print(char* filename, int line, char *fmt,...)
 
 void init_logging()
 {
-  char logfile[1024];
   char command[1024];
   printf("start logging\n");
   sprintf(command,"mkdir -p %s",param_logfolder);
