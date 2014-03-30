@@ -81,7 +81,7 @@ void init_logging()
   printf("%s\n",command);
   system(command);
   sprintf(logfile,"%s/status_%d.log",param_logfolder,mpi_rank);
-  LOG_PRINT("Start SimpleTree");
+  //LOG_PRINT("Start SimpleTree");
 }
 
 
