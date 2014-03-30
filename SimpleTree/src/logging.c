@@ -69,13 +69,6 @@ void log_print(char* filename, int line, char *fmt,...)
                 fprintf(fp,"%f", e);
                 continue;
 	      }
-            case 'lf':
-	      {
-                e = va_arg( list, double );
-
-                fprintf(fp,"%lf", e);
-                continue;
-	      }
             default:
 	      fputc( *p, fp );
             }
