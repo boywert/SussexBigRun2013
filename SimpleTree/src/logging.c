@@ -23,7 +23,7 @@ void log_print(char* filename, int line, char *fmt,...)
   va_list         list;
   char            *p, *r;
   int             e;
-
+  float           f;
   if(SESSION_TRACKER > 0)
     fp = fopen (logfile,"a+");
   else
@@ -64,9 +64,9 @@ void log_print(char* filename, int line, char *fmt,...)
 	      }
             case 'f':
 	      {
-                e = va_arg( list, float );
+                f = va_arg( list, float );
 
-                fprintf(fp,"%f", e);
+                fprintf(fp,"%f", f);
                 continue;
 	      }
             default:
