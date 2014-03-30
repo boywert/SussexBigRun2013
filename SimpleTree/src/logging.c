@@ -1,9 +1,10 @@
 #include "logging.h"
 
 FILE* mpi_log_fp;
+char logfile[1024];
+static int SESSION_TRACKER;
 
-
-void logging(char* str)
+void log_print(char* str)
 {
   fprintf(mpi_log_fp,str);
   fprintf(mpi_log_fp,"\n");

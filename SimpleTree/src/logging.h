@@ -9,9 +9,12 @@
 #include "common.h"
 #include "readconfig.h"
 #include "mpi.h"
-extern FILE* mpi_log_fp;
+#include <stdarg.h>
+#include <time.h>
+
 extern void logging(char* str);
 extern void init_logging();
 extern void finalise_logging();
 
+#define LOG_PRINT(...) log_print(__FILE__, __LINE__, __VA_ARGS__ )
 #endif
