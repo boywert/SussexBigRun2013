@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   /* [Boyd] Read config files == TODO need to specify config file later */
   readconfig(&(configfile[0]));
 
-  init_logging();
+  init_logging();  finalise_logging();
   sprintf(folder, param_INPUTDIR);
   sprintf(outputfolder,param_OUTPUTDIR);
 
@@ -170,7 +170,7 @@ int main(int argc,char **argv)
     }
 #endif
   MPI_Barrier(MPI_COMM_WORLD);
-  finalise_logging();
+
   finalise_MPI();
   return 0;
 }
