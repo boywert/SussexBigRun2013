@@ -12,7 +12,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   char memmgr_buff[memmgr_max_str];
   hid_t loophalo;
   int i;
-
+  double start_time,stop_time;
   /* make buffer_size to check some weird movement */
   buffer_size = param_fixed_padding +  speed_of_light*dt*max_part_speed_in_c;
   /* [Boyd] Make the catalogue B exclusive table */
@@ -24,7 +24,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   sprintf(memmgr_buff,"Particle inside wrapper: Hash");
   tmppartB[0].mparticle = memmgr_malloc(0,memmgr_buff);
   if(haloB->nHalos > 1)
-    qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
+    {
+      start_time = omp_get_wtime();
+      qsort(haloB->mhalos,haloB->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_Mvir);
+      stop_time = omp_get_wtime();
+      LOG_PRINT("Sort haloB by Mvir: %f s",stop_time-start_time);
+    }
   countpart = 0;
 
 
