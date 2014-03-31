@@ -131,6 +131,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   stop_time = omp_get_wtime();
   LOG_PRINT("Find Descendant for haloA: %f s",stop_time-start_time);
 
+  start_time = omp_get_wtime();
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
 
   //printf("haloA %llu halos\n",haloA->nHalos);
@@ -233,8 +234,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	}
     }
   free(merit_prog);
+  stop_time = omp_get_wtime();
+  LOG_PRINT("Fine main progenitor for haloB: %f s",stop_time-start_time);
 
   /* Calculate dM/dt  */
+  start_time = omp_get_wtime();
+ 
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
@@ -284,6 +289,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	  //printf("halo %llu<=%llu dm = %lf\n",ihalo,NULLPOINT,haloB->mhalos[ihalo].Mvir);
   	}
     }
+  stop_time = omp_get_wtime();
+  LOG_PRINT("Calculate dM/dt and do sanity check: %f s",stop_time-start_time);
   /* for(ihalo=0;ihalo < haloB->nHalos; ihalo++) */
   /*   { */
   /*     printf("realloc haloB[%llu]\n",ihalo); */
