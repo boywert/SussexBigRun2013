@@ -148,9 +148,9 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   min_z = block_z*domain_width+buffer_width;
   max_z = (block_z+1)*domain_width-buffer_width;
 
-  z_pos = position/pow(3,2) - 1;
-  y_pos = (position - z_pos*pow(3,2)) / 3 - 1;
-  x_pos = position - z_pos*pow(3,2) - y_pos*3 - 1;
+  z_pos = position/100 - 1;
+  y_pos = (position - z_pos*100) / 10 - 1;
+  x_pos = position - z_pos*100 - y_pos*10 - 1;
   printf("position %d: %d %d %d\n",position,x_pos,y_pos,z_pos);
 
   for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++ )
@@ -301,7 +301,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain_include_b
   		{
   		  block = z*(domain_per_dim*domain_per_dim) + y*domain_per_dim + x;
 		  /* encrypt the position of the block */
-		  position = (k+1)*pow(3,2) + (j+1)*3 + (i+1);
+		  position = (k+1)*100 + (j+1)*10 + (i+1);
   		  /* if(i==1) */
   		  /*   position = 1; */
   		  /* if(i==-1) */
