@@ -149,8 +149,8 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   max_z = (block_z+1)*domain_width-buffer_width;
 
   z_pos = position/100 - 1;
-  y_pos = (position - z_pos*100) / 10 - 1;
-  x_pos = position - z_pos*100 - y_pos*10 - 1;
+  y_pos = (position - (z_pos+1)*100) / 10 - 1;
+  x_pos = position - (z_pos+1)*100 - (y_pos+1)*10 - 1;
   printf("position %d: %d %d %d\n",position,x_pos,y_pos,z_pos);
 
   for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++ )
