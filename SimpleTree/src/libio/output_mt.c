@@ -550,7 +550,7 @@ void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domai
   sprintf(foldername,"%s/%3.3f",outputfolder,haloA->redshift);
   sprintf(command,"mkdir -p %s", foldername);
   system(command);
-  sprintf(filename,"%s/%3.3f/descaux_%d.dat_bin",outputfolder,haloB->redshift,domainid);
+  sprintf(filename,"%s/%3.3f/descaux_%d.dat_bin",outputfolder,haloA->redshift,domainid);
   sprintf(command,"rm -f %s",filename);
   system(command);
 
@@ -569,7 +569,7 @@ void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domai
   else
     {
       printf("Cannot open desc file %s\nExiting...\n",filename);
-      LOG_PRINT("Cannot open desc file %s. Exiting...",filename)
+      LOG_PRINT("Cannot open desc file %s. Exiting...",filename);
       exit(1);
     }
 }
