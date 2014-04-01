@@ -557,12 +557,12 @@ void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domai
   fp = fopen(filename, "wb+");
   if(fp != NULL)
     {
-      nHalos = haloA.nHalos;
+      nHalos = haloA->nHalos;
       fwrite(&(nHalos),sizeof(hid_t),1,fp);
-      for(ihalo=0;ihalo<haloA.nHalos;ihalo++)
+      for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
 	{
-	  fwrite(&(haloA.mhalos[ihalo].descendant),sizeof(hid_t),1,fp);
-	  fwrite(&(haloA.mhalos[ihalo].merit_embed),sizeof(merit_embed_t),1,fp);
+	  fwrite(&(haloA->mhalos[ihalo].descendant),sizeof(hid_t),1,fp);
+	  fwrite(&(haloA->mhalos[ihalo].merit_embed),sizeof(merit_embed_t),1,fp);
 	}
       fclose(fp);
     }
