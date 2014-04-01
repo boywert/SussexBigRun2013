@@ -38,6 +38,7 @@ typedef struct m_merit_embed
   double merit_delucia2007;
   double merit_knollman2009;
   double merit_NFW;
+  double accumulated_mass;
 } merit_embed_t;
 
 typedef struct m_particle_wrapper

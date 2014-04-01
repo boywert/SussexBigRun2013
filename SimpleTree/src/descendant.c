@@ -1,5 +1,6 @@
 #include "descendant.h"
 
+
 /* Make link A -> B, timewise */
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
@@ -130,6 +131,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   memmgr_free(tmppartB,sizeof(m_particle_wrapper_t),"Particle Wrapper: Hash");
   stop_time = omp_get_wtime();
   LOG_PRINT("Find Descendant for haloA: %f s",stop_time-start_time);
+
+  /* Write descendant info */
+  
 
   start_time = omp_get_wtime();
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);

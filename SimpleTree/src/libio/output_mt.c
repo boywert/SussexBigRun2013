@@ -542,6 +542,38 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
   //printf("finish relabel struct\n");
 } 
 
+void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domainid)
+{
+  hid_t ihalo,nHalos;
+  char command[1024],filename[1024];
+  FILE* fp;
+  sprintf(foldername,"%s/%3.3f",outputfolder,haloA->redshift);
+  sprintf(command,"mkdir -p %s", foldername);
+  system(command);
+  sprintf(filename,"%s/%3.3f/descaux_%d.dat_bin",outputfolder,haloB->redshift,domainid);
+  sprintf(command,"rm -f %s",filename);
+  system(command);
+
+  fp = fopen(filename, "wb+");
+  if(fp != NULL)
+    {
+      nHalos = haloA.nHalos;
+      fwrite(&(nHalos),sizeof(hid_t),1,fp);
+      for(ihalo=0;ihalo<haloA.nHalos;ihalo++)
+	{
+	  fwrite(&(haloA.mhalos[ihalo].descendant),sizeof(hid_t),1,fp);
+	  fwrite(&(haloA.mhalos[ihalo].merit_embed),sizeof(merit_embed_t),1,fp);
+	}
+      fclose(fp);
+    }
+  else
+    {
+      printf("Cannot open desc file %s\nExiting...\n",filename);
+      LOG_PRINT("Cannot open desc file %s. Exiting...",filename)
+      exit(1);
+    }
+}
+
 void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid)
 {
   hid_t ihalo,whalo;
@@ -553,6 +585,7 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
   float M200,Pos[3],Vel[3],VelDisp,Vmax,Spin[3];
   long long MostBoundID;
   hid_t nHalos;
+  double accumulated_mass;
 
  
   create_subfind_substruct(haloB);
@@ -708,6 +741,19 @@ void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domain
 	      fwrite(&(MostBoundID),sizeof(long long),1,fp);
 	    }
 	}    
+      /* write accumulated mass */
+      for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
+	{
+	  if(haloB->mhalos[ihalo].used == 1)
+	    {
+	      accumulated_mass = 0.;
+	      for(whalo=0; whalo < haloB->mhalos[ihalo].nprogs; whalo++)
+		{	      
+		  fwrite(&(haloB->mhalos[ihalo].proglist[whalo]),sizeof(hid_t),1,fp);
+		}
+	    }
+	}
+
       fclose(fp);
     }
   else

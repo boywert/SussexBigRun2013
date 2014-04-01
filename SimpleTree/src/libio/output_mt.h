@@ -12,6 +12,7 @@
 #include "../libmemmgr/memmgr.h"
 #include "../treeformat.h"
 #include "../common.h"
+#include "../logging.h"
 #include "mpi.h"
 
 /* convert to lgal */
@@ -47,5 +48,6 @@ typedef struct clgal_aux_data_wrapper
 extern void sussexbigrun_dm_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
 extern void internalaux_outputs(m_halo_wrapper_t* haloB, char* outputfolder, int domainid);
 extern void generate_lgal_output(char* outputfolder, int localdomain, float *snaplist,int nSnaps, int totaldomains);
+extern void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domainid);
 #define OUTPUT_MT_H
 #endif
