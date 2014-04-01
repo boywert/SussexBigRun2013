@@ -237,9 +237,9 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   new = tot_halos*sizeof(m_halo_t);
   sprintf(memmgr_buff,"Halo Array");
   mhalo.mhalos = memmgr_realloc(mhalo.mhalos,new,old, memmgr_buff);
-  printf("Before filter: %llu\n",mhalos.nHalos);
+  printf("Before filter: %llu\n",mhalo.nHalos);
   mhalo.nHalos = tot_halos;
-  printf("After filter: %llu\n",mhalos.nHalos);
+  printf("After filter: %llu\n",mhalo.nHalos);
   for(ihalo=0;ihalo<mhalo.nHalos;ihalo++)
     {
       mhalo.mhalos[ihalo].used = 0;
