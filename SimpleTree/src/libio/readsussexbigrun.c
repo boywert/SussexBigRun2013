@@ -411,7 +411,7 @@ m_halo_wrapper_t sussexbigrun_load_halo_catalogue_binary_single_domain(char *fol
       mhalo.mhalos[ihalo].used = 1;
     }
   stop_time = omp_get_wtime();
-  LOG_PRINT("Read halo catalogue z=%f: %f s",redshift,stop_time-start_time);
+  LOG_PRINT("Read halo catalogue z=%f: %f s",(double)redshift,stop_time-start_time);
   return mhalo;
 }
 
