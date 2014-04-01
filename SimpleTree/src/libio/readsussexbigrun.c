@@ -148,12 +148,14 @@ m_halo_wrapper_t sussexbigrun_add_halo_buffer_binary(char *folder, float redshif
   min_z = block_z*domain_width+buffer_width;
   max_z = (block_z+1)*domain_width-buffer_width;
 
+  z_pos = position/pow(3,2) - 1;
+  y_pos = (position - z_pos*pow(3,2)) / 3 - 1;
+  x_pos = position - z_pos*pow(3,2) - y_pos*3 - 1;
+  printf("pos: %d %d %d\n",x_pos,y_pos,z_pos);
+
   for(ihalo = 0; ihalo < mhalo.nHalos; ihalo++ )
     {
-      z_pos = position/pow(3,2) - 1;
-      y_pos = (position - z_pos*pow(3,2)) / 3 - 1;
-      x_pos = position - z_pos*pow(3,2) - y_pos*3 - 1;
-      printf("pos: %d %d %d\n",x_pos,y_pos,z_pos);
+
       if(x_pos == 1)      // upper x
 	{
 	  if(mhalo.mhalos[ihalo].Xc > min_x)
