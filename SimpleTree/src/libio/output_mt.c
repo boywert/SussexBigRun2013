@@ -545,7 +545,7 @@ void create_subfind_substruct(m_halo_wrapper_t* haloB)
 void internaldesc_outputs(m_halo_wrapper_t* haloA, char* outputfolder, int domainid)
 {
   hid_t ihalo,nHalos;
-  char command[1024],filename[1024];
+  char command[1024],filename[1024],foldername[1024];
   FILE* fp;
   sprintf(foldername,"%s/%3.3f",outputfolder,haloA->redshift);
   sprintf(command,"mkdir -p %s", foldername);
