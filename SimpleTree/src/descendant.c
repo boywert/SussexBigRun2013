@@ -171,8 +171,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
     {
       desc = haloA->mhalos[ihalo].descendant;
-      sprintf(log,"%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
-      LOG_PRINT("%s",log);
+      //sprintf(log,"%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
+      //LOG_PRINT("%s",log);
       if(desc != NULLPOINT)
   	{
   	  destination_domain = haloB->mhalos[desc].domainID;
@@ -191,40 +191,40 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     }
   stop_time = omp_get_wtime();
   LOG_PRINT("Finish selecting haloA to transfer: %f s",stop_time-start_time);
-  /* qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom); */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* for(i=0;i<mpi_nodes;i++) */
-  /*   { */
-  /*     for(j=0;j<mpi_nodes;j++) */
-  /* 	{ */
-  /* 	  current_ntransfer = 0; */
-  /* 	  if(i!=j) */
-  /* 	    { */
-  /* 	      if (mpi_rank == i)  */
-  /* 		{ */
-  /* 		  current_ntransfer = transfer_nhalo[j]; */
-  /* 		  MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, i*mpi_nodes+j, MPI_COMM_WORLD); */
-  /* 		} */
-  /* 	      else if(mpi_rank==j) */
-  /* 		{ */
-  /* 		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status); */
-  /* 		} */
-  /* 	      MPI_Barrier(MPI_COMM_WORLD); */
-  /* 	      for (ihalo=0;ihalo<current_ntransfer;ihalo++) */
-  /* 		{ */
-  /* 		  if (mpi_rank == i)  */
-  /* 		    { */
-  /* 		      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD); */
-  /* 		    } */
-  /* 		  else if(mpi_rank==j) */
-  /* 		    { */
-  /* 		      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status); */
-  /* 		    } */
-  /* 		} */
-  /* 	      MPI_Barrier(MPI_COMM_WORLD); */
-  /* 	    } */
-  /* 	} */
-  /*   } */
+  qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom);
+  MPI_Barrier(MPI_COMM_WORLD);
+  for(i=0;i<mpi_nodes;i++)
+    {
+      for(j=0;j<mpi_nodes;j++)
+  	{
+  	  current_ntransfer = 0;
+  	  if(i!=j)
+  	    {
+  	      if (mpi_rank == i)
+  		{
+  		  current_ntransfer = transfer_nhalo[j];
+  		  MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, i*mpi_nodes+j, MPI_COMM_WORLD);
+  		}
+  	      else if(mpi_rank==j)
+  		{
+  		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status);
+  		}
+  	      MPI_Barrier(MPI_COMM_WORLD);
+  	      for (ihalo=0;ihalo<current_ntransfer;ihalo++)
+  		{
+  		  if (mpi_rank == i)
+  		    {
+  		      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD);
+  		    }
+  		  else if(mpi_rank==j)
+  		    {
+  		      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status);
+  		    }
+  		}
+  	      MPI_Barrier(MPI_COMM_WORLD);
+  	    }
+  	}
+    }
   free(transfer_log);
   stop_time = omp_get_wtime();
   
