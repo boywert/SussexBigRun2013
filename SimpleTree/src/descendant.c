@@ -73,8 +73,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
     	  tmppartB[0].mparticle[countpart].ID =  haloB->mhalos[ihalo].Particles[ipart].ID;
   	  tmppartB[0].mparticle[countpart].haloID = haloB->mhalos[ihalo].ID;
   	  countpart++;
-    	}
-  
+    	}  
     }
   /* Sort particles by PID  */
   qsort(tmppartB[0].mparticle,tmppartB[0].npart, sizeof(m_particle_t),compare_m_particle_t_by_ID);
