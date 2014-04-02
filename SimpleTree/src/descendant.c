@@ -23,7 +23,8 @@ int compare_struct_transfer_by_dest_dom(const void *v1, const void *v2)
 /* Make link A -> B, timewise */
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
-  MPI_Status status;
+  MPI_Status status[mpi_nodes];
+  MPI_Request request[mpi_nodes];
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id,proghalo;
@@ -212,19 +213,19 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status);
   		}
   	      /* MPI_Barrier(MPI_COMM_WORLD); */
-  	      /* for (ihalo=0;ihalo<current_ntransfer;ihalo++) */
-  	      /* 	{ */
-  	      /* 	  if (mpi_rank == i) */
-  	      /* 	    { */
-  	      /* 	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD); */
-  	      /* 	    } */
-  	      /* 	  else if(mpi_rank==j) */
-  	      /* 	    { */
-  	      /* 	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status); */
-  	      /* 	    } */
-  	      /* 	} */
-  	      /* MPI_Barrier(MPI_COMM_WORLD); */
+  	      for (ihalo=0;ihalo<current_ntransfer;ihalo++)
+  	      	{
+  	      	  if (mpi_rank == i)
+  	      	    {
+  	      	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD);
+  	      	    }
+  	      	  else if(mpi_rank==j)
+  	      	    {
+  	      	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status);
+  	      	    }
+  	      	}
   	    }
+	  MPI_Barrier(MPI_COMM_WORLD);
   	}
     }
   free(transfer_log);
