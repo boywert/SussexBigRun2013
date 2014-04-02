@@ -213,7 +213,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   		{
   		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status);
   		}
-  	      /* MPI_Barrier(MPI_COMM_WORLD); */
+  	      MPI_Barrier(MPI_COMM_WORLD); 
   	      for (ihalo=0;ihalo<current_ntransfer;ihalo++)
   	      	{
   	      	  if (mpi_rank == i)
@@ -227,9 +227,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
   	      	    }
   	      	}
+	      MPI_Barrier(MPI_COMM_WORLD);
   	    }
   	}
-      MPI_Barrier(MPI_COMM_WORLD);
     }
   free(transfer_log);
   stop_time = omp_get_wtime();
