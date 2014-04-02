@@ -139,11 +139,11 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /* Need to transfer the haloA info to the domain containing haloA as progenitor */
 
   /* need mpi_nodes = cubep3m_domains */
-  domainid = haloA->mhalos[ihalo].domainID;
   for(i=0;i<mpi_nodes;i++)
     {
       if(mpi_rank==i)
 	{
+	  domainid = haloA->mhalos[0].domainID;
 	  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
 	    {
 	      desc = haloA->mhalos[ihalo].descendant;
