@@ -11,6 +11,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   uint64_t old,new;
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
+  char log[1024];
   hid_t loophalo,desc;
   int i,domainid;
   double start_time,stop_time;
@@ -148,7 +149,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	      desc = haloA->mhalos[ihalo].descendant;
 	      if(haloB->mhalos[desc].domainID != domainid)
 		{
-		  printf("export %llu\n",haloB->mhalos[desc].globalRefID);
+		  sprintf(log,"export %llu\n",haloB->mhalos[desc].globalRefID);
+		  LOG_PRINT("%s",log);
 		}
 	    }
 	}
