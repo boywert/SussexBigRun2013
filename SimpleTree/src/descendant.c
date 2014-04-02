@@ -23,6 +23,7 @@ int compare_struct_transfer_by_dest_dom(const void *v1, const void *v2)
 /* Make link A -> B, timewise */
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
+  int tag;
   MPI_Status status[mpi_nodes];
   MPI_Request request[mpi_nodes];
   m_particle_wrapper_t *tmppartB;
@@ -217,11 +218,13 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      	{
   	      	  if (mpi_rank == i)
   	      	    {
-  	      	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, (int)ihalo+(i*mpi_nodes+j)*100000, MPI_COMM_WORLD);
+		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
+  	      	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, tag, MPI_COMM_WORLD);
   	      	    }
   	      	  else if(mpi_rank==j)
   	      	    {
-  	      	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, (int)ihalo+(i*mpi_nodes+1)*100000, MPI_COMM_WORLD, &status);
+		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
+  	      	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
   	      	    }
   	      	}
   	    }
