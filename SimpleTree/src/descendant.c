@@ -161,68 +161,69 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
   /* need mpi_nodes = cubep3m_domains */
   start_time = omp_get_wtime();
+
   nTransfer = 0;
   transfer_log = malloc(0);
 
-  /* reset transfer_nhalos */
-  for(j=0;j<mpi_nodes;j++)
-    transfer_nhalo[j] = 0;
-  domainid = haloA->mhalos[0].domainID;
-  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
-    {
-      desc = haloA->mhalos[ihalo].descendant;
-      //printf("%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
-      if(desc != NULLPOINT)
-	{
-	  destination_domain = haloB->mhalos[desc].domainID;
-	  if(destination_domain != domainid)
-	    {
-	      sprintf(log,"export %llu",haloB->mhalos[desc].globalRefID);
-	      LOG_PRINT("%s",log);
-	      nTransfer++;
-	      transfer_log = realloc(transfer_log,nTransfer*sizeof(struct transfer));
-	      transfer_log[nTransfer-1].src_dom = domainid;
-	      transfer_log[nTransfer-1].dest_dom = destination_domain;
-	      transfer_log[nTransfer-1].src_id = ihalo;
-	      transfer_nhalo[destination_domain]++;
-	    }
-	}
-    }
-  LOG_PRINT("Finish selecting haloA to transfer");
-  qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom);
-  MPI_Barrier(MPI_COMM_WORLD);
-  for(i=0;i<mpi_nodes;i++)
-    {
-      for(j=0;j<mpi_nodes;j++)
-	{
-	  current_ntransfer = 0;
-	  if(i!=j)
-	    {
-	      if (mpi_rank == i) 
-		{
-		  current_ntransfer = transfer_nhalo[j];
-		  MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, i*mpi_nodes+j, MPI_COMM_WORLD);
-		}
-	      else if(mpi_rank==j)
-		{
-		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status);
-		}
-	      MPI_Barrier(MPI_COMM_WORLD);
-	      for (ihalo=0;ihalo<current_ntransfer;ihalo++)
-		{
-		  if (mpi_rank == i) 
-		    {
-		      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD);
-		    }
-		  else if(mpi_rank==j)
-		    {
-		      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status);
-		    }
-		}
-	      MPI_Barrier(MPI_COMM_WORLD);
-	    }
-	}
-    }
+  /* /\* reset transfer_nhalos *\/ */
+  /* for(j=0;j<mpi_nodes;j++) */
+  /*   transfer_nhalo[j] = 0; */
+  /* domainid = haloA->mhalos[0].domainID; */
+  /* for(ihalo=0;ihalo<haloA->nHalos;ihalo++) */
+  /*   { */
+  /*     desc = haloA->mhalos[ihalo].descendant; */
+  /*     //printf("%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc); */
+  /*     if(desc != NULLPOINT) */
+  /* 	{ */
+  /* 	  destination_domain = haloB->mhalos[desc].domainID; */
+  /* 	  if(destination_domain != domainid) */
+  /* 	    { */
+  /* 	      sprintf(log,"export %llu",haloB->mhalos[desc].globalRefID); */
+  /* 	      LOG_PRINT("%s",log); */
+  /* 	      nTransfer++; */
+  /* 	      transfer_log = realloc(transfer_log,nTransfer*sizeof(struct transfer)); */
+  /* 	      transfer_log[nTransfer-1].src_dom = domainid; */
+  /* 	      transfer_log[nTransfer-1].dest_dom = destination_domain; */
+  /* 	      transfer_log[nTransfer-1].src_id = ihalo; */
+  /* 	      transfer_nhalo[destination_domain]++; */
+  /* 	    } */
+  /* 	} */
+  /*   } */
+  /* LOG_PRINT("Finish selecting haloA to transfer"); */
+  /* qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom); */
+  /* MPI_Barrier(MPI_COMM_WORLD); */
+  /* for(i=0;i<mpi_nodes;i++) */
+  /*   { */
+  /*     for(j=0;j<mpi_nodes;j++) */
+  /* 	{ */
+  /* 	  current_ntransfer = 0; */
+  /* 	  if(i!=j) */
+  /* 	    { */
+  /* 	      if (mpi_rank == i)  */
+  /* 		{ */
+  /* 		  current_ntransfer = transfer_nhalo[j]; */
+  /* 		  MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, i*mpi_nodes+j, MPI_COMM_WORLD); */
+  /* 		} */
+  /* 	      else if(mpi_rank==j) */
+  /* 		{ */
+  /* 		  MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, i*mpi_nodes+j, MPI_COMM_WORLD, &status); */
+  /* 		} */
+  /* 	      MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	      for (ihalo=0;ihalo<current_ntransfer;ihalo++) */
+  /* 		{ */
+  /* 		  if (mpi_rank == i)  */
+  /* 		    { */
+  /* 		      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD); */
+  /* 		    } */
+  /* 		  else if(mpi_rank==j) */
+  /* 		    { */
+  /* 		      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, ihalo, MPI_COMM_WORLD, &status); */
+  /* 		    } */
+  /* 		} */
+  /* 	      MPI_Barrier(MPI_COMM_WORLD); */
+  /* 	    } */
+  /* 	} */
+  /*   } */
   free(transfer_log);
   stop_time = omp_get_wtime();
   
