@@ -219,12 +219,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      	  if (mpi_rank == i)
   	      	    {
 		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
-  	      	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, tag, MPI_COMM_WORLD);
+  	      	      //MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, tag, MPI_COMM_WORLD);
   	      	    }
   	      	  else if(mpi_rank==j)
   	      	    {
 		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
-  	      	      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
+  	      	      //MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
   	      	    }
   	      	}
 	      MPI_Barrier(MPI_COMM_WORLD);
