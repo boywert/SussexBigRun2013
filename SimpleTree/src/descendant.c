@@ -24,8 +24,8 @@ int compare_struct_transfer_by_dest_dom(const void *v1, const void *v2)
 void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 {
   int tag;
-  MPI_Status status[mpi_nodes];
-  MPI_Request request[mpi_nodes];
+  MPI_Status status;
+  MPI_Request request;
   m_particle_wrapper_t *tmppartB;
   ptid_t ipart,countpart,ref,curpart;
   hid_t ihalo,jhalo,ihid,max_id,count_progs,previous_id,iprog,next_id,proghalo;
