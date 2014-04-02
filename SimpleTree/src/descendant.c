@@ -18,6 +18,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   buffer_size = param_fixed_padding +  speed_of_light*dt*max_part_speed_in_c;
   /* [Boyd] Make the catalogue B exclusive table */
 
+  LOG_PRINT("nHaloA: %d  nHaloB:%d",(int)(haloA->nHalos),(int)(haloB->nHalos));
   
   sprintf(memmgr_buff,"Particle Wrapper: Hash");
   tmppartB = memmgr_malloc(sizeof(m_particle_wrapper_t),memmgr_buff);
