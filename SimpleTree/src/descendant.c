@@ -167,7 +167,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   for(j=0;j<mpi_nodes;j++)
     transfer_nhalo[j] = 0;
 
-  domainid = haloA->mhalos[0].domainID;
+  domainid = mpi_rank;
   for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
     {
       desc = haloA->mhalos[ihalo].descendant;
