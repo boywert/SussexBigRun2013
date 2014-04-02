@@ -155,8 +155,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   stop_time = omp_get_wtime();
   LOG_PRINT("Find Descendant for haloA: %f s",stop_time-start_time);
 
-
-  MPI_Barrier(MPI_COMM_WORLD);
   /* Need to transfer the haloA info to the domain containing haloA as progenitor */
 
   /* need mpi_nodes = cubep3m_domains */
@@ -168,11 +166,13 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /* reset transfer_nhalos */
   for(j=0;j<mpi_nodes;j++)
     transfer_nhalo[j] = 0;
+
   domainid = haloA->mhalos[0].domainID;
   for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
     {
       desc = haloA->mhalos[ihalo].descendant;
-      //printf("%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
+      sprintf(log,"%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
+      LOG_PRINT("%s",log);
       if(desc != NULLPOINT)
   	{
   	  destination_domain = haloB->mhalos[desc].domainID;
