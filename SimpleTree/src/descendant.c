@@ -161,40 +161,35 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /* Need to transfer the haloA info to the domain containing haloA as progenitor */
 
   /* need mpi_nodes = cubep3m_domains */
-
-  /* use node 0 to record the transfer */
+  start_time = omp_get_wtime();
   nTransfer = 0;
   transfer_log = malloc(0);
-  for(i=0;i<mpi_nodes;i++)
+
+  /* reset transfer_nhalos */
+  for(j=0;j<mpi_nodes;j++)
+    transfer_nhalo[j] = 0;
+  domainid = haloA->mhalos[0].domainID;
+  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
     {
-      if(mpi_rank==i)
+      desc = haloA->mhalos[ihalo].descendant;
+      //printf("%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
+      if(desc != NULLPOINT)
 	{
-	  /* reset transfer_nhalos */
-	  for(j=0;j<mpi_nodes;j++)
-	    transfer_nhalo[j] = 0;
-	  domainid = haloA->mhalos[0].domainID;
-	  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
+	  destination_domain = haloB->mhalos[desc].domainID;
+	  if(destination_domain != domainid)
 	    {
-	      desc = haloA->mhalos[ihalo].descendant;
-	      //printf("%llu/%llu  export %llu\n",ihalo,haloA->nHalos,desc);
-	      if(desc != NULLPOINT)
-		{
-		  destination_domain = haloB->mhalos[desc].domainID;
-		  if(destination_domain != domainid)
-		    {
-		      sprintf(log,"export %llu",haloB->mhalos[desc].globalRefID);
-		      LOG_PRINT("%s",log);
-		      nTransfer++;
-		      transfer_log = realloc(transfer_log,nTransfer*sizeof(struct transfer));
-		      transfer_log[nTransfer-1].src_dom = domainid;
-		      transfer_log[nTransfer-1].dest_dom = destination_domain;
-		      transfer_log[nTransfer-1].src_id = ihalo;
-		      transfer_nhalo[destination_domain]++;
-		    }
-		}
+	      sprintf(log,"export %llu",haloB->mhalos[desc].globalRefID);
+	      LOG_PRINT("%s",log);
+	      nTransfer++;
+	      transfer_log = realloc(transfer_log,nTransfer*sizeof(struct transfer));
+	      transfer_log[nTransfer-1].src_dom = domainid;
+	      transfer_log[nTransfer-1].dest_dom = destination_domain;
+	      transfer_log[nTransfer-1].src_id = ihalo;
+	      transfer_nhalo[destination_domain]++;
 	    }
 	}
     }
+
   qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom);
   MPI_Barrier(MPI_COMM_WORLD);
   for(i=0;i<mpi_nodes;i++)
@@ -231,6 +226,9 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	}
     }
   free(transfer_log);
+  stop_time = omp_get_wtime();
+  
+  LOG_PRINT("Distribute descendants of haloA: %f s",stop_time-start_time);
 
   start_time = omp_get_wtime();
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);

@@ -125,6 +125,7 @@ int main(int argc,char **argv)
 	      halocatB[0].snapid = i;
 	      halocatA[0].snapid = i-1;
 	      printf("Snapid - haloA: %d haloB: %d\n",halocatA[0].snapid,halocatB[0].snapid);
+	      LOG_PRINT("Make links %f->%f",redshiftused[0],redshiftused[1]);
 	      halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain(folder,redshiftused[0],l,halocatA[0].snapid);
 	      halocatB[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[1], l, halocatB[0].snapid,param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
 	      //halocatA[0] = sussexbigrun_load_halo_catalogue_binary_single_domain_include_buffer(folder, redshiftused[0], l, halocatA[0].snapid,param_domain_per_dim, param_boxsize/param_domain_per_dim, speed_of_light*dt*max_part_speed_in_c);
