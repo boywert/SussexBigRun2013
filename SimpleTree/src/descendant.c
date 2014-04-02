@@ -36,7 +36,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   int i,j,domainid,destination_domain;
   double start_time,stop_time;
   struct transfer  *transfer_log;
-  hid_t transfer_nhalo[mpi_nodes],current_ntransfer;
+  hid_t transfer_nhalo[mpi_nodes],nTransfer,current_ntransfer;
   /* make buffer_size to check some weird movement */
   buffer_size = param_fixed_padding +  speed_of_light*dt*max_part_speed_in_c;
   /* [Boyd] Make the catalogue B exclusive table */
