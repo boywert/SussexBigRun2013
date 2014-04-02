@@ -3,21 +3,21 @@ struct transfer {
   int src_dom;
   int dest_dom;
   hid_t src_id;
-}
+};
 
-  int compare_struct_transfer_by_dest_dom(const void *v1, const void *v2)
-  {
-    const struct transfer *u1 = v1;
-    const struct transfer *u2 = v2;
-    int ret;
-    if(u1->dest_dom < u2->dest_dom)
-      ret =  -1;
-    else if(u1->dest_dom > u2->dest_dom)
-      ret = 1;
-    else if(u1->dest_dom == u2->dest_dom)
-      ret = 0;
-    return ret;
-  }
+int compare_struct_transfer_by_dest_dom(const void *v1, const void *v2)
+{
+  const struct transfer *u1 = v1;
+  const struct transfer *u2 = v2;
+  int ret;
+  if(u1->dest_dom < u2->dest_dom)
+    ret =  -1;
+  else if(u1->dest_dom > u2->dest_dom)
+    ret = 1;
+  else if(u1->dest_dom == u2->dest_dom)
+    ret = 0;
+  return ret;
+}
 
 
 /* Make link A -> B, timewise */
