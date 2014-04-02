@@ -189,7 +189,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	    }
 	}
     }
-
+  LOG_PRINT("Finish selecting haloA to transfer")
   qsort(transfer_log,nTransfer, sizeof(struct transfer),compare_struct_transfer_by_dest_dom);
   MPI_Barrier(MPI_COMM_WORLD);
   for(i=0;i<mpi_nodes;i++)
@@ -211,7 +211,6 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	      MPI_Barrier(MPI_COMM_WORLD);
 	      for (ihalo=0;ihalo<current_ntransfer;ihalo++)
 		{
-		  
 		  if (mpi_rank == i) 
 		    {
 		      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, ihalo, MPI_COMM_WORLD);
