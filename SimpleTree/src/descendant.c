@@ -11,8 +11,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   uint64_t old,new;
   merit_t *merit,*merit_prog;
   char memmgr_buff[memmgr_max_str];
-  hid_t loophalo;
-  int i;
+  hid_t loophalo,desc;
+  int i,domainid;
   double start_time,stop_time;
   /* make buffer_size to check some weird movement */
   buffer_size = param_fixed_padding +  speed_of_light*dt*max_part_speed_in_c;
@@ -133,8 +133,28 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   stop_time = omp_get_wtime();
   LOG_PRINT("Find Descendant for haloA: %f s",stop_time-start_time);
 
-  /* Write descendant info */
-  
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  /* Need to transfer the haloA info to the domain containing haloA as progenitor */
+
+  /* need mpi_nodes = cubep3m_domains */
+  domainid = haloA->mhalos[ihalo].domainid;
+  for(i=0;i<mpi_nodes;i++)
+    {
+      if(mpi_rank==i)
+	{
+	  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
+	    {
+	      desc = haloA->mhalos[ihalo].descendant;
+	      if(haloB->mhalos[desc].domainid != domainid)
+		{
+		  printf("export %llu\n",haloB->mhalos[desc].globalRefID);
+		}
+	    }
+	}
+      MPI_Barrier(MPI_COMM_WORLD);
+    }
+
 
   start_time = omp_get_wtime();
   qsort(haloA->mhalos,haloA->nHalos, sizeof(m_halo_t),compare_m_halo_t_by_descendant);
@@ -157,18 +177,14 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   /*   } */
   
   
-  MPI_Barrier(MPI_COMM_WORLD);
+
+
 
   ihid = NULLPOINT;
   max_Mvir = 0.;
   merit_prog = malloc(0);
   for(ihalo = 0; ihalo <= max_id ; ihalo++)
     {
-      /* if(haloA->mhalos[ihalo].descendant < NULLPOINT) */
-      /* 	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloB->mhalos[haloA->mhalos[ihalo].descendant].globalRefID); */
-      /* else */
-      /* 	printf("loop: %llu =--> %llu\n",haloA->mhalos[ihalo].globalRefID,haloA->mhalos[ihalo].descendant); */
-
       if(ihalo == max_id)
 	{
 	  if(ihid < NULLPOINT)
