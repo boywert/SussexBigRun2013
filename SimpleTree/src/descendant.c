@@ -147,6 +147,8 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 	  for(ihalo=0;ihalo<haloA->nHalos;ihalo++)
 	    {
 	      desc = haloA->mhalos[ihalo].descendant;
+	      sprintf(log,"export %llu\n",desc);
+	      LOG_PRINT("%s",log);
 	      if(haloB->mhalos[desc].domainID != domainid)
 		{
 		  sprintf(log,"export %llu\n",haloB->mhalos[desc].globalRefID);
