@@ -120,24 +120,21 @@ StarFormationRecipe             0   ;Star Formation recipe
 TrackDiskInstability		1	;allow bulges to form when the stellar disks become unstable
 
 
-
 %------------------------------------------
 %----- Parameters of physical model -------
 %------------------------------------------
 
 %% Reionization
-Reionization_z0	            8.0     ;These parameter choices give the best fit to Genedin (2000)
-Reionization_zr	            7.0	    ;using the analytic fit of Kravtsov et al. 2004 
+Reionization_z0	            50.0     ;These parameter choices give the best fit to Genedin (2000)
+Reionization_zr	            40.0	    ;using the analytic fit of Kravtsov et al. 2004 
 
 %% IMF
-%Yield			    0.03    ;fraction of metals instantaneously returned after SF (produced by short lived massive stars)
-Yield			    0.047   ;Hen12
+Yield			    0.03    ;fraction of metals instantaneously returned after SF (produced by short lived massive stars)
 RecycleFraction             0.43    ;0.43 fraction of SF mass instantaneously recycled back to cold - IMF dependent
 
 %% Star formation
-%SfrEfficiency              0.02    ;WMAP-1 efficiency of SF 0.03 Ori/ SN/ and SN2/ and 0.01 in SFR/
-%SfrEfficiency        	    0.173   ;WMAP-7
-SfrEfficiency               0.055   ;Hen12
+%SfrEfficiency               0.02    ;WMAP-1 efficiency of SF 0.03 Ori/ SN/ and SN2/ and 0.01 in SFR/
+SfrEfficiency              0.173   ;WMAP-7
 SfrLawPivotVelocity         1000.0
 SfrLawSlope                 0.0
 
@@ -154,49 +151,37 @@ EtaSN			    8.0e-3
 FracZtoHot                  0.0	    ;fraction of metals returned to hot component
 % Introduced by Guo 10, the following 2 parameters limit star-formation in dwarfs.
 %ReheatPreVelocity	    70.     ;WMAP-1 normalization of SN feedback
-%ReheatPreVelocity	    16.1    ;WMAP-7
-ReheatPreVelocity	    405.    ;Hen12
+ReheatPreVelocity	    16.1    ;WMAP-7
 %ReheatSlope		    3.5	    ;WMAP-1 slope of the dependence of  SN feedback on Vvir 
-%ReheatSlope		    6.1	    ;WMAP-7
-ReheatSlope		    0.921   ;Hen12
+ReheatSlope		    6.1	    ;WMAP-7
 % Heating of cold gas to hot
 %FeedbackReheatingEpsilon    6.5	    ;WMAP-1 mass of cold gas reheated due to SF (see Martin 1999) 
-%FeedbackReheatingEpsilon    7.2	    ;WMAP-7
-FeedbackReheatingEpsilon    2.12	    ;Hen12
+FeedbackReheatingEpsilon    7.2	    ;WMAP-7
 % Ejection of gas from halo
 %EjectPreVelocity	    70.		;WMAP-1 normalization of total SN 
-%EjectPreVelocity	    107.	;WMAP-7
-EjectPreVelocity	    336.	;Hen12
+EjectPreVelocity	    107.	;WMAP-7
 %EjectSlope		    3.5		;WMAP-1 slope of total SN
-%EjectSlope		    5.4		;WMAP-7 
-EjectSlope		    0.46	;Hen12
-%FeedbackEjectionEfficiency 0.32	;WMAP-1 fraction of energy available for ejection of gas
-%FeedbackEjectionEfficiency 0.19	;WMAP-7
-FeedbackEjectionEfficiency  0.645	;Hen12
+EjectSlope		    5.4		;WMAP-7 
+%FeedbackEjectionEfficiency  0.32	;WMAP-1 fraction of energy available for ejection of gas
+FeedbackEjectionEfficiency  0.19	;WMAP-7
 
 %% Black-hole growth
 %BlackHoleGrowthRate	    0.03    ;WMAP-1 fraction of cold gas added to the BH during mergers (AGNrecipeOn=1)
-%BlackHoleGrowthRate	    0.017   ;WMAP-7
-BlackHoleGrowthRate	    0.0146   ;Hen12
+BlackHoleGrowthRate	    0.017   ;WMAP-7
 BlackHoleSeedMass           1e-7    ; 1000 Msun/h
 BlackHoleAccretionRate      3.      ; fraction of M_BH/t_Edd.  If Eddington limited then = (1-e)/e where e is radiation efficiency.
 BlackHoleCutoffVelocity     280.
 
 %% AGN Feedback
-%AgnEfficiency              1.5e-5   ;WMAP-1 Passive accretion and cooling flow reheating
-%AgnEfficiency              4.8e-4   ;WMAP-7
-AgnEfficiency		    3.23e-5  ;Hen12
+%AgnEfficiency               1.5e-5  ;WMAP-1 Passive accretion and cooling flow reheating
+AgnEfficiency               4.8e-4  ;WMAP-7
 
 %% Reincorporation of ejected material
 %ReIncorporationFactor	    0.30	;WMAP-1 fraction of ejected mass reincorporated per dynamical time to hot
-%ReIncorporationFactor	    1.58	;WMAP-7
-ReIncorporationFactor	    1.81e10	;Hen12
+ReIncorporationFactor	    1.58	;WMAP-7
 %% I don't think that the following two are used - PAT
 ReincZpower                 2.1
 ReincVelocitypower          2.7
-
-
-
 
 % Don't change these
 UnitLength_in_cm                   3.08568e+24		;Mpc - WATCH OUT, distances in the code are in Mpc/h

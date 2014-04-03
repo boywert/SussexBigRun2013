@@ -37,6 +37,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   hid_t loophalo,desc;
   int i,j,domainid,destination_domain;
   double start_time,stop_time;
+  double start_time2,stop_time2;
   struct transfer  *transfer_log;
   hid_t transfer_nhalo[mpi_nodes],nTransfer,current_ntransfer;
   /* make buffer_size to check some weird movement */
@@ -219,12 +220,12 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
   	      	  if (mpi_rank == i)
   	      	    {
 		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
-  	      	      //MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, tag, MPI_COMM_WORLD);
+  	      	      MPI_Send(&current_ntransfer, 8, MPI_BYTE, j, tag, MPI_COMM_WORLD);
   	      	    }
   	      	  else if(mpi_rank==j)
   	      	    {
 		      tag = (int)ihalo+(i*mpi_nodes+j)*100000;
-  	      	      //MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
+		      MPI_Recv(&current_ntransfer, 8, MPI_BYTE, i, tag, MPI_COMM_WORLD, &status);
   	      	    }
   	      	}
 	      MPI_Barrier(MPI_COMM_WORLD);
@@ -340,7 +341,7 @@ void make_link_AB(m_halo_wrapper_t* haloA, m_halo_wrapper_t* haloB, double dt)
 
   /* Calculate dM/dt  */
   start_time = omp_get_wtime();
- 
+   
   for(ihalo=0; ihalo < haloB->nHalos; ihalo++)
     {
       if(haloB->mhalos[ihalo].main_progenitor < NULLPOINT)
