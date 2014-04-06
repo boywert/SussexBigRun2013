@@ -1,0 +1,11 @@
+BATCHFOLD = $(CURDIR)
+
+basetree:
+	cd $(BATCHFOLD)
+	cd ../Code/B-BaseTrees/
+	make
+
+halotree:
+	cd $(BATCHFOLD)
+	cd ../Code/B-HaloTrees/
+	make

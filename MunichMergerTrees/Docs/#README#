@@ -1,0 +1,160 @@
+Instructions for building Munich merger trees
+---------------------------------------------
+
+This document describes how to build DM halo merger trees using the Munich software. There are 5 codes
+
+1. B-BaseTree
+2. B-HaloTrees
+3. L-TreeAddIDTab
+4. L-TreeAddPosTab
+5. L-TreeMakeUniqueIDs
+
+which must be run in that order. The first 2 of these are the main codes for generating the merger trees, the next 2 are for dealing with type 2 satellite galaxies, and the final code relabels the merger trees in the same way as used in the GAVO SQL database.
+
+
+B-BaseTree
+----------
+
+B-BaseTree needs to be run for each pair of subsequent snapshots. This is done by calling it as 
+
+./B-BaseTree <parameter file> <snapshot number>
+
+where snapshotnumber goes from 0 to the second to last dump. This code will determine descendant subhalos in the next output for each subhalo of the current output. In essence, these descendants are already uniquely defining the merger trees, but for more convenient analysis of individual trees, further processing is necessary.
+
+An example Makefile is provided in the Examples directory. I now describe the options
+
+1. LONGIDS                 Switch this on if the simulation uses 64-bit 
+   			   particle IDs
+2. IDS_HAVE_GAPS       	   Switch this on if the DM particle IDs are not 
+   			   continuous
+3. HAVE_HDF5               Switch these 2 options on if the simulation 
+4. H5_USE_16_API           snapshots are in the HDF5 format
+5. HAVE_NUMPART_HIGHWORD   Switch this on if the simulation has more than 2^32
+   			   particles
+
+All of the following options I have never experimented with, and I don't know what they do, so I would suggest leaving them commented out 
+
+6. H5_USE_16_API
+7. SKIP_BY_WEIGHT  
+8. ALPHA=0.8       
+9. BACKWARD_CHECKING    
+10. HALO_SIZE_INCREASE_FOR_SWITCHING=1.5  
+
+An example parameter file is also included in the Examples directory. The parameters are
+
+1. OutputDir             Simulation data directory
+2. SnapshotFileBase      Snapshot name
+3. SnapSkipFac        	 How many snapshots to skip when checking for the
+   			 descendants of subhalos. I set this to 1
+4. LastSnapShotNr     	 Number of the last snapshot
+
+
+B-HaloTrees
+-----------
+
+B-HaloTrees takes all the SUBFIND output and the descendant files produced by B-BaseTree and creates the tree files that can be passed to L-Galaxies SAM. The code is called as follows
+
+./B-HaloTrees <parameter file> 
+
+An example Makefile is provided in the Examples directory. There are 2 Makefile options
+
+1. LONGIDS                 Switch this on if the simulation uses 64-bit 
+   			   particle IDs
+2. SAVE_MASS_TAB       	   If SAVE_MASS_TAB was activated in SUBFIND, then the subhalo 
+   			   catalogues contain an extra array detailing how the mass of a 
+			   subhalo is split among the 6 possible particle types in the 
+			   simulation. Setting SAVE_MASS_TAB in B-HaloTrees causes this 
+			   information to be read in, although it doesn't seem to be used 
+			   for anything
+
+An example parameter file is also included in the Examples directory. The parameters are
+
+1. OutputDir             Simulation data directory
+2. SnapshotFileBase      Snapshot name
+3. FirstSnapShotNr     	 Number of the first snapshot
+4. LastSnapShotNr     	 Number of the last snapshot
+5. SnapSkipFac        	 How many snapshots to skip when checking for the
+   			 descendants of subhalos. I set this to 1
+6. NumberOfOutputFiles	 Specifies how many tree files will be generated
+
+
+L-TreeAddIDTab
+--------------
+
+In L-Galaxies, type 2 galaxies are galaxies which have lost their own DM subhalo, but are supposed to have not yet merged with their central galaxy. It is then customary to roughly estimate their current position with the coordinates of the particle that was the most bound particle the last time the galaxy still had a DM subhalo. In order to allow the SAM to find the coordinates of these single particles efficiently without having to read all of the particle data, additional auxillary files are used. These 'treeaux' files only contain the IDs and positions/velocities of particles that may be needed by the L-Galaxies code. The IDs are found by the L-TreeAddIDTab code, which is called as follows
+
+./L-TreeAddIDTab <parameter file> 
+
+An example Makefile is provided in the Examples directory. There is just 1 Makefile option
+
+1. SAVE_MASS_TAB       	   If SAVE_MASS_TAB was activated in SUBFIND, then the subhalo 
+   			   catalogues contain an extra array detailing how the mass of a 
+			   subhalo is split among the 6 possible particle types in the 
+			   simulation. Setting SAVE_MASS_TAB in L-TreeAddIDTab causes this 
+			   information to be read in, although it doesn't seem to be used 
+			   for anything
+
+An example parameter file is also included in the Examples directory. The parameters are
+
+1. SimulationDir         Simulation data directory
+2. LastSnapShotNr     	 Number of the last snapshot
+3. FirstFile     	 Number of the first tree file
+4. LastFile     	 Number of the last tree file
+5. FilesPerSnapshot	 Appears to be redundant
+
+
+L-TreeAddPosTab
+---------------
+
+L-TreeAddPosTab adds the particle position and velocity data to the treeaux files. Note that the size of the treeaux files will not change when doing this, but their contents will be updated. L-TreeAddPosTab needs to be run once on each output as follows
+
+./L-TreeAddPosTab <parameter file> <snapshot number>
+
+An example Makefile is provided in the Examples directory. I now describe the options
+
+1. LONGIDS                 Switch this on if the simulation uses 64-bit 
+   			   particle IDs
+2. HAVE_HDF5               Switch these 2 options on if the simulation 
+3. H5_USE_16_API           snapshots are in the HDF5 format
+
+I have never experimented with the following option, and I don't know what it does, so I would suggest leaving it commented out 
+
+4. PATCH_IDS
+
+An example parameter file is also included in the Examples directory. The parameters are
+
+1. SimulationDir         Simulation data directory
+2. LastSnapShotNr     	 Number of the last snapshot
+3. FirstFile     	 Number of the first tree file
+4. LastFile     	 Number of the last tree file
+5. FilesPerSnapshot	 Number of snapshot sub-files
+6. SnapshotFileBase      Snapshot name
+7. SnapFormat        	 Snapshot format. See the Gadget-2 user guide for the possible choices
+
+
+L-TreeMakeUniqueIDs
+-------------------
+
+L-TreeMakeUniqueIDs generates the tree_dbids files which contain the unique IDs for halos, assigned in depth-first order along trees, for use in the SQL database. This assignment scheme allows fast retrieval of information such as all the progenitors of a given galaxy, etc. L-TreeMakeUniqueIDs is run as follows
+
+./L-TreeMakeUniqueIDs <parameter file>
+
+An example Makefile is provided in the Examples directory. The only option is
+
+1. SAVE_MASS_TAB       	   If SAVE_MASS_TAB was activated in SUBFIND, then the subhalo 
+   			   catalogues contain an extra array detailing how the mass of a 
+			   subhalo is split among the 6 possible particle types in the 
+			   simulation. Setting SAVE_MASS_TAB in L-TreeMakeUniqueIDs causes this 
+			   information to be read in, although it doesn't seem to be used 
+			   for anything
+
+An example parameter file is also included in the Examples directory. The parameters are
+
+1. SimulationDir         Simulation data directory
+2. LastSnapShotNr     	 Number of the last snapshot
+3. FirstFile     	 Number of the first tree file
+4. LastFile     	 Number of the last tree file
+5. FilesPerSnapshot	 Appears to be redundant
+6. FileWithSnapList      File that contains a list of the output scale factors
+7. BoxSize		 Side length of the parent simulation volume in Mpc/h
+8. Hashbits		 I usually set this to be 8, on the advice of Volker Springel

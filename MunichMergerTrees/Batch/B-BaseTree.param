@@ -1,0 +1,5 @@
+OutputDir /mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/
+SnapshotFileBase 62.5_dm
+SnapSkipFac 1
+LastSnapShotNr 61
+SnapFormat 1

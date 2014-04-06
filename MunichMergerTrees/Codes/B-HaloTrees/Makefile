@@ -7,7 +7,7 @@ INCL   = allvars.h  proto.h  Makefile
 
 #OPTIONS  += -DLONGIDS
 #OPTIONS  += -DSAVE_MASS_TAB         # writes MassTab of individual species into output
-
+OPTIONS += -DFLAG_GROUP_VELDISP
 SYSTYPE="tiberius"
 #SYSTYPE="cosma-iv"
 #SYSTYPE="Octor"
@@ -22,8 +22,8 @@ OPTIMIZE =   -O3 -Wall  # optimization and warning flags (default)
 
 
 ifeq ($(SYSTYPE),"tiberius")
-CC = cc
-OPTIMIZE     = -O3
+CC = gcc
+OPTIMIZE     = #-O3
 endif
 
 
