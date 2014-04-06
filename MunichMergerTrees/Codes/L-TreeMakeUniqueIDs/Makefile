@@ -19,8 +19,8 @@ CC       =    cc -g       # sets the C-compiler (default)
 OPTIMIZE =    -Wall    # optimization and warning flags (default)
 
 ifeq ($(SYSTYPE),"tiberius")
-CC = icc
-OPTIMIZE     = -O3 -Wall
+CC = gcc
+OPTIMIZE     = #-O3 -Wall
 endif
 
 

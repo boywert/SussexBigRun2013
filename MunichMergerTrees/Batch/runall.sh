@@ -36,7 +36,7 @@ TreeAddIDTab_param="L-TreeAddIDTab.param"
 echo "SimulationDir"  $SimDir > $TreeAddIDTab_param
 echo "LastSnapShotNr"  $LastSnapNr >> $TreeAddIDTab_param
 echo "FirstFile"  $FirstOutputFile >> $TreeAddIDTab_param
-echo "LastFile"  >> $TreeAddIDTab_param
+echo "LastFile"  $LastOutputFile >> $TreeAddIDTab_param
 echo "FilesPerSnapshot"  $FilesPerSnapshot  >> $TreeAddIDTab_param
 
 TreeAddPosTab_param="L-TreeAddPosTab.param"

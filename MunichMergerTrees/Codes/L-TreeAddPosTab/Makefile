@@ -6,7 +6,7 @@ INCL   = allvars.h proto.h  Makefile
 
 
 #OPTIONS += -DLONGIDS
-OPTIONS += -DHAVE_HDF5 
+#OPTIONS += -DHAVE_HDF5 
 #OPTIONS += -DH5_USE_16_API
 #OPTIONS += -DPATCH_IDS
 
@@ -30,11 +30,11 @@ HDF5_LDFLAGS =
 HDF5_INCLUDE =
 
 ifeq ($(SYSTYPE),"tiberius")
-CC = icc
+CC = gcc
 OPTIMIZE     = -O3 -Wall 
-HDF5_LIBS    = -lhdf5
-HDF5_LDFLAGS = -L/pactusers/cs390/local/lib
-HDF5_INCLUDE = -I/pactusers/cs390/local/include
+HDF5_LIBS    = #-lhdf5
+HDF5_LDFLAGS = #-L/pactusers/cs390/local/lib
+HDF5_INCLUDE = #-I/pactusers/cs390/local/include
 endif
 
 
