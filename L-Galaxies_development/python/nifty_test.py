@@ -24,7 +24,7 @@ def stellar_massftn():
     file_prefix = "SA_z0.00"    
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
-    mass = numpy.log10(masssf)
+    mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
     print stellarmass
     massftn_y = stellarmass[0]
