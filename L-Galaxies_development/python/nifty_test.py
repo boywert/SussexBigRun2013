@@ -35,7 +35,7 @@ def stellar_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize**3.,'r-',label="AHF")
 
     firstfile = 0
     lastfile = 7
@@ -51,7 +51,7 @@ def stellar_massftn():
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
 
-    ax.plot(massftn_x,massftn_y,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize**3.,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
