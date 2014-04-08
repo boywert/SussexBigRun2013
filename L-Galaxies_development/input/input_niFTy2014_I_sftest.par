@@ -15,7 +15,7 @@ FileWithFilterNames  ./input/Filter_Sloan.txt
 McFile				  ./input/Mc.txt
 
 FirstFile     0
-LastFile      0
+LastFile      7
 
 
 %-------------------------------------------------
@@ -23,8 +23,8 @@ LastFile      0
 %-------------------------------------------------
 
 %OutputDir           ./output/
-SimulationDir        /mnt/lustre/scratch/cs390/nIFTy/62.5_dm/
-OutputDir             /mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/
+SimulationDir        /mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/
+OutputDir             /mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/
 
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
