@@ -6,23 +6,23 @@ FileNameGalaxies      SA
 FileWithOutputRedshifts   ./input/desired_output_redshifts.txt
 
 %SpecPhotDir          /galformod/data/L-Galaxies/Util/PhotTables_2.0/
-SpecPhotDir               /galformod/scratch/bmh20/Workspace/SpecPhotTables/
+SpecPhotDir           /home/cpes/astr/petert/research/SAM/SpecPhotTables/
 PhotPrefix            WMAP7_M05 ; WMAP7_BC03 ;WMAP7_CB07
 SpecPhotIMF           Chabrier ; Salpeter ; Kroupa 
 
-CoolFunctionsDir      ../CoolFunctions/
+CoolFunctionsDir      /home/cpes/astr/petert/research/SAM/CoolFunctions/
 FileWithFilterNames   ./input/Filter_Sloan.txt
 McFile		      ./input/Mc.txt
 
-FirstFile     511
-LastFile      511
+FirstFile     0
+LastFile      7
 
 %-------------------------------------------------
 %----- Simulation input/model output files  ------
 %-------------------------------------------------
 
-OutputDir           ./output/bursttest/
-SimulationDir        /Users/petert/millgas/data/500_dm/
+OutputDir           /mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/
+SimulationDir       /mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/
 
 %-------------------------------------------------
 %-- Scaling options and cosmological parameters --
@@ -39,12 +39,12 @@ Omega        	    0.272
 OmegaLambda  	    0.728 
 BaryonFrac   	    0.167
 Hubble_h     	    0.704
-BoxSize             500.
+BoxSize             62.5
 PartMass_OriginalCosm     0.093639456
 Omega_OriginalCosm        0.272
 OmegaLambda_OriginalCosm  0.728
 Hubble_h_OriginalCosm     0.704
-BoxSize_OriginalCosm      500.
+BoxSize_OriginalCosm      62.5
 
 % Bits and bobs -------------------------------------
 Hashbits    8        ; needed for Peano hilbert key with the GALAXYTREE option

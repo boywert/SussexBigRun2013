@@ -11,9 +11,9 @@ Msun2Gadget = 1e-10
 G = G * (m2km**2.) * (m2Mpc) / (kg2Msun * Msun2Gadget) # (Mpc/h) (km/s)^2 / (1e10Msun/h)
 print G
 #info
-boxsize = 47.0    # Mpc/h
-npart = 1728      # per dim
-omegam = 0.27
+boxsize = 62.5    # Mpc/h
+npart =  270     # per dim
+omegam = 0.272
 omegab = 0.045
 pi = pylab.pi
 
