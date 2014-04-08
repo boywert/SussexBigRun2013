@@ -8,6 +8,8 @@ FileWithOutputRedshifts   ./input/desired_output_redshifts.txt
 %SpecPhotDir              /galformod/data/L-Galaxies/Util/PhotTables_2.0/
 SpecPhotDir                /home/cpes/astr/petert/research/SAM/SpecPhotTables/  
 PhotPrefix          M05_Chabrier ; M05_Chabrier ; M05_Chabrier ;BC03_Chabrier ;CB07_Chabrier 
+
+SpecPhotIMF           Chabrier ; Salpeter ; Kroupa 
 CoolFunctionsDir      /home/cpes/astr/petert/research/SAM/CoolFunctions/
 FileWithFilterNames  ./input/Filter_Sloan.txt
 McFile				  ./input/Mc.txt
@@ -154,7 +156,7 @@ RamPressureRadiusThreshold   0.0     ;efficiency of ram pressure stripping
 SfrEfficiency               0.055   ;WMAP-7
 SfrLawPivotVelocity         1000.0
 SfrLawSlope                 0.0
-
+SfrColdCrit                 0.19   ; in units of 10^10Msun
 
 %% Mergers
 ThreshMajorMerger	    0.3     ;major merger when mass ratio gt this
