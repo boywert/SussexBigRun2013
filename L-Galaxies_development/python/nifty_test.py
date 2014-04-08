@@ -50,7 +50,8 @@ def stellar_massftn():
     massftn_x = []
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-
+    ax.set_xlabel(r"$'log(M_\star/M_\odot h)'")
+    ax.set_ylabel(r"$'\phi'")
     ax.plot(massftn_x,massftn_y/boxsize**3.,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
