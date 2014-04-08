@@ -1,0 +1,16 @@
+15
+u_band_trans.dat 0.3551 us
+g_band_trans.dat 0.4686 gs
+r_band_trans.dat 0.6165 rs
+i_band_trans.dat 0.7481 is
+z_band_trans.dat 0.8931 zs
+GALEX_FUV.txt 0.1480 GFUV
+GALEX_NUV.txt 0.21916 GNUV  
+NIC_F110W.txt 1.10 NIC110
+NIC_F160W.txt 1.60 NIC160
+VIMOS_U.txt 0.38 VIMOSU
+WFC3_UVIS_F225W.txt 0.225 WFC225
+WFC3_UVIS_F275W.txt 0.275 WFC275
+WFC3_UVIS_F336W.txt 0.336 WFC336
+WFPC2_F300W.txt 0.30 WFPC300
+WFPC2_F450W.txt 0.45 WFPC450

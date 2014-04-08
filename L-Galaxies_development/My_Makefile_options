@@ -1,0 +1,18 @@
+OPT += -DDISRUPTION 
+OPT += -DMERGE01 
+
+#OPT += -DDEBUG
+#OPT += -DMASS_CHECKS
+OPT += -DSAVE_MEMORY
+
+OPT += -DNOUT=15
+OPT += -DOVERWRITE_OUTPUT
+
+OPT += -DNMAG=15
+OPT += -DCOMPUTE_SPECPHOT_PROPERTIES
+ifeq (COMPUTE_SPECPHOT_PROPERTIES,$(findstring COMPUTE_SPECPHOT_PROPERTIES,$(OPT)))
+OBJS  += ./code/model_spectro_photometric.o
+OPT += -DOUTPUT_REST_MAGS    # output rest-frame magnitudes
+OPT += -DM05 #use Maraston 2005 stellar populations need to change input.par
+OPT += -DPHOTTABLES_PRECOMPUTED     
+endif
