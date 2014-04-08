@@ -53,6 +53,8 @@ def stellar_massftn():
 
     ax.plot(massftn_x,massftn_y,'b-',label="SUBFIND")
     ax.set_yscale("log")
+    ax.legend(loc='upper right', handlelength = 4,ncol=1, fancybox=True, prop={'size':6})
+
     pylab.show()
 
 stellar_massftn()
