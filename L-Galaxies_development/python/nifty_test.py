@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('PDF')
 import pylab
 import numpy
 import read_lgal
