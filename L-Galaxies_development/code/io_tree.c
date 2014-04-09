@@ -217,6 +217,24 @@ void load_tree(int nr)
   HaloIDs = mymalloc("HaloIDs", sizeof(struct halo_ids_data) * TreeNHalos[nr]);
   myfseek(treedbids_file, sizeof(struct halo_ids_data) * TreeFirstHalo[nr], SEEK_SET);
   myfread(HaloIDs, TreeNHalos[nr], sizeof(struct halo_ids_data), treedbids_file);
+#ifdef BOYDDEBUG
+  for(j=0;j<totNHalos;j++)
+    {
+      printf("ID:%d\n",j);
+      printf("\t HaloID: %ld\n",HaloIDs_Data[j].HaloID);
+      printf("\t FileTreeNr: %ld\n",HaloIDs_Data[j].FileTreeNr);
+      printf("\t FirstProgenitor:%ld\n",HaloIDs_Data[j].FirstProgenitor);
+      printf("\t NextProgenitor:%ld\n",HaloIDs_Data[j].NextProgenitor);
+      printf("\t LastProgenitor:%ld\n",HaloIDs_Data[j].LastProgenitor);
+      printf("\t Descendant:%ld\n",HaloIDs_Data[j].Descendant);
+      printf("\t FirstHaloInFOFgroup:%ld\n",HaloIDs_Data[j].FirstHaloInFOFgroup);
+      printf("\t NextHaloInFOFgroup:%ld\n",HaloIDs_Data[j].NextHaloInFOFgroup);
+      printf("\t Redshift:%lf\n",HaloIDs_Data[j].Redshift);
+      printf("\t PeanoKey:%d\n",HaloIDs_Data[j].PeanoKey);
+    }
+#endif
+
+
 #endif
 
 #endif
