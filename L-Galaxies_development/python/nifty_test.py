@@ -110,8 +110,8 @@ def disk_massftn():
     massftn_x = []
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-    ax.set_xlabel(r"$\log(M_{\mathrf{disk}}/M_\odot$ $h)$")
-    ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrf{disk}}/M_\odot$ $h)$")
+    ax.set_xlabel(r"$\log(M_{\mathrm{disk}}/M_\odot$ $h)$")
+    ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{disk}}/M_\odot$ $h)$")
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
