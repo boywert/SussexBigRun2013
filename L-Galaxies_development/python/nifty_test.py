@@ -117,7 +117,7 @@ def coldgas_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
-    print, "Cold gas mass"
+    print "Cold gas mass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i] 
 
@@ -174,7 +174,7 @@ def bh_massftn():
     ax.set_xlabel(r"$\log(M_{\mathrm{bh}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{bh}}/M_\odot$ $h)$")
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
-    print, "Blackhole mass"
+    print "Blackhole mass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i] 
 
@@ -239,7 +239,7 @@ def bulge_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
-    print, "Bulge mass"
+    print "Bulge mass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i]
 
@@ -299,7 +299,7 @@ def stellar_massftn():
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_\star/M_\odot$ $h)$")
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
 
-    print, "Stellar mass"
+    print "Stellar mass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i]
     ax.set_yscale("log")
@@ -359,7 +359,7 @@ def disk_massftn():
     ax.set_xlabel(r"$\log(M_{\mathrm{disk}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{disk}}/M_\odot$ $h)$")
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
-    print, "Diskmass"
+    print "Diskmass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i]
     ax.set_yscale("log")
