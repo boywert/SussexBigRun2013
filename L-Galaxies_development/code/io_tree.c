@@ -199,7 +199,7 @@ void free_tree_table(void)
 
 void load_tree(int nr)
 {
-  int i;
+  int i,j;
 
 #ifdef PRELOAD_TREES
   Halo = Halo_Data + TreeFirstHalo[nr];
