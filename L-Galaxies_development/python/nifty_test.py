@@ -5,7 +5,7 @@ import numpy
 import read_lgal
 import LGalaxyStruct
 
-def stellar_massftn():
+def bulge_massftn():
     gadget2msun=10.e10
     boxsize = 47.0
     max_mag=-16.
@@ -179,4 +179,5 @@ def disk_massftn():
     pylab.savefig('disk_mass.pdf',bbox_inches='tight')
 
 stellar_massftn()
+bulge_massftn()
 disk_massftn()
