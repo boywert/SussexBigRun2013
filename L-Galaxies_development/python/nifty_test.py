@@ -58,7 +58,7 @@ def hotgas_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
-    print, "Hot gas mass"
+    print "Hot gas mass"
     for i in len(range(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i] 
 
