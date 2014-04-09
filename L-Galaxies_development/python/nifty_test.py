@@ -13,7 +13,7 @@ def stellar_massftn():
     hubble_h = 0.7
     subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
-
+    
     firstfile = 0
     lastfile = 0
 
@@ -32,10 +32,11 @@ def stellar_massftn():
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
 
+    delta_logM = massftn_x[1]-massftn_x[0]
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3.,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
 
     firstfile = 0
     lastfile = 7
@@ -52,7 +53,7 @@ def stellar_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$log(M_\star/M_\odot$ $h)$")
     ax.set_ylabel(r"$\phi/$galaxies/Mpc$^3$ $h^3$")
-    ax.plot(massftn_x,massftn_y/boxsize**3.,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
