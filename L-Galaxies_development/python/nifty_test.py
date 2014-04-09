@@ -60,7 +60,7 @@ def hotgas_massftn():
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Hot gas mass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i] 
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM 
 
     #pylab.show()
     pylab.savefig('hotgas_mass.pdf',bbox_inches='tight')
@@ -119,7 +119,7 @@ def coldgas_massftn():
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Cold gas mass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i] 
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM 
 
 
     #pylab.show()
@@ -176,7 +176,7 @@ def bh_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     print "Blackhole mass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i] 
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM 
 
 
     ax.set_yscale("log")
@@ -241,7 +241,7 @@ def bulge_massftn():
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Bulge mass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i]
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM
 
     #pylab.show()
     pylab.savefig('bulge_mass.pdf',bbox_inches='tight')
@@ -301,7 +301,7 @@ def stellar_massftn():
 
     print "Stellar mass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i]
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
@@ -361,7 +361,7 @@ def disk_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     print "Diskmass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i]
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM/boxsize**3./delta_logM
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
