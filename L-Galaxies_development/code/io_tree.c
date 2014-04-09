@@ -201,6 +201,7 @@ void load_tree(int nr)
 {
   int i,j;
 
+
 #ifdef PRELOAD_TREES
   Halo = Halo_Data + TreeFirstHalo[nr];
   /*for(i=0;i<TreeNHalos[nr];i++)
