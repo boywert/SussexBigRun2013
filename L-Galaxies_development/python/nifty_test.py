@@ -60,7 +60,7 @@ def bulge_massftn():
 
 
     #pylab.show()
-    pylab.savefig('stellar_mass.pdf',bbox_inches='tight')
+    pylab.savefig('bulge_mass.pdf',bbox_inches='tight')
 
 
 
