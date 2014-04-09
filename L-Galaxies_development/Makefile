@@ -28,7 +28,7 @@ include My_Makefile_options
 #include My_Makefile_options_MCMC_Halo_Model
 
 # Choose your system type (needs to match an entry in Makefile_compilers)
-SYSTYPE = "Sussex"
+#SYSTYPE = "Sussex"
 include Makefile_compilers
 #include My_Makefile_compilers
 
