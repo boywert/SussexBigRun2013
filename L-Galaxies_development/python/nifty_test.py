@@ -25,7 +25,7 @@ def bh_massftn():
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
     massf = gadget2msun*gal['BlackHoleMass']
     mass = numpy.log10(massf)
-    stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
+    stellarmass = pylab.histogram(mass,bins=20,range=(3.0,10.0))
     print stellarmass
     massftn_y = stellarmass[0]
     massftn_x = []
@@ -45,7 +45,7 @@ def bh_massftn():
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
     massf = gadget2msun*gal['BlackHoleMass']
     mass = numpy.log10(massf)
-    stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
+    stellarmass = pylab.histogram(mass,bins=20,range=(3.0,10.0))
     print stellarmass
     massftn_y = stellarmass[0]
     massftn_x = []
