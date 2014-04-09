@@ -290,7 +290,7 @@ def stellar_massftn():
     ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
     for i in range(len(massftn_x)):
         print massftn_x[i],massftn_y[i]
-X
+
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
