@@ -238,3 +238,4 @@ def disk_massftn():
 stellar_massftn()
 bulge_massftn()
 disk_massftn()
+bh_massftn()
