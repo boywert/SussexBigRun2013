@@ -33,6 +33,7 @@ AHFprefix = "62.5_dm"
 SUSSINGtree = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/MergerTree+AHF.txt"
 SNAPfile = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/snapidzred.txt"
 FileOut = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/trees_061.0"
+FileOut2 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/tree_dbids_061.0"
 
 def readAHFascii():
     halocat = {}
@@ -63,6 +64,7 @@ def readAHFascii():
                 hid = long(halo[0])
                 #print hid
                 halocat[hid] = {}
+                halocat[hid]["Redshift"] = time[2];
                 halocat[hid]["UID"] = halo[0]
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
@@ -168,7 +170,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
 
-def outputtrees(halocat2,fileout):
+def outputtrees(halocat2,fileout,fileout2):
     halocat = copy.copy(halocat2)
     ntrees = 0
     cumnhalo = []
@@ -305,6 +307,7 @@ def outputtrees(halocat2,fileout):
         exit()
 
     fp = open(fileout,"wb")
+    fp2 = open(fileout2,"wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
     fp.write(buffer)
@@ -315,13 +318,18 @@ def outputtrees(halocat2,fileout):
         #print tree,":",nhalopertree[tree]
         buffer = struct.pack("i",int(nhalopertree[tree]))
         fp.write(buffer)
+
+    maptreeall = {}
+    countall = 0
     for tree in range(ntrees):
         count = 0
         maptree = {}
         maptree[-1] = -1
         for hid in fulltree[tree]:
             maptree[hid] = count
+            maptreeall[hid] = countall
             count += 1
+            countall += 1
         if len(fulltree[tree])+1 != len(maptree):
             print "There are dupplicated entries"
             print "Exit"
@@ -378,8 +386,38 @@ def outputtrees(halocat2,fileout):
 
 
     fp.close()
+    for tree in range(ntrees):
+        for hid in fulltree[tree]:
+            halo = halocat[hid]
+            buffer = struct.pack("q",halo["UID"])
+            fp2.write(buffer)
+            buffer = struct.pack("q",0)  #FileNr
+            fp2.write(buffer)
+            buffer = struct.pack("q",maptreeall[halo["FirstProgenitor"]])
+            fp2.write(buffer)
+            buffer = struct.pack("q",maptreeall[halo["LastProgenitor"]])
+            fp2.write(buffer)
+            buffer = struct.pack("q",maptreeall[halo["NextProgenitor"]])
+            fp2.write(buffer)
+            buffer = struct.pack("q",maptreeall[halo["Descendant"]])
+            fp2.write(buffer)
+            if(halo["MainHalo"] > -1):
+                buffer = struct.pack("q",maptree[halo["MainHalo"]])
+            else:
+                buffer = struct.pack("q",maptree[halo["ID"]])
+            fp2.write(buffer)
+            buffer = struct.pack("q",maptreeall[halo["NextHalo"]])
+            fp2.write(buffer)
+            buffer = struct.pack("d",halo["Redshift"])
+            fp2.write(buffer)
+            buffer = struct.pack("i",0) #Peano keys
+            fp2.write(buffer)
+            buffer = struct.pack("i",0) #dummy
+            fp2.write(buffer)
+            
+    fp2.close()  
 
 halo = readAHFascii()
 ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf,FileOut)
+outputtrees(ahf,FileOut,FileOut2)
 
