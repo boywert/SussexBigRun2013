@@ -320,6 +320,7 @@ def outputtrees(halocat2,fileout,fileout2):
         fp.write(buffer)
 
     maptreeall = {}
+    maptreeall[-1] = -1
     countall = 0
     for tree in range(ntrees):
         count = 0
