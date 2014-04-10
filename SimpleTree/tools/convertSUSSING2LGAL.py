@@ -387,7 +387,7 @@ def outputtrees(halocat2,fileout,fileout2):
 
     fp.close()
     for tree in range(ntrees):
-        lastprogid = fulltree[tree][len(fulltree[tree]-1)]
+        lastprogid = fulltree[tree][len(fulltree[tree])-1]
         for hid in fulltree[tree]:
             halo = halocat[hid]
             buffer = struct.pack("q",halo["UID"])
