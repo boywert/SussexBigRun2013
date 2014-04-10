@@ -28,11 +28,11 @@ kg2Msun = 1./Msun2kg
 G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
 print G
 
-AHFdir = "/scratch/datasetI"
+AHFdir = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/AHF/"
 AHFprefix = "62.5_dm"
-SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LHaloTree"
-SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-FileOut = "/scratch/datasetI/treedata/trees_061.0"
+SUSSINGtree = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/MergerTree+AHF.txt"
+SNAPfile = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/snapidzred.txt"
+FileOut = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/trees_061.0"
 
 def readAHFascii():
     halocat = {}
