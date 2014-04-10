@@ -404,9 +404,9 @@ def outputtrees(halocat2,fileout,fileout2):
             buffer = struct.pack("q",maptreeall[halo["Descendant"]])
             fp2.write(buffer)
             if(halo["MainHalo"] > -1):
-                buffer = struct.pack("q",maptree[halo["MainHalo"]])
+                buffer = struct.pack("q",maptreeall[halo["MainHalo"]])
             else:
-                buffer = struct.pack("q",maptree[halo["ID"]])
+                buffer = struct.pack("q",maptreeall[halo["ID"]])
             fp2.write(buffer)
             buffer = struct.pack("q",maptreeall[halo["NextHalo"]])
             fp2.write(buffer)
