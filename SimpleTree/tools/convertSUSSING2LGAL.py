@@ -22,15 +22,17 @@ m2Mpc = 1./3.08567758e22
 m2km = 0.001
 kpc2Mpc = 0.001
 Msun2Gadget = 1.e-10
-kg2Msun = 1.989e-30
+Msun2kg = 1.989e30
+kg2Msun = 1./Msun2kg
 #change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
 G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
+print G
 
 AHFdir = "/scratch/datasetI"
 AHFprefix = "62.5_dm"
 SUSSINGtree = "/export/research/virgo/Boyd/SUSSING2013/DATASET_I/LHaloTree"
 SNAPfile = "/scratch/datasetI/data_snaplist.txt"
-
+FileOut = "/scratch/datasetI/treedata/trees_061.0"
 
 def readAHFascii():
     halocat = {}
@@ -61,6 +63,7 @@ def readAHFascii():
                 hid = long(halo[0])
                 #print hid
                 halocat[hid] = {}
+                halocat[hid]["UID"] = halo[0]
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
                 halocat[hid]["Len"] = halo[4]
@@ -69,12 +72,12 @@ def readAHFascii():
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
                 # use Peebles lambdaE definition to find angular momentum
-                halocat[hid]["Ep"] = halo[38]
-                halocat[hid]["Ek"] = halo[39]
+                #halocat[hid]["Ep"] = halo[38]
+                #halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
-                halocat[hid]["LambdaE"] = halo[20]
+                #halocat[hid]["LambdaE"] = halo[20]
                 J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
-                halocat[hid]["TotalEnergy"] = total_energy
+                #halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
                 halocat[hid]["FirstProgenitor"] = -1
                 halocat[hid]["NextProgenitor"] = -1
@@ -84,7 +87,11 @@ def readAHFascii():
                     halocat[hid]["HostHalo"] = -1
                 halocat[hid]["NextHalo"] = -1
                 halocat[hid]["SnapNum"] = long(time[0])
-                halocat[hid]["NextinTree"] = -1
+                #halocat[hid]["NextinTree"] = -1
+                halocat[hid]["HaloNr"] = -1
+                halocat[hid]["TreeNr"] = -1
+                halocat[hid]["movetonew"] = -1
+                
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
         #print haloc
@@ -161,11 +168,9 @@ def treecrowler(hid,halocat,treenr,fulltree):
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
 
-def outputtrees(halocat2):
+def outputtrees(halocat2,fileout):
     halocat = copy.copy(halocat2)
     ntrees = 0
-    nhalos = 0
-    nhalopertree = []
     cumnhalo = []
     fulltree = {}
     print "start outputting trees"
@@ -178,12 +183,128 @@ def outputtrees(halocat2):
                 (halocat,fulltree) = treecrowler(curid,halocat,ntrees,fulltree)
                 curid = halocat[curid]["NextHalo"]
             if len(fulltree[ntrees]) > 0:
-                nhalopertree.append(len(fulltree[ntrees]))
-                nhalos += len(fulltree[ntrees])
                 ntrees += 1
- 
-       
-    fp = open("/scratch/datasetI/treedata/trees_061.0","wb")
+
+    #GROUP TREES INTO BUSHES
+    newfulltree = {}
+    newntrees = 0
+    oldmergetonew = []
+    newmergetonew = {}
+
+    for tree in range(ntrees):
+        oldmergetonew.append(-1)
+
+    for tree in range(ntrees):
+        #print "tree:",tree
+        if(len(fulltree[tree]) > 0):
+            checked = 0
+            newfulltree[newntrees] = []
+            newmergetonew[newntrees] = -1
+            for hids in fulltree[tree]:
+                newfulltree[newntrees].append(hids)
+            fulltree[tree] = []
+            oldmergetonew[tree] = newntrees
+            print "move oldtree:",tree,"=>",newntrees
+            countrep = 1
+            while checked == 0:
+               #print "Check tree ..."
+                count = 0
+                maptree = {}
+                maptree[-1] = -1
+                insidecheck = 1 # 1 if it's OK
+                for hid in newfulltree[newntrees]:
+                    maptree[hid] = count
+                    count += 1
+                print tree,": trial:",countrep
+                if len(maptree) != len(newfulltree[newntrees])+1:
+                    print "INSIDE: dupplicate"
+                    exit()
+                for hid in newfulltree[newntrees]:
+                    halo = halocat[hid]
+                    if halo["MainHalo"] not in maptree: # -1 is in maptree
+                        target = halo["MainHalo"]
+                        oldtree = halocat[target]["TreeNr"]
+                        if(oldtree > -1):
+                            if(oldmergetonew[oldtree] == -1):
+                                for hids in fulltree[oldtree]:
+                                    newfulltree[newntrees].append(hids)
+                                fulltree[oldtree] = []
+                                oldmergetonew[oldtree] = newntrees
+                                print "move oldtree:",oldtree,"=>",newntrees
+                            else:
+                                srctree = oldmergetonew[oldtree]
+                                reftree = srctree
+                                while srctree > -1:
+                                    reftree = srctree
+                                    srctree = newmergetonew[srctree]
+                                srctree = reftree
+                                for hids in newfulltree[srctree]:
+                                    newfulltree[newntrees].append(hids)
+                                print "move newtree:",srctree,"=>",newntrees
+                                newmergetonew[srctree] = newntrees
+                                newfulltree[srctree] = []
+                        else:
+                            print "remove main halo"
+                            halo["NextHalo"] = -1
+                            halo["MainHalo"] = -1
+                        insidecheck = 0
+                        break
+                    if halo["NextHalo"] not in maptree: # -1 is in maptree
+                        target = halo["NextHalo"]
+                        oldtree = halocat[target]["TreeNr"]
+                        if(oldtree > -1):
+                            if(oldmergetonew[oldtree] == -1):
+                                for hids in fulltree[oldtree]:
+                                    newfulltree[newntrees].append(hids)
+                                fulltree[oldtree] = []
+                                oldmergetonew[oldtree] = newntrees
+                                print "move oldtree:",oldtree,"=>",newntrees
+                            else:
+                                srctree = oldmergetonew[oldtree]
+                                reftree = srctree
+                                while srctree > -1:
+                                    reftree = srctree
+                                    srctree = newmergetonew[srctree]
+                                srctree = reftree
+                                for hids in newfulltree[srctree]:
+                                    newfulltree[newntrees].append(hids)
+                                print "move newtree:",srctree,"=>",newntrees
+                                newmergetonew[srctree] = newntrees
+                                newfulltree[srctree] = []
+                        else:
+                            print "forward halo"
+                            halo["NextHalo"] = halocat[target]["NextHalo"]
+                        insidecheck = 0
+                        break
+                countrep += 1
+                if(insidecheck == 1):
+                    checked = 1
+            newntrees += 1
+
+    nhalopertree = []
+    nhalos = 0
+    ntrees = 0
+    fulltree = {}
+    for tree in range(newntrees):
+        if len(newfulltree[tree]) > 0:
+            nhalopertree.append(len(newfulltree[tree]))
+            fulltree[ntrees] = newfulltree[tree]
+            nhalos += len(newfulltree[tree])
+            ntrees += 1
+
+    # check uniqueness
+    count = 0
+    unique = {}
+    for tree in range(ntrees):
+        for hid in fulltree[tree]:
+            unique[hid] = count
+            count += 1
+
+    if count != len(unique):
+        print "trees are not isolated"
+        exit()
+
+    fp = open(fileout,"wb")
     print "Ntrees:",ntrees
     buffer = struct.pack("i",int(ntrees))
     fp.write(buffer)
@@ -191,7 +312,7 @@ def outputtrees(halocat2):
     buffer = struct.pack("i",int(nhalos))
     fp.write(buffer)
     for tree in range(ntrees):
-        print tree,":",nhalopertree[tree]
+        #print tree,":",nhalopertree[tree]
         buffer = struct.pack("i",int(nhalopertree[tree]))
         fp.write(buffer)
     for tree in range(ntrees):
@@ -201,27 +322,10 @@ def outputtrees(halocat2):
         for hid in fulltree[tree]:
             maptree[hid] = count
             count += 1
-
-        #fix structure
-        for hid in fulltree[tree]:
-            halo = halocat[hid]
-            if halo["MainHalo"] not in maptree:
-                print "remove",hid,"from",halo["MainHalo"]
-                #remove relationship from other trees
-                curhalo = halo["MainHalo"]
-                while curhalo > -1:
-                    if curhalo == hid:
-                        halocat[refhalo]["NextHalo"] = halo["NextHalo"]
-                    refhalo = curhalo
-                    curhalo= halocat[curhalo]["NextHalo"]
-                halo["NextHalo"] = -1
-                halo["MainHalo"] = -1
-
-            if halo["NextHalo"] not in maptree:
-                nexthalo = halo["NextHalo"]
-                halocat[nexthalo]["MainHalo"] = -1
-                halo["NextHalo"] = -1
-
+        if len(fulltree[tree])+1 != len(maptree):
+            print "There are dupplicated entries"
+            print "Exit"
+            exit()
         for hid in fulltree[tree]:
             halo = halocat[hid]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
@@ -235,6 +339,12 @@ def outputtrees(halocat2):
             else:
                 buffer = struct.pack("i",int(maptree[halo["ID"]]))
             fp.write(buffer)
+            if halo["NextHalo"] not in maptree:
+                print tree
+                print halo
+                print halocat[halo["NextHalo"]]
+                print fulltree[tree]
+                exit()
             buffer = struct.pack("i",int(maptree[halo["NextHalo"]]))
             fp.write(buffer)
             buffer = struct.pack("i",halo["Len"])
@@ -271,5 +381,5 @@ def outputtrees(halocat2):
 
 halo = readAHFascii()
 ahf = readSussingtree(SUSSINGtree,halo)
-outputtrees(ahf)
+outputtrees(ahf,FileOut)
 
