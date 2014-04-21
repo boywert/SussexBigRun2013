@@ -5,10 +5,12 @@ import numpy
 import read_lgal
 import LGalaxyStruct
 
-subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
 global subfind_folder
 global ahf_folder
+
+subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+
 
 def hotgas_massftn():
     gadget2msun=10.e10
