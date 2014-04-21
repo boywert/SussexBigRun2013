@@ -5,12 +5,29 @@ import numpy
 import read_lgal
 import LGalaxyStruct
 
-global subfind_folder
-global ahf_folder
+global folder1
+global folder2
+global first1
+global last1
+global fitst2
+global last2
+global file_prefix
+global boxsize1
+global boxsize2
+global label1
+global label2
 
-subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/500_test/outputs/"
-
+folder1 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+folder2 = "/mnt/lustre/scratch/cs390/nIFTy/500_test/outputs/"
+first1  = 0
+last1 = 7
+first2 = 6
+last2 = 6
+file_prefix = "SA_z0.00"
+boxsize1 = 62.5
+boxsize2 = 500.0
+label1 = "62.5Mpc/h SF"
+label2 = "500Mpc/h SF"
 
 def hotgas_massftn():
     gadget2msun=10.e10
@@ -22,14 +39,14 @@ def hotgas_massftn():
     #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    firstfile = 0
-    lastfile = 0
+    firstfile = first1
+    lastfile = last1
 
     filter = LGalaxyStruct.properties_used
     filter['HotGas'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['HotGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,15.0))
@@ -43,13 +60,13 @@ def hotgas_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = 0
-    lastfile = 7
+    firstfile = first2
+    lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['HotGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,15.0))
@@ -60,7 +77,7 @@ def hotgas_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_{\mathrm{hotgas}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{hotgas}}/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Hot gas mass"
@@ -81,14 +98,14 @@ def coldgas_massftn():
     #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    firstfile = 0
-    lastfile = 0
+    firstfile = first1
+    lastfile = last1
 
     filter = LGalaxyStruct.properties_used
     filter['ColdGas'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['ColdGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(8.0,13.0))
@@ -102,13 +119,13 @@ def coldgas_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = 0
-    lastfile = 7
+    firstfile = first2
+    lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['ColdGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(8.0,13.0))
@@ -119,7 +136,7 @@ def coldgas_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_{\mathrm{coldgas}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{coldgas}}/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Cold gas mass"
@@ -140,14 +157,14 @@ def bh_massftn():
     #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    firstfile = 0
-    lastfile = 0
+    firstfile = first1
+    lastfile = last1
 
     filter = LGalaxyStruct.properties_used
     filter['BlackHoleMass'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['BlackHoleMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,10.0))
@@ -161,13 +178,12 @@ def bh_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = 0
-    lastfile = 7
-
+    firstfile = first2
+    lastfile = last2
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['BlackHoleMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,10.0))
@@ -178,7 +194,7 @@ def bh_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_{\mathrm{bh}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{bh}}/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
     print "Blackhole mass"
     for i in range(len(massftn_x)):
         print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM 
@@ -202,15 +218,15 @@ def bulge_massftn():
     #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    firstfile = 0
-    lastfile = 0
+    firstfile = first1
+    lastfile = last1 
 
     filter = LGalaxyStruct.properties_used
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -224,13 +240,13 @@ def bulge_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = 0
-    lastfile = 7
+    firstfile = first2
+    lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -241,7 +257,7 @@ def bulge_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_{\mathrm{bulge}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{bulge}}/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
     print "Bulge mass"
@@ -263,15 +279,15 @@ def stellar_massftn():
     #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
     #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    firstfile = 0
-    lastfile = 0
+    firstfile = first1
+    lastfile = last1
 
     filter = LGalaxyStruct.properties_used
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -285,13 +301,13 @@ def stellar_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = 0
-    lastfile = 7
+    firstfile = first2
+    lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -302,7 +318,7 @@ def stellar_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_\star/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_\star/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
 
     print "Stellar mass"
     for i in range(len(massftn_x)):
@@ -331,8 +347,8 @@ def disk_massftn():
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
 
-    file_prefix = "SA_z0.00"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(ahf_folder,file_prefix,firstfile,lastfile,filter)
+    #file_prefix = "SA_z0.00"    
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder1,file_prefix,first1,last1,filter)
     massf = gadget2msun*gal['DiskMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -346,13 +362,13 @@ def disk_massftn():
     pylab.rc('text', usetex=True)
     fig = pylab.figure()
     ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'r-',label="AHF")
+    ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
     firstfile = 0
     lastfile = 7
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfind_folder,file_prefix,firstfile,lastfile,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['DiskMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -363,10 +379,10 @@ def disk_massftn():
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     ax.set_xlabel(r"$\log(M_{\mathrm{disk}}/M_\odot$ $h)$")
     ax.set_ylabel(r"galaxies$/(Mpc^3 h^{-3})/\Delta \log(M_{\mathrm{disk}}/M_\odot$ $h)$")
-    ax.plot(massftn_x,massftn_y/boxsize**3./delta_logM,'b-',label="SUBFIND")
+    ax.plot(massftn_x,massftn_y/boxsize2**3./delta_logM,'b-',label=label2)
     print "Diskmass"
     for i in range(len(massftn_x)):
-        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM/boxsize**3./delta_logM
+        print massftn_x[i],"\t",massftn_y[i]/boxsize**3./delta_logM
     ax.set_yscale("log")
     ax.legend(loc='upper right',ncol=1, fancybox=True)
 
