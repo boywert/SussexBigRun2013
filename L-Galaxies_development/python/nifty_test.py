@@ -66,7 +66,7 @@ def hotgas_massftn():
     lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['HotGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,15.0))
@@ -125,7 +125,7 @@ def coldgas_massftn():
     lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['ColdGas']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(8.0,13.0))
@@ -183,7 +183,7 @@ def bh_massftn():
     firstfile = first2
     lastfile = last2
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['BlackHoleMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(3.0,10.0))
@@ -246,7 +246,7 @@ def bulge_massftn():
     lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -307,7 +307,7 @@ def stellar_massftn():
     lastfile = last2
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
@@ -368,7 +368,7 @@ def disk_massftn():
     lastfile = 7
 
      
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(subfolder2,file_prefix,first2,last2,filter)
+    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['DiskMass']
     mass = numpy.log10(massf)
     stellarmass = pylab.histogram(mass,bins=20,range=(9.0,14.0))
