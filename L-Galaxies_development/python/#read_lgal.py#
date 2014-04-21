@@ -18,8 +18,8 @@ def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxySt
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
-        this_nTrees =  dummy[0]
-        nTrees += this_nTrees
+        dummy = numpy.fromfile(f,numpy.int32,1)
+        sizestruct = dummy[0]
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nHalos = dummy[0]
         nHalos += this_nHalos
@@ -35,7 +35,7 @@ def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxySt
        
       
         f.close()
-    return (nTrees,nHalos,nTreeHalos,output_Galaxy)
+    return (nHalos,output_Galaxy)
 
 
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
