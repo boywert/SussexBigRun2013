@@ -5,7 +5,10 @@ import numpy
 import read_lgal
 import LGalaxyStruct
 
-
+subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+global subfind_folder
+global ahf_folder
 
 def hotgas_massftn():
     gadget2msun=10.e10
@@ -14,8 +17,8 @@ def hotgas_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
@@ -73,8 +76,8 @@ def coldgas_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
@@ -132,8 +135,8 @@ def bh_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
@@ -194,8 +197,8 @@ def bulge_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
@@ -255,8 +258,8 @@ def stellar_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
@@ -316,8 +319,8 @@ def disk_massftn():
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
-    subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-    ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+    #subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
+    #ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
     firstfile = 0
     lastfile = 0
