@@ -9,7 +9,7 @@ global subfind_folder
 global ahf_folder
 
 subfind_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
-ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
+ahf_folder = "/mnt/lustre/scratch/cs390/nIFTy/500_test/outputs/"
 
 
 def hotgas_massftn():
