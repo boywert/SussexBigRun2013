@@ -25,7 +25,7 @@ first2 = 10
 last2 = 10
 file_prefix = "SA_z0.00"
 boxsize1 = 62.5
-boxsize2 = 500.0
+boxsize2 = 500.0/512
 label1 = "62.5Mpc/h SF"
 label2 = "500Mpc/h SF"
 
