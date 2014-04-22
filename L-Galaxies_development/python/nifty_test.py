@@ -21,8 +21,8 @@ folder1 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dmSF/outputs/"
 folder2 = "/mnt/lustre/scratch/cs390/nIFTy/500_test/outputs/"
 first1  = 0
 last1 = 7
-first2 = 5
-last2 = 5
+first2 = 10
+last2 = 10
 file_prefix = "SA_z0.00"
 boxsize1 = 62.5
 boxsize2 = 500.0
@@ -121,9 +121,7 @@ def coldgas_massftn():
     ax = fig.add_subplot(111)
     ax.plot(massftn_x,massftn_y/boxsize1**3./delta_logM,'r-',label=label1)
 
-    firstfile = first2
-    lastfile = last2
-
+ 
      
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder2,file_prefix,first2,last2,filter)
     massf = gadget2msun*gal['ColdGas']
