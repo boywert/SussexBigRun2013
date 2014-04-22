@@ -25,14 +25,14 @@ first2 = 10
 last2 = 10
 file_prefix = "SA_z0.00"
 boxsize1 = 62.5
-boxsize2 = 500.0/512.**(1./3.)
+boxsize2 = 500.0/8.0
 label1 = "62.5Mpc/h SF"
 label2 = "500Mpc/h SF"
 
 def hotgas_massftn():
     gadget2msun=10.e10
     boxsize = 47.0
-    max_mag=-16.
+    max_mag=-16.0
     min_mag = -23.
     nbins=14
     hubble_h = 0.7
