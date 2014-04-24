@@ -24,7 +24,7 @@ def convert_nifty():
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
     for galaxy in gal:
-        print gal['DiskMass']
+        print galaxy['DiskMass']
     
 
 
