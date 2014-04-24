@@ -1,6 +1,6 @@
 import LGalaxyStruct
 import numpy
-
+import os
 
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
 # The input are (folder,file_prefix,firstfile,lastfile [,filter_arr])
@@ -18,11 +18,15 @@ def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxySt
         filename = folder+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
-        this_nTrees =  dummy[0]
-        nTrees += this_nTrees
+        one = dummy[0]
+        dummy = numpy.fromfile(f,numpy.int32,1)
+        structsize = dummy[0]
+        if(structsize != filter_dtype.itemsize):
+            print "size:",structsize,filter_dtype.itemsize
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nHalos = dummy[0]
         nHalos += this_nHalos
+        f.seek(structsize, os.SEEK_SET) 
         print "File ", ifile," nGals = ",this_nHalos
         addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
         nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
@@ -35,7 +39,7 @@ def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxySt
        
       
         f.close()
-    return (nTrees,nHalos,nTreeHalos,output_Galaxy)
+    return (nHalos,output_Galaxy)
 
 
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
