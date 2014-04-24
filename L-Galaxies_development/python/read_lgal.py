@@ -11,6 +11,7 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
         if(filter_arr[prop] is True):
             filter_tuple.append((prop,LGalaxyStruct.struct_dtype[prop]))
     filter_dtype = numpy.dtype(filter_tuple)
+    print filter_dtype
     output_Galaxy = numpy.array([],dtype=filter_dtype)
     for ifile in range(firstfile,lastfile+1):
         filename = folder+file_prefix+"galtree_"+"%d"%(ifile)
