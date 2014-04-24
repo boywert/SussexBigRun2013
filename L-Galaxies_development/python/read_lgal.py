@@ -28,8 +28,6 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
         nHalos += this_nHalos
         f.seek(structsize, os.SEEK_SET) 
         print "File ", ifile," nGals = ",this_nHalos
-        addednTreeHalos = numpy.fromfile(f,numpy.int32,this_nTrees)
-        nTreeHalos = numpy.append(nTreeHalos,addednTreeHalos)
         this_addedGalaxy = numpy.fromfile(f,LGalaxyStruct.struct_dtype,this_nHalos)
         addedGalaxy = numpy.zeros(this_nHalos,dtype=filter_dtype)
         for prop in LGalaxyStruct.struct_dtype.names:
