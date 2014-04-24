@@ -17,12 +17,15 @@ def convert_nifty():
     # i=0
     filter = LGalaxyStruct.properties_used
     filter['Mvir'] = False
+    filter['DiskMass'] = True
     filter['Mag'] = True
     filter['MagDust'] = True
     print filter
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
-    print gal
+    for galaxy in gal:
+        print gal['DiskMass']
+    
 
 
 convert_nifty()
