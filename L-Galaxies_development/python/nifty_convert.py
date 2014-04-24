@@ -19,7 +19,7 @@ def convert_nifty():
     filter['Mvir'] = False
     filter['Mag'] = True
     filter['MagDust'] = True
-
+    print filter
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
     print gal
