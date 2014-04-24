@@ -4,7 +4,7 @@ import os
 
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
 # The input are (folder,file_prefix,firstfile,lastfile [,filter_arr])
-def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
+def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
     nTrees = 0
     nHalos = 0
     nTreeHalos = numpy.array([],dtype=numpy.int32)
@@ -15,14 +15,14 @@ def readsnap_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxySt
     filter_dtype = numpy.dtype(filter_tuple)
     output_Galaxy = numpy.array([],dtype=filter_dtype)
     for ifile in range(firstfile,lastfile+1):
-        filename = folder+file_prefix+"_"+"%d"%(ifile)
+        filename = folder+file_prefix+"galtree_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
         one = dummy[0]
         dummy = numpy.fromfile(f,numpy.int32,1)
         structsize = dummy[0]
         if(structsize != filter_dtype.itemsize):
-            print "size:",structsize,filter_dtype.itemsize
+            print "size mismatch:",structsize,filter_dtype.itemsize
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nHalos = dummy[0]
         nHalos += this_nHalos
