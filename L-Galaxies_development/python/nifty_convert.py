@@ -11,10 +11,10 @@ def convert_nifty():
 
     firstfile = 0
     lastfile = 0
-    f = open(snaplist_file)
-    lines = f.readlines()
-    f.close()
-    i=0
+    # f = open(snaplist_file)
+    # lines = f.readlines()
+    # f.close()
+    # i=0
     filter = LGalaxyStruct.properties_used
     filter['Mvir'] = False
     filter['Mag'] = True
