@@ -11,14 +11,14 @@ OPT += -DOVERWRITE_OUTPUT
 OPT += -DNMAG=5
 OPT += -DGALAXYTREE
 OPT += -DSTAR_FORMATION_HISTORY
-OPT += -DOUTPUT_REST_MAGS
+
 ifeq (STAR_FORMATION_HISTORY,$(findstring STAR_FORMATION_HISTORY,$(OPT)))
 OBJS  += ./code/star_formation_history.o
 ifeq (POST_PROCESS_MAGS,$(findstring POST_PROCESS_MAGS,$(OPT)))
 OBJS  += ./code/post_process_mags.o
 endif
 endif
-#OPT += -DCOMPUTE_SPECPHOT_PROPERTIES
+OPT += -DCOMPUTE_SPECPHOT_PROPERTIES
 ifeq (COMPUTE_SPECPHOT_PROPERTIES,$(findstring COMPUTE_SPECPHOT_PROPERTIES,$(OPT)))
 OBJS  += ./code/model_spectro_photometric.o
 OPT += -DOUTPUT_REST_MAGS    # output rest-frame magnitudes
