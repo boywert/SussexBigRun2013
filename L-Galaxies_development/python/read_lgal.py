@@ -5,9 +5,7 @@ import os
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
 # The input are (folder,file_prefix,firstfile,lastfile [,filter_arr])
 def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
-    nTrees = 0
     nHalos = 0
-    nTreeHalos = numpy.array([],dtype=numpy.int32)
     filter_tuple = []
     for prop in LGalaxyStruct.struct_dtype.names:
         if(filter_arr[prop] is True):
