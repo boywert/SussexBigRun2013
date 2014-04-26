@@ -20,8 +20,8 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
         one = dummy[0]
         dummy = numpy.fromfile(f,numpy.int32,1)
         structsize = dummy[0]
-        if(structsize != filter_dtype.itemsize):
-            print "size mismatch:",structsize,filter_dtype.itemsize
+        if(structsize != LGalaxyStruct.struct_dtype.itemsize):
+            print "size mismatch:",structsize,LGalaxyStruct.struct_dtype.itemsize
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nHalos = dummy[0]
         nHalos += this_nHalos
