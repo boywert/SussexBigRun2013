@@ -20,13 +20,38 @@ def convert_nifty():
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
     filter['Mag'] = True
-    filter['MagDust'] = True
+    filter['ColdGas'] = True
+    filter['HotGas'] = True
+    filter['HaloID'] = True
+    filter['Pos'] = True
+    filter['Vel'] = True
+    filter['ColdGas'] = True
+    filter['HotGas'] = True
+    filter['BlackHoleMass'] = True
+    filter['MetalsColdGas'] = True
+    filter['MetalsHotGas'] = True
+    filter['MetalsBulgeMass'] = True
+    filter['MetalsDiskMass'] = True
+    filter['MassWeightAge'] = True
+
     print filter
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
     for galaxy in gal:
-        print galaxy['DiskMass']+galaxy['BulgeMass']
-    
-
+        haloid = galaxy["HaloID"]
+        Mstar = galaxy['DiskMass']+galaxy['BulgeMass']
+        X = galaxy["Pos"][0]
+        Y = galaxy["Pos"][1]
+        Z = galaxy["Pos"][2]
+        VX = galaxy["Vel"][0]
+        VY = galaxy["Vel"][1]
+        VZ = galaxy["Vel"][2]
+        Mcold = galaxy["ColdGas"]
+        Mhot = galaxy["HotGas"]
+        Mbh = galaxy["BlackHoleMass"]
+        Z_gas = galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"]
+        Z_stars = galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"]
+        T_stars = galaxy["MassWeightAge"]
+        
 
 convert_nifty()
