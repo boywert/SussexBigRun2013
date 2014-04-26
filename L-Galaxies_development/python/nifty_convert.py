@@ -17,7 +17,7 @@ def convert_nifty():
     # i=0
     filter = LGalaxyStruct.properties_used
 
-    filter['Mvir'] = False
+    filter['Type'] = True
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
     filter['Mag'] = True
@@ -53,6 +53,8 @@ def convert_nifty():
         Z_gas = galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"]
         Z_stars = galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"]
         T_stars = galaxy["MassWeightAge"]
-        print haloid, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
+        Type = galaxy["Type"]
+        if(Type == 2):
+            print haloid, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
 
 convert_nifty()
