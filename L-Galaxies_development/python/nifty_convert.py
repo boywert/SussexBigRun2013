@@ -16,6 +16,7 @@ def convert_nifty():
     # f.close()
     # i=0
     filter = LGalaxyStruct.properties_used
+
     filter['Mvir'] = False
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
