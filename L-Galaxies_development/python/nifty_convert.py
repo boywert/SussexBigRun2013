@@ -18,6 +18,7 @@ def convert_nifty():
     filter = LGalaxyStruct.properties_used
     filter['Mvir'] = False
     filter['DiskMass'] = True
+    filter['BulgeMass'] = True
     filter['Mag'] = True
     filter['MagDust'] = True
     print filter
