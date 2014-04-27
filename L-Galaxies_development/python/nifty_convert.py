@@ -54,7 +54,7 @@ def convert_nifty():
         Z_stars = galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"]
         T_stars = galaxy["MassWeightAge"]
         Type = galaxy["Type"]
-        if(Type == 2):
+        if(haloid == 60000000000176):
             print haloid, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
 
 convert_nifty()
