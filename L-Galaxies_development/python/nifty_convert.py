@@ -42,6 +42,7 @@ def read_galaxies():
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
     halomap = {}
+    lasthalomap = []
     for idgal in range(nGals):
         galaxy = gal[idgal]
         haloid = galaxy["HaloID"]
@@ -55,7 +56,7 @@ def read_galaxies():
             while (gal[last_main_prog]["Type"] == 2):
                 last_main_prog = last_main_prog+1
             lasthaloid = gal[last_main_prog]["HaloID"]
-        gal[idgal]["LastHalo"] = lasthaloid
+        lasthalomap.append(lasthaloid)
 
         if haloid in halomap:
             halomap[haloid].append(idgal)
@@ -63,10 +64,10 @@ def read_galaxies():
             halomap[haloid] = []
             halomap[haloid].append(idgal)
 
-    return (nGals,gal,halomap)
+    return (nGals,gal,halomap,lasthalomap)
 
 
-(nGals,gal,halomap) = read_galaxies()
+(nGals,gal,halomap,lasthalomap) = read_galaxies()
 
 
 AHFdir = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/AHF/"
@@ -118,11 +119,12 @@ for time in timesnap:
                     Z_gas = (galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"])*Gadget2Msun
                     Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"])*Gadget2Msun
                     T_stars = galaxy["MassWeightAge"]
+                    lasthaloid = lasthalomap[galid]
                     if(galaxy["Type"] == 2):
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
-                    print galaxy["LastHalo"],orphan_flag
+                    print lasthaloid,orphan_flag
             else:
                 print hid, 0
 
