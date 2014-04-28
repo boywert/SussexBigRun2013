@@ -5,9 +5,7 @@ import LGalaxyStruct
 import os
 
 def read_galaxies():
-    boxsize = 62.5*1000. #kpc/h
-    Mpc2kpc = 1000.0
-    Gadget2Msun = 1.e10
+
 
     folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
@@ -78,6 +76,11 @@ SNAPfile = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/snapidzred.txt"
 FileOut = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/trees_061.0"
 FileOut2 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/tree_dbids_061.0"
 timesnap = numpy.loadtxt(SNAPfile)
+
+boxsize = 62.5*1000. #kpc/h
+Mpc2kpc = 1000.0
+Gadget2Msun = 1.e10
+
 for time in timesnap:
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
