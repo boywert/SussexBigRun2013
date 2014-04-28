@@ -55,7 +55,7 @@ def read_galaxies():
             while (gal[last_main_prog]["Type"] == 2):
                 last_main_prog = last_main_prog+1
             lasthaloid = gal[last_main_prog]["HaloID"]
-        galaxy["LastHalo"] = lasthaloid
+        gal[idgal]["LastHalo"] = lasthaloid
 
         if haloid in halomap:
             halomap[haloid].append(idgal)
