@@ -44,6 +44,7 @@ def read_galaxies():
     halomap = {}
     for idgal in range(nGals):
         galaxy = gal[idgal]
+        haloid = galaxy["HaloID"]
         Type = galaxy["Type"]
         
 
