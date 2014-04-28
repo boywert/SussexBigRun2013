@@ -65,7 +65,7 @@ def read_galaxies():
     return (nGals,gal,halomap)
 
 
-(nGals,gal,halomap) = convert_nifty()
+(nGals,gal,halomap) = read_galaxies()
 
 
 AHFdir = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/AHF/"
