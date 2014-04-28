@@ -80,6 +80,8 @@ timesnap = numpy.loadtxt(SNAPfile)
 boxsize = 62.5*1000. #kpc/h
 Mpc2kpc = 1000.0
 Gadget2Msun = 1.e10
+L_sun = 3.846e26 #W
+pc2m = 3.08567758e16 #m
 
 for time in timesnap:
     zstring = "%.3f" % (time[2])
@@ -124,11 +126,19 @@ for time in timesnap:
                     Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"])*Gadget2Msun
                     T_stars = galaxy["MassWeightAge"]
                     lasthaloid = lasthalomap[galid]
+                    # convert SDSS magnitude to luminosity
+                    # u,g,r,i,z
+                    # M = -2.5 log (L_SDSS/ (3631 Jy * 4* pi* (10 pc)^2 * bandwidth))
+                    u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                    g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                    r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                    i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                    z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     if(galaxy["Type"] == 2):
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
-                    print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars
+                    print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
             else:
                 print hid, 0
 
