@@ -128,7 +128,7 @@ for time in timesnap:
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
-                    print lasthaloid,orphan_flag
+                    print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars
             else:
                 print hid, 0
 
