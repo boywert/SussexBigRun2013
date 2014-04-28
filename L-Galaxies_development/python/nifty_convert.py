@@ -153,7 +153,8 @@ for time in timesnap:
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
-                    print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
+                    print galaxy['Mag']
+                    #print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
             else:
                 print hid, 0
 
