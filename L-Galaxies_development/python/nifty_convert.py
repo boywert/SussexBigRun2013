@@ -2,6 +2,7 @@ import pylab
 import numpy
 import read_lgal
 import LGalaxyStruct
+import os
 
 def read_galaxies():
     boxsize = 62.5*1000. #kpc/h
