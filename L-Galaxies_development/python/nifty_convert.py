@@ -62,9 +62,9 @@ def convert_nifty():
         else:
             last_main_prog = galaxy["FirstProgGal"]
             print last_main_prog
-            while (gal[last_main_prog]["Type"] == 2) and (last_main_prog > -1):
-                last_main_prog = gal[last_main_prog]["FirstProgGal"]
-            lasthaloid = gal[last_main_prog]["HaloID"]
+            # while (gal[last_main_prog]["Type"] == 2) and (last_main_prog > -1):
+            #     last_main_prog = gal[last_main_prog]["FirstProgGal"]
+            # lasthaloid = gal[last_main_prog]["HaloID"]
         # if(haloid == 60000000000176):
         #     print haloid,Type, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
 
