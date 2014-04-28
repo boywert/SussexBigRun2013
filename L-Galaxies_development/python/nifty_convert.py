@@ -63,7 +63,7 @@ def convert_nifty():
             last_main_prog = ProgGal
             while (gal[last_main_prog]["Type"] == 2):
                 last_main_prog = gal[last_main_prog]["FirstProgGal"]
-            lasthaloid = gal[lastfile]["HaloID"]
+            lasthaloid = gal[last_main_prog]["HaloID"]
         # if(haloid == 60000000000176):
         #     print haloid,Type, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
 
