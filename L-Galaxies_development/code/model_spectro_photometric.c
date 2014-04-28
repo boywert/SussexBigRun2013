@@ -43,7 +43,9 @@ void setup_LumTables_precomputed(char SimName[])
   int dumb_ssp_nsnaps, dumb_ssp_nage, dumb_ssp_nmetallicites, dumb_nmag;
 
   /*Read list of metallicities available from SSP*/
-  sprintf(buf, "%s/PhotTables/%s_%s_Metallicity_list.dat", SpecPhotDir, PhotPrefix, SpecPhotIMF);
+  /* Boyd changed here */
+  sprintf(buf, "%s/PhotTables/%s_Metallicity_list.dat", SpecPhotDir, PhotPrefix);
+  // sprintf(buf, "%s/PhotTables/%s_%s_Metallicity_list.dat", SpecPhotDir, PhotPrefix, SpecPhotIMF);
   if(!(fa = fopen(buf, "r")))
   {
   	char sbuf[1000];
