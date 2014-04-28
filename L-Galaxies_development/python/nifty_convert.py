@@ -104,7 +104,7 @@ for time in timesnap:
     if(stat.st_size > 384):
         data = numpy.loadtxt(filename)
         for halo in data:
-            hid = halo[0]
+            hid = long(halo[0])
             if hid in halomap:
                 print hid, len(halomap[hid])
                 for galid in halomap[hid]:
