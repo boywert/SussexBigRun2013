@@ -41,7 +41,8 @@ def convert_nifty():
 
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
-    for galaxy in gal:
+    for idgal in range(nGals):
+        galaxy = gal[idgal]
         haloid = galaxy["HaloID"]
         Mstar = galaxy['DiskMass']+galaxy['BulgeMass']
         X = galaxy["Pos"][0]*Mpc2kpc
@@ -61,12 +62,11 @@ def convert_nifty():
         if(Type != 2):
             lasthaloid = haloid
         else:
-            last_main_prog = galaxy["FirstProgGal"]
-            print galaxy["GalID"], last_main_prog
-            # while (gal[last_main_prog]["Type"] == 2) and (last_main_prog > -1):
-            #     last_main_prog = gal[last_main_prog]["FirstProgGal"]
-            # lasthaloid = gal[last_main_prog]["HaloID"]
-        # if(haloid == 60000000000176):
-        #     print haloid,Type, Mstar, X, Y, Z, VX, VY, VZ, Mcold, Mhot, Mbh, Z_gas, Z_stars, T_stars
+            last_main_prog = idgal+1
+            while (gal[last_main_prog]["Type"] == 2):
+                last_main_prog = last_main_prog+1
+            lasthaloid = gal[last_main_prog]["HaloID"]
+
+        print haloid,lasthaloid
 
 convert_nifty()
