@@ -61,7 +61,7 @@ def convert_nifty():
             lasthaloid = haloid
         else:
             last_main_prog = galaxy["FirstProgGal"]
-            while (gal[last_main_prog]["Type"] == 2 and last_main_prog > -1)
+            while ((gal[last_main_prog]["Type"] == 2) and (last_main_prog > -1))
                 last_main_prog = gal[last_main_prog]["FirstProgGal"]
             lasthaloid = gal[last_main_prog]["HaloID"]
         # if(haloid == 60000000000176):
