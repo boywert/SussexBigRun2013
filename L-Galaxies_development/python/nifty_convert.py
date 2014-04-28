@@ -56,12 +56,12 @@ def convert_nifty():
         Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"])*Gadget2Msun
         T_stars = galaxy["MassWeightAge"]
         Type = galaxy["Type"]
-        ProgGal = galaxy["FirstProgGal"]
+
         if(Type != 2):
             lasthaloid = haloid
         else:
-            last_main_prog = ProgGal
-            while (gal[last_main_prog]["Type"] == 2):
+            last_main_prog = galaxy["FirstProgGal"]
+            while (gal[last_main_prog]["Type"] == 2 && last_main_prog > -1)
                 last_main_prog = gal[last_main_prog]["FirstProgGal"]
             lasthaloid = gal[last_main_prog]["HaloID"]
         # if(haloid == 60000000000176):
