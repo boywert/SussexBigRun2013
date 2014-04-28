@@ -129,23 +129,23 @@ for time in timesnap:
                     # convert SDSS magnitude to luminosity
                     # u,g,r,i,z
                     # M = -2.5 log (L_SDSS/ (3631 Jy * 4* pi* (10 pc)^2 * bandwidth))
-                    if(galaxy['Mag'][0] < 99):
+                    if(galaxy['Mag'][0] < 20.):
                         u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         u_l = 0.
-                    if(galaxy['Mag'][1] < 99):
+                    if(galaxy['Mag'][1] < 20.):
                         g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         g_l = 0.
-                    if(galaxy['Mag'][2] < 99):
+                    if(galaxy['Mag'][2] < 20.):
                         r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         r_l = 0.
-                    if(galaxy['Mag'][3] < 99):
+                    if(galaxy['Mag'][3] < 20.):
                         i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         i_l = 0.
-                    if(galaxy['Mag'][4] < 99):
+                    if(galaxy['Mag'][4] < 20.):
                         z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         z_l = 0.
