@@ -24,4 +24,5 @@ OBJS  += ./code/model_spectro_photometric.o
 OPT += -DOUTPUT_REST_MAGS    # output rest-frame magnitudes
 OPT += -DM05 #use Maraston 2005 stellar populations need to change input.par
 #OPT += -DPHOTTABLES_PRECOMPUTED     
+OPT += -DSPEC_PHOTABLES_ON_THE_FLY
 endif
