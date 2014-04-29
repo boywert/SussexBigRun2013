@@ -87,6 +87,9 @@ os.system("mkdir -p "+output_folder)
 prefix = "nifty_I"
 for timeid in range(len(timesnap)):
     time = timesnap[timeid]
+    ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
+    fp = open(ofilename,"w+")
+    print >> fp, "M_sun/h  W/Hz"
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
@@ -108,9 +111,6 @@ for timeid in range(len(timesnap)):
         #print stat.st_size
     if(stat.st_size > 384):
         
-        ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
-        fp = open(ofilename,"w+")
-        print >> fp, "M_sun/h  W/Hz"
         data = numpy.loadtxt(filename)
         for halo in data:
             hid = long(halo[0])
@@ -165,4 +165,4 @@ for timeid in range(len(timesnap)):
             else:
                 print >>fp, hid, 0
     
-        fp.close()
+    fp.close()
