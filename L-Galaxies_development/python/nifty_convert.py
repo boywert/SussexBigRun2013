@@ -152,16 +152,16 @@ for timeid in range(len(timesnap)):
                         i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
                     else:
                         i_l = 0.
-                    if(galaxy['Mag'][4] < 20.):
-                        z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
-                    else:
-                        z_l = 0.
+                    # if(galaxy['Mag'][4] < 20.):
+                    #     z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                    # else:
+                    #     z_l = 0.
                     if(galaxy["Type"] == 2):
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
                     
-                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
+                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l
             else:
                 print >>fp, hid, 0
     
