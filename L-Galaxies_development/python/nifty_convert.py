@@ -82,7 +82,7 @@ Mpc2kpc = 1000.0
 Gadget2Msun = 1.e10
 L_sun = 3.846e26 #W
 pc2m = 3.08567758e16 #m
-output_folder = "./"
+output_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/SAM/"
 os.system("mkdir -p "+output_folder)
 prefix = "nifty_I"
 for timeid in range(len(timesnap)):
