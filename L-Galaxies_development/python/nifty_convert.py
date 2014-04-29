@@ -108,8 +108,8 @@ for timeid in range(len(timesnap)):
         #print stat.st_size
     if(stat.st_size > 384):
         
-        filename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
-        fp = open(filename,"w+")
+        ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
+        fp = open(ofilename,"w+")
         print >> fp, "M_sun/h  W/Hz"
         data = numpy.loadtxt(filename)
         for halo in data:
