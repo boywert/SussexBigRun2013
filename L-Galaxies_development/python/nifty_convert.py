@@ -82,8 +82,11 @@ Mpc2kpc = 1000.0
 Gadget2Msun = 1.e10
 L_sun = 3.846e26 #W
 pc2m = 3.08567758e16 #m
-
-for time in timesnap:
+output_folder = "./"
+os.system("mkdir -p "+output_folder)
+prefix = "nifty_I"
+for timeid in range(len(timesnap)):
+    
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
@@ -104,11 +107,15 @@ for time in timesnap:
     stat = os.stat(filename)
         #print stat.st_size
     if(stat.st_size > 384):
+        time = timesnap[timeid]
+        filename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
+        fp = open(filename,"w+")
+        print >> fp, "M_sun/h  W/Hz"
         data = numpy.loadtxt(filename)
         for halo in data:
             hid = long(halo[0])
             if hid in halomap:
-                print hid, len(halomap[hid])
+                print >> fp,  hid, len(halomap[hid])
                 for galid in halomap[hid]:
                     galaxy = gal[galid]
                     haloid = galaxy["HaloID"]
@@ -153,8 +160,9 @@ for time in timesnap:
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
-                    print galaxy['Mag']
-                    #print lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
+                    
+                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
             else:
-                print hid, 0
-
+                print >>fp, hid, 0
+    
+        fp.close()
