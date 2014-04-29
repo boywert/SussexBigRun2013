@@ -86,7 +86,7 @@ output_folder = "./"
 os.system("mkdir -p "+output_folder)
 prefix = "nifty_I"
 for timeid in range(len(timesnap)):
-    
+    time = timesnap[timeid]
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
@@ -107,7 +107,7 @@ for timeid in range(len(timesnap)):
     stat = os.stat(filename)
         #print stat.st_size
     if(stat.st_size > 384):
-        time = timesnap[timeid]
+        
         filename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
         fp = open(filename,"w+")
         print >> fp, "M_sun/h  W/Hz"
