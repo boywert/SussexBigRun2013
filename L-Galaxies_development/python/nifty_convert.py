@@ -81,6 +81,7 @@ boxsize = 62.5*1000. #kpc/h
 Mpc2kpc = 1000.0
 Gadget2Msun = 1.e10
 L_sun = 3.846e26 #W
+L_vega = 40.12*L_sun
 pc2m = 3.08567758e16 #m
 output_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/SAM/"
 os.system("mkdir -p "+output_folder)
@@ -135,21 +136,21 @@ for timeid in range(len(timesnap)):
                     lasthaloid = lasthalomap[galid]
                     # convert SDSS magnitude to luminosity
                     # u,g,r,i,z
-                    # M = -2.5 log (L_SDSS/ (3631 Jy * 4* pi* (10 pc)^2 * bandwidth))
+                    # M = -2.5 log (L_SDSS/ L_vega))
                     if(galaxy['Mag'][0] < 20.):
-                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * L_vega / L_sun
                     else:
                         u_l = 0.
                     if(galaxy['Mag'][1] < 20.):
-                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * L_vega / L_sun
                     else:
                         g_l = 0.
                     if(galaxy['Mag'][2] < 20.):
-                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * L_vega / L_sun
                     else:
                         r_l = 0.
                     if(galaxy['Mag'][3] < 20.):
-                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
+                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * L_vega / L_sun
                     else:
                         i_l = 0.
                     # if(galaxy['Mag'][4] < 20.):
