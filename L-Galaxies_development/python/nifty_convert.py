@@ -90,7 +90,7 @@ for timeid in range(len(timesnap)):
     time = timesnap[timeid]
     ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
     fp = open(ofilename,"w+")
-    print >> fp, "M_sun/h  W/Hz"
+    print >> fp, "M_sun/h  W"
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
@@ -137,26 +137,27 @@ for timeid in range(len(timesnap)):
                     # convert SDSS magnitude to luminosity
                     # u,g,r,i,z
                     # M = -2.5 log (L_SDSS/ L_vega))
-                    if(galaxy['Mag'][0] < 20.):
-                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * L_vega / L_sun
+                    if(galaxy['Mag'][0] < 98.):
+                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * L_vega 
                     else:
                         u_l = 0.
-                    if(galaxy['Mag'][1] < 20.):
-                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * L_vega / L_sun
+                    if(galaxy['Mag'][1] < 98.):
+                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * L_vega 
                     else:
                         g_l = 0.
-                    if(galaxy['Mag'][2] < 20.):
-                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * L_vega / L_sun
+                    if(galaxy['Mag'][2] < 98.):
+                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * L_vega 
                     else:
                         r_l = 0.
-                    if(galaxy['Mag'][3] < 20.):
-                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * L_vega / L_sun
+                    if(galaxy['Mag'][3] < 98.):
+                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * L_vega 
                     else:
                         i_l = 0.
-                    # if(galaxy['Mag'][4] < 20.):
-                    #     z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * 3631.0 * 1.e-26 * 4.*numpy.pi*(10.*pc2m)**2. / L_sun
-                    # else:
-                    #     z_l = 0.
+                    if(galaxy['Mag'][4] < 20.):
+                        z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * L_vega 
+                    else:
+                        z_l = 0.
+
                     if(galaxy["Type"] == 2):
                         orphan_flag = 1
                     else:
