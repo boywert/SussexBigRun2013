@@ -26,8 +26,8 @@ OPT += -DM05 #use Maraston 2005 stellar populations need to change input.par
 #OPT += -DPHOTTABLES_PRECOMPUTED     
 OPT += -DSPEC_PHOTABLES_ON_THE_FLY
 ifeq (SPEC_PHOTABLES_ON_THE_FLY,$(findstring SPEC_PHOTABLES_ON_THE_FLY,$(OPT)))
-#OPT += -DVEGA
-OPT += -DAB
+OPT += -DVEGA
+#OPT += -DAB
 OBJS += ./code/model_spectro_photometric_onthefly_initialize.o
 OBJS += ./code/model_spectro_photometric_onthefly_misc.o
 endif
