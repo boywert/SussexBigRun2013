@@ -137,6 +137,7 @@ for timeid in range(len(timesnap)):
                     # convert SDSS magnitude to luminosity
                     # u,g,r,i,z
                     # M = -2.5 log (L_SDSS/ L_vega))
+
                     if(galaxy['Mag'][0] < 98.):
                         u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * L_vega 
                     else:
