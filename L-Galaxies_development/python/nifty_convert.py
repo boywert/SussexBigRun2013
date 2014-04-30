@@ -139,23 +139,23 @@ for timeid in range(len(timesnap)):
                     # M = -2.5 log (L_SDSS/ L_vega))
 
                     if(galaxy['Mag'][0] < 98.):
-                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) * L_vega 
+                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) 
                     else:
                         u_l = 0.
                     if(galaxy['Mag'][1] < 98.):
-                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) * L_vega 
+                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) 
                     else:
                         g_l = 0.
                     if(galaxy['Mag'][2] < 98.):
-                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5) * L_vega 
+                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5)  
                     else:
                         r_l = 0.
                     if(galaxy['Mag'][3] < 98.):
-                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5) * L_vega 
+                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5)  
                     else:
                         i_l = 0.
                     if(galaxy['Mag'][4] < 20.):
-                        z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5) * L_vega 
+                        z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5)  
                     else:
                         z_l = 0.
 
@@ -164,7 +164,7 @@ for timeid in range(len(timesnap)):
                     else:
                         orphan_flag = 0
                     
-                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,galaxy['Mag'][0],galaxy['Mag'][1],galaxy['Mag'][2],galaxy['Mag'][3],galaxy['Mag'][4]
+                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
             else:
                 print >>fp, hid, 0
     
