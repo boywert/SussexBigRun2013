@@ -2,134 +2,170 @@ import pylab
 import numpy
 import read_lgal
 import LGalaxyStruct
+import os
 
-def uv_l_z8():
-    boxsize = 47.0
-    max_mag=-16.
-    min_mag = -23.
-    nbins=14
-    hubble_h = 0.7
+def read_galaxies():
+
+
+    folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/outputs/"
     
-    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_fullre/"
-    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_nore/"
-    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/treedata/zlist.txt"
-    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_130315_6_1728_47Mpc_ext2/observed_UVL/"
-
 
     firstfile = 0
-    lastfile = 215
-    f = open(snaplist_file)
-    lines = f.readlines()
-    f.close()
-    i=0
+    lastfile = 0
+    # f = open(snaplist_file)
+    # lines = f.readlines()
+    # f.close()
+    # i=0
     filter = LGalaxyStruct.properties_used
-    filter['Mvir'] = False
-    filter['Mag'] = True
-    filter['MagDust'] = True
 
-    file_prefix = "SA_z8.06"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
-    lgal_hist_metal = pylab.histogram(gal['MagDust'][:,5],bins=nbins,range=(min_mag,max_mag))
-    
-    lgal_hist_metal_y = lgal_hist_metal[0]
-    lgal_hist_metal_x = []
-    for i in range(len(lgal_hist_metal_y)):
-        lgal_hist_metal_x.append((lgal_hist_metal[1][i]+lgal_hist_metal[1][i+1])/2.)
-    
-    lgal_hist_metal_x = lgal_hist_metal_x - 5.*numpy.log10(hubble_h)
-    lgal_hist_metal_y = lgal_hist_metal_y / boxsize**3. / (lgal_hist_metal_x[1]-lgal_hist_metal_x[0])
-    lgal_hist_total =  pylab.histogram(gal['Mag'][:,5],bins=nbins,range=(min_mag,max_mag))
-    lgal_hist_total_y = lgal_hist_total[0]/ boxsize**3. / (lgal_hist_metal_x[1]-lgal_hist_metal_x[0])
-
-    (nTrees,nGals,nTreeGals,gal2) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
-    lgal_hist_metal_nr = pylab.histogram(gal2['MagDust'][:,5],bins=nbins,range=(min_mag,max_mag))
-    
-    lgal_hist_metal_nr_y = lgal_hist_metal_nr[0]
-    lgal_hist_metal_nr_x = []
-    for i in range(len(lgal_hist_metal_nr_y)):
-        lgal_hist_metal_nr_x.append((lgal_hist_metal_nr[1][i]+lgal_hist_metal_nr[1][i+1])/2.)
-    
-    lgal_hist_metal_nr_x = lgal_hist_metal_nr_x - 5.*numpy.log10(hubble_h)
-    lgal_hist_metal_nr_y = lgal_hist_metal_nr_y / boxsize**3. / (lgal_hist_metal_nr_x[1]-lgal_hist_metal_nr_x[0])
-    lgal_hist_total_nr =  pylab.histogram(gal2['Mag'][:,5],bins=nbins,range=(min_mag,max_mag))
-    lgal_hist_total_nr_y = lgal_hist_total_nr[0]/ boxsize**3. / (lgal_hist_metal_nr_x[1]-lgal_hist_metal_nr_x[0])
-
-
-    pylab.rc('text', usetex=True)
-    fig = pylab.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-',label="MagDust(Okamoto)")
-    ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="Mag(Okamoto)")
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="MagDust(No Reionisation)")
-    ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--',label="Mag(No Reionisation)")
-    bouwens2011_file = observe_folder+"bouwens2011_z8.txt"
-    bouwens2011 = numpy.loadtxt(bouwens2011_file)
-    bouwens2011_x = bouwens2011[:,0]-5.*numpy.log10(hubble_h)
-    bouwens2011_y = (10.**bouwens2011[:,1])/hubble_h**3.
-
-    bouwens2011_errorup = (10.**(bouwens2011[:,1] + bouwens2011[:,5]) - 10.**bouwens2011[:,1])/hubble_h**3.
-    bouwens2011_errordown = (10.**bouwens2011[:,1] - 10.**(bouwens2011[:,1] + bouwens2011[:,4]))/hubble_h**3.
-    ax.errorbar(bouwens2011_x,bouwens2011_y,yerr=bouwens2011_y/10., fmt='o',label="Bouwens et al. (2011)")
-    ax.set_yscale("log")
-    
-    leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-    leg.get_frame().set_linewidth(0)
-    print nGals, len(gal)
-    ax.set_xlabel(r"Mag$_UV$")
-    ax.set_ylabel(r"$\phi$ (Galaxies $h^{3}$ Mpc$^{-3}$ mags$^{-1}$)")
-    fig.suptitle("GFUV z~8")
-    pylab.savefig('uv_l_z8.pdf',bbox_inches='tight')
-    pylab.show()
-
-
-def galaxy_stellar_massftn():
-    gadget2msun=10.e10
-    boxsize = 47.0
-    max_mag=-16.
-    min_mag = -23.
-    nbins=14
-    hubble_h = 0.7
-    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs/"
-    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/outputs_nore/"
-    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_131212_6_1728_47Mpc_ext2/mergertrees/cubep3m_zlist_out"
-    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_131212_6_1728_47Mpc_ext2/observed_UVL/"
-    firstfile = 0
-    lastfile = 215
-
-    filter = LGalaxyStruct.properties_used
+    filter['Type'] = True
+    filter['GalID'] = True
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
+    filter['Mag'] = True
+    filter['ColdGas'] = True
+    filter['HotGas'] = True
+    filter['HaloID'] = True
+    filter['Pos'] = True
+    filter['Vel'] = True
+    filter['ColdGas'] = True
+    filter['HotGas'] = True
+    filter['BlackHoleMass'] = True
+    filter['MetalsColdGas'] = True
+    filter['MetalsHotGas'] = True
+    filter['MetalsBulgeMass'] = True
+    filter['MetalsDiskMass'] = True
+    filter['MassWeightAge'] = True
+    filter["FirstProgGal"] = True
 
-    file_prefix = "SA_z8.06"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(model2_folder,file_prefix,firstfile,lastfile,filter)
-    massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
-    mass = [i for i in massf if i > 10.e6]
-    mass = numpy.log10(mass)
-    stellarmass = pylab.histogram(mass)
-    print stellarmass
-    massftn_y = stellarmass[0]
-    massftn_x = []
-    for i in range(len(stellarmass[0])):
-        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+    file_prefix = "SA_"    
+    (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
+    halomap = {}
+    lasthalomap = []
+    for idgal in range(nGals):
+        galaxy = gal[idgal]
+        haloid = galaxy["HaloID"]
+        Type = galaxy["Type"]
+        
 
-    pylab.rc('text', usetex=True)
-    fig = pylab.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(massftn_x,massftn_y,'r-')
+        if(Type != 2):
+            lasthaloid = haloid
+        else:
+            last_main_prog = idgal+1
+            while (gal[last_main_prog]["Type"] == 2):
+                last_main_prog = last_main_prog+1
+            lasthaloid = gal[last_main_prog]["HaloID"]
+        lasthalomap.append(lasthaloid)
+
+        if haloid in halomap:
+            halomap[haloid].append(idgal)
+        else:
+            halomap[haloid] = []
+            halomap[haloid].append(idgal)
+
+    return (nGals,gal,halomap,lasthalomap)
 
 
-    file_prefix = "SA_z8.06"    
-    (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(nore_folder,file_prefix,firstfile,lastfile,filter)
-    massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
-    mass = [i for i in massf if i > 10.e6]
-    mass = numpy.log10(mass)
-    stellarmass = pylab.histogram(mass)
-    print stellarmass
-    massftn_y = stellarmass[0]
-    massftn_x = []
-    for i in range(len(stellarmass[0])):
-        massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
+(nGals,gal,halomap,lasthalomap) = read_galaxies()
 
-    ax.plot(massftn_x,massftn_y,'b-')
-    ax.set_yscale("log")
-    pylab.show()
+
+AHFdir = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/AHF/"
+AHFprefix = "62.5_dm"
+SUSSINGtree = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/MergerTree+AHF.txt"
+SNAPfile = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/snapidzred.txt"
+FileOut = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/trees_061.0"
+FileOut2 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/tree_dbids_061.0"
+timesnap = numpy.loadtxt(SNAPfile)
+
+boxsize = 62.5*1000. #kpc/h
+Mpc2kpc = 1000.0
+Gadget2Msun = 1.e10
+L_sun = 3.846e26 #W
+L_vega = 40.12*L_sun
+pc2m = 3.08567758e16 #m
+output_folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/SAM/"
+os.system("mkdir -p "+output_folder)
+prefix = "nifty_I"
+for timeid in range(len(timesnap)):
+    time = timesnap[timeid]
+    ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
+    fp = open(ofilename,"w+")
+    print >> fp, "M_sun/h  L_Vega"
+    zstring = "%.3f" % (time[2])
+        #print zstring[len(zstring)-1]
+    filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
+        #print "checking "+filename
+    if os.path.isfile(filename) == False:
+        zstring = "%.3f" % (time[2]+0.00001)
+            #print zstring[len(zstring)-1]
+        filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
+    if os.path.isfile(filename) == False:
+        zstring = "%.3f" % (time[2]-0.00001)
+            #print "checking "+filename
+            #print zstring[len(zstring)-1]
+        filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
+    if os.path.isfile(filename) == False:
+        print "checking error"+filename
+        exit()
+    print "Reading "+filename
+    stat = os.stat(filename)
+        #print stat.st_size
+    if(stat.st_size > 384):
+        
+        data = numpy.loadtxt(filename)
+        for halo in data:
+            hid = long(halo[0])
+            if hid in halomap:
+                print >> fp,  hid, len(halomap[hid])
+                for galid in halomap[hid]:
+                    galaxy = gal[galid]
+                    haloid = galaxy["HaloID"]
+                    Mstar = galaxy['DiskMass']+galaxy['BulgeMass']
+                    X = galaxy["Pos"][0]*Mpc2kpc
+                    Y = galaxy["Pos"][1]*Mpc2kpc
+                    Z = galaxy["Pos"][2]*Mpc2kpc
+                    VX = galaxy["Vel"][0]
+                    VY = galaxy["Vel"][1]
+                    VZ = galaxy["Vel"][2]
+                    Mcold = galaxy["ColdGas"]*Gadget2Msun
+                    Mhot = galaxy["HotGas"]*Gadget2Msun
+                    Mbh = galaxy["BlackHoleMass"]*Gadget2Msun
+                    Z_gas = (galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"])*Gadget2Msun
+                    Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"])*Gadget2Msun
+                    T_stars = galaxy["MassWeightAge"]
+                    lasthaloid = lasthalomap[galid]
+                    # convert SDSS magnitude to luminosity
+                    # u,g,r,i,z
+                    # M = -2.5 log (L_SDSS/ L_vega))
+
+                    if(galaxy['Mag'][0] < 98.):
+                        u_l = 10.**(-1.*(galaxy['Mag'][0] + 0.0)/2.5) 
+                    else:
+                        u_l = 0.
+                    if(galaxy['Mag'][1] < 98.):
+                        g_l = 10.**(-1.*(galaxy['Mag'][1] + 0.0)/2.5) 
+                    else:
+                        g_l = 0.
+                    if(galaxy['Mag'][2] < 98.):
+                        r_l = 10.**(-1.*(galaxy['Mag'][2] + 0.0)/2.5)  
+                    else:
+                        r_l = 0.
+                    if(galaxy['Mag'][3] < 98.):
+                        i_l = 10.**(-1.*(galaxy['Mag'][3] + 0.0)/2.5)  
+                    else:
+                        i_l = 0.
+                    if(galaxy['Mag'][4] < 20.):
+                        z_l = 10.**(-1.*(galaxy['Mag'][4] + 0.0)/2.5)  
+                    else:
+                        z_l = 0.
+
+                    if(galaxy["Type"] == 2):
+                        orphan_flag = 1
+                    else:
+                        orphan_flag = 0
+                    
+                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
+            else:
+                print >>fp, hid, 0
+    
+    fp.close()
