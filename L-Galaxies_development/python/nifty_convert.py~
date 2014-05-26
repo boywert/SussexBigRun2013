@@ -164,7 +164,7 @@ for timeid in range(len(timesnap)):
                     else:
                         orphan_flag = 0
                     
-                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
+                    print >> fp, lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mbh,Mstar, Z_gas,Z_stars,T_stars,u_l,g_l,r_l,i_l,z_l
             else:
                 print >>fp, hid, 0
     
