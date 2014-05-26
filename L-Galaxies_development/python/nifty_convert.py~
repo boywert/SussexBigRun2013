@@ -131,7 +131,7 @@ for timeid in range(len(timesnap)):
                     Mhot = galaxy["HotGas"]*Gadget2Msun
                     Mbh = galaxy["BlackHoleMass"]*Gadget2Msun
                     Z_gas = (galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"]) / (galaxy["ColdGas"] + galaxy["HotGas"])
-                    Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"])*(galaxy['DiskMass']+galaxy['BulgeMass'])
+                    Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"]) / (galaxy['DiskMass']+galaxy['BulgeMass'])
                     T_stars = galaxy["MassWeightAge"]
                     lasthaloid = lasthalomap[galid]
                     # convert SDSS magnitude to luminosity
