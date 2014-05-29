@@ -1,145 +1,66 @@
 ;=========================================================================
-  
-   PRO plot_sfr,sfr,sfrname=sfrname,$
-               ps=ps,box=box,Hubble_h=Hubble_h,$
-               min=min,max=max,binsize=binsize
-
-;=========================================================================
 ;
-;  Example procedure to create luminosity function from magnitudes
+;  Script to read in L-galaxies snapshot data
+;  and produce a scatter plot of sfr versus mass
+
+;  Parameters:
+;   ps - keyword to cause the plot to be written to a postscript file.
+;        (by default the plot will be drawn on the screen)
+    PS = 0b
+;   SNAP - which snapshot is it (affects axes)
+    SNAP = 12
+;   FirstFile = 0
+;   LastFile = 511
+    FirstFile = 5
+    LastFile = 5
 ;
 ;-------------------------------------------------------------------------
 
-; Inputs:
-; sfr=array of sfr
-
-sfrname = "log!D10!nSFR(M!Dsol!N/yr)"
-ps = ps
-
-
-Ngals=n_elements(sfr)
-if Ngals eq 0 then message,'plot_sfr called with zero-length magnitude array'
-if n_elements(sfrname) eq 0 then sfrname='SFR'
-if n_elements(box) eq 0 then begin
-   print,'Using boxsize=500 Mpc'
-   box=500.
-endif
-
-if n_elements(Hubble_h) eq 0 then begin
-   print,'Using Hubble_h= 0.704'
-   Hubble_h= 0.704
-endif
-
-if n_elements(min) eq 0 then min = 0.
-if n_elements(max) eq 0 then max = 200.
-if n_elements(binsize) eq 0 then binsize = 10.00
-
-min=-1
-max=3
-
-
-; volume in Mpc
-; this should set values to assume h=0.704
-volume = (box/Hubble_h)^3.0
-log_hubble = alog10(Hubble_h)
-;sfr = sfr - alog10(Hubble_h) ; CHECK THIS WITH PETER!
+@'/export/virgo/MillGas/WMAP/data/500_sam/Guo10_uv/snap_template.pro'
+;
+; Define which files you want to read in
+if SNAP eq 12 then DirName = '/export/virgo/MillGas/WMAP/data/500_sam/Guo10_uv/'
+if SNAP eq 12 then FileName = 'SA_z8.55'
+ModelName = DirName + FileName
 
 ;-------------------------------------------------------------------------------
-redshift="z10.94"
 
-;if (keyword_set(ps)) then begin
-    set_plot, 'PS'
-    device, filename = redshift+'sfr.ps', xsize = 12, ysize = 11, /color, $
-      xoffset=1, $
-      yoffset=5
-;endif
+; read in data
+
+read_lgal,ModelName,Template,GalStruct $
+         ,FirstFile=FirstFile,LastFile=LastFile ;,/swap_endian
+
+;-------------------------------------------------------------------------------
+
+; Define simple arrays containing useful data from structure array
+print, ' Now defining useful quantities...'
+
+StellarMass = (GalStruct.DiskMass+GalStruct.BulgeMass) * 1.0e10
+SFR = GalStruct.sfr
+
+;-------------------------------------------------------------------------------
+
+; Create plot
+
+start_plot
+
+; Open file for all plots
+if PS then set_plot, 'PS'
+if PS then device, filename = 'mag.ps', /color, $
+                  xsize = 15, ysize = 10, $
+                  xoffset=1,  yoffset=5
   
-; Create histogram of data and data points
+x=StellarMass
+y=SFR
 
-binsize=0.1
+plot, x, y, /nodata, /xlog, psym=3, $
+  xtitle = 'Stellar mass/h!u-1!nM!d!Mn!n', $
+  xrange = [1e2,1e12],xstyle=1, $
+  ytitle = 'SFR / M!d!mn!n yr!u-1!n', $
+  yrange = [-25,-5],ystyle=1
+oplot, x, y, color=2, psym=3
 
-sfr = alog10(sfr)
-  hist=(histogram(sfr,locations=c,min=min,max=max,binsize=binsize))
-  ; x is centre of bins
-  x=c+0.5*binsize
-  ; y is normalised to volume and binsize
-  y=hist/(volume*binsize)
-
-
-; THIS SHOULD BE UNNECESSARY
-; h
-; x = x - (5*ALOG10(Hubble_h)) ; THIS NEEDS CHANGING
-; y = y/(Hubble_h^3)
-; x = alog10(x)
-  
-
-; Set axes
-  xmin=min-0.5
-  xmax=max+0.5
-;  index=where(y gt 1e-30)
-;  ylogmin=-10 > floor(min(alog10(y[index])))
-;  ylogmax=ceil(max(alog10(y[index])))
-
-; New axis limits
-;  xmin = -23
-;  xmax = -16
-;  ylogmin = -6
-;  ylogmax = -1
-
-;Observations
-;z=4
-renske4x = [-0.66,-0.44,-0.21,0.02,0.25,0.48,0.72,0.95,1.19,1.44,1.68,1.92,2.16]
-renske4y = [0.0529,0.06703,0.02537,0.02534,0.01430,0.01153,0.00601,0.00354,0.00221,0.00139,0.00052,0.00023,0.00002]
-renske4yerr =[0.02855,0.00838,0.00326,0.000326,0.00268,0.00144,0.00117,0.00025,0.00017,0.00012,0.00008,0.00006,0.00004,0.00002]
-
-;z=5
-renske5x =[-0.33,-0.11,0.12,0.36,0.61,0.86,1.11,1.37,1.63,1.89]
-renske5y =[0.01766,0.01161,0.01076,0.00420,0.00362,0.00224,0.00121,0.00060,0.00023,0.00006]
-renske5yerr =[0.00858,0.00294,0.00121,0.00046,0.00040,0.00014,0.00008,0.00006,0.00002,0.00002]
-
-;z=6
-renske6x =[-0.04,0.41,0.77,1.01,1.26,1.51,1.77,2.03]
-renske6y =[0.01197,0.00426,0.00173,0.00110,0.00026,0.00014,0.00002,0.00002]
-renske6yerr =[0.00262,0.00089,0.00037,0.00024,0.00008,0.00004,0.00002,0.00002]
-
-;z=7
-renske7x =[-0.07,0.15,0.38,0.61,0.84,1.08,1.32]
-renske7y =[0.01543,0.00761,0.00513,0.00224,0.00106,0.00031,0.00033]
-renske7yerr =[0.00473,0.00215,0.00149,0.00075,0.00044,0.00019,0.00018]
-
-
-
-; Plot
-  plot, x, y, /ylog,$
-        xstyle=1, xtitle = sfrname,$
-        ystyle=1, title=redshift,yrange=[0.00000001,0.01],$
-        ytitle = '!4U!3 /(Mpc!u-3!ndex!u-1!n)'
-        
-  oploterr,renske6x,renske6y/2,renske6yerr
-  
-;if (keyword_set(ps)) then begin
-    device, /close_file
-    set_plot,'x'
-;endif
-  
-
-  
-;print to file
-
-;openw,1,redshift+'_sfr_x.cat' ;open the file to write
-;printf,1,"# 1 x"
-;printf,1,x
-;close, 1 ;close file
-;
-;openw,2,redshift+'_sfr_y.cat'
-;printf,2,"# 1 y"
-;printf,2,y
-;close,2
-;  
-;
-
+if PS then device, /close_file
+if PS then set_plot,'x'
 
 ;------------------------------------------------------------------------------
-
-
-end

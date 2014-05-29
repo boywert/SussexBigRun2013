@@ -2,10 +2,9 @@
 ;
 ;  Script to read in L-galaxies snapshot data
 
-;@'/export/data/virgo/MR7/data/500_sam/Guo10_uv/snap_template.pro'
-@'/mnt/lustre/scratch/virgo/SAM_output/Hen12_uv/snap_template.pro'
+;@'/export/virgo/MillGas/WMAP7/data/500_sam/Guo10/snap_template.pro'
 ;@'~/millgas/data/500_sam/Guo10_sfh4/snap_template.pro'
-;@'~/millgas/data/500_sam/Hen12_sfh4/snap_template.pro'
+@'~/millgas/data/500_sam/Hen12_sfh4/snap_template.pro'
 ;
 ;-------------------------------------------------------------------------
 
@@ -13,22 +12,17 @@
 ;DirName =
 ;'/export/virgo/MillGas/WMAP7/data/500_sam/Guo10/snapdir_061/'
 ;DirName = '~/millgas/data/500_sam/Hen12_sfh4/snapdir_061/'
-;DirName ='/mnt/lustre/scratch/phys/sc558/output/'
-
-;DirName =  '/mnt/lustre/scratch/virgo/SAM_output/Hen12_uv/snapdir_009/'
-
-DirName =  '/mnt/lustre/scratch/phys/sc558/output/MR/snapdir_009/'
-
-FileName = 'SA_z10.94'
+DirName = '../output/'
+FileName = 'SA_z0.00'
 ModelName = DirName + FileName
-FirstFile = 1
+FirstFile = 511
 LastFile = 511
 
 ;-------------------------------------------------------------------------------
 
 ; read in data
 
-if n_elements(Galstruct) eq 0 then read_lgal,ModelName,Template,G $
+if n_elements(Galstruct) eq 0 then read_lgal,ModelName,Template,Galstruct $
          ,FileNr=FileNr,TreeNr=TreeNr,NGalsPerTree=NGalsPerTree $
          ,FirstFile=FirstFile,LastFile=LastFile ;,/swap_endian
 
