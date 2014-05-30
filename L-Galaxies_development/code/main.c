@@ -304,7 +304,7 @@ void SAM(int filenr)
         //used to allow parameter values to vary with redshift
     	  //re_set_parameters(snapnum);
 #endif
-    	  printf("doing snap=%d\n",snapnum);
+    	  //printf("doing snap=%d\n",snapnum);
     	  for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
     	  	if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
     	  		construct_galaxies(filenr, treenr, halonr);
