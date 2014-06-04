@@ -393,16 +393,18 @@ void read_output_snaps(void)
       printf("%d: output z = %f\n",i,ListOutputRedshifts[i]);
       //find the snapshot corresponding to the desired output redshift in ListOutputRedshifts[]
       for(j = 0; j < LastDarkMatterSnapShot+1; j++)
-    	  if(ListOutputRedshifts[i]>=ZZ[j])
-    	    {
-    		  if((ZZ[j-1]-ListOutputRedshifts[i])<(ListOutputRedshifts[i]-ZZ[j]) || ZZ[j]< 0.0)
-    	        ListOutputSnaps[i]=j-1;
-    		  else
-    		    ListOutputSnaps[i]=j;
-    		printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
-    		  break;
-    	    }
-
+	{
+	  if(ListOutputRedshifts[i]>=ZZ[j])
+	    {
+	      if((ZZ[j-1]-ListOutputRedshifts[i])<(ListOutputRedshifts[i]-ZZ[j]) || ZZ[j]< 0.0)
+		ListOutputSnaps[i]=j-1;
+	      else
+		ListOutputSnaps[i]=j;
+	      // printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
+	      break;
+	    }
+	  printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
+	}
       //define the LastSnapShotNr as the highest snapshot need to be computed
       if(LastSnapShotNr<ListOutputSnaps[i])
     	LastSnapShotNr=ListOutputSnaps[i];
