@@ -349,6 +349,8 @@ void subfind(int num)
 
   MaxNsubgroups = nlocid / All.DesLinkNgb;	/* this is a quite conservative upper limit */
   Nsubgroups = 0;
+  if(ThisTask==0) printf("MaxNsubgroups:%d\n",MaxNsubgroups);
+  exit(0);
   SubGroup =
     (struct subgroup_properties *) mymalloc("SubGroup", MaxNsubgroups * sizeof(struct subgroup_properties));
 
@@ -1828,7 +1830,7 @@ void subfind_save_local_catalogue(int num)
 	      break;
 	    case SIO_VMAX:
 	      for(i = 0; i < nwrite; i++)
-		fp[i] = (MyOutputFloat) SubGroup[i].SubVmax;
+		fp[i] = (MyOutputFloat)SubGroup[i ].SubVmax;
 	      break;
 	    case SIO_RVMAX:
 	      for(i = 0; i < nwrite; i++)
@@ -1926,7 +1928,6 @@ void subfind_save_local_catalogue(int num)
 
 	      for(i = 0; i < nwrite; i++)
 		{
-#define Boydchange
 #ifdef Boydchange
 		  ID_list[i].Mass = ID_list[i].BindingEgy;
 #endif

@@ -11,14 +11,14 @@ Msun2Gadget = 1e-10
 G = G * (m2km**2.) * (m2Mpc) / (kg2Msun * Msun2Gadget) # (Mpc/h) (km/s)^2 / (1e10Msun/h)
 print G
 #info
-boxsize = 500.0    # Mpc/h
-npart =  6912    # per dim
+boxsize = 47.0    # Mpc/h
+npart =  1728    # per dim
 omegam = 0.27
-omegab = 0.045
+omegab = 0.046
 pi = pylab.pi
 
 rho_crit_0 = 3.* H0**2 / (8.*pi*G)  # (1e10 Msun/h)/(Mpc/h)^3
 
 pmass = omegam*rho_crit_0*boxsize**3./npart**3.
 print "rho_crit = ",rho_crit_0
-print "pmass = ", pmass/Msun2Gadget
+print "pmass = ", pmass
