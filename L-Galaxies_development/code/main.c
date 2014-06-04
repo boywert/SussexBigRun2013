@@ -1,4 +1,4 @@
- #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -20,7 +20,6 @@
 #ifdef ALL_SKY_LIGHTCONE
 #include "lightcone.h"
 #endif
-
 
 /**@file main.c
  * @brief Controlling function of L-Galaxies plus SAM Construct Galaxies,
@@ -1186,6 +1185,12 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
    * @brief Check whether makefile options are compatible.
    */
   void check_options() {
+
+#ifndef SAVE_MEMORY
+    printf("SAVE_MEMORY must be activated.\n");
+    exit(32);
+#endif
+
 #ifdef OUTPUT_OBS_MAGS
 #ifndef COMPUTE_OBS_MAGS
     printf("> Error : option OUTPUT_OBS MAGS requires option COMPUTE_OBS_MAGS \n");
