@@ -397,10 +397,10 @@ void read_output_snaps(void)
 	  // if(ListOutputRedshifts[i]>=ZZ[j])
 	  if(fabs(ListOutputRedshifts[i] - ZZ[j]) < 0.01)
 	    {
-	      if((ZZ[j-1]-ListOutputRedshifts[i])<(ListOutputRedshifts[i]-ZZ[j]) || ZZ[j]< 0.0)
-		ListOutputSnaps[i]=j-1;
-	      else
-		ListOutputSnaps[i]=j;
+	      /* if((ZZ[j-1]-ListOutputRedshifts[i])<(ListOutputRedshifts[i]-ZZ[j]) || ZZ[j]< 0.0) */
+	      /* 	ListOutputSnaps[i]=j-1; */
+	      /* else */
+	      ListOutputSnaps[i]=j;
 	      // printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
 	      break;
 	    }
