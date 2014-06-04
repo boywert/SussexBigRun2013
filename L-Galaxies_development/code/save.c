@@ -56,7 +56,7 @@ void create_galaxy_files(int filenr)
     	TreeNgals[n][i] = 0;
 
       sprintf(buf, "%s/%s_z%1.2f_%d", OutputDir, FileNameGalaxies, ZZ[ListOutputSnaps[n]], filenr);
-      printf("Creating %s\n",buf);
+      printf("%d: Creating %s\n",n,buf);
 
       if(!(FdGalDumps[n] = fopen(buf, "w+")))
         {
