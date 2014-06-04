@@ -386,12 +386,11 @@ void read_output_snaps(void)
     {
       if(fscanf(fd, " %f ", &ListOutputRedshifts[i]) != 1)
         {
-	  printf("%d: output z = %f\n",i,ListOutputRedshifts[i]);
     	  char sbuf[1000];
     	  sprintf(sbuf, "I/O error in file '%s'\n", buf);
     	  terminate(sbuf);
         }
-
+      printf("%d: output z = %f\n",i,ListOutputRedshifts[i]);
       //find the snapshot corresponding to the desired output redshift in ListOutputRedshifts[]
       for(j = 0; j < LastDarkMatterSnapShot+1; j++)
     	  if(ListOutputRedshifts[i]>=ZZ[j])
