@@ -399,7 +399,7 @@ void read_output_snaps(void)
     	        ListOutputSnaps[i]=j-1;
     		  else
     		    ListOutputSnaps[i]=j;
-    		  //printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
+    		printf("outz=%f zz[%d]=%f snap=%d\n",ListOutputRedshifts[i], j-1, ZZ[j-1]);
     		  break;
     	    }
 
