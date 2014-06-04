@@ -386,7 +386,7 @@ void read_output_snaps(void)
     {
       if(fscanf(fd, " %f ", &ListOutputRedshifts[i]) != 1)
         {
-	  printf("%d: output z = %f\n",ListOutputRedshifts[i]);
+	  printf("%d: output z = %f\n",i,ListOutputRedshifts[i]);
     	  char sbuf[1000];
     	  sprintf(sbuf, "I/O error in file '%s'\n", buf);
     	  terminate(sbuf);
