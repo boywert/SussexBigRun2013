@@ -57,6 +57,7 @@ void create_galaxy_files(int filenr)
 
       sprintf(buf, "%s/%s_z%1.2f_%d", OutputDir, FileNameGalaxies, ZZ[ListOutputSnaps[n]], filenr);
       printf("Creating %s\n",buf);
+
       if(!(FdGalDumps[n] = fopen(buf, "w+")))
         {
     	  char sbuf[1000];
