@@ -18,7 +18,6 @@ void load_xfrac(int SnapNum)
   char buf[1024];
   int ncells=306;
   float redshift;
-  float *XfracData;
   char *XfracDir;
   XfracDir = "/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/";
   redshift = 6.0;
