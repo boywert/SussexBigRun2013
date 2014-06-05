@@ -1229,3 +1229,10 @@ extern FILE *FdGalDumps[NOUT];
 
 /*H2 fraction table*/
 extern double h2frac[LENSIGMAH][LENZ];
+
+
+#ifdef PATCHY_REIONIZATION
+extern double *XfracData[MAXSNAPS];
+extern char XfracDir[1024];
+extern int XfracMesh[3];
+#endif

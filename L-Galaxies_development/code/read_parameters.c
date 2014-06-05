@@ -58,10 +58,6 @@ void read_parameter_file(char *fname)
   strcpy(tag[nt], "XfracDir");
   addr[nt] = XfracDir;
   id[nt++] = STRING;
-
-  strcpy(tag[nt], "XfracCells");
-  addr[nt] = &XfracCells;
-  id[nt++] = INT;
 #endif
 
   strcpy(tag[nt], "FileWithOutputRedshifts");

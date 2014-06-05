@@ -418,3 +418,7 @@ void reset_ejection_rates(int i, int sfh_ibin,
 
 
 void print_galaxy(char string[], int p, int halonr);
+
+#ifdef PATCHY_REIONIZATION
+void load_xfrac();
+#endif
