@@ -842,7 +842,7 @@ struct GALAXY			/* Galaxy data */
 #endif //INDIVIDUAL_ELEMENTS
 
 #ifdef PATCHY_REIONIZATION
-  float xfrac3d;
+  float Xfrac3d;
 #endif
 } *Gal, *HaloGal;
 
