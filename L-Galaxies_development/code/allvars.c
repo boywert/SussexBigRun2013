@@ -298,6 +298,7 @@ FILE *FdGalDumps[NOUT];
 #ifdef PATCHY_REIONIZATION
 double *XfracData[MAXSNAPS];
 char XfracDir[1024];
+int XfracMesh[3];
 #endif
 
 
