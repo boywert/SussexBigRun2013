@@ -20,7 +20,8 @@ void load_xfrac(int SnapNum)
   float redshift;
   float *XfracData;
   char *XfracDir;
-  int i,j,k,cell;
+  int i,j,k,cellcd;
+  int mesh[3],dummy;
   XfracDir = "/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/";
   redshift = 6.0;
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir,redshift);
@@ -33,7 +34,14 @@ void load_xfrac(int SnapNum)
     }
   // XfracData = mymalloc("XfracData",sizeof(float)*ncells);
   XfracData = malloc(sizeof(float)*ncells*ncells*ncells);
+  fread(&dummy, 1, sizeof(int),fp);
+  fread(mesh, 3, sizeof(int),fp);
+  fread(&dummy, 1, sizeof(int),fp);
+
+  fread(&dummy, 1, sizeof(int),fp);
   fread(XfracData, ncells*ncells*ncells, sizeof(float),fp);
+  fread(&dummy, 1, sizeof(int),fp);
+
   for(i=0;i<ncells;i++)
     {
       for(j=0;j<ncells;j++)
