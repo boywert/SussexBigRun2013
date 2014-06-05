@@ -21,9 +21,9 @@ void load_xfrac()
   char buf[1024],buf2[1024];
   float redshift;
   char *XfracDir;
-  int i,j,k,cell;
+  int i,j,k,il,cell;
   int dummy;
-  for(int il=0;il<MAXSNAPS;il++)
+  for(il=0;il<MAXSNAPS;il++)
     {
       redshift = ZZ[il];
       sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir,redshift);
@@ -35,10 +35,10 @@ void load_xfrac()
 	}
  
       fread(&dummy, 1, sizeof(int),fp);
-      myfread(mesh, 3, sizeof(int),fp);
+      myfread(XfracMesh, 3, sizeof(int),fp);
       fread(&dummy, 1, sizeof(int),fp);
       sprintf(buf2,"XfracData[%d]",il);
-      XfracDatap[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+      XfracData[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
       fread(&dummy, 1, sizeof(int),fp);
       myfread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
       fread(&dummy, 1, sizeof(int),fp);
