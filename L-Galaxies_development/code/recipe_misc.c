@@ -193,7 +193,13 @@ void init_galaxy(int p, int halonr)
   Gal[p].HaloVelDisp = Halo[halonr].VelDisp;
   Gal[p].HaloVmax = Halo[halonr].Vmax;
 #endif
-
+#ifdef PATCHY_REIONIZATION
+  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
+    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1])*XfracMesh[0])
+    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2])*XfracMesh[0]*XfracMesh[1]);
+  Gal[ngal].Xfrac3d = XfracData[HaloGal[currentgal].SnapNum][cell];
+				    
+#endif
   for(j = 0; j < 3; j++)
     {
       Gal[p].Pos[j] = Halo[halonr].Pos[j];

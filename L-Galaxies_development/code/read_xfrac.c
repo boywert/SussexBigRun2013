@@ -64,7 +64,6 @@ void load_xfrac()
 	  XfracDataDone[il] = 1;
 	}
     }
-  free_xfrac();
 }
 
 void free_xfrac()

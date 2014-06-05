@@ -171,6 +171,10 @@ int main(int argc, char **argv)
       SAM(filenr); // run the model in NORMAL MODE
 #endif
 
+#ifdef PATCHY_REIONIZATION
+      free_xfrac();
+#endif
+
 #ifdef MCMC
       break;	//break loop on files since the MCMC is done on a single file
 #else
@@ -588,6 +592,15 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #ifdef GALAXYTREE
 		  Gal[ngal].FirstProgGal = HaloGal[currentgal].GalTreeIndex;	/* CHECK */
 #endif
+#ifdef PATCHY_REIONIZATION
+		  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
+		    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1])*XfracMesh[0])
+		    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2])*XfracMesh[0]*XfracMesh[1]);
+		  Gal[ngal].Xfrac3d = XfracData[HaloGal[currentgal].SnapNum][cell];
+				    
+#endif
+
+
 		  // To fail this check means that we copy in a failed galaxy
 		  mass_checks("Middle of join_galaxies_of_progenitors",ngal);
 
