@@ -30,12 +30,11 @@ void load_xfrac()
   for(il=0;il<MAXSNAPS;il++)
     {
       redshift = ZZ[il];
-      printf("%s\n",XfracDir);
       sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
       if(!(fp = fopen(buf,"r")))
 	{
 	  char sbuf[1000];
-	  sprintf(sbuf, "can't open file `%s'\n", buf);
+	  sprintf(sbuf, "can't open file `%s': SKIP\n", buf);
 	  XfracDataDone[il] = 0;
 	}
       else
@@ -49,17 +48,17 @@ void load_xfrac()
 	  myfread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
 
-	  for(i=0;i<XfracMesh[0];i++)
-	    {
-	      for(j=0;j<XfracMesh[1];j++)
-		{
-		  for(k=0;k<XfracMesh[2];k++)
-		    {
-		      cell = k*XfracMesh[0]*XfracMesh[1]+j*XfracMesh[0]+i;
-		      printf("%d: %lf\n",cell,XfracData[il][cell]);
-		    }
-		}
-	    }
+	  /* for(i=0;i<XfracMesh[0];i++) */
+	  /*   { */
+	  /*     for(j=0;j<XfracMesh[1];j++) */
+	  /* 	{ */
+	  /* 	  for(k=0;k<XfracMesh[2];k++) */
+	  /* 	    { */
+	  /* 	      cell = k*XfracMesh[0]*XfracMesh[1]+j*XfracMesh[0]+i; */
+	  /* 	      printf("%d: %lf\n",cell,XfracData[il][cell]); */
+	  /* 	    } */
+	  /* 	} */
+	  /*   } */
 	  fclose(fp);
 	  XfracDataDone[il] = 1;
 	}
