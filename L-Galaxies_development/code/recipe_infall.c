@@ -63,7 +63,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
       int cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
 	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-      printf("loonking for cell %d\n",cell);
+      // printf("loonking for cell %d\n",cell);
       reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]);
     }
 #endif
