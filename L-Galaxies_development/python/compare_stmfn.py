@@ -7,7 +7,12 @@ print okamoto_model
 pylab.rc('text', usetex=True)
 fig = pylab.figure()
 ax = fig.add_subplot(111)
-ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r-',label="Okamoto et al. (2008)")
+
+
+ax.plot(okamoto_model[0],okamoto_model[1],'r-',label="Okamoto et al. (2008)")
+
+
+
 ax.set_yscale("log")
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
