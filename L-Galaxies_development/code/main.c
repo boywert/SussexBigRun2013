@@ -594,8 +594,8 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #endif
 #ifdef PATCHY_REIONIZATION
 		  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
-		    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1])*XfracMesh[0])
-		    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2])*XfracMesh[0]*XfracMesh[1]);
+		    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
+		    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
 		  Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];
 				    
 #endif
