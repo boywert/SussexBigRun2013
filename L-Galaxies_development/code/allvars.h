@@ -1233,6 +1233,7 @@ extern double h2frac[LENSIGMAH][LENZ];
 
 #ifdef PATCHY_REIONIZATION
 extern double *XfracData[MAXSNAPS];
+extern int XfracDataDone[MAXSNAPS];
 extern char XfracDir[1024];
 extern int XfracMesh[3];
 #endif

@@ -36,32 +36,41 @@ void load_xfrac()
 	{
 	  char sbuf[1000];
 	  sprintf(sbuf, "can't open file `%s'\n", buf);
-	  terminate(sbuf);
+	  XfracDataDone[il] = 0;
 	}
- 
-      fread(&dummy, 1, sizeof(int),fp);
-      myfread(XfracMesh, 3, sizeof(int),fp);
-      fread(&dummy, 1, sizeof(int),fp);
-      sprintf(buf2,"XfracData[%d]",il);
-      XfracData[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
-      fread(&dummy, 1, sizeof(int),fp);
-      myfread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
-      fread(&dummy, 1, sizeof(int),fp);
-
-      for(i=0;i<XfracMesh[0];i++)
+      else
 	{
-	  for(j=0;j<XfracMesh[1];j++)
+	  fread(&dummy, 1, sizeof(int),fp);
+	  myfread(XfracMesh, 3, sizeof(int),fp);
+	  fread(&dummy, 1, sizeof(int),fp);
+	  sprintf(buf2,"XfracData[%d]",il);
+	  XfracData[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+	  fread(&dummy, 1, sizeof(int),fp);
+	  myfread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+	  fread(&dummy, 1, sizeof(int),fp);
+
+	  for(i=0;i<XfracMesh[0];i++)
 	    {
-	      for(k=0;k<XfracMesh[2];k++)
+	      for(j=0;j<XfracMesh[1];j++)
 		{
-		  cell = k*XfracMesh[0]*XfracMesh[1]+j*XfracMesh[0]+i;
-		  printf("%d: %lf\n",cell,XfracData[il][cell]);
+		  for(k=0;k<XfracMesh[2];k++)
+		    {
+		      cell = k*XfracMesh[0]*XfracMesh[1]+j*XfracMesh[0]+i;
+		      printf("%d: %lf\n",cell,XfracData[il][cell]);
+		    }
 		}
 	    }
+	  fclose(fp);
+	  XfracDataDone[il] = 1;
 	}
-    
-      myfree(XfracData[il]);
-      fclose(fp);
     }
 }
 
+void free_xfrac()
+{
+  int i;
+  for(i=0;i<MAXSNAPS;i++)
+    {
+      myfree(XfracData[i]);
+    }
+}
