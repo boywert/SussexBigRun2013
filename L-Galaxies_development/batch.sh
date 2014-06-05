@@ -47,12 +47,13 @@ inputfolder="inputs_47Mpc_full/"
 mkdir -p $inputfolder
 template="input/input_47mpc_template.par"
 exec=./L-Galaxies
-OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/"
+OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization/"
 SimulationDir="/mnt/lustre/scratch/cs390/47Mpc/"
 XfracDir="/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/"
-ReionizationOn=1
+ReionizationOn=3
 z0=50.0
 zr=50.0
+maxmemsize=31200
 mkdir -p $OutputDir
 mkdir -p $inputfolder
 filename="${inputfolder}/input_nr_${i}"
@@ -66,6 +67,7 @@ echo "ReionizationOn" $ReionizationOn >> $filename
 echo "Reionization_z0" $z0 >> $filename
 echo "Reionization_zr" $zr >> $filename
 echo "XfracDir" $XfracDir >> $filename
+echo "MaxMemSize" $maxmemsize >> $filename
 cat $template >> $filename
 
 if [ $i -eq 0 ]
