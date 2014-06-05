@@ -20,7 +20,6 @@ void load_xfrac()
   FILE* fp;
   char buf[1024],buf2[1024];
   float redshift;
-  char *XfracDir;
   int i,j,k,il,cell;
   int dummy;
  
