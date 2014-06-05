@@ -21,12 +21,27 @@ void load_xfrac()
   char buf[1024],buf2[1024];
   float redshift;
   int i,j,k,il,cell;
-  int dummy;
+  int dummy,mesh[3];
  
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data\n\n");
     }
+
+  /* Read mesh from LastSnap */
+  redshift = ZZ[MAXSNAPS-1];
+  sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
+  if((fp = fopen(buf,"r")) == NULL)
+    {
+      char sbuf[1000];
+      printf("can't open file `%s'\n", buf);
+      terminate(sbuf);
+    }
+  fread(&dummy, 1, sizeof(int),fp);
+  myfread(XfracMesh, 3, sizeof(int),fp);
+  fread(&dummy, 1, sizeof(int),fp);
+  fclose(fp);
+
   for(il=0;il<MAXSNAPS;il++)
     {
       redshift = ZZ[il];
@@ -35,16 +50,17 @@ void load_xfrac()
 	{
 	  char sbuf[1000];
 	  printf("can't open file `%s': SKIP\n", buf);
-	  XfracDataDone[il] = 0;
+	  XfracDataDone[il] = 1;
+	  XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
 	}
       else
 	{
 	  fread(&dummy, 1, sizeof(int),fp);
-	  myfread(XfracMesh, 3, sizeof(int),fp);
+	  fread(&mesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
 	  printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
 	  sprintf(buf2,"XfracData[il]",il);
-	  XfracData[il] = malloc(sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+	  XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 	  fread(&dummy, 1, sizeof(int),fp);
 	  fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
