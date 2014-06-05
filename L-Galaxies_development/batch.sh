@@ -17,13 +17,11 @@
 #newgrp fs-virgo
 # Created files will have rw permission for the group and r for the world
 umask 002
-mkdir -p logs
-rm -f logs/*
 # Set pathnames below relative to the current working directory
 #$ -cwd
 # Say which queue you want to submit to
 #$ -q mps.q
-#$ -l vf=32G
+#$ -l vf=42G
 # Define a task farm of jobs
 #$ -t 1-128
 # Limit to 20 concurrent jobs
@@ -31,7 +29,7 @@ rm -f logs/*
 # Join standard error to standard out
 #$ -j y
 # Give the job a name
-#$ -N Lgalaxy_nore
+#$ -N Lgalaxy_patchy
 # Name and location of the output file
 # SGE will only substitute certain variables here
 #$ -o logs/$JOB_NAME_$TASK_ID.log
@@ -53,7 +51,7 @@ XfracDir="/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/"
 ReionizationOn=3
 z0=50.0
 zr=50.0
-maxmemsize=31200
+maxmemsize=40000
 mkdir -p $OutputDir
 mkdir -p $inputfolder
 filename="${inputfolder}/input_nr_${i}"
