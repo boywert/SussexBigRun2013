@@ -57,6 +57,15 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
    * amount of infalling gas. */
   if(ReionizationOn == 0)
     reionization_modifier = 1.0;
+#ifdef PATCHY_REIONIZATION
+  else if(ReionizationOn == 3)
+    {
+      int cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
+	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
+	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
+      reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]);
+    }
+#endif
   else
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
 
