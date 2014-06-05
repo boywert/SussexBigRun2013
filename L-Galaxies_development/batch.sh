@@ -21,11 +21,12 @@ mkdir -p logs
 # Set pathnames below relative to the current working directory
 #$ -cwd
 # Say which queue you want to submit to
-#$ -q mps_amd.q
+#$ -q mps.q
+#$ -l vf=32G
 # Define a task farm of jobs
 #$ -t 1-128
 # Limit to 20 concurrent jobs
-#$ -tc 20
+#$ -tc 128
 # Join standard error to standard out
 #$ -j y
 # Give the job a name
