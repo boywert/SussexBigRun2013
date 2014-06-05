@@ -20,7 +20,7 @@ void load_xfrac(int SnapNum)
   float redshift;
   float *XfracData;
   char *XfracDir;
-  int i,j,k,cellcd;
+  int i,j,k,cell;
   int mesh[3],dummy;
   XfracDir = "/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/";
   redshift = 6.0;
