@@ -49,6 +49,7 @@ template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/"
 SimulationDir="/mnt/lustre/scratch/cs390/47Mpc/"
+XfracDir="/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/"
 ReionizationOn=1
 z0=50.0
 zr=50.0
@@ -64,7 +65,7 @@ echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
 echo "Reionization_z0" $z0 >> $filename
 echo "Reionization_zr" $zr >> $filename
-
+echo "XfracDir" $XfracDir >> $filename
 cat $template >> $filename
 
 if [ $i -eq 0 ]
