@@ -39,7 +39,6 @@ void load_xfrac()
 	}
       else
 	{
-	  printf("Reading %s\n",buf);
 	  fread(&dummy, 1, sizeof(int),fp);
 	  myfread(XfracMesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
@@ -47,7 +46,7 @@ void load_xfrac()
 	  sprintf(buf2,"XfracData[%d]",il);
 	  XfracData[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 	  fread(&dummy, 1, sizeof(int),fp);
-	  myfread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+	  fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
 
 	  /* for(i=0;i<XfracMesh[0];i++) */
