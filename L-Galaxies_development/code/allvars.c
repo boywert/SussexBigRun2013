@@ -295,5 +295,10 @@ FILE *FdGalTreeSFH;
 FILE *FdGalDumps[NOUT];
 
 
+#ifdef PATCHY_REIONIZATION
+double *XfracData[MAXSNAPS];
+char XfracDir[1024];
+#endif
+
 
 
