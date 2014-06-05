@@ -39,6 +39,7 @@ void load_xfrac()
 	}
       else
 	{
+	  printf("Reading %s\n",buf);
 	  fread(&dummy, 1, sizeof(int),fp);
 	  myfread(XfracMesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
