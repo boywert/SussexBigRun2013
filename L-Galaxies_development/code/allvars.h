@@ -50,6 +50,11 @@
 #define  MAXSNAPS  64
 #endif
 
+#ifdef CUSTOM_MAXSNAPS
+#undef MAXSNAPS
+#define MAXSNAPS CUSTOM_MAXSNAPS
+#endif
+
 #define  MAXGALFAC 2.3 /*1.5/2.3 - maximum fraction of satellite without a halo (for memory allocation)*/
 
 #define  STEPS 20		/* Number of integration intervals between two snapshots */
