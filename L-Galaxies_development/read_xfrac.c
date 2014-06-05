@@ -23,7 +23,7 @@ void load_xfrac(int SnapNum)
   int i,j,k,cell;
   int mesh[3],dummy;
   XfracDir = "/research/prace/47Mpc_RT/47Mpc_f2_0_306/results/";
-  redshift = 6.0;
+  redshift = 18.186;
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir,redshift);
   if(!(fp = fopen(buf,"r")))
     {
