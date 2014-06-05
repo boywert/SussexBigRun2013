@@ -121,10 +121,6 @@ void load_tree_table(int filenr)
   myfseek(tree_file, sizeof(int) * (2 + Ntrees), SEEK_SET);
   myfread(Halo_Data, totNHalos, sizeof(struct halo_data), tree_file);
 
-  if(ReionizationOn == 3)
-    {
-      
-    }
 #ifdef PARALLEL
   printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
 #endif

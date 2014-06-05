@@ -50,7 +50,7 @@ exec=./L-Galaxies
 OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/"
 SimulationDir="/mnt/lustre/scratch/cs390/47Mpc/"
 ReionizationOn=1
-z0=100.0
+z0=50.0
 zr=50.0
 mkdir -p $OutputDir
 mkdir -p $inputfolder

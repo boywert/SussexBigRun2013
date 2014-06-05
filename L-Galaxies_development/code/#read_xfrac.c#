@@ -14,8 +14,23 @@
     @brief Read in inonization fraction from C2Ray  
 */
 
-void read_xfrac(float redshift)
+void load_xfrac(int SnapNum)
 {
   FILE* fp;
+  char buf[1024];
+  int ncells;
+  float redshift;
+  redshift = ZZ[SnapNum];
+  sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir,redshift);
+  if(!(fp = fopen(buf,"r")))
+    {
+      char sbuf[1000];
+      sprintf(sbuf, "can't open file `%s'\n", buf);
+      terminate(sbuf);
+    }
+  XfracData = mymalloc("XfracData",sizeof(float)*ncells);
+  myfread(XfracData, ncells, sizeof(float),fp);
   
+  myfree(XfracData);
+  fclose(fp);
 }

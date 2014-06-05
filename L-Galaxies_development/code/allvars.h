@@ -835,6 +835,10 @@ struct GALAXY			/* Galaxy data */
   struct elements ICM_elements;
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
+
+#ifdef PATCHY_REIONIZATION
+  float xfrac3d;
+#endif
 } *Gal, *HaloGal;
 
 
