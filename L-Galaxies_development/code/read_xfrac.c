@@ -31,10 +31,10 @@ void load_xfrac()
     {
       redshift = ZZ[il];
       sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-      if(!(fp = fopen(buf,"r")))
+      if((fp = fopen(buf,"r")) == NULL)
 	{
 	  char sbuf[1000];
-	  sprintf(sbuf, "can't open file `%s': SKIP\n", buf);
+	  printf("can't open file `%s': SKIP\n", buf);
 	  XfracDataDone[il] = 0;
 	}
       else
@@ -42,6 +42,7 @@ void load_xfrac()
 	  fread(&dummy, 1, sizeof(int),fp);
 	  myfread(XfracMesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
+	  printf("Mesh: %d %d %d\n",XfracMesh[0],XfracMesh[1],XfracMesh[2])
 	  sprintf(buf2,"XfracData[%d]",il);
 	  XfracData[il] = mymalloc(buf2,sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 	  fread(&dummy, 1, sizeof(int),fp);
