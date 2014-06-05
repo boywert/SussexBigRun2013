@@ -15,7 +15,7 @@ def stellar_mass_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1
 
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
     massf = gadget2msun*gal['DiskMass']+gadget2msun*gal['BulgeMass']
-    stellarmass = numpy.histogram(numpy.log10(mass),nbins,(numpy.log10(mass_min),numpy.log10(mass_max)))
+    stellarmass = numpy.histogram(numpy.log10(massf),nbins,(numpy.log10(mass_min),numpy.log10(mass_max)))
     massftn_y = stellarmass[0]
     massftn_x = []
     for i in range(len(stellarmass[0])):
