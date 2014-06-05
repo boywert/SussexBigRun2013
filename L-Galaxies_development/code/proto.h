@@ -421,4 +421,5 @@ void print_galaxy(char string[], int p, int halonr);
 
 #ifdef PATCHY_REIONIZATION
 void load_xfrac();
+void free_xfrac();
 #endif
