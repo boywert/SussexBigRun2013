@@ -49,7 +49,7 @@ void load_xfrac(int SnapNum)
 	  for(k=0;k<ncells;k++)
 	    {
 	      cell = k*ncells*ncells+j*ncells+i;
-	      printf("%d: %f\n",cell,XfracData[cell]);
+	      printf("%d: %lf\n",cell,XfracData[cell]);
 	    }
 	}
     }
