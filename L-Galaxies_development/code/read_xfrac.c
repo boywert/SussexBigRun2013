@@ -23,10 +23,16 @@ void load_xfrac()
   char *XfracDir;
   int i,j,k,il,cell;
   int dummy;
+ 
+  if(ThisTask == 0)
+    {
+      printf("Reading Xfrac data\n\n");
+    }
   for(il=0;il<MAXSNAPS;il++)
     {
       redshift = ZZ[il];
-      sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir,redshift);
+      printf("%s\n",XfracDir);
+      sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
       if(!(fp = fopen(buf,"r")))
 	{
 	  char sbuf[1000];
