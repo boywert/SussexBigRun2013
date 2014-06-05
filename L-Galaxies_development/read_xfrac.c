@@ -36,3 +36,7 @@ void load_xfrac(int SnapNum)
   free(XfracData);
   fclose(fp);
 }
+in main()
+{
+  load_xfrac(10);
+}
