@@ -43,14 +43,15 @@ echo Running on file $i
 
 # Run jobs
 
-inputfolder="inputs_47Mpc/"
+inputfolder="inputs_47Mpc_full/"
 mkdir -p $inputfolder
 template="input/input_47mpc_template.par"
 exec=./L-Galaxies
-OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/"
+OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/"
 SimulationDir="/mnt/lustre/scratch/cs390/47Mpc/"
-ReionizationOn=0
-
+ReionizationOn=1
+z0=100.0
+zr=50.0
 mkdir -p $OutputDir
 mkdir -p $inputfolder
 filename="${inputfolder}/input_nr_${i}"
@@ -61,6 +62,9 @@ echo "LastFile" $i >> $filename
 echo "OutputDir" $OutputDir >> $filename
 echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
+echo "Reionization_z0" $z0 >> $filename
+echo "Reionization_zr" $zr >> $filename
+
 cat $template >> $filename
 
 if [ $i -eq 0 ]
