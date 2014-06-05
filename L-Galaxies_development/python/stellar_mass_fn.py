@@ -8,7 +8,7 @@ def stellar_mass_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1
     hubble_h = 0.7
 
     firstfile = 0
-    lastfile = 128
+    lastfile = 127
     filter = LGalaxyStruct.properties_used
     filter['DiskMass'] = True
     filter['BulgeMass'] = True
