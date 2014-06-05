@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include "allvars.h"
+#include "proto.h"
+
+/*  @file read_xfrac.c
+    @brief Read in inonization fraction from C2Ray  
+*/
+
+void read_xfrac(float redshift)
+{
+  FILE* fp;
+  
+}
