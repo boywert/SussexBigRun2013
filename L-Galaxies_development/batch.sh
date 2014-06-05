@@ -18,6 +18,7 @@
 # Created files will have rw permission for the group and r for the world
 umask 002
 mkdir -p logs
+rm -f logs/*
 # Set pathnames below relative to the current working directory
 #$ -cwd
 # Say which queue you want to submit to
@@ -44,7 +45,7 @@ echo Running on file $i
 
 inputfolder="inputs_47Mpc/"
 mkdir -p $inputfolder
-template="input/input_47Mpc_template.par"
+template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/"
 SimulationDir="/mnt/lustre/scratch/cs390/47Mpc/"
