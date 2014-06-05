@@ -153,6 +153,10 @@ int main(int argc, char **argv)
 
       load_tree_table(filenr);
 
+#ifdef PATCHY_REIONIZATION
+      load_xfrac();
+#endif
+
 #ifdef MCMC
 #ifdef PARALLEL
       time_t start, start2;
