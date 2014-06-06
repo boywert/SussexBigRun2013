@@ -3,6 +3,7 @@ import read_lgal
 import LGalaxyStruct
 
 def stellar_mass_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1.e20,nbins=20):
+    print "reading "+folder
     gadget2msun=10.e10
     boxsize = 47.0
     hubble_h = 0.7
