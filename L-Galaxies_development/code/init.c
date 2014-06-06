@@ -143,7 +143,7 @@ void init(void)
   read_sfrz();
 #endif
 
-  if(ReionizationOn == 2) 
+  if(ReionizationOn == 2 || ReionizationOn == 3)  
     read_reionization();
 
 
