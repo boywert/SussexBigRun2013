@@ -66,7 +66,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
       reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]) 
 	+ XfracData[Gal[centralgal].SnapNum][cell]*do_reionization(Gal[centralgal].Mvir, Zcurr);
-      printf("modifier = %lf: xfrac = %lf\n",reionization_modifier,XfracData[Gal[centralgal].SnapNum][cell]);
+      // printf("modifier = %lf: xfrac = %lf\n",reionization_modifier,XfracData[Gal[centralgal].SnapNum][cell]);
     }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
