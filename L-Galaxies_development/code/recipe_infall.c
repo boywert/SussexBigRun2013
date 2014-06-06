@@ -82,6 +82,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   //else
   //	new_fb=BaryonFrac;
 
+
   /*if(Gal[centralgal].Mvir>50.)
    	new_fb=0.15*pow(Gal[centralgal].Mvir/(3.0e+4),0.15);
   else
