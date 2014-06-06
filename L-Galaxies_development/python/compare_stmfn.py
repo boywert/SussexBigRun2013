@@ -6,7 +6,7 @@ okamoto_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto
 noreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/","SA_z6.00",ff,lf,1.e3,1.e12,50)
 fullreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/","SA_z6.00",ff,lf,1.e3,1.e12,50)
 patchyreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization/","SA_z6.00",ff,lf,1.e3,1.e12,50)
-print okamoto_model
+print patchyreionization_model
 pylab.rc('text', usetex=True)
 fig = pylab.figure()
 ax = fig.add_subplot(111)
