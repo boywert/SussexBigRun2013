@@ -21,7 +21,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   int i;
   double tot_mass, reionization_modifier, infallingMass;
   double dis;
-  printf("calculate infall");
+  printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
   /*  need to add up all the baryonic mass asociated with the full halo to check
    *  what baryonic fraction is missing/in excess. That will give the mass of gas
    *  that need to be added/subtracted to the hot phase, gas that infalled.*/
