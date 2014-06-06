@@ -21,7 +21,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   int i;
   double tot_mass, reionization_modifier, infallingMass;
   double dis;
-  printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
+  int cell;
+  // printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
   /*  need to add up all the baryonic mass asociated with the full halo to check
    *  what baryonic fraction is missing/in excess. That will give the mass of gas
    *  that need to be added/subtracted to the hot phase, gas that infalled.*/
@@ -60,12 +61,12 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 #ifdef PATCHY_REIONIZATION
   else if(ReionizationOn == 3)
     {
-      int cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
+      cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
 	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
       reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]) 
 	+ XfracData[Gal[centralgal].SnapNum][cell]*do_reionization(Gal[centralgal].Mvir, Zcurr);
-      printf("modifier = %lf\n",reionization_modifier);
+      printf("modifier = %lf: xfrac = %lf\n",reionization_modifier,XfracData[Gal[centralgal].SnapNum][cell]);
     }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
