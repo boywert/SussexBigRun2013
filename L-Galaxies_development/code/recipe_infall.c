@@ -63,11 +63,12 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
       int cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
 	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-      reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]) + 
-	XfracData[Gal[centralgal].SnapNum][cell]*do_reionization(Gal[centralgal].Mvir, Zcurr);
+      reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]) 
+	+ XfracData[Gal[centralgal].SnapNum][cell]*do_reionization(Gal[centralgal].Mvir, Zcurr);
+      printf("modifier = %lf\n",reionization_modifier);
     }
 #endif
-  else
+  else if(ReionizationOn == 1 || ReionizationOn == 2) 
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
 
   infallingMass = reionization_modifier * BaryonFrac * Gal[centralgal].Mvir - tot_mass;
