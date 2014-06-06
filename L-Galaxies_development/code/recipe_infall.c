@@ -63,8 +63,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
       int cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
 	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-      // printf("loonking for cell %d\n",cell);
-      reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]);
+      reionization_modifier = (1.0-XfracData[Gal[centralgal].SnapNum][cell]) + 
+	XfracData[Gal[centralgal].SnapNum][cell]*do_reionization(Gal[centralgal].Mvir, Zcurr);
     }
 #endif
   else
@@ -165,7 +165,7 @@ double do_reionization(float Mvir, double Zcurr)
     mass_to_use = max(Mfiltering, Mchar);
     modifier = 1.0 / pow3(1.0 + 0.26 * (mass_to_use / Mvir));
   }
-  else if (ReionizationOn ==2) {
+  else if (ReionizationOn==2 || ReionizationOn==3) {
     /* reionization recipie described in Gnedin (2000), with the fitting
      * from Okamoto et al. 2008 -> Qi(2010)*/
 
