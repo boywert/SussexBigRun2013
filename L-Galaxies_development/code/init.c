@@ -490,6 +490,7 @@ void set_units(void)
   G = GRAVITY / pow3(UnitLength_in_cm) * UnitMass_in_g * pow2(UnitTime_in_s);//43.00708
 
   printf("G = %f\n", (float)G);
+  printf("GRAVITY = %f\n",(float)GRAVITY);
   exit(0);
 
   //converts g.cm^-3 into internal units (1e10Msun Mpc^-3)
