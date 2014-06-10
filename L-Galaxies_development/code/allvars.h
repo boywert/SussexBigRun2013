@@ -1110,6 +1110,8 @@ extern double
 	Hubble,
 	a0, ar;
 
+extern double k_Boltzmann;
+
 extern int ListOutputSnaps[NOUT];
 extern float ListOutputRedshifts[NOUT];
 

@@ -206,6 +206,7 @@ double UnitLength_in_cm,
   G,
   Hubble,
   a0, ar;
+double k_Boltzmann;
 
 int ListOutputSnaps[NOUT];
 float ListOutputRedshifts[NOUT];
