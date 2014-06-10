@@ -3,7 +3,7 @@ import pylab
 import sys
 ff = 0
 lf = 127
-prefix="SA_z8.05"
+prefix="SA_z8.06"
 okamoto_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
 noreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
 #fullreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/full_reionization/","SA_z6.00",ff,lf,1.e3,1.e12,50)
