@@ -489,10 +489,8 @@ void set_units(void)
   //gravity in internal units
   G = GRAVITY / pow3(UnitLength_in_cm) * UnitMass_in_g * pow2(UnitTime_in_s);//43.00708
 
-  printf("G = %f\n", (float)G);
-  double GG = GRAVITY*1.0;
-  printf("GRAVITY = %f\n",(float)GG);
-  exit(0);
+  k_Boltzmann = BOLTZMANN;
+  printf("k= %lf\n",k_Boltzmann);
 
   //converts g.cm^-3 into internal units (1e10Msun Mpc^-3)
   UnitDensity_in_cgs = UnitMass_in_g / pow3(UnitLength_in_cm);//6.769898e-31
