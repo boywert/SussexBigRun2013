@@ -485,11 +485,12 @@ void set_units(void)
   UnitTime_in_Megayears = UnitTime_in_s / SEC_PER_MEGAYEAR;
   UnitTime_in_years = 1e6*UnitTime_in_Megayears;
 
-  double boyd_G=GRAVITY;
-  printf("G=%lf,H=%f\n",boyd_G,1.*HUBBLE);
-  exit(0);
+
   //gravity in internal units
   G = GRAVITY / pow3(UnitLength_in_cm) * UnitMass_in_g * pow2(UnitTime_in_s);//43.00708
+
+  printf("G = %f\n", (float)G);
+  exit(0);
 
   //converts g.cm^-3 into internal units (1e10Msun Mpc^-3)
   UnitDensity_in_cgs = UnitMass_in_g / pow3(UnitLength_in_cm);//6.769898e-31
