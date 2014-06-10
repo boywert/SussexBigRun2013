@@ -79,7 +79,6 @@
 #define  CM_PER_MPC  3.085678e24 // TODO this is read in from input.par
 #define  PROTONMASS  1.6726e-24
 #define  HUBBLE      3.2407789e-18   /* in h/sec */
-#define  HUBBLE_s    3.2407789e-18   /* in h/sec */
 //To understand the units in the code read through set_units in init.c!!!
 #define  SEC_PER_MEGAYEAR   3.155e13
 #define  SEC_PER_YEAR       3.155e7
