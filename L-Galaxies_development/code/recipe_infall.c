@@ -23,6 +23,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   double dis;
   int cell;
   double mu,m_p,Tk;
+  mu = 0.59;
+  m_p = 1.67262178e-24; // grams
   // printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
   /*  need to add up all the baryonic mass asociated with the full halo to check
    *  what baryonic fraction is missing/in excess. That will give the mass of gas
@@ -80,11 +82,9 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
       if(XfracData[Gal[centralgal].SnapNum][cell] > 0.5)
 	{
-	  mu = 0.59;
-	  m_p = 1.67262178e-24; // grams
-	  Tk = 0.5*mu*m_p/BOLTZMANN*pow(0.5*200.*Omega,1./3.)
+	  Tk = 0.5*mu*m_p/BOLTZMANN*(double)pow(0.5*200.*Omega,1./3.)
 	    *(1.+ZZ[Gal[centralgal].SnapNum])
-	    *pow(GRAVITY*HUBBLE_s*Gal[centralgal].CentralMvir*UnitMass_in_g,2./3.);
+	    *(double)pow(GRAVITY*HUBBLE_s*Gal[centralgal].CentralMvir*UnitMass_in_g,2./3.);
 	  printf("T=%lf\n",Tk);
 	  if(Tk < 10000.)
 	    reionization_modifier = 0.;
