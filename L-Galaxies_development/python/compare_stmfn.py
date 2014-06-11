@@ -22,7 +22,7 @@ cold_noreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/out
 cold_patchyreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
 cold_patchyreionization_model_II = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
 
-print patchyreionization_model
+
 pylab.rc('text', usetex=True)
 fig = pylab.figure()
 ax = fig.add_subplot(111)
