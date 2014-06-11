@@ -373,7 +373,9 @@ struct GALAXY_OUTPUT
  // long long FirstHaloInFOFgroup;
 #endif
 #ifdef HALOPROPERTIES
-  float HaloM_Mean200, HaloM_Crit200, HaloM_TopHat;
+  float HaloM_Mean200;
+  float HaloM_Crit200;
+  float HaloM_TopHat;
   float HaloPos[3];
   float HaloVel[3];
   float HaloVelDisp;
