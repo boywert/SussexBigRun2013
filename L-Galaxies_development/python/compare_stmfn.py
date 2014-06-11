@@ -13,7 +13,7 @@ star_patchyreionization_model_II = stellar_mass_fn("/mnt/lustre/scratch/cs390/47
 
 hot_okamoto_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
 hot_noreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
-hot_patchyreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I",prefix,ff,lf,1.e3,1.e12,50)
+hot_patchyreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
 hot_patchyreionization_model_II = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
 
 
