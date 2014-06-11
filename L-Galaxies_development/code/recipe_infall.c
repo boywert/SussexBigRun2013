@@ -85,7 +85,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	  Tk = 0.5*mu*m_p/BOLTZMANN*(double)pow(0.5*200.*Omega,1./3.)
 	    *(1.+ZZ[Gal[centralgal].SnapNum])
 	    *(double)pow(GRAVITY*HUBBLE*Gal[centralgal].HaloM_Crit200*UnitMass_in_g,2./3.);
-	  printf("T=%lg,Mvir=%lg\n",Tk,Gal[centralgal].HaloM_Crit200);
+	  // printf("T=%lg,Mvir=%lg\n",Tk,Gal[centralgal].HaloM_Crit200);
 	  if(Tk < 10000.)
 	    reionization_modifier = 0.;
 	  else
