@@ -1,4 +1,5 @@
 from gas_mass_fn import *
+from stellar_mass_fn import *
 import pylab
 import sys
 ff = 10
