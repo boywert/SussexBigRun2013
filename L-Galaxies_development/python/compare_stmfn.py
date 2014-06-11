@@ -38,7 +38,7 @@ leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-pylab.show()
+#pylab.show()
 pylab.savefig('reion_star_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
 
 fig = pylab.figure()
@@ -54,7 +54,7 @@ leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Hot Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-pylab.show()
+#pylab.show()
 pylab.savefig('reion_hotgas_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
 
 
@@ -68,5 +68,6 @@ ax.plot(cold_patchyreionization_model_II[0],cold_patchyreionization_model_II[1],
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-pylab.show()
+
 pylab.savefig('reion_coldgas_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
+pylab.show()
