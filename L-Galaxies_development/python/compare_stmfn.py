@@ -70,4 +70,4 @@ ax.set_ylabel(r"$N$")
 fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 
 pylab.savefig('reion_coldgas_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
-pylab.show()
+#pylab.show()
