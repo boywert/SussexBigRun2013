@@ -24,7 +24,7 @@ umask 002
 #$ -pe openmpi 1
 #$ -l vf=41G
 # Define a task farm of jobs
-#$ -t 10-10
+#$ -t 1-128
 # Limit to 20 concurrent jobs
 #$ -tc 128
 # Join standard error to standard out
@@ -205,5 +205,5 @@ then
 fi
 
 
-$exec $filename
+#$exec $filename
 
