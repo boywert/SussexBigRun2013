@@ -54,7 +54,7 @@ def coldgas_mass_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     return (massftn_x,massftn_y)
 
-def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.,mass_max=5.,nbins=50):
+def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.000001,mass_max=1.,nbins=50):
     print "reading "+folder
     gadget2msun=10.e10
     boxsize = 47.0
@@ -63,8 +63,8 @@ def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.,mass_max=5.,nbins=5
     filter['Sfr'] = True
 
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
-    massf = gal['Sfr']
-    stellarmass = numpy.histogram(massf,nbins,(mass_min,mass_max))
+    massf = pylab.log10(gal['Sfr'])
+    stellarmass = numpy.histogram(massf,nbins,(pylab.log10(mass_min),pylab.log10(mass_max)))
     massftn_y = stellarmass[0]
     massftn_x = []
     for i in range(len(stellarmass[0])):
