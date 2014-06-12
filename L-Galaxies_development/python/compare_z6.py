@@ -64,7 +64,7 @@ ax.plot(hot_okamoto_model[0],hot_okamoto_model[1],'r--',label="Okamoto et al. (2
 ax.plot(hot_noreionization_model[0],hot_noreionization_model[1],'b--',label="No Reionization")
 ax.plot(hot_patchyreionization_model[0],hot_patchyreionization_model[1],'m--',label="Patchy Reionization")
 ax.plot(hot_patchyreionization_model_II[0],hot_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-ax.plot(hot_patchyreionization_model_III[0],hot_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
+#ax.plot(hot_patchyreionization_model_III[0],hot_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
 ax.set_yscale("log")
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
