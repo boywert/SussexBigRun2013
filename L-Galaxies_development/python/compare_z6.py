@@ -87,7 +87,7 @@ ax.plot(bh_okamoto_model[0],bh_okamoto_model[1],'r--',label="Okamoto et al. (200
 ax.plot(bh_noreionization_model[0],bh_noreionization_model[1],'b--',label="No Reionization")
 ax.plot(bh_patchyreionization_model[0],bh_patchyreionization_model[1],'m--',label="Patchy Reionization")
 ax.plot(bh_patchyreionization_model_II[0],bh_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-ax.set_yscale("log")
+#ax.set_yscale("log")
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
