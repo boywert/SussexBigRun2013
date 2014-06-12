@@ -54,7 +54,7 @@ def coldgas_mass_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
     return (massftn_x,massftn_y)
 
-def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=1.e10,nbins=50):
+def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=1.,mass_max=100.,nbins=50):
     print "reading "+folder
     gadget2msun=10.e10
     boxsize = 47.0
