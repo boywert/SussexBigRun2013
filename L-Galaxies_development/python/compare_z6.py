@@ -21,6 +21,10 @@ cold_noreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/out
 cold_patchyreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
 cold_patchyreionization_model_II = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
 
+sfr_okamoto_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf)
+sfr_noreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf)
+sfr_patchyreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf)
+sfr_patchyreionization_model_II = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf)
 
 pylab.rc('text', usetex=True)
 
@@ -38,7 +42,7 @@ ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 #pylab.show()
-pylab.savefig('reion_star_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
+pylab.savefig('reion_star_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 fig = pylab.figure()
 ax = fig.add_subplot(111)
@@ -54,7 +58,7 @@ ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Hot Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 #pylab.show()
-pylab.savefig('reion_hotgas_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
+pylab.savefig('reion_hotgas_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 
 fig = pylab.figure()
@@ -70,5 +74,21 @@ ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 
-pylab.savefig('reion_coldgas_'+str(ff)+''+str(lf)+'.pdf',bbox_inches='tight')
+pylab.savefig('reion_coldgas_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+
+
+fig = pylab.figure()
+ax = fig.add_subplot(111)
+ax.plot(sfr_okamoto_model[0],sfr_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
+ax.plot(sfr_noreionization_model[0],sfr_noreionization_model[1],'b--',label="No Reionization")
+ax.plot(sfr_patchyreionization_model[0],sfr_patchyreionization_model[1],'m--',label="Patchy Reionization")
+ax.plot(sfr_patchyreionization_model_II[0],sfr_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
+ax.set_yscale("log")
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
+ax.set_xlabel(r"SFR")
+ax.set_ylabel(r"$N$")
+fig.suptitle("SFR z = 6 file "+str(ff)+"-"+str(lf))
+
+pylab.savefig('reion_sfr_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 #pylab.show()
