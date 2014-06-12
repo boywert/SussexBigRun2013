@@ -1,8 +1,8 @@
 from mass_fn import *
 import pylab
 import sys
-ff = 10
-lf = 10
+ff = 9
+lf = 9
 prefix="SA_z6.00"
 star_okamoto_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
 star_noreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
