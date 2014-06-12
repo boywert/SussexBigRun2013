@@ -84,6 +84,7 @@ ax.plot(sfr_noreionization_model[0],sfr_noreionization_model[1],'b--',label="No 
 ax.plot(sfr_patchyreionization_model[0],sfr_patchyreionization_model[1],'m--',label="Patchy Reionization")
 ax.plot(sfr_patchyreionization_model_II[0],sfr_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
 ax.set_yscale("log")
+ax.set_xscale("log")
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"SFR")
