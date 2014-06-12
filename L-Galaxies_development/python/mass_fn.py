@@ -63,8 +63,8 @@ def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.000001,mass_max=1.,n
     filter['Sfr'] = True
 
     (nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
-    massf = pylab.log10(gal['Sfr'])
-    stellarmass = numpy.histogram(massf,nbins,(pylab.log10(mass_min),pylab.log10(mass_max)))
+    massf = numpy.log10(gal['Sfr'])
+    stellarmass = numpy.histogram(massf,nbins,(numpy.log10(mass_min),numpy.log10(mass_max)))
     massftn_y = stellarmass[0]
     massftn_x = []
     for i in range(len(stellarmass[0])):
