@@ -21,8 +21,8 @@ umask 002
 #$ -cwd
 # Say which queue you want to submit to
 #$ -q mps.q
-#$ -pe openmpi 3
-#$ -l vf=161G
+#$ -pe openmpi 1
+#$ -l vf=41G
 # Define a task farm of jobs
 #$ -t 10-10
 # Limit to 20 concurrent jobs
@@ -162,7 +162,7 @@ then
 fi
 
 
-$exec $filename
+$exec $filename 
 
 
 
