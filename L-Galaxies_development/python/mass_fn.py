@@ -69,5 +69,6 @@ def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.000001,mass_max=1.,n
     massftn_x = []
     for i in range(len(stellarmass[0])):
         massftn_x.append((stellarmass[1][i]+stellarmass[1][i+1])/2.)
-    massftn_x = 10.**(massftn_x)
+    for i in range(len(massftn_x)):
+        massftn_x[i] = numpy.pow(10.,massftn_x[i])
     return (massftn_x,massftn_y)
