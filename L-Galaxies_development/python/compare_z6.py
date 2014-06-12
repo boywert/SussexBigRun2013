@@ -15,10 +15,10 @@ hot_noreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outpu
 hot_patchyreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
 hot_patchyreionization_model_II = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
 
-bh_okamoto_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
-bh_noreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
-bh_patchyreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
-bh_patchyreionization_model_II = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.0,1.e6,50)
+bh_okamoto_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf)
+bh_noreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf)
+bh_patchyreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf)
+bh_patchyreionization_model_II = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf)
 
 cold_okamoto_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
 cold_noreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
@@ -92,7 +92,7 @@ leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size
 leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
-fig.suptitle("Cold Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+fig.suptitle("Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 
 pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
