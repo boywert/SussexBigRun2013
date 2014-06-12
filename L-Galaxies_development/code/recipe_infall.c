@@ -80,7 +80,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
       cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
 	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-      if(XfracData[Gal[centralgal].SnapNum][cell] > 0.8)
+      if(XfracData[Gal[centralgal].SnapNum][cell] > 0.5)
 	{
 	  Tk = 0.5*mu*m_p/BOLTZMANN*(double)pow(0.5*200.*Omega,1./3.)
 	    *(1.+ZZ[Gal[centralgal].SnapNum])
