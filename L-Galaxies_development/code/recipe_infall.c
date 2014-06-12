@@ -94,6 +94,25 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
       else
 	reionization_modifier = 1.0;
     }
+  else if(ReionizationOn == 5)
+    {
+      cell = (int) (Gal[centralgal].Pos[0]/(BoxSize/XfracMesh[0]))
+	+ (int) (Gal[centralgal].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
+	+ (int) (Gal[centralgal].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
+      if(XfracData[Gal[centralgal].SnapNum][cell] > 0.8)
+	{
+	  Tk = 0.5*mu*m_p/BOLTZMANN*(double)pow(0.5*200.*Omega,1./3.)
+	    *(1.+ZZ[Gal[centralgal].SnapNum])
+	    *(double)pow(GRAVITY*HUBBLE*Gal[centralgal].HaloM_Crit200*UnitMass_in_g,2./3.);
+	  // printf("T=%lg,Mvir=%lg\n",Tk,Gal[centralgal].HaloM_Crit200);
+	  if(Tk < 10000.)
+	    reionization_modifier = 0.;
+	  else
+	    reionization_modifier = 1.;
+	}
+      else
+	reionization_modifier = 1.0;
+    }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
