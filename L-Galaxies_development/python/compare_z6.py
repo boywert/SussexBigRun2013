@@ -36,7 +36,7 @@ sfr_okamoto_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",pr
 sfr_noreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf)
 sfr_patchyreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf)
 sfr_patchyreionization_model_II = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf)
-sfr_patchyreionization_model_II = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_III/",prefix,ff,lf)
+sfr_patchyreionization_model_III = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_III/",prefix,ff,lf)
 
 
 pylab.rc('text', usetex=True)
