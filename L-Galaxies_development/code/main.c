@@ -209,178 +209,200 @@ int main(int argc, char **argv)
 
 /**@brief SAM() loops on trees and calls construct_galaxies.*/
 #ifdef MCMC
-double SAM(int filenr)
+  double SAM(int filenr)
 #else
-void SAM(int filenr)
+  void SAM(int filenr)
 #endif
-{
-  int treenr, halonr;
+  {
+    int treenr, halonr;
 
 #ifdef MCMC
-  int ii;
-  MCMC_GAL = mymalloc("MCMC_Gal", sizeof(struct MCMC_GALAXY) * MCMCAllocFactor);
-  for(ii=0;ii<NOUT;ii++)
-  	  TotMCMCGals[ii] = 0;
+    int ii;
+    MCMC_GAL = mymalloc("MCMC_Gal", sizeof(struct MCMC_GALAXY) * MCMCAllocFactor);
+    for(ii=0;ii<NOUT;ii++)
+      TotMCMCGals[ii] = 0;
 
-  if(Sample_Cosmological_Parameters==1)
-  {
-  	 reset_cosmology ();
+    if(Sample_Cosmological_Parameters==1)
+      {
+	reset_cosmology ();
 #ifdef HALOMODEL
-  	 initialize_halomodel();
+	initialize_halomodel();
 #endif
-  }
+      }
 
 #ifdef MR_PLUS_MRII
-  change_dark_matter_sim("MR");
+    change_dark_matter_sim("MR");
 #else
-  if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==1)
-        read_sample_info();
-  else
-  {
+    if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==1)
+      read_sample_info();
+    else
+      {
         int snap, ii;
         for(snap=0;snap<NOUT;snap++)
-                for(ii=0;ii<NFofsInSample[snap];ii++)
-                        MCMC_FOF[ii].NGalsInFoF[snap]=0;
-  }
+	  for(ii=0;ii<NFofsInSample[snap];ii++)
+	    MCMC_FOF[ii].NGalsInFoF[snap]=0;
+      }
 #endif
 #endif
 
-  //to be used when we have tables for the scaling in any cosmology
-  //read_scaling_parameters();
+    //to be used when we have tables for the scaling in any cosmology
+    //read_scaling_parameters();
 
 #ifndef MCMC
 #ifdef GALAXYTREE
-  create_galaxy_tree_file(filenr);
+    create_galaxy_tree_file(filenr);
 #else
-  create_galaxy_files(filenr);
+    create_galaxy_files(filenr);
 #endif
 #ifdef ALL_SKY_LIGHTCONE
- int nr;
- for ( nr = 0; nr < NCONES; nr++)
-   create_galaxy_lightcone_files(filenr, nr);
+    int nr;
+    for ( nr = 0; nr < NCONES; nr++)
+      create_galaxy_lightcone_files(filenr, nr);
 #endif
 #endif
 
 #ifdef GALAXYTREE
-  FILE *fdg = fopen("treengal.dat", "w");
+    FILE *fdg = fopen("treengal.dat", "w");
 #endif
 
-//***************************************************************************************
-//***************************************************************************************
+    //***************************************************************************************
+    //***************************************************************************************
 
-  //for(treenr = 0; treenr < NTrees_Switch_MR_MRII; treenr++)
-  //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
-  for(treenr = 0; treenr < Ntrees; treenr++)
-  //for(treenr = 0; treenr < 1;treenr++)
-  {
-  //printf("doing tree %d of %d\n", treenr, Ntrees);
+
+    //for(treenr = 0; treenr < NTrees_Switch_MR_MRII; treenr++)
+    //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
+
+#ifdef WITHRADIATIVETRANSFER
+    int currentsnap = 0;
+    for(currentsnap = 0; currentsnap <= LastSnapShotNr; currentsnap++)
+      {
+	printf("calculate snap = %d\n",currentsnap);
+#endif
+
+	for(treenr = 0; treenr < Ntrees; treenr++)
+	  //for(treenr = 0; treenr < 1;treenr++)
+	  {
+	    //printf("doing tree %d of %d\n", treenr, Ntrees);
 
 #ifdef MR_PLUS_MRII
-  	if(treenr == NTrees_Switch_MR_MRII)
-  		change_dark_matter_sim("MRII");
+	    if(treenr == NTrees_Switch_MR_MRII)
+	      change_dark_matter_sim("MRII");
 #endif
-
-  	load_tree(treenr);
+	    load_tree(treenr);
 
 #ifdef MCMC
 #ifdef PRELOAD_TREES
-      if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==0)
+	    if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==0)
 #endif
 #endif
-        scale_cosmology(TreeNHalos[treenr]);
+	      scale_cosmology(TreeNHalos[treenr]);
 
-      gsl_rng_set(random_generator, filenr * 100000 + treenr);
-      NumMergers = 0;
-      NHaloGal = 0;
+	    gsl_rng_set(random_generator, filenr * 100000 + treenr);
+	    NumMergers = 0;
+	    NHaloGal = 0;
 
 #ifdef GALAXYTREE
-      NGalTree = 0;
-      IndexStored = 0;
+	    NGalTree = 0;
+	    IndexStored = 0;
 #endif
-      int snapnum;
-      //LastSnapShotNr is the highest output snapshot
-      /* we process the snapshots now in temporal order 
-       * (as a means to reduce peak memory usage) */
-      for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)
-      	//for(snapnum = 0; snapnum <= 30; snapnum++)
-      {
-#ifdef MCMC
-    	  /* read the appropriate parameter list for current snapnum
-    	   * into the parameter variables to be used in construct_galaxies */
-    	  read_mcmc_par(snapnum);
+	    int snapnum;
+	    
+#ifdef WITHRADIATIVETRANSFER
+	    snapnum = currentsnap;
 #else
-        //used to allow parameter values to vary with redshift
-    	  //re_set_parameters(snapnum);
+	    //LastSnapShotNr is the highest output snapshot
+	    /* we process the snapshots now in temporal order 
+	     * (as a means to reduce peak memory usage) */
+	    for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)
+	      {
 #endif
-    	  //printf("doing snap=%d\n",snapnum);
-    	  for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
-    	  	if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
-    	  		construct_galaxies(filenr, treenr, halonr);
-      }
+		//for(snapnum = 0; snapnum <= 30; snapnum++)
 
-      /* output remaining galaxies as needed */
-      while(NHaloGal)
-      	output_galaxy(treenr, 0);
+#ifdef MCMC
+		/* read the appropriate parameter list for current snapnum
+		 * into the parameter variables to be used in construct_galaxies */
+		read_mcmc_par(snapnum);
+#else
+		//used to allow parameter values to vary with redshift
+		//re_set_parameters(snapnum);
+#endif
+		//printf("doing snap=%d\n",snapnum);
+		for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
+		  if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
+		    construct_galaxies(filenr, treenr, halonr);
+#ifndef WITHRADIATIVETRANSFER
+	      }
+#endif
+
+	    /* output remaining galaxies as needed */
+	    while(NHaloGal)
+	      output_galaxy(treenr, 0);
 
 
 #ifndef MCMC
 #ifdef GALAXYTREE
-      save_galaxy_tree_finalize(filenr, treenr);
+	    save_galaxy_tree_finalize(filenr, treenr);
 #ifndef PARALLEL
-      if((treenr/100)*100==treenr) printf("treenr=%d  TotGalCount=%d\n", treenr, TotGalCount);
+	    if((treenr/100)*100==treenr) printf("treenr=%d  TotGalCount=%d\n", treenr, TotGalCount);
 #endif
-      fflush(stdout);
-      fprintf(fdg, "%d\n", NGalTree);
+	    fflush(stdout);
+	    fprintf(fdg, "%d\n", NGalTree);
 #endif
 #else//ifdef MCMC
 #ifdef PRELOAD_TREES
-      if(Sample_Cosmological_Parameters==1)
-    	  un_scale_cosmology(TreeNHalos[treenr]);
+	    if(Sample_Cosmological_Parameters==1)
+	      un_scale_cosmology(TreeNHalos[treenr]);
 #endif
 #endif
-      free_galaxies_and_tree();
-  }
+	    free_galaxies_and_tree();
+	  }
+
+#ifdef PATCHY_REIONIZATION
+      }
+#endif
+
+
 
 #ifdef MCMC
-  double lhood = get_likelihood();
+    double lhood = get_likelihood();
 
 #ifdef MR_PLUS_MRII
-  free(MCMC_FOF);
+    free(MCMC_FOF);
 #else
-  if(Sample_Cosmological_Parameters==1 ||  CurrentMCMCStep==ChainLength)
-  	free(MCMC_FOF);
+    if(Sample_Cosmological_Parameters==1 ||  CurrentMCMCStep==ChainLength)
+      free(MCMC_FOF);
 #endif
 
 #ifdef HALOMODEL
-  if (Sample_Cosmological_Parameters==1) {
-    gsl_spline_free(FofSpline);
-    gsl_interp_accel_free(FofAcc);
-    gsl_spline_free(SigmaSpline);
-    gsl_interp_accel_free(SigmaAcc);
-    gsl_spline_free(ellipSpline);
-    gsl_interp_accel_free(ellipAcc);
-    gsl_spline_free(PowSpline);
-  } //if
+    if (Sample_Cosmological_Parameters==1) {
+      gsl_spline_free(FofSpline);
+      gsl_interp_accel_free(FofAcc);
+      gsl_spline_free(SigmaSpline);
+      gsl_interp_accel_free(SigmaAcc);
+      gsl_spline_free(ellipSpline);
+      gsl_interp_accel_free(ellipAcc);
+      gsl_spline_free(PowSpline);
+    } //if
 #endif
 
-  myfree(MCMC_GAL);
-  return lhood;
+    myfree(MCMC_GAL);
+    return lhood;
 
 #else //MCMC
 
 #ifdef GALAXYTREE
-  close_galaxy_tree_file();
+    close_galaxy_tree_file();
 #else
-  close_galaxy_files();
+    close_galaxy_files();
 #endif
 #ifdef ALL_SKY_LIGHTCONE
-  for (nr = 0; nr < NCONES; nr++)
-    close_galaxy_lightcone_files(nr);
+    for (nr = 0; nr < NCONES; nr++)
+      close_galaxy_lightcone_files(nr);
 #endif
 
-  return;
+    return;
 #endif
-}
+  }
 
 
 /**@brief  construct_galaxies() recursively runs the semi-analytic model.
