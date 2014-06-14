@@ -357,7 +357,7 @@ int main(int argc, char **argv)
 	    free_galaxies_and_tree();
 	  }
 
-#ifdef PATCHY_REIONIZATION
+#ifdef WITHRADIATIVETRANSFER
       }
 #endif
 
