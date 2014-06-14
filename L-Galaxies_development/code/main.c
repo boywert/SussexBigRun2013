@@ -154,7 +154,7 @@ int main(int argc, char **argv)
       load_tree_table(filenr);
 
 #ifdef PATCHY_REIONIZATION
-      load_xfrac();
+      // load_xfrac();
 #endif
 
 #ifdef MCMC
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
 #endif
 
 #ifdef PATCHY_REIONIZATION
-      free_xfrac();
+      // free_xfrac();
 #endif
 
 #ifdef MCMC
