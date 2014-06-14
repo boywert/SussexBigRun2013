@@ -65,7 +65,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   else if(ReionizationOn == 3)
     {
 
-     reionization_modifier = (1.0-Gal[centralgal].Xfrac3d][cell]) 
+     reionization_modifier = (1.0-Gal[centralgal].Xfrac3d) 
 	+ Gal[centralgal].Xfrac3d*do_reionization(Gal[centralgal].Mvir, Zcurr);
     }
   else if(ReionizationOn == 4)
