@@ -153,9 +153,6 @@ int main(int argc, char **argv)
 
       load_tree_table(filenr);
 
-#ifdef READXFRAC
-      load_xfrac();
-#endif
 
 #ifdef MCMC
 #ifdef PARALLEL
@@ -171,9 +168,7 @@ int main(int argc, char **argv)
       SAM(filenr); // run the model in NORMAL MODE
 #endif
 
-#ifdef READXFRAC
-      free_xfrac();
-#endif
+
 
 #ifdef MCMC
       break;	//break loop on files since the MCMC is done on a single file
@@ -277,6 +272,9 @@ int main(int argc, char **argv)
     for(currentsnap = 0; currentsnap <= LastSnapShotNr; currentsnap++)
       {
 	printf("calculate snap = %d\n",currentsnap);
+#ifdef READXFRAC
+	load_xfrac(currentsnap);
+#endif 
 #endif
 
 	for(treenr = 0; treenr < Ntrees; treenr++)
@@ -358,6 +356,9 @@ int main(int argc, char **argv)
 	  }
 
 #ifdef WITHRADIATIVETRANSFER
+#ifdef READXFRAC
+	load_xfrac(currentsnap);
+#endif
       }
 #endif
 

@@ -15,7 +15,7 @@
     @brief Read in inonization fraction from C2Ray  
 */
 
-void load_xfrac()
+void load_xfrac(int snapnr)
 {
   FILE* fp;
   char buf[1024],buf2[1024];
@@ -42,51 +42,37 @@ void load_xfrac()
   fread(&dummy, 1, sizeof(int),fp);
   fclose(fp);
 
-  for(il=0;il<MAXSNAPS;il++)
+  il = snapnr;
+  redshift = ZZ[il];
+  sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
+  if((fp = fopen(buf,"r")) == NULL)
     {
-      redshift = ZZ[il];
-      sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-      if((fp = fopen(buf,"r")) == NULL)
-	{
-	  char sbuf[1000];
-	  printf("can't open file `%s': SKIP\n", buf);
-	  XfracDataDone[il] = 1;
-	  XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
-	}
-      else
-	{
-	  fread(&dummy, 1, sizeof(int),fp);
-	  fread(&mesh, 3, sizeof(int),fp);
-	  fread(&dummy, 1, sizeof(int),fp);
-	  printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
-	  sprintf(buf2,"XfracData[il]",il);
-	  XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
-	  fread(&dummy, 1, sizeof(int),fp);
-	  fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
-	  fread(&dummy, 1, sizeof(int),fp);
-
-	  /* for(i=0;i<XfracMesh[0];i++) */
-	  /*   { */
-	  /*     for(j=0;j<XfracMesh[1];j++) */
-	  /* 	{ */
-	  /* 	  for(k=0;k<XfracMesh[2];k++) */
-	  /* 	    { */
-	  /* 	      cell = k*XfracMesh[0]*XfracMesh[1]+j*XfracMesh[0]+i; */
-	  /* 	      printf("%d: %lf\n",cell,XfracData[il][cell]); */
-	  /* 	    } */
-	  /* 	} */
-	  /*   } */
-	  fclose(fp);
-	  XfracDataDone[il] = 1;
-	}
+      char sbuf[1000];
+      printf("can't open file `%s': SKIP\n", buf);
+      XfracDataDone[il] = 1;
+      XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
     }
+  else
+    {
+      fread(&dummy, 1, sizeof(int),fp);
+      fread(&mesh, 3, sizeof(int),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+      printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
+      sprintf(buf2,"XfracData[il]",il);
+      XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+      fread(&dummy, 1, sizeof(int),fp);
+      fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+
+      fclose(fp);
+      XfracDataDone[il] = 1;
+    }
+    
 }
 
-void free_xfrac()
+void free_xfrac(int snapnr)
 {
-  int i;
-  for(i=0;i<MAXSNAPS;i++)
-    {
-      free(XfracData[i]);
-    }
+
+  free(XfracData[snapnr]);
+ 
 }
