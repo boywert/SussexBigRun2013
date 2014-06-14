@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 
       load_tree_table(filenr);
 
-#ifdef PATCHY_REIONIZATION
+#ifdef READXFRAC
       load_xfrac();
 #endif
 
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
       SAM(filenr); // run the model in NORMAL MODE
 #endif
 
-#ifdef PATCHY_REIONIZATION
+#ifdef READXFRAC
       free_xfrac();
 #endif
 
@@ -614,12 +614,11 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #ifdef GALAXYTREE
 		  Gal[ngal].FirstProgGal = HaloGal[currentgal].GalTreeIndex;	/* CHECK */
 #endif
-#ifdef PATCHY_REIONIZATION
+#ifdef READXFRAC
 		  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
 		    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 		    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-		  // Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];
-				    
+		  Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];		    
 #endif
 
 

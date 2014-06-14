@@ -162,6 +162,7 @@ double get_initial_disk_radius(int halonr, int p)
 void init_galaxy(int p, int halonr)
 {
   int j, outputbin;
+  int cell;
 
   /* make explicitly sure that the whole galaxy structure has defined 0 values */
   memset(&Gal[p], 0, sizeof(struct GALAXY));
@@ -193,8 +194,8 @@ void init_galaxy(int p, int halonr)
   Gal[p].HaloVelDisp = Halo[halonr].VelDisp;
   Gal[p].HaloVmax = Halo[halonr].Vmax;
 #endif
-#ifdef PATCHY_REIONIZATION
-  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
+#ifdef READXFRAC
+  cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
     + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
     + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
   Gal[p].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];

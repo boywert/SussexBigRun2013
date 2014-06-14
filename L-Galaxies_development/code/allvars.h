@@ -842,9 +842,10 @@ struct GALAXY			/* Galaxy data */
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
 
-#ifdef PATCHY_REIONIZATION
+#if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   float Xfrac3d;
 #endif
+
 } *Gal, *HaloGal;
 
 
@@ -1234,9 +1235,9 @@ extern FILE *FdGalDumps[NOUT];
 extern double h2frac[LENSIGMAH][LENZ];
 
 
-#ifdef PATCHY_REIONIZATION
+/* For Reionization data */
 extern double *XfracData[MAXSNAPS];
 extern int XfracDataDone[MAXSNAPS];
 extern char XfracDir[1024];
 extern int XfracMesh[3];
-#endif
+

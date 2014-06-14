@@ -296,12 +296,12 @@ FILE *FdGalTreeSFH;
 FILE *FdGalDumps[NOUT];
 
 
-#ifdef PATCHY_REIONIZATION
+/* for reionization modelling */
+
 double *XfracData[MAXSNAPS];
 int XfracDataDone[MAXSNAPS];
 char XfracDir[1024];
 int XfracMesh[3];
-#endif
 
 
 

@@ -54,11 +54,9 @@ void read_parameter_file(char *fname)
   addr[nt] = SimulationDir;
   id[nt++] = STRING;
 
-#ifdef PATCHY_REIONIZATION
   strcpy(tag[nt], "XfracDir");
   addr[nt] = XfracDir;
   id[nt++] = STRING;
-#endif
 
   strcpy(tag[nt], "FileWithOutputRedshifts");
   addr[nt] = FileWithOutputRedshifts;
