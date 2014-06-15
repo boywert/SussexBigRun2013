@@ -267,6 +267,7 @@ int main(int argc, char **argv)
     //for(treenr = 0; treenr < NTrees_Switch_MR_MRII; treenr++)
     //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
 
+    /* Scan through all trees snapshot by snapshot */
 #ifdef WITHRADIATIVETRANSFER
     int currentsnap = 0;
     for(currentsnap = 0; currentsnap <= LastSnapShotNr; currentsnap++)
@@ -359,8 +360,8 @@ int main(int argc, char **argv)
 #ifdef READXFRAC
 	load_xfrac(currentsnap);
 #endif
-      }
-#endif
+      } // Snapshot loop
+#endif 
 
 
 
@@ -525,7 +526,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
   first_occupied = Halo[halonr].FirstProgenitor;
   prog = Halo[halonr].FirstProgenitor;
 
-  printf("\t joint galaxy Halo:%d NgalStart:%d\n",halonr,ngalstart);
+  // printf("\t joint galaxy Halo:%d NgalStart:%d\n",halonr,ngalstart);
   /* When there is no galaxy in the Halo of FirstProgenitor, the first_occupied
    * pointer is changed to a subhalo which have the maximum mass (This should
    * only happen in the case that the leaf on the firstprogenitor branch occurs
@@ -1343,6 +1344,7 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
 
 void output_galaxy(int treenr, int heap_index)
 {
+  printf("output galaxy Tree:%d,Heap:%d\n",treenr,heap_index);
   int gal_index = HaloGalHeap[heap_index];
 
   if(heap_index >= NHaloGal)
@@ -1353,7 +1355,7 @@ void output_galaxy(int treenr, int heap_index)
 
 #ifdef GUO10
 #ifdef UPDATETYPETWO
-		  update_type_two_coordinate_and_velocity(treenr, gal_index, HaloGal[0].CentralGal);
+  update_type_two_coordinate_and_velocity(treenr, gal_index, HaloGal[0].CentralGal);
 #endif
 #endif
 
