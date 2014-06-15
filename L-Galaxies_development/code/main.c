@@ -357,7 +357,7 @@ int main(int argc, char **argv)
 	    
 	  }
 	time(&t_mark_b);
-	printf("After constrcut: %lg\n",(double)(t_mark_b-t_mark_a));
+	printf("After construct: %lg\n",(double)difftime(t_mark_b,t_mark_a));
 #ifdef WITHRADIATIVETRANSFER
 #ifdef READXFRAC
 	load_xfrac(currentsnap);
