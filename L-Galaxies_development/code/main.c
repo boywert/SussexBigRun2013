@@ -277,12 +277,11 @@ int main(int argc, char **argv)
 	load_xfrac(currentsnap);
 #endif 
 #endif
-	
+	time(&t_mark_a);
 	for(treenr = 0; treenr < Ntrees; treenr++)
 	  //for(treenr = 0; treenr < 1;treenr++)
 	  {
 	    //printf("doing tree %d of %d\n", treenr, Ntrees);
-	    time(&t_mark_a);
 #ifdef MR_PLUS_MRII
 	    if(treenr == NTrees_Switch_MR_MRII)
 	      change_dark_matter_sim("MRII");
@@ -354,10 +353,10 @@ int main(int argc, char **argv)
 #endif
 #endif
 	    free_galaxies_and_tree();
-	    time(&t_mark_b);
-	    printf("After constrcut: %lg\n",(double)(t_mark_b-t_mark_a));
+	    
 	  }
-
+	time(&t_mark_b);
+	printf("After constrcut: %lg\n",(double)(t_mark_b-t_mark_a));
 #ifdef WITHRADIATIVETRANSFER
 #ifdef READXFRAC
 	load_xfrac(currentsnap);
