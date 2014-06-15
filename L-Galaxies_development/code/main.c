@@ -269,101 +269,90 @@ int main(int argc, char **argv)
     //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
 
     /* Scan through all trees snapshot by snapshot */
-#ifdef WITHRADIATIVETRANSFER
-    int currentsnap = 0;
-    for(currentsnap = 0; currentsnap <= LastSnapShotNr; currentsnap++)
-      {
-	printf("calculate snap = %d\n",currentsnap);
+    int snapnum;
 #ifdef READXFRAC
-	load_xfrac(currentsnap);
+    for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
+      load_xfrac(snapnum);
 #endif 
-#endif
-	time(&t_mark_a);
-	for(treenr = 0; treenr < Ntrees; treenr++)
-	  //for(treenr = 0; treenr < 1;treenr++)
-	  {
-	    //printf("doing tree %d of %d\n", treenr, Ntrees);
+
+    //for(treenr = 0; treenr < NTrees_Switch_MR_MRII; treenr++)
+    //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
+    for(treenr = 0; treenr < Ntrees; treenr++)
+      //for(treenr = 0; treenr < 1;treenr++)
+      {
+	//printf("doing tree %d of %d\n", treenr, Ntrees);
+
 #ifdef MR_PLUS_MRII
-	    if(treenr == NTrees_Switch_MR_MRII)
-	      change_dark_matter_sim("MRII");
+	if(treenr == NTrees_Switch_MR_MRII)
+	  change_dark_matter_sim("MRII");
 #endif
-	    load_tree(treenr);
+
+	load_tree(treenr);
 
 #ifdef MCMC
 #ifdef PRELOAD_TREES
-	    if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==0)
+	if(Sample_Cosmological_Parameters==1 || CurrentMCMCStep==0)
 #endif
 #endif
-	      scale_cosmology(TreeNHalos[treenr]);
+	  scale_cosmology(TreeNHalos[treenr]);
 
-	    gsl_rng_set(random_generator, filenr * 100000 + treenr);
-	    NumMergers = 0;
-	    NHaloGal = 0;
+	gsl_rng_set(random_generator, filenr * 100000 + treenr);
+	NumMergers = 0;
+	NHaloGal = 0;
 
 #ifdef GALAXYTREE
-	    NGalTree = 0;
-	    IndexStored = 0;
+	NGalTree = 0;
+	IndexStored = 0;
 #endif
-	    int snapnum;
-	    
-#ifdef WITHRADIATIVETRANSFER
-	    snapnum = currentsnap;
-#else
-	    //LastSnapShotNr is the highest output snapshot
-	    /* we process the snapshots now in temporal order 
-	     * (as a means to reduce peak memory usage) */
-	    for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)
-	      {
-#endif
-		//for(snapnum = 0; snapnum <= 30; snapnum++)
-
+	//LastSnapShotNr is the highest output snapshot
+	/* we process the snapshots now in temporal order
+	 * (as a means to reduce peak memory usage) */
+	for(snapnum = 0; snapnum <= LastSnapShotNr; snapnum++)
+	  //for(snapnum = 0; snapnum <= 30; snapnum++)
+	  {
 #ifdef MCMC
-		/* read the appropriate parameter list for current snapnum
-		 * into the parameter variables to be used in construct_galaxies */
-		read_mcmc_par(snapnum);
+	    /* read the appropriate parameter list for current snapnum
+	     * into the parameter variables to be used in construct_galaxies */
+	    read_mcmc_par(snapnum);
 #else
-		//used to allow parameter values to vary with redshift
-		//re_set_parameters(snapnum);
+	    //used to allow parameter values to vary with redshift
+	    //re_set_parameters(snapnum);
 #endif
-		//printf("doing snap=%d\n",snapnum);
-		for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
-		  if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
-		    construct_galaxies(filenr, treenr, halonr);
-#ifndef WITHRADIATIVETRANSFER
-	      }
-#endif
-	    
-	    /* output remaining galaxies as needed */
-	    while(NHaloGal)
-	      output_galaxy(treenr, 0);
+	    //printf("doing snap=%d\n",snapnum);
+	    for(halonr = 0; halonr < TreeNHalos[treenr]; halonr++)
+	      if(HaloAux[halonr].DoneFlag == 0 && Halo[halonr].SnapNum == snapnum)
+		construct_galaxies(filenr, treenr, halonr);
+	  }
+
+	/* output remaining galaxies as needed */
+	while(NHaloGal)
+	  output_galaxy(treenr, 0);
 
 
 #ifndef MCMC
 #ifdef GALAXYTREE
-	    save_galaxy_tree_finalize(filenr, treenr);
+	save_galaxy_tree_finalize(filenr, treenr);
 #ifndef PARALLEL
-	    if((treenr/100)*100==treenr) printf("treenr=%d  TotGalCount=%d\n", treenr, TotGalCount);
+	if((treenr/100)*100==treenr) printf("treenr=%d TotGalCount=%d\n", treenr, TotGalCount);
 #endif
-	    fflush(stdout);
-	    fprintf(fdg, "%d\n", NGalTree);
+	fflush(stdout);
+	fprintf(fdg, "%d\n", NGalTree);
 #endif
 #else//ifdef MCMC
 #ifdef PRELOAD_TREES
-	    if(Sample_Cosmological_Parameters==1)
-	      un_scale_cosmology(TreeNHalos[treenr]);
+	if(Sample_Cosmological_Parameters==1)
+	  un_scale_cosmology(TreeNHalos[treenr]);
 #endif
 #endif
-	    free_galaxies_and_tree();
-	    
-	  }
-	time(&t_mark_b);
-	printf("After construct: %lg\n",(double)difftime(t_mark_b,t_mark_a));
-#ifdef WITHRADIATIVETRANSFER
+	free_galaxies_and_tree();
+      }
+
+
 #ifdef READXFRAC
-	load_xfrac(currentsnap);
+    for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
+      free_xfrac(snapnum);
 #endif
-      } // Snapshot loop
-#endif 
+
 
 
 
