@@ -214,6 +214,7 @@ int main(int argc, char **argv)
 #ifdef MCMC
     int ii;
     MCMC_GAL = mymalloc("MCMC_Gal", sizeof(struct MCMC_GALAXY) * MCMCAllocFactor);
+
     for(ii=0;ii<NOUT;ii++)
       TotMCMCGals[ii] = 0;
 
@@ -1345,7 +1346,7 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
 
 void output_galaxy(int treenr, int heap_index)
 {
-  printf("output galaxy Tree:%d,Heap:%d\n",treenr,heap_index);
+  // printf("output galaxy Tree:%d,Heap:%d\n",treenr,heap_index);
   int gal_index = HaloGalHeap[heap_index];
 
   if(heap_index >= NHaloGal)
