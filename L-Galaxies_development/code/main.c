@@ -420,7 +420,7 @@ void construct_galaxies(int filenr, int treenr, int halonr)
   static int halosdone = 0;
   int prog, fofhalo, ngal, cenngal, p;
 
-  printf("File:%d Tree:%d Halo:%d\n",filenr,treenr,halonr);
+  printf("construct galaxy File:%d Tree:%d Halo:%d\n",filenr,treenr,halonr);
   HaloAux[halonr].DoneFlag = 1;
   halosdone++;
 
@@ -525,7 +525,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
   first_occupied = Halo[halonr].FirstProgenitor;
   prog = Halo[halonr].FirstProgenitor;
 
-
+  printf("\t joint galaxy Halo:%d NgalStart:%d\n",halonr,ngalstart);
   /* When there is no galaxy in the Halo of FirstProgenitor, the first_occupied
    * pointer is changed to a subhalo which have the maximum mass (This should
    * only happen in the case that the leaf on the firstprogenitor branch occurs
