@@ -210,7 +210,7 @@ int main(int argc, char **argv)
 #endif
   {
     int treenr, halonr;
-
+    time_t t_mark_a, t_mark_b;
 #ifdef MCMC
     int ii;
     MCMC_GAL = mymalloc("MCMC_Gal", sizeof(struct MCMC_GALAXY) * MCMCAllocFactor);
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
 	load_xfrac(currentsnap);
 #endif 
 #endif
-
+	
 	for(treenr = 0; treenr < Ntrees; treenr++)
 	  //for(treenr = 0; treenr < 1;treenr++)
 	  {
@@ -332,7 +332,7 @@ int main(int argc, char **argv)
 #ifndef WITHRADIATIVETRANSFER
 	      }
 #endif
-
+	    time(&t_mark_a);
 	    /* output remaining galaxies as needed */
 	    while(NHaloGal)
 	      output_galaxy(treenr, 0);
@@ -354,6 +354,8 @@ int main(int argc, char **argv)
 #endif
 #endif
 	    free_galaxies_and_tree();
+	    time(&t_mark_b);
+	    printf("After constrcut: %lf\n",(double)(t_mark_b-t_mark_a));
 	  }
 
 #ifdef WITHRADIATIVETRANSFER
@@ -421,7 +423,7 @@ void construct_galaxies(int filenr, int treenr, int halonr)
   static int halosdone = 0;
   int prog, fofhalo, ngal, cenngal, p;
 
-  printf("construct galaxy File:%d Tree:%d Halo:%d\n",filenr,treenr,halonr);
+  // printf("construct galaxy File:%d Tree:%d Halo:%d\n",filenr,treenr,halonr);
   HaloAux[halonr].DoneFlag = 1;
   halosdone++;
 
