@@ -17,6 +17,7 @@
 # SYSTYPE = "Sussex"
 # SYSTYPE = "VIP"
 # SYSTYPE = "COSMA"
+SYSTYPE = "Apollo"
 
 # Default set
 CC       = gcc                  # sets the C-compiler
@@ -27,11 +28,21 @@ else
 OPTIMIZE = -O3                  # optimization
 endif
 
+ifeq ($(SYSTYPE),"Apollo")
+ifeq (PARALLEL,$(findstring PARALLEL,$(OPT)))
+CC       =   mpicc 
+else
+CC       =   mpicc 
+endif
+GSL_INCL = -I/sw/include
+GSL_LIBS = -L/sw/lib
+endif
+
 ifeq ($(SYSTYPE),"Sussex")
 ifeq (PARALLEL,$(findstring PARALLEL,$(OPT)))
 CC       =   gcc -pg
 else
-CC       =   cc 
+CC       =   mpicc 
 #CC       =   /opt/pgi/osx86/9.0-4/bin/pgcc
 endif
 GSL_INCL = -I/usr/local/include

@@ -8,9 +8,17 @@ OPT += -DLOADIDS
 OPT += -DNOUT=8
 OPT += -DOVERWRITE_OUTPUT
 #OPT += -DBOYDDEBUG
-OPT += -DNMAG=4
-OPT += -DGALAXYTREE
-OPT += -DSTAR_FORMATION_HISTORY
+OPT += -DNMAG=5
+#OPT += -DGALAXYTREE
+#OPT += -DSTAR_FORMATION_HISTORY
+OPT += -DCUSTOM_MAXSNAPS=76
+OPT += -DREADXFRAC
+OPT += -DHALOPROPERTIES
+OPT += -DPARALLEL
+
+ifeq (READXFRAC,$(findstring READXFRAC,$(OPT)))
+OBJS  += ./code/read_xfrac.o
+endif
 
 ifeq (STAR_FORMATION_HISTORY,$(findstring STAR_FORMATION_HISTORY,$(OPT)))
 OBJS  += ./code/star_formation_history.o
@@ -26,6 +34,8 @@ OPT += -DM05 #use Maraston 2005 stellar populations need to change input.par
 #OPT += -DPHOTTABLES_PRECOMPUTED     
 OPT += -DSPEC_PHOTABLES_ON_THE_FLY
 ifeq (SPEC_PHOTABLES_ON_THE_FLY,$(findstring SPEC_PHOTABLES_ON_THE_FLY,$(OPT)))
+#OPT += -DVEGA
+OPT += -DAB
 OBJS += ./code/model_spectro_photometric_onthefly_initialize.o
 OBJS += ./code/model_spectro_photometric_onthefly_misc.o
 endif

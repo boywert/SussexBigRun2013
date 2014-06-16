@@ -30,7 +30,7 @@ endif
 
 ifeq ($(SYSTYPE),"Apollo")
 ifeq (PARALLEL,$(findstring PARALLEL,$(OPT)))
-CC       =   gcc 
+CC       =   mpicc 
 else
 CC       =   mpicc 
 endif
