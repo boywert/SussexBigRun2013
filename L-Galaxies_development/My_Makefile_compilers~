@@ -1,11 +1,8 @@
 # List of compilers and flags.
 
 # Default set
-ifeq (PARALLEL,$(findstring PARALLEL,$(OPT)))
-CC       =   gcc 
-else
-CC       =   mpicc 
-
+CC       = gcc                  # sets the C-compiler
+CC_MD    = gcc                  # for the metadata
 ifeq (DEBUG,$(findstring DEBUG,$(OPT)))
 OPTIMIZE =   -g -Wall
 else
