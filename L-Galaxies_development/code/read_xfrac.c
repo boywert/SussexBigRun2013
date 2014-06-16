@@ -22,7 +22,6 @@ void load_xfrac(int snapnr)
   float redshift;
   int i,j,k,il,cell;
   int dummy,mesh[3];
- 
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data\n\n");
