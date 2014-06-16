@@ -15,7 +15,9 @@ OPT += -DCUSTOM_MAXSNAPS=76
 OPT += -DREADXFRAC
 OPT += -DHALOPROPERTIES
 
-
+ifeq (READXFRAC,$(findstring READXFRAC,$(OPT)))
+OBJS  += ./code/read_xfrac.o
+endif
 
 ifeq (STAR_FORMATION_HISTORY,$(findstring STAR_FORMATION_HISTORY,$(OPT)))
 OBJS  += ./code/star_formation_history.o
