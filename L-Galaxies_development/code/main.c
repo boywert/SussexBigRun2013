@@ -270,6 +270,7 @@ int main(int argc, char **argv)
 
     /* Scan through all trees snapshot by snapshot */
     int snapnum;
+
 #ifdef READXFRAC
     for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
       load_xfrac(snapnum);
