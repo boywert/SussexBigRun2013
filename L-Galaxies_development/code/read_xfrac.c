@@ -60,9 +60,9 @@ void load_xfrac(int snapnr)
     }
   il = snapnr;
 
-#ifdef PARALLELPPPP
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
+#ifdef PARALLELPPPP
   if(ThisTask == 0)
     {
 #endif
