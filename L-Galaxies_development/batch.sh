@@ -23,7 +23,7 @@ template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 maxmemsize=4000
 firstfile=0
-Lastfile=127
+lastfile=127
 
 # No reionization
 OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/"
