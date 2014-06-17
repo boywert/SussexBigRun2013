@@ -18,6 +18,7 @@ module add gsl/gcc/1.15
 
 inputfolder="inputs_batch/"
 mkdir -p $inputfolder
+rm $inputfolder
 template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 maxmemsize=4000
