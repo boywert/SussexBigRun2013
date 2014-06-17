@@ -1,14 +1,19 @@
 #!/bin/bash
 #$ -S /bin/bash
-umask 002
-
 #$ -cwd
 #$ -q mps.q
 #$ -l vf=16G
 #$ -pe openmpi 128
 #$ -j y
 #$ -N Lgalaxy_all
-#$ -o logs/$JOB_NAME_$JOB_ID.log
+
+umask 002
+
+module add sge
+module add gcc/4.8.1
+module add openmpi/gcc/64/1.7.3
+module add gsl/gcc/1.15
+
 
 
 inputfolder="inputs_batch/"
