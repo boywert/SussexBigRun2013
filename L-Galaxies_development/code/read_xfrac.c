@@ -28,50 +28,75 @@ void load_xfrac(int snapnr)
     }
 
   /* Read mesh from LastSnap */
-  redshift = ZZ[MAXSNAPS-1];
-  sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-  if((fp = fopen(buf,"r")) == NULL)
+
+#ifdef PARALLEL
+  if(ThisTask == 0)
     {
-      char sbuf[1000];
-      printf("can't open file `%s'\n", buf);
-      terminate(sbuf);
+#endif
+      redshift = ZZ[MAXSNAPS-1];
+      sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
+      if((fp = fopen(buf,"r")) == NULL)
+	{
+	  char sbuf[1000];
+	  printf("can't open file `%s'\n", buf);
+	  terminate(sbuf);
+	}
+      fread(&dummy, 1, sizeof(int),fp);
+      myfread(XfracMesh, 3, sizeof(int),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+      fclose(fp);
+#ifdef PARALLEL
     }
-  fread(&dummy, 1, sizeof(int),fp);
-  myfread(XfracMesh, 3, sizeof(int),fp);
-  fread(&dummy, 1, sizeof(int),fp);
-  fclose(fp);
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(XfracMesh, 3, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
 
   il = snapnr;
+
+#ifdef PARALLEL
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-  if((fp = fopen(buf,"r")) == NULL)
+  if(ThisTask == 0)
     {
-      char sbuf[1000];
-      printf("can't open file `%s': SKIP\n", buf);
-      XfracDataDone[il] = 1;
-      XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
+#endif
+      if((fp = fopen(buf,"r")) == NULL)
+	{
+	  char sbuf[1000];
+	  printf("can't open file `%s': SKIP\n", buf);
+	  XfracDataDone[il] = 1;
+	  XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
+	}
+      else
+	{
+	  fread(&dummy, 1, sizeof(int),fp);
+	  fread(&mesh, 3, sizeof(int),fp);
+	  fread(&dummy, 1, sizeof(int),fp);
+	  printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
+	  sprintf(buf2,"XfracData[il]",il);
+	  XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+	  fread(&dummy, 1, sizeof(int),fp);
+	  fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+	  fread(&dummy, 1, sizeof(int),fp);
+
+	  fclose(fp);
+	  XfracDataDone[il] = 1;
+	}
+
+#ifdef PARALLEL
     }
   else
     {
-      fread(&dummy, 1, sizeof(int),fp);
-      fread(&mesh, 3, sizeof(int),fp);
-      fread(&dummy, 1, sizeof(int),fp);
-      printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
-      sprintf(buf2,"XfracData[il]",il);
       XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
-      fread(&dummy, 1, sizeof(int),fp);
-      fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
-      fread(&dummy, 1, sizeof(int),fp);
-
-      fclose(fp);
-      XfracDataDone[il] = 1;
     }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
     
 }
 
 void free_xfrac(int snapnr)
 {
-
   free(XfracData[snapnr]);
- 
 }
