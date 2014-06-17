@@ -272,6 +272,7 @@ int main(int argc, char **argv)
     int snapnum;
 
 #ifdef READXFRAC
+    get_xfrac_mesh();
     for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
       load_xfrac(snapnum);
 #endif 
