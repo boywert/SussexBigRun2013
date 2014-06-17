@@ -62,7 +62,7 @@ void load_xfrac(int snapnr)
 
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-#ifdef PARALLELPPPP
+#ifdef PARALLEL
   if(ThisTask == 0)
     {
 #endif
@@ -89,12 +89,14 @@ void load_xfrac(int snapnr)
 	  XfracDataDone[il] = 1;
 	}
 
-#ifdef PARALLELPPPP
+#ifdef PARALLEL
     }
   else
     {
       XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
     }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(&(XfracDataDone[il]), 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
   if(XfracDataDone[il] == 1)
     {
