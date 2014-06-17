@@ -6,7 +6,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#ifdef PARALLEL
+#include <mpi.h>
+#endif
 #include "allvars.h"
 #include "proto.h"
 
