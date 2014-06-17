@@ -18,11 +18,12 @@ module add gsl/gcc/1.15
 
 inputfolder="inputs_batch/"
 mkdir -p $inputfolder
-rm $inputfolder
+rm $inputfolder/* -f
 template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 maxmemsize=4000
-
+firstfile=0
+Lastfile=127
 
 # No reionization
 OutputDir="/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/"
@@ -35,8 +36,8 @@ mkdir -p $OutputDir
 mkdir -p $inputfolder
 filename="${inputfolder}/input_0"
 
-echo "FirstFile" $i > $filename
-echo "LastFile" $i >> $filename
+echo "FirstFile" $firstfile > $filename
+echo "LastFile" $lastfile >> $filename
 echo "OutputDir" $OutputDir >> $filename
 echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
@@ -69,8 +70,8 @@ mkdir -p $inputfolder
 filename="${inputfolder}/input_2"
 
 
-echo "FirstFile" $i > $filename
-echo "LastFile" $i >> $filename
+echo "FirstFile" $firstfile > $filename
+echo "LastFile" $lastfile >> $filename
 echo "OutputDir" $OutputDir >> $filename
 echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
@@ -104,8 +105,8 @@ mkdir -p $inputfolder
 filename="${inputfolder}/input_3"
 
 
-echo "FirstFile" $i > $filename
-echo "LastFile" $i >> $filename
+echo "FirstFile" $firstfile > $filename
+echo "LastFile" $lastfile >> $filename
 echo "OutputDir" $OutputDir >> $filename
 echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
@@ -138,8 +139,8 @@ mkdir -p $inputfolder
 filename="${inputfolder}/input_4"
 
 
-echo "FirstFile" $i > $filename
-echo "LastFile" $i >> $filename
+echo "FirstFile" $firstfile > $filename
+echo "LastFile" $lastfile >> $filename
 echo "OutputDir" $OutputDir >> $filename
 echo "SimulationDir" $SimulationDir >> $filename
 echo "ReionizationOn" $ReionizationOn >> $filename
