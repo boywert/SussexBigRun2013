@@ -118,11 +118,14 @@ void load_xfrac(int snapnr)
     }
   else
     {
-      XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
+      XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
     }
-  MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Bcast(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Barrier(MPI_COMM_WORLD);
+  if(XfracDataDone[il] == 1)
+    {
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Bcast(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+      MPI_Barrier(MPI_COMM_WORLD);
+    }
 #endif
     
 }
