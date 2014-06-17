@@ -12,11 +12,41 @@
 #include "allvars.h"
 #include "proto.h"
 
+void get_xfrac_mesh()
+{
+  FILE* fp;
+  char buf[1024],sbuf[1024];
+  float redshift;
+  int dummy;
+
+#ifdef PARALLEL
+  if(ThisTask == 0)
+    {
+#endif
+      redshift = ZZ[MAXSNAPS-1];
+      sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
+      if((fp = fopen(buf,"r")) == NULL)
+	{
+	  char sbuf[1000];
+	  printf("can't open file `%s'\n", buf);
+	  terminate(sbuf);
+	}
+      fread(&dummy, 1, sizeof(int),fp);
+      myfread(XfracMesh, 3, sizeof(int),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+      fclose(fp);
+#ifdef PARALLEL
+    }
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(XfracMesh, 3, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+#endif
+
+}
 
 /*  @file read_xfrac.c
     @brief Read in inonization fraction from C2Ray  
 */
-
 void load_xfrac(int snapnr)
 {
   FILE* fp;
@@ -30,7 +60,6 @@ void load_xfrac(int snapnr)
     }
 
   /* Read mesh from LastSnap */
-
 #ifdef PARALLEL
   if(ThisTask == 0)
     {
