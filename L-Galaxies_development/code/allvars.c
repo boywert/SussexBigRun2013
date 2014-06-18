@@ -297,11 +297,11 @@ FILE *FdGalDumps[NOUT];
 
 
 /* for reionization modelling */
-
-double *XfracData[MAXSNAPS];
+#ifdef READXFRAC
+double *XfracData;
 int XfracDataDone[MAXSNAPS];
 char XfracDir[1024];
 int XfracMesh[3];
-
+#endif
 
 
