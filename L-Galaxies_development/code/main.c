@@ -146,7 +146,9 @@ int main(int argc, char **argv)
 #endif //MCMC
 	  time(&start);
 
-
+#ifdef READXFRAC
+      get_xfrac_mesh();
+#endif 
 #ifdef PARALLEL
       printf("\nTask[%d] reading FILE Nr %d\n\n", ThisTask, filenr);
 #endif
@@ -154,9 +156,7 @@ int main(int argc, char **argv)
       load_tree_table(filenr);
 
       /* Read in mesh dimensions */
-#ifdef READXFRAC
-      get_xfrac_mesh();
-#endif 
+
 
 #ifdef MCMC
 #ifdef PARALLEL
