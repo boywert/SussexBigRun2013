@@ -269,6 +269,9 @@ void load_tree(int nr)
 #ifdef LOADIDS
   HaloIDs = HaloIDs_Data + TreeFirstHalo[nr];
 #endif
+#ifdef READXFRAC
+  Xfrac = Xfrac_Data + TreeFirstHalo[nr];
+#endif
 #else
 
   Halo = mymalloc("Halo", sizeof(struct halo_data) * TreeNHalos[nr]);
@@ -335,6 +338,9 @@ void free_galaxies_and_tree(void)
 #ifndef PRELOAD_TREES
 #ifdef LOADIDS
   myfree(HaloIDs);
+#endif
+#ifdef READXFRAC
+  myfree(Xfrac);
 #endif
   myfree(Halo);
 #endif
