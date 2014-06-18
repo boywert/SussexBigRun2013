@@ -420,7 +420,8 @@ void reset_ejection_rates(int i, int sfh_ibin,
 void print_galaxy(char string[], int p, int halonr);
 
 #ifdef READXFRAC
+void load_xfrac();
 void get_xfrac_mesh();
-int read_xfrac(int snapnr, double* xfrac);
+int load_xfrac_table(int snapnr, double* xfrac);
 void free_xfrac(int snapnr);
 #endif
