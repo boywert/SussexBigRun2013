@@ -72,7 +72,7 @@ void load_xfrac(int snapnr)
 	  char sbuf[1000];
 	  printf("can't open file `%s': SKIP\n", buf);
 	  XfracDataDone[il] = 0;
-	  XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
+	  // XfracData[il] = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
 	}
       else
 	{
@@ -94,15 +94,15 @@ void load_xfrac(int snapnr)
     }
   else
     {
-      XfracData[il] = calloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2],sizeof(double));
+      XfracData[il] = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
     }
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* MPI_Bcast(&(XfracDataDone[il]), 1, MPI_INT, 0, MPI_COMM_WORLD); */
-  /* MPI_Barrier(MPI_COMM_WORLD); */
-  /* if(XfracDataDone[il] == 1) */
-  /*   { */
-  /*     MPI_Bcast(&(XfracData[il][0]), XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD); */
-  /*   } */
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Bcast(&(XfracDataDone[il]), 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Barrier(MPI_COMM_WORLD);
+  if(XfracDataDone[il] == 1)
+    {
+      MPI_Bcast(&(XfracData[il][0]), XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    }
 #endif
     
 }
