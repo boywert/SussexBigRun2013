@@ -153,6 +153,10 @@ int main(int argc, char **argv)
 
       load_tree_table(filenr);
 
+      /* Read in mesh dimensions */
+#ifdef READXFRAC
+      get_xfrac_mesh();
+#endif 
 
 #ifdef MCMC
 #ifdef PARALLEL
@@ -271,11 +275,6 @@ int main(int argc, char **argv)
     /* Scan through all trees snapshot by snapshot */
     int snapnum;
 
-#ifdef READXFRAC
-    get_xfrac_mesh();
-    for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
-      load_xfrac(snapnum);
-#endif 
 
     //for(treenr = 0; treenr < NTrees_Switch_MR_MRII; treenr++)
     //for(treenr = NTrees_Switch_MR_MRII; treenr < Ntrees; treenr++)
@@ -349,11 +348,6 @@ int main(int argc, char **argv)
 	free_galaxies_and_tree();
       }
 
-
-#ifdef READXFRAC
-    for(snapnum=0;snapnum<=LastSnapShotNr;snapnum++)
-      free_xfrac(snapnum);
-#endif
 
 
 
@@ -611,10 +605,8 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 		  Gal[ngal].FirstProgGal = HaloGal[currentgal].GalTreeIndex;	/* CHECK */
 #endif
 #ifdef READXFRAC
-		  int cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0]))
-		    + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
-		    + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-		  Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];		    
+
+		  // Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];		
 #endif
 
 

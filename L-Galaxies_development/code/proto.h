@@ -421,6 +421,6 @@ void print_galaxy(char string[], int p, int halonr);
 
 #ifdef READXFRAC
 void get_xfrac_mesh();
-void load_xfrac(int snapnr);
+int load_xfrac(int snapnr, double* xfrac);
 void free_xfrac(int snapnr);
 #endif

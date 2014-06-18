@@ -53,11 +53,11 @@ void read_parameter_file(char *fname)
   strcpy(tag[nt], "SimulationDir");
   addr[nt] = SimulationDir;
   id[nt++] = STRING;
-
+#ifdef READXFRAC
   strcpy(tag[nt], "XfracDir");
   addr[nt] = XfracDir;
   id[nt++] = STRING;
-
+#endif
   strcpy(tag[nt], "FileWithOutputRedshifts");
   addr[nt] = FileWithOutputRedshifts;
   id[nt++] = STRING;

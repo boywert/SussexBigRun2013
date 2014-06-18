@@ -57,7 +57,10 @@ void load_tree_table(int filenr)
 {
   int i,j, n, totNHalos, SnapShotInFileName;
   char buf[1000];
-
+#ifdef READXFRAC
+  int cell,status,status_prev;
+  double *xfrac;
+#endif
   SnapShotInFileName=LastDarkMatterSnapShot;
 
 #ifdef MCMC
@@ -151,6 +154,44 @@ void load_tree_table(int filenr)
 #endif
 #endif
 #endif
+
+#ifdef READXFRAC
+  XfracData = mymalloc("XfracData", sizeof(double) * totNHalos);
+  status_prev;
+  for(i=0;i<MAXSNAPS;i++)
+    {
+      xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+      if((status = read_xfrac(i,xfrac)) == 1)	    
+	{
+	  status_prev = 1;
+	  for(j=0;j<totNHalos;j++)
+	    {
+	      if(Halo_Data[j].SnapNum == i)
+		{
+		  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
+		    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
+		    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
+		  XfracData[j] = xfrac[cell]; 
+		}
+	    }
+	}
+      else
+	{
+	  for(j=0;j<totNHalos;j++)
+	    {
+	      if(Halo_Data[j].SnapNum == i)
+		{
+		  if(status_prev == 0)
+		    XfracData[j] = 0.;
+		  else
+		    XfracData[j] = 1.;
+		}
+	    }
+	}
+      myfree(xfrac);
+    }
+#endif
+
 }
 
 

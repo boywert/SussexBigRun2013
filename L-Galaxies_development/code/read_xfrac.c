@@ -46,18 +46,21 @@ void get_xfrac_mesh()
 
 /*  @file read_xfrac.c
     @brief Read in inonization fraction from C2Ray  
+    return 0 if not found, 1 if success
 */
-void load_xfrac(int snapnr)
+int load_xfrac(int snapnr, double* xfrac)
 {
   FILE* fp;
   char buf[1024],buf2[1024];
   float redshift;
   int i,j,k,il,cell;
   int dummy,mesh[3];
+  int status;
+
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
-      printf("Reading Xfrac data\n");
+      printf("Reading Xfrac data: Snap = %d\n",snapnr);
     }
   il = snapnr;
 
@@ -71,8 +74,7 @@ void load_xfrac(int snapnr)
 	{
 	  char sbuf[1000];
 	  printf("can't open file `%s': SKIP\n", buf);
-	  XfracDataDone[il] = 0;
-	  // XfracData[il] = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+	  status = 0;
 	}
       else
 	{
@@ -81,32 +83,28 @@ void load_xfrac(int snapnr)
 	  fread(&dummy, 1, sizeof(int),fp);
 	  printf("z=%2.3f, Mesh: %d %d %d\n\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
 	  sprintf(buf2,"XfracData[il]",il);
-	  XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 	  fread(&dummy, 1, sizeof(int),fp);
-	  fread(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+	  fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
 
 	  fclose(fp);
-	  XfracDataDone[il] = 1;
+	  status = 1;
 	}
 
 #ifdef PARALLEL
     }
   MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Bcast(&(XfracDataDone[il]), 1, MPI_INT, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
   if(XfracDataDone[il] == 1)
     {
       if(ThisTask != 0) 
-	XfracData[il] = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+	xfrac = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
       MPI_Barrier(MPI_COMM_WORLD);
-      MPI_Bcast(&(XfracData[il][0]), XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+      MPI_Bcast(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+      MPI_Barrier(MPI_COMM_WORLD);
     }
 #endif
-    
+  return status;
 }
 
-void free_xfrac(int snapnr)
-{
-  free(XfracData[snapnr]);
-}
