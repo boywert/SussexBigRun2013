@@ -1237,6 +1237,7 @@ extern double h2frac[LENSIGMAH][LENZ];
 
 /* For Reionization data */
 #ifdef READXFRAC
+extern double *XfracData;
 extern int XfracDataDone[MAXSNAPS];;
 extern int XfracMesh[3];
 extern char XfracDir[1024];
