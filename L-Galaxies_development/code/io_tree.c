@@ -160,6 +160,7 @@ void load_tree_table(int filenr)
   status_prev;
   for(i=0;i<MAXSNAPS;i++)
     {
+      if(ThisTask==0)printf("allocate\n");
       xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
       if((status = read_xfrac(i,xfrac)) == 1)	    
 	{
@@ -188,7 +189,9 @@ void load_tree_table(int filenr)
 		}
 	    }
 	}
+      if(ThisTask==0)printf("free\n");
       myfree(xfrac);
+      if(ThisTask==0)printf("finish\n");
     }
 #endif
 
