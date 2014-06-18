@@ -164,6 +164,7 @@ void load_tree_table(int filenr)
       xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
       if((status = read_xfrac(i,xfrac)) == 1)	    
 	{
+	  if(ThisTask==0)printf("finish reading");
 	  status_prev = 1;
 	  for(j=0;j<totNHalos;j++)
 	    {
