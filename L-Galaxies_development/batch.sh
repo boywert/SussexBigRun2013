@@ -3,7 +3,7 @@
 #$ -cwd
 #$ -q mps.q
 #$ -hard -l mf=200M
-#$ -pe openmpi 128
+#$ -pe openmpi 16
 #$ -j y
 #$ -N Lgalaxy_all
 
@@ -22,7 +22,7 @@ rm $inputfolder/* -f
 template="input/input_47mpc_template.par"
 exec=./L-Galaxies
 maxmemsize=4000
-firstfile=0
+firstfile=127
 lastfile=127
 
 # No reionization
