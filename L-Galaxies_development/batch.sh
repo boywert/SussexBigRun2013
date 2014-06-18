@@ -2,11 +2,10 @@
 #$ -S /bin/bash
 #$ -cwd
 #$ -q mps.q
-#$ -l mf=24G
+#$ -hard -l mf=3072G
 #$ -pe openmpi 128
 #$ -j y
 #$ -N Lgalaxy_all
-#$ -hard
 
 umask 002
 
