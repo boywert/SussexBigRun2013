@@ -207,10 +207,10 @@ void free_tree_table(void)
 #ifdef LOADIDS
   myfree(HaloIDs_Data);
 #endif
-  myfree(Halo_Data);
 #ifdef READXFRAC
   myfree(Xfrac_Data);
 #endif
+  myfree(Halo_Data);
 #endif
 
   myfree(TreeNgals[0]);
