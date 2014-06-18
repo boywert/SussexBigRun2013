@@ -156,7 +156,7 @@ void load_tree_table(int filenr)
 #endif
 
 #ifdef READXFRAC
-  XfracData = mymalloc("XfracData", sizeof(double) * totNHalos);
+  Xfrac_Data = mymalloc("Xfrac_Data", sizeof(double) * totNHalos);
   status_prev;
   for(i=0;i<MAXSNAPS;i++)
     {
@@ -171,7 +171,7 @@ void load_tree_table(int filenr)
 		  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
 		    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 		    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-		  XfracData[j] = xfrac[cell]; 
+		  Xfrac_Data[j] = xfrac[cell]; 
 		}
 	    }
 	}
@@ -182,9 +182,9 @@ void load_tree_table(int filenr)
 	      if(Halo_Data[j].SnapNum == i)
 		{
 		  if(status_prev == 0)
-		    XfracData[j] = 0.;
+		    Xfrac_Data[j] = 0.;
 		  else
-		    XfracData[j] = 1.;
+		    Xfrac_Data[j] = 1.;
 		}
 	    }
 	}
@@ -208,6 +208,9 @@ void free_tree_table(void)
   myfree(HaloIDs_Data);
 #endif
   myfree(Halo_Data);
+#ifdef READXFRAC
+  myfree(Xfrac_Data);
+#endif
 #endif
 
   myfree(TreeNgals[0]);
@@ -335,9 +338,7 @@ void free_galaxies_and_tree(void)
 #endif
   myfree(Halo);
 #endif
-#ifdef READXFRAC
-  myfree(XfracData);
-#endif
+
 
 }
 

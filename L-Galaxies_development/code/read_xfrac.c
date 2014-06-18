@@ -81,8 +81,9 @@ int read_xfrac(int snapnr, double* xfrac)
 	  fread(&dummy, 1, sizeof(int),fp);
 	  fread(&mesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
-	  printf("z=%2.3f, Mesh: %d %d %d\n\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
-	  sprintf(buf2,"XfracData[il]",il);
+	  if(mesh[0] != XfracMesh[0]
+	     || mesh[1] != XfracMesh[1]
+	     || mesh[2] != XfracMesh[2])
 	  fread(&dummy, 1, sizeof(int),fp);
 	  fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
