@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 #$ -cwd
 #$ -q mps.q
-#$ -l vf=16G
+#$ -l mem_free=16G
 #$ -pe openmpi 128
 #$ -j y
 #$ -N Lgalaxy_all

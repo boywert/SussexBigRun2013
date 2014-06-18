@@ -57,7 +57,7 @@ void load_xfrac(int snapnr)
   MPI_Barrier(MPI_COMM_WORLD);
   if(ThisTask == 0)
     {
-      printf("Reading Xfrac data\n\n");
+      printf("Reading Xfrac data\n");
     }
   il = snapnr;
 
@@ -79,7 +79,7 @@ void load_xfrac(int snapnr)
 	  fread(&dummy, 1, sizeof(int),fp);
 	  fread(&mesh, 3, sizeof(int),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
-	  printf("z=%2.3f, Mesh: %d %d %d\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
+	  printf("z=%2.3f, Mesh: %d %d %d\n\n",redshift,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
 	  sprintf(buf2,"XfracData[il]",il);
 	  XfracData[il] = malloc(sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 	  fread(&dummy, 1, sizeof(int),fp);
@@ -101,7 +101,7 @@ void load_xfrac(int snapnr)
   MPI_Barrier(MPI_COMM_WORLD);
   if(XfracDataDone[il] == 1)
     {
-      MPI_Bcast(XfracData[il], XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+      MPI_Bcast(&(XfracData[il][0]), XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 #endif
     
