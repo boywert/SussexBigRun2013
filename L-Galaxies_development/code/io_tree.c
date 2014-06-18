@@ -335,6 +335,10 @@ void free_galaxies_and_tree(void)
 #endif
   myfree(Halo);
 #endif
+#ifdef READXFRAC
+  myfree(XfracData);
+#endif
+
 }
 
 
