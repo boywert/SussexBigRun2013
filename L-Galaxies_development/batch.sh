@@ -2,10 +2,11 @@
 #$ -S /bin/bash
 #$ -cwd
 #$ -q mps.q
-#$ -l mem_free=16G
+#$ -l mf=16G
 #$ -pe openmpi 128
 #$ -j y
 #$ -N Lgalaxy_all
+#$ -hard
 
 umask 002
 
