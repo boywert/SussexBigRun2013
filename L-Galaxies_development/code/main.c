@@ -606,7 +606,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #endif
 #ifdef READXFRAC
 
-		  // Gal[ngal].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell];		
+		  Gal[ngal].Xfrac3d = Xfrac[halonr];		
 #endif
 
 

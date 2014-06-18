@@ -194,11 +194,8 @@ void init_galaxy(int p, int halonr)
   Gal[p].HaloVelDisp = Halo[halonr].VelDisp;
   Gal[p].HaloVmax = Halo[halonr].Vmax;
 #endif
-#ifdef READXFRAC
-  /* cell = (int) (Halo[halonr].Pos[0]/(BoxSize/XfracMesh[0])) */
-  /*   + (int) (Halo[halonr].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0] */
-  /*   + (int) (Halo[halonr].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1]; */
-  /* Gal[p].Xfrac3d = XfracData[Halo[halonr].SnapNum][cell]; */
+#ifdef READXFRA
+  Gal[p].Xfrac3d = Xfrac[halonr]; 
 				    
 #endif
   for(j = 0; j < 3; j++)
