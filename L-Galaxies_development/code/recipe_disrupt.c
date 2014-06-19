@@ -276,7 +276,7 @@ double sat_radius(int p)
     Sigma0 = 0;
     rd = 1.;
   }
-
+ 
   /* increases the search radius until it encompasses half the total mass taking
    * into account the stellar disk, stellar bulge and cold gas disk. */
   M = 0.0;
@@ -294,6 +294,7 @@ double sat_radius(int p)
     //M += diskmass_r(r,rd,Sigma0,dr)+bulgemass_r(r,rb,Mbulge,dr)+diskmass_r(r,rgd,Sigma0_g,dr);
 
     ii++;
+    printf("ii:%d M:%g tot:%g\n",ii,(float)M,(float)totmass);
     if(ii > 1000)
     	terminate ("couldn't find half mass radius");
   }
