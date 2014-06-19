@@ -162,9 +162,10 @@ void load_tree_table(int filenr)
     {
       if(ThisTask==0)printf("allocate\n");
       xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
-      if((status = read_xfrac(i,xfrac)) == 1)	    
+      status = read_xfrac(i,xfrac)
+      if(status == 1)	    
 	{
-	  if(ThisTask==0)printf("finish reading");
+	  if(ThisTask==0)printf("finish reading\n");
 	  status_prev = 1;
 	  for(j=0;j<totNHalos;j++)
 	    {
@@ -174,6 +175,7 @@ void load_tree_table(int filenr)
 		    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 		    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
 		  Xfrac_Data[j] = xfrac[cell]; 
+		  printf("xfrac: %lf\n",Xfrac_Data[j]);
 		}
 	    }
 	}
@@ -187,6 +189,7 @@ void load_tree_table(int filenr)
 		    Xfrac_Data[j] = 0.;
 		  else
 		    Xfrac_Data[j] = 1.;
+		  printf("xfrac: %lf\n",Xfrac_Data[j]);
 		}
 	    }
 	}
