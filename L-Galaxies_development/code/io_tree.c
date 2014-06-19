@@ -162,7 +162,7 @@ void load_tree_table(int filenr)
     {
       if(ThisTask==0)printf("allocate\n");
       xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
-      status = read_xfrac(i,xfrac)
+      status = read_xfrac(i,xfrac);
       if(status == 1)	    
 	{
 	  if(ThisTask==0)printf("finish reading\n");
