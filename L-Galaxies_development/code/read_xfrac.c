@@ -51,7 +51,7 @@ void get_xfrac_mesh()
 int read_xfrac(int snapnr, double* xfrac)
 {
   FILE* fp;
-  char buf[1024],buf2[1024];
+  char buf[1024],sbuf[1024];
   float redshift;
   int i,j,k,il,cell;
   int dummy,mesh[3];
@@ -84,6 +84,10 @@ int read_xfrac(int snapnr, double* xfrac)
 	  if(mesh[0] != XfracMesh[0]
 	     || mesh[1] != XfracMesh[1]
 	     || mesh[2] != XfracMesh[2])
+	    {
+	      sprintf(sbuf,"Meshes do not match\n");
+	      terminate(sbuf);
+	    }
 	  fread(&dummy, 1, sizeof(int),fp);
 	  fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
 	  fread(&dummy, 1, sizeof(int),fp);
