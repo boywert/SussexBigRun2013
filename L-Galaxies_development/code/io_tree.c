@@ -175,7 +175,7 @@ void load_tree_table(int filenr)
 		    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 		    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
 		  Xfrac_Data[j] = xfrac[cell]; 
-		  printf("xfrac: %lf\n",Xfrac_Data[j]);
+		  // printf("xfrac: %lf\n",Xfrac_Data[j]);
 		}
 	    }
 	}
@@ -189,7 +189,7 @@ void load_tree_table(int filenr)
 		    Xfrac_Data[j] = 0.;
 		  else
 		    Xfrac_Data[j] = 1.;
-		  printf("xfrac: %lf\n",Xfrac_Data[j]);
+		  // printf("xfrac: %lf\n",Xfrac_Data[j]);
 		}
 	    }
 	}
