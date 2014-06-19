@@ -280,7 +280,7 @@ double sat_radius(int p)
   /* increases the search radius until it encompasses half the total mass taking
    * into account the stellar disk, stellar bulge and cold gas disk. */
   M = 0.0;
-  do {
+  while(M < 0.5*totmass) {
     rmi = (rmin) + ii* rbin;
     rma = (rmin) + rbin * (ii+1);
     dr = rma - rmi;
@@ -298,7 +298,7 @@ double sat_radius(int p)
     if(ii > 1000)
     	terminate ("couldn't find half mass radius");
   }
-  while(M < 0.5*totmass);
+  
 #else
 	M=0.5*(Gal[p].DiskMass + Gal[p].ColdGas+Gal[p].BulgeMass);   //to find half mass radius
 	rb=Gal[p].BulgeSize;
