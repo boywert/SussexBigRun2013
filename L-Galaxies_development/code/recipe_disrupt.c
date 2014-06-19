@@ -244,7 +244,7 @@ double sat_radius(int p)
   Mgas = Gal[p].ColdGas;
   Mbulge = Gal[p].BulgeMass;
   totmass = Gal[p].DiskMass + Gal[p].BulgeMass + Gal[p].ColdGas;
-  printf("gas:%g bulge:%g disk:%g M200:%f\n",Mgas,Mbulge,Mdisk,Gal[p].HaloM_Crit200);
+  // printf("gas:%g bulge:%g disk:%g M200:%f\n",Mgas,Mbulge,Mdisk,Gal[p].HaloM_Crit200);
 
   //defining a maximum search radius for half mass?
   tmprmax=(rd*1.68 > rb)? rd*1.68:rb;
