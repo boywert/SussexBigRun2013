@@ -244,7 +244,7 @@ double sat_radius(int p)
   Mgas = Gal[p].ColdGas;
   Mbulge = Gal[p].BulgeMass;
   totmass = Gal[p].DiskMass + Gal[p].BulgeMass + Gal[p].ColdGas;
-
+  printf("gas:%g bulge:%g disk:%g\n",Mgas,Mbulge,Mdisk);
 
   //defining a maximum search radius for half mass?
   tmprmax=(rd*1.68 > rb)? rd*1.68:rb;
@@ -280,7 +280,7 @@ double sat_radius(int p)
   /* increases the search radius until it encompasses half the total mass taking
    * into account the stellar disk, stellar bulge and cold gas disk. */
   M = 0.0;
-  while(M < 0.5*totmass) {
+  do {
     rmi = (rmin) + ii* rbin;
     rma = (rmin) + rbin * (ii+1);
     dr = rma - rmi;
@@ -294,11 +294,10 @@ double sat_radius(int p)
     //M += diskmass_r(r,rd,Sigma0,dr)+bulgemass_r(r,rb,Mbulge,dr)+diskmass_r(r,rgd,Sigma0_g,dr);
 
     ii++;
-    printf("ii:%d M:%g tot:%g\n",ii,(float)M,(float)totmass);
     if(ii > 1000)
     	terminate ("couldn't find half mass radius");
   }
-  
+  while(M < 0.5*totmass);
 #else
 	M=0.5*(Gal[p].DiskMass + Gal[p].ColdGas+Gal[p].BulgeMass);   //to find half mass radius
 	rb=Gal[p].BulgeSize;
