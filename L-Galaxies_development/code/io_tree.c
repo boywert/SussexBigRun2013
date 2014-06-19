@@ -157,7 +157,7 @@ void load_tree_table(int filenr)
 
 #ifdef READXFRAC
   Xfrac_Data = mymalloc("Xfrac_Data", sizeof(double) * totNHalos);
-  status_prev;
+  status_prev=0;
   for(i=0;i<MAXSNAPS;i++)
     {
       if(ThisTask==0)printf("allocate\n");
