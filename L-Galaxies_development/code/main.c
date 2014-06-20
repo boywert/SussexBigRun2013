@@ -832,6 +832,7 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
   /* Calculate how much hot gas needs to be accreted to give the correct baryon fraction
    * in the main halo. This is the universal fraction, less any reduction due to reionization. */
   infallingGas = infall_recipe(centralgal, ngal, Zcurr);
+  printf("infallingGas = %g\n",infallingGas);
   Gal[centralgal].PrimordialAccretionRate=infallingGas/deltaT;
   
   //if(halonr > 35 && halonr < 40)
