@@ -58,10 +58,6 @@ int read_xfrac(int snapnr, double* xfrac)
   int dummy,mesh[3];
   int status;
 
-#ifdef PARALLEL
-  MPI_Barrier(MPI_COMM_WORLD);
-  sleep(2*ThisTask);
-#endif
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data: Snap = %d\n",snapnr);
