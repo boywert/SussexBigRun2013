@@ -109,12 +109,12 @@ int read_xfrac(int snapnr, double* xfrac)
       MPI_Barrier(MPI_COMM_WORLD);
       MPI_Bcast(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
       MPI_Barrier(MPI_COMM_WORLD);
-      for(i=0;i<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];i++)
-	{
-	  if(xfrac[i] > 0.5)
-	    printf("Task:%d, %d =>%lf\n",ThisTask,i,xfrac[i]);
-	  MPI_Barrier(MPI_COMM_WORLD);
-	}
+      /* for(i=0;i<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];i++) */
+      /* 	{ */
+      /* 	  if(xfrac[i] > 0.5) */
+      /* 	    printf("Task:%d, %d =>%lf\n",ThisTask,i,xfrac[i]); */
+      /* 	  MPI_Barrier(MPI_COMM_WORLD); */
+      /* 	} */
     }
 
 #endif
