@@ -263,7 +263,7 @@ void add_infall_to_hot(int centralgal, double infallingGas) {
 	}
 	else	//  Add the infalling gas to the central galaxy hot component
 	  Gal[centralgal].HotGas += infallingGas;
-	printf("Hotgas = %g\n",Gal[centralgal].HotGas);
+	// printf("Hotgas = %g\n",Gal[centralgal].HotGas);
 #ifdef INDIVIDUAL_ELEMENTS
   //Gal[centralgal].HotGas_elements.H += 0.75*infallingGas*1.0e10;
   Gal[centralgal].HotGas_elements.H += 0.75*(infallingGas/Hubble_h)*1.0e10;
