@@ -102,7 +102,7 @@ int read_xfrac(int snapnr, double* xfrac)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
-  if(XfracDataDone[il] == 1)
+  if(status == 1)
     {
       if(ThisTask != 0) 
 	xfrac = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
