@@ -20,6 +20,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 {
   int i;
   double tot_mass, reionization_modifier, infallingMass;
+  double infall1,infall2;
   double dis;
   int cell;
   double mu,m_p,Tk;
@@ -66,7 +67,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     {
      reionization_modifier = (1.0-Gal[centralgal].Xfrac3d) 
 	+ Gal[centralgal].Xfrac3d*do_reionization(Gal[centralgal].Mvir, Zcurr);
-     printf("xfrac:%f, re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
+     // printf("xfrac:%f, re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
     }
   else if(ReionizationOn == 4)
     {
@@ -83,14 +84,14 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	}
       else
 	reionization_modifier = 1.0;
-      printf("xfrac:%f, re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
+      printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
     }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
 
   infallingMass = reionization_modifier * BaryonFrac * Gal[centralgal].Mvir - tot_mass;
-
+  
   //double new_fb;
   //new_fb=0.00625*log10(Gal[centralgal].Mvir*1.e10)+0.06125;
   //new_fb=0.02625*log10(Gal[centralgal].Mvir*1.e10)-0.24;
