@@ -97,7 +97,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
 
   infallingMass = reionization_modifier * BaryonFrac * Gal[centralgal].Mvir - tot_mass;
-  
+  printf("infall = %g\n",infallingMass);
   //double new_fb;
   //new_fb=0.00625*log10(Gal[centralgal].Mvir*1.e10)+0.06125;
   //new_fb=0.02625*log10(Gal[centralgal].Mvir*1.e10)-0.24;
