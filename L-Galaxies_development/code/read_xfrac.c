@@ -58,7 +58,10 @@ int read_xfrac(int snapnr, double* xfrac)
   int dummy,mesh[3];
   int status;
 
+#ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
+  sleep(2*ThisTask);
+#endif
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data: Snap = %d\n",snapnr);
@@ -67,57 +70,34 @@ int read_xfrac(int snapnr, double* xfrac)
 
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-#ifdef PARALLEL
-  if(ThisTask == 0)
+
+  if((fp = fopen(buf,"r")) == NULL)
     {
-#endif
-      if((fp = fopen(buf,"r")) == NULL)
-	{
-	  char sbuf[1000];
-	  printf("can't open file `%s': SKIP\n", buf);
-	  status = 0;
-	}
-      else
-	{
-	  fread(&dummy, 1, sizeof(int),fp);
-	  fread(&mesh, 3, sizeof(int),fp);
-	  fread(&dummy, 1, sizeof(int),fp);
-	  if(mesh[0] != XfracMesh[0]
-	     || mesh[1] != XfracMesh[1]
-	     || mesh[2] != XfracMesh[2])
-	    {
-	      sprintf(sbuf,"Meshes do not match\n");
-	      terminate(sbuf);
-	    }
-	  fread(&dummy, 1, sizeof(int),fp);
-	  fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
-	  fread(&dummy, 1, sizeof(int),fp);
-
-	  fclose(fp);
-	  status = 1;
-	}
-
-#ifdef PARALLEL
+      char sbuf[1000];
+      printf("can't open file `%s': SKIP\n", buf);
+      status = 0;
     }
-  MPI_Barrier(MPI_COMM_WORLD);
-  MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
-  MPI_Barrier(MPI_COMM_WORLD);
-  if(status == 1)
+  else
     {
-      if(ThisTask != 0) 
-	xfrac = malloc(XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
-      MPI_Barrier(MPI_COMM_WORLD);
-      MPI_Bcast(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
-      MPI_Barrier(MPI_COMM_WORLD);
-      /* for(i=0;i<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];i++) */
-      /* 	{ */
-      /* 	  if(xfrac[i] > 0.5) */
-      /* 	    printf("Task:%d, %d =>%lf\n",ThisTask,i,xfrac[i]); */
-      /* 	  MPI_Barrier(MPI_COMM_WORLD); */
-      /* 	} */
+      fread(&dummy, 1, sizeof(int),fp);
+      fread(&mesh, 3, sizeof(int),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+      if(mesh[0] != XfracMesh[0]
+	 || mesh[1] != XfracMesh[1]
+	 || mesh[2] != XfracMesh[2])
+	{
+	  sprintf(sbuf,"Meshes do not match\n");
+	  terminate(sbuf);
+	}
+      fread(&dummy, 1, sizeof(int),fp);
+      fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+      fread(&dummy, 1, sizeof(int),fp);
+
+      fclose(fp);
+      status = 1;
     }
 
-#endif
+
   return status;
 }
 
