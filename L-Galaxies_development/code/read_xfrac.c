@@ -40,6 +40,7 @@ void get_xfrac_mesh()
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Bcast(XfracMesh, 3, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
+  printf("Task:%d => %d %d %d\n",ThisTask,XfracMesh[0],XfracMesh[1],XfracMesh[2]);
 #endif
 
 }

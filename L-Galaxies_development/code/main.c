@@ -1229,6 +1229,17 @@ void evolve_galaxies(int halonr, int ngal, int treenr, int cenngal)
     terminate("PARALLEL cannot be run with OVERWRITE_OUTPUT\n");
 #endif
 #endif*/
+
+#ifdef READXFRAC
+#ifndef HALOPROPERTIES
+    printf("> Error : option READXFRAC requires option HALOPROPERTIES \n");
+    exit(32);
+#endif
+/* #ifndef PARALLEL */
+/*     printf("> Error : option READXFRAC requires option PARALLEL \n"); */
+/*     exit(32); */
+/* #endif */
+#endif
   
 #ifdef OUTPUT_MOMAF_INPUTS
 #ifndef POST_PROCESS_MAGS
