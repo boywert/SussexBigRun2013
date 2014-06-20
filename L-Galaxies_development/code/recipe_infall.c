@@ -86,7 +86,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	{
 	  reionization_modifier = 1.0;
 	}
-      printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
+      // printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
     }
   else if(ReionizationOn == 5)
     {
