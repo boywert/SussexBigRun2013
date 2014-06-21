@@ -19,7 +19,9 @@ lastfile = 127
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patcy_II"]
+model_labels = ["Okamoto et al. (2008)","No Reionization","Patchy Reionization I","Patchy Reionization II"]
 model_paths = ["/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/","/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/"]
+model_plot_patterns = ['r--','b--','g--','m--']
 
 gal = {}
 nTrees = {}
@@ -38,59 +40,25 @@ for i in range(len(model_names)):
     coldgas[index] = coldgas_mass_fn(gal[index],1.e3,1.e12,50)
     sfr[index] = sfr_fn(gal[index])
 
-# star_okamoto_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
-# star_noreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
-# star_patchyreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
-# star_patchyreionization_model_II = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
 
 
+pylab.rc('text', usetex=True)
 
-# hot_okamoto_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
-# hot_noreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
-# hot_patchyreionization_model = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
-# hot_patchyreionization_model_II = hotgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
+fig = pylab.figure()
+ax = fig.add_subplot(111)
 
+for i in range(len(model_names)):
+    index = model_names[i]
+    ax.plot(star[index][0],star[index][1],model_plot_patterns[i],label=model_labels[i])
+ax.set_yscale("log")
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
 
-
-# bh_okamoto_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf)
-# bh_noreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf)
-# bh_patchyreionization_model = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf)
-# bh_patchyreionization_model_II = bh_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf)
-
-
-
-# cold_okamoto_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
-# cold_noreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
-# cold_patchyreionization_model = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf,1.e3,1.e12,50)
-# cold_patchyreionization_model_II = coldgas_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf,1.e3,1.e12,50)
-
-
-
-# sfr_okamoto_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf)
-# sfr_noreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf)
-# sfr_patchyreionization_model = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/",prefix,ff,lf)
-# sfr_patchyreionization_model_II = sfr_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/",prefix,ff,lf)
-
-
-
-# pylab.rc('text', usetex=True)
-
-# fig = pylab.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(star_okamoto_model[0],star_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
-# ax.plot(star_noreionization_model[0],star_noreionization_model[1],'b--',label="No Reionization")
-# ax.plot(star_patchyreionization_model[0],star_patchyreionization_model[1],'m--',label="Patchy Reionization")
-# ax.plot(star_patchyreionization_model_II[0],star_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-# #ax.plot(star_patchyreionization_model_III[0],star_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
-# ax.set_yscale("log")
-# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-# leg.get_frame().set_linewidth(0)
-
-# ax.set_xlabel(r"$\log(M/M_\odot h)$")
-# ax.set_ylabel(r"$N$")
-# fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-# #pylab.show()
-# pylab.savefig('reion_star_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+ax.set_xlabel(r"$\log(M/M_\odot h)$")
+ax.set_ylabel(r"$N$")
+fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+#pylab.show()
+pylab.savefig('reion_star_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 # fig = pylab.figure()
 # ax = fig.add_subplot(111)
