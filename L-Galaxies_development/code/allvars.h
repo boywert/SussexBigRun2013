@@ -559,6 +559,10 @@ struct GALAXY_OUTPUT
   struct elements ICM_elements;
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
+
+#if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
+  float Xfrac3d;
+#endif
 };
 
 // next only of interest to DB output, which generally requires complete tree
