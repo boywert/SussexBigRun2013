@@ -58,7 +58,7 @@ ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 #pylab.show()
-pylab.savefig('reion_star_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+pylab.savefig('reion_star_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 # fig = pylab.figure()
 # ax = fig.add_subplot(111)
