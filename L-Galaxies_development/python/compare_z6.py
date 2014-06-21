@@ -16,16 +16,18 @@ filter['Xfrac3d'] = True
 file_prefix = "SA_z6.00"
 firstfile = 127
 lastfile = 127
-(nTrees,nGals,nTreeGals,gal) = read_lgal.readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter)
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patcy_II"]
 model_paths = ["/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/","/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/"]
 
 gal = {}
-
+nTrees = {}
+nGals = {}
+nTreeGals = {}
 for i in range(len(model_names)):
-    (nTrees,nGals,nTreeGals,gal[model_names[i]]) = read_lgal.readsnap_lgal(model_paths[i],file_prefix,firstfile,lastfile,filter)
+    index = model_names[i]
+    (nTrees[index],nGals[index],nTreeGals[index],gal[index]) = read_lgal.readsnap_lgal(model_paths[i],file_prefix,firstfile,lastfile,filter)
 
 
 
