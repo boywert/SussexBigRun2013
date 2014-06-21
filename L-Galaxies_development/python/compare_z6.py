@@ -14,7 +14,7 @@ filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 file_prefix = "SA_z6.00"
-firstfile = 127
+firstfile = 0
 lastfile = 127
 
 config = {}
@@ -35,7 +35,7 @@ sfr = {}
 for i in range(len(model_names)):
     index = model_names[i]
     (nTrees[index],nGals[index],nTreeGals[index],gal[index]) = read_lgal.readsnap_lgal(model_paths[i],file_prefix,firstfile,lastfile,filter)
-    star[index] = stellar_mass_fn(gal[index],1.e3,1.e12,50)
+    star[index] = stellar_mass_fn(gal[index],1.,1.e10,50)
     hotgas[index] = hotgas_mass_fn(gal[index],1.e3,1.e12,50)
     coldgas[index] = coldgas_mass_fn(gal[index],1.e3,1.e12,50)
     sfr[index] = sfr_fn(gal[index])
