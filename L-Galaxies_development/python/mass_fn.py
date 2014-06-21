@@ -44,7 +44,7 @@ def bh_mass_fn(gal,mass_min=1.0,mass_max=1.e8,nbins=50):
     return (massftn_x,massftn_y)
 
 
-def sfr_fn(folder,file_prefix,firstfile,lastfile,mass_min=0.000001,mass_max=1.,nbins=50):
+def sfr_fn(gal,mass_min=0.000001,mass_max=1.,nbins=50):
     massf = numpy.log10(gal['Sfr'])
     stellarmass = numpy.histogram(massf,nbins,(numpy.log10(mass_min),numpy.log10(mass_max)))
     massftn_y = stellarmass[0]

@@ -25,12 +25,18 @@ gal = {}
 nTrees = {}
 nGals = {}
 nTreeGals = {}
+star = {}
+hotgas = {}
+coldgas = {}
+Blackhole = {}
+sfr = {}
 for i in range(len(model_names)):
     index = model_names[i]
     (nTrees[index],nGals[index],nTreeGals[index],gal[index]) = read_lgal.readsnap_lgal(model_paths[i],file_prefix,firstfile,lastfile,filter)
-
-
-
+    star[index] = stellar_mass_fn(gal[index],1.e3,1.e12,50)
+    hotgas[index] = hotgas_mass_fn(gal[index],1.e3,1.e12,50)
+    coldgas[index] = coldgas_mass_fn(gal[index],1.e3,1.e12,50)
+    sfr[index] = sfr_fn(gal[index])
 
 # star_okamoto_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/",prefix,ff,lf,1.e3,1.e12,50)
 # star_noreionization_model = stellar_mass_fn("/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/",prefix,ff,lf,1.e3,1.e12,50)
