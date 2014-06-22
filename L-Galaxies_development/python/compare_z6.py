@@ -110,17 +110,9 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["Xfrac3d"],gal["okamoto"]["Sfr"],s=1,color='red',label='oka')
-ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["Sfr"],s=1,color='green',label='patchy')
-# ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"])
-# stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
+ax.scatter(gal["okamoto"]["Xfrac3d"],gal["okamoto"]["DiskMass"],s=2,color='red',label='oka')
+ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["DiskMass"],s=2,color='green',label='patchy')
 
-# for i in range(10):
-#     if gal["okamoto"]["DiskMass"][i] > 0.0:
-#         print gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i],gal["okamoto"]["DiskMass"][i]
-
-# ax.set_yscale("log")
-# ax.set_xscale("log")
 
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
