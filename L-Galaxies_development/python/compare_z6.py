@@ -119,7 +119,7 @@ ax.set_yscale("log")
 #leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
-ax.set_xlim([0.9,1.0])
+
 fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
 fig.show()
 pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.png',bbox_inches='tight')
