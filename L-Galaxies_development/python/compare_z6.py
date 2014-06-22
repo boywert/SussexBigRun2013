@@ -113,9 +113,10 @@ ax = fig.add_subplot(111)
 ax.scatter(gal["okamoto"]["Xfrac3d"],gal["okamoto"]["DiskMass"],s=2,color='red',label='oka')
 ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["DiskMass"],s=2,color='green',label='patchy')
 
+ax.set_yscale("log")
 
-leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-leg.get_frame().set_linewidth(0)
+#leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+#leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_xlim([0.9,1.0])
