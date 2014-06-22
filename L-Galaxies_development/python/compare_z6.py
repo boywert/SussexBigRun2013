@@ -113,8 +113,8 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.plot(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],label="Okamoto et al. (2008)")
-ax.plot(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],label="Patchy Reionization II")
+ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],label="Okamoto et al. (2008)")
+ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],label="Patchy Reionization II")
 
 ax.set_yscale("log")
 ax.set_xscale("log")
