@@ -110,7 +110,7 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["DiskMass"],label='test')
+ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],label='test')
 # ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"])
 # stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
 
