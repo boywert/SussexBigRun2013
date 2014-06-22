@@ -1,9 +1,6 @@
 from mass_fn import *
 import pylab
 import sys
-ff = 9
-lf = 9
-prefix="SA_z6.00"
 
 filter = LGalaxyStruct.properties_used
 filter['Sfr'] = True
@@ -14,7 +11,7 @@ filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 file_prefix = "SA_z6.00"
-firstfile = 0
+firstfile = 127
 lastfile = 127
 
 config = {}
