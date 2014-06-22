@@ -114,9 +114,9 @@ ax.scatter(gal["okamoto"]["BulgeMass"][0:10]+gal["okamoto"]["DiskMass"][0:10],ga
 # ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"])
 # stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
 
-# for i in range(len(stellar)):
-#     if stellar[i] > 0.0:
-#         print stellar[i],  gal["okamoto"]["Sfr"][i]
+for i in range(10):
+    if stellar[i] > 0.0:
+        print gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i],gal["okamoto"]["DiskMass"][i]
 
 ax.set_yscale("log")
 ax.set_xscale("log")
