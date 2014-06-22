@@ -119,8 +119,7 @@ ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patch
 print len(gal["okamoto"]["BulgeMass"])
 ax.set_yscale("log")
 ax.set_xscale("log")
-pylab.ylim([0.000001,1.])
-pylab.xlim([1.e3,1.e12])
+
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
