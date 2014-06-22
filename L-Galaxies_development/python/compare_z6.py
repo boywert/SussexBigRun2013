@@ -113,8 +113,9 @@ ax = fig.add_subplot(111)
 ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],s=2,color='green',label="Okamoto et al. (2008)")
 ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],s=2,color='red',label="Patchy Reionization II")
 stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
-print stellar[:]
-print gal["okamoto"]["Sfr"][:]
+
+for i in range(len(stellar)):
+    print stellar[i] + gal["okamoto"]["Sfr"][i]
 
 ax.set_yscale("log")
 ax.set_xscale("log")
