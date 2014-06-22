@@ -113,13 +113,14 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],label="Okamoto et al. (2008)")
-ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],label="Patchy Reionization II")
+ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],s=2,color='green',label="Okamoto et al. (2008)")
+ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],s=2,color='red',label="Patchy Reionization II")
 
 print len(gal["okamoto"]["BulgeMass"])
 ax.set_yscale("log")
 ax.set_xscale("log")
-
+ax.ylim([0.000001,1.])
+ax.xlim([1.e3,1.e12])
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
