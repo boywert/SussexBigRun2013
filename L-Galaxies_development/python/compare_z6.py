@@ -119,7 +119,7 @@ ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]
 #         print gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i],gal["okamoto"]["DiskMass"][i]
 
 # ax.set_yscale("log")
-# ax.set_xscale("log")
+ax.set_xscale("log")
 
 leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 leg.get_frame().set_linewidth(0)
