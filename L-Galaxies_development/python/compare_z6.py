@@ -18,7 +18,7 @@ firstfile = 0
 lastfile = 127
 
 config = {}
-model_names = ["okamoto","noreionization","patchy_I","patcy_II"]
+model_names = ["okamoto","noreionization","patchy_I","patchy_II"]
 model_labels = ["Okamoto et al. (2008)","No Reionization","Patchy Reionization I","Patchy Reionization II"]
 model_paths = ["/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/","/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_I/","/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/"]
 model_plot_patterns = ['r--','b--','g--','m--']
@@ -57,75 +57,73 @@ leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
 fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-#pylab.show()
 pylab.savefig('reion_star_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
-# fig = pylab.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(hot_okamoto_model[0],hot_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
-# ax.plot(hot_noreionization_model[0],hot_noreionization_model[1],'b--',label="No Reionization")
-# ax.plot(hot_patchyreionization_model[0],hot_patchyreionization_model[1],'m--',label="Patchy Reionization")
-# ax.plot(hot_patchyreionization_model_II[0],hot_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-# #ax.plot(hot_patchyreionization_model_III[0],hot_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
-# ax.set_yscale("log")
-# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-# leg.get_frame().set_linewidth(0)
 
-# ax.set_xlabel(r"$\log(M/M_\odot h)$")
-# ax.set_ylabel(r"$N$")
-# fig.suptitle("Hot Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
-# #pylab.show()
-# pylab.savefig('reion_hotgas_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+fig = pylab.figure()
+ax = fig.add_subplot(111)
 
+for i in range(len(model_names)):
+    index = model_names[i]
+    ax.plot(hotgas[index][0],hotgas[index][1],model_plot_patterns[i],label=model_labels[i])
 
-# fig = pylab.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(cold_okamoto_model[0],cold_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
-# ax.plot(cold_noreionization_model[0],cold_noreionization_model[1],'b--',label="No Reionization")
-# ax.plot(cold_patchyreionization_model[0],cold_patchyreionization_model[1],'m--',label="Patchy Reionization")
-# ax.plot(cold_patchyreionization_model_II[0],cold_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-# #ax.plot(cold_patchyreionization_model_III[0],cold_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
-# ax.set_yscale("log")
-# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-# leg.get_frame().set_linewidth(0)
-# ax.set_xlabel(r"$\log(M/M_\odot h)$")
-# ax.set_ylabel(r"$N$")
-# fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+ax.set_yscale("log")
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
 
-# pylab.savefig('reion_coldgas_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+ax.set_xlabel(r"$\log(M/M_\odot h)$")
+ax.set_ylabel(r"$N$")
+fig.suptitle("Hot Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+pylab.savefig('reion_hotgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 
-# fig = pylab.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(bh_okamoto_model[0],bh_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
-# ax.plot(bh_noreionization_model[0],bh_noreionization_model[1],'b--',label="No Reionization")
-# ax.plot(bh_patchyreionization_model[0],bh_patchyreionization_model[1],'m--',label="Patchy Reionization")
-# ax.plot(bh_patchyreionization_model_II[0],bh_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-# #ax.plot(bh_patchyreionization_model_III[0],bh_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
-# #ax.set_yscale("log")
-# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-# leg.get_frame().set_linewidth(0)
-# ax.set_xlabel(r"$\log(M/M_\odot h)$")
-# ax.set_ylabel(r"$N$")
-# fig.suptitle("Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+fig = pylab.figure()
+ax = fig.add_subplot(111)
 
-# pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+for i in range(len(model_names)):
+    index = model_names[i]
+    ax.plot(coldgas[index][0],coldgas[index][1],model_plot_patterns[i],label=model_labels[i])
+
+ax.set_yscale("log")
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
+ax.set_xlabel(r"$\log(M/M_\odot h)$")
+ax.set_ylabel(r"$N$")
+fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+
+pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 
-# fig = pylab.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(sfr_okamoto_model[0],sfr_okamoto_model[1],'r--',label="Okamoto et al. (2008)")
-# ax.plot(sfr_noreionization_model[0],sfr_noreionization_model[1],'b--',label="No Reionization")
-# ax.plot(sfr_patchyreionization_model[0],sfr_patchyreionization_model[1],'m--',label="Patchy Reionization")
-# ax.plot(sfr_patchyreionization_model_II[0],sfr_patchyreionization_model_II[1],'g--',label="Patchy Reionization II")
-# #ax.plot(sfr_patchyreionization_model_III[0],sfr_patchyreionization_model_III[1],'k--',label="Patchy Reionization III")
-# ax.set_yscale("log")
-# ax.set_xscale("log")
-# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-# leg.get_frame().set_linewidth(0)
-# ax.set_xlabel(r"SFR ($M_\odot/yr$)")
-# ax.set_ylabel(r"$N$")
-# fig.suptitle("SFR z = 6 file "+str(ff)+"-"+str(lf))
+fig = pylab.figure()
+ax = fig.add_subplot(111)
 
-# pylab.savefig('reion_sfr_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
-# #pylab.show()
+for i in range(len(model_names)):
+    index = model_names[i]
+    ax.plot(Blackhole[index][0],Blackhole[index][1],model_plot_patterns[i],label=model_labels[i])
+
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
+ax.set_xlabel(r"$\log(M/M_\odot h)$")
+ax.set_ylabel(r"$N$")
+fig.suptitle("Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+
+pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+
+
+fig = pylab.figure()
+ax = fig.add_subplot(111)
+
+ax.plot(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],label="Okamoto et al. (2008)")
+ax.plot(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],label="Patchy Reionization II")
+
+ax.set_yscale("log")
+ax.set_xscale("log")
+
+leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+leg.get_frame().set_linewidth(0)
+ax.set_ylabel(r"SFR ($M_\odot/yr$)")
+ax.set_xlabel(r"$\log(M/M_\odot h)$")
+fig.suptitle("SFR z = 6 file "+str(ff)+"-"+str(lf))
+
+pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.png',bbox_inches='tight')
+
