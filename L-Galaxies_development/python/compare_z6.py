@@ -53,7 +53,7 @@ leg.get_frame().set_linewidth(0)
 
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
-fig.suptitle("Stellar Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+fig.suptitle("Stellar Mass Function z = 6 file "+str(firstfile)+"-"+str(lastfile))
 pylab.savefig('reion_star_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 
@@ -70,7 +70,7 @@ leg.get_frame().set_linewidth(0)
 
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
-fig.suptitle("Hot Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+fig.suptitle("Hot Gass Mass Function z = 6 file "+str(firstfile)+"-"+str(lastfile))
 pylab.savefig('reion_hotgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 
@@ -86,7 +86,7 @@ leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size
 leg.get_frame().set_linewidth(0)
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 ax.set_ylabel(r"$N$")
-fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+fig.suptitle("Cold Gass Mass Function z = 6 file "+str(firstfile)+"-"+str(lastfile))
 
 pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
@@ -121,7 +121,7 @@ leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size
 leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
-fig.suptitle("SFR z = 6 file "+str(ff)+"-"+str(lf))
+fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
 
 pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.png',bbox_inches='tight')
 
