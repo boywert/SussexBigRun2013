@@ -116,7 +116,7 @@ ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["DiskMass"],s=2,color='g
 ax.set_yscale("log")
 
 for i in range(len(gal["okamoto"]["Xfrac3d"])):
-    print gal["okamoto"]["Xfrac3d"][i],gal["okamoto"]["DiskMass"][i]
+    print gal["okamoto"]["Xfrac3d"][i]
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 #leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
