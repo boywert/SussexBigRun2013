@@ -11,8 +11,8 @@ filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 file_prefix = "SA_z6.00"
-firstfile = 127
-lastfile = 127
+firstfile = 1
+lastfile = 1
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patchy_II"]
