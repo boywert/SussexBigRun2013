@@ -110,13 +110,13 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"],gal["okamoto"]["Sfr"],s=2,color='green',label="Okamoto et al. (2008)")
-ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patchy_II"]["Sfr"],s=2,color='red',label="Patchy Reionization II")
-stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
+ax.scatter(gal["okamoto"]["BulgeMass"],gal["okamoto"]["DiskMass"],s=2,color='green',label="Okamoto et al. (2008)")
+ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"],s=2,color='red',label="Patchy Reionization II")
+# stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
 
-for i in range(len(stellar)):
-    if stellar[i] > 0.0:
-        print stellar[i],  gal["okamoto"]["Sfr"][i]
+# for i in range(len(stellar)):
+#     if stellar[i] > 0.0:
+#         print stellar[i],  gal["okamoto"]["Sfr"][i]
 
 ax.set_yscale("log")
 ax.set_xscale("log")
