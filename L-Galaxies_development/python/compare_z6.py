@@ -110,8 +110,8 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["BulgeMass"],gal["okamoto"]["DiskMass"],s=2,color='green',label="Okamoto et al. (2008)")
-ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"],s=2,color='red',label="Patchy Reionization II")
+ax.scatter(gal["okamoto"]["BulgeMass"][0:1000],gal["okamoto"]["DiskMass"][0:1000])
+# ax.scatter(gal["patchy_II"]["BulgeMass"],gal["patchy_II"]["DiskMass"])
 # stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
 
 # for i in range(len(stellar)):
