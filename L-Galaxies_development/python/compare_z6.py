@@ -126,7 +126,7 @@ leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size
 leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
-ax.xlim([0,0.01])
+ax.set_xlim([0,0.01])
 fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
 pylab.show()
 pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
