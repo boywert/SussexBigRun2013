@@ -126,6 +126,6 @@ leg.get_frame().set_linewidth(0)
 ax.set_ylabel(r"SFR ($M_\odot/yr$)")
 ax.set_xlabel(r"$\log(M/M_\odot h)$")
 fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
-
-pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.png',bbox_inches='tight')
+pylab.show()
+pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
