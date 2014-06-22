@@ -115,7 +115,7 @@ ax.scatter(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"],gal["patch
 stellar =  gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"]
 
 for i in range(len(stellar)):
-    print stellar[i] + gal["okamoto"]["Sfr"][i]
+    print stellar[i],  gal["okamoto"]["Sfr"][i]
 
 ax.set_yscale("log")
 ax.set_xscale("log")
