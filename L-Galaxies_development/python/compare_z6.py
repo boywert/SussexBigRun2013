@@ -94,20 +94,20 @@ fig.suptitle("Cold Gass Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
 
-fig = pylab.figure()
-ax = fig.add_subplot(111)
+# fig = pylab.figure()
+# ax = fig.add_subplot(111)
 
-for i in range(len(model_names)):
-    index = model_names[i]
-    ax.plot(Blackhole[index][0],Blackhole[index][1],model_plot_patterns[i],label=model_labels[i])
+# for i in range(len(model_names)):
+#     index = model_names[i]
+#     ax.plot(Blackhole[index][0],Blackhole[index][1],model_plot_patterns[i],label=model_labels[i])
 
-leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-leg.get_frame().set_linewidth(0)
-ax.set_xlabel(r"$\log(M/M_\odot h)$")
-ax.set_ylabel(r"$N$")
-fig.suptitle("Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
+# leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
+# leg.get_frame().set_linewidth(0)
+# ax.set_xlabel(r"$\log(M/M_\odot h)$")
+# ax.set_ylabel(r"$N$")
+# fig.suptitle("Blackhole Mass Function z = 6 file "+str(ff)+"-"+str(lf))
 
-pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
+# pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 
 fig = pylab.figure()
