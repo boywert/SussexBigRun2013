@@ -116,7 +116,7 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 # ax.set_yscale("log")
 f = open("test","w+")
 for i in range(len(gal["okamoto"]["Xfrac3d"])):
-    f.write("%f %f\n" % (gal["okamoto"]["Xfrac3d"][i],(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10))
+    f.write("%f %f\n" % (gal["okamoto"]["Xfrac3d"][i],(gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*10.e10))
 f.close()
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 # #leg.get_frame().set_linewidth(0)
