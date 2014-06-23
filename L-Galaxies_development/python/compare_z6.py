@@ -12,9 +12,9 @@ filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 filter['HaloM_Crit200'] = True
-file_prefix = "SA_z8.06"
-firstfile = 1
-lastfile = 1
+file_prefix = "SA_z6.00"
+firstfile = 0
+lastfile = 127
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patchy_II"]
