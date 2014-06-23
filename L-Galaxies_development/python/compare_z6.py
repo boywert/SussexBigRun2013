@@ -110,8 +110,8 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 
 
 fig = plt.figure()
-ax1 = fig.add_subplot(121)
-ax2 = fig.add_subplot(122) 
+ax1 = fig.add_subplot(221)
+ax2 = fig.add_subplot(222) 
 z=[]
 x=[]
 y=[]
