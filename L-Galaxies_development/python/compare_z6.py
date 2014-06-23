@@ -112,21 +112,33 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = plt.figure()
 ax = fig.add_subplot(111)
 
-z = gal["okamoto"]["Xfrac3d"]
-x = numpy.log10(gal["okamoto"]["HaloM_Crit200"]*1.e10)
-y = numpy.log10((gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*1.e10)
-
-sc = ax.scatter(x, y, c=z, s=2, edgecolors='None')
-plt.colorbar(sc)
+z=[]
+x=[]
+y=[]
+for i in range(len(gal["okamoto"]["Xfrac3d"])):
+    if(gal["okamoto"]["Xfrac3d"] >= 0.5):
+        x.append(numpy.log10(gal["okamoto"]["HaloM_Crit200"][i]*1.e10))
+        y.append(numpy.log10((gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*1.e10))
+        
+ax.scatter(x, y, s=4, color='red')
+z=[]
+x=[]
+y=[]
+for i in range(len(gal["patchy_II"]["Xfrac3d"])):
+    if(gal["patchy_II"]["Xfrac3d"] >= 0.5):
+        x.append(numpy.log10(gal["patchy_II"]["HaloM_Crit200"][i]*1.e10))
+        y.append(numpy.log10((gal["patchy_II"]["BulgeMass"][i]+gal["patchy_II"]["DiskMass"][i])*1.e10))
+        
+ax.scatter(x, y, s=4, color='green')
 # ax.scatter(x,y,s=2)
 # ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
 # ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
 
-#ax.set_yscale("log")
-f = open("test","w+")
-for i in range(len(gal["okamoto"]["Xfrac3d"])):
-    f.write("%f %f\n" % (gal["okamoto"]["Xfrac3d"][i],(gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*10.e10))
-f.close()
+# #ax.set_yscale("log")
+# f = open("test","w+")
+# for i in range(len(gal["okamoto"]["Xfrac3d"])):
+#     f.write("%f %f\n" % (gal["okamoto"]["Xfrac3d"][i],(gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*10.e10))
+# f.close()
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
 # #leg.get_frame().set_linewidth(0)
 # ax.set_ylabel(r"SFR ($M_\odot/yr$)")
