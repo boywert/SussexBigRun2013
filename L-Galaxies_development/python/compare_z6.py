@@ -110,8 +110,8 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-ax.scatter(gal["okamoto"]["Xfrac3d"],gal["okamoto"]["DiskMass"],s=2,color='red',label='oka')
-ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["DiskMass"],s=2,color='green',label='patchy')
+ax.scatter(gal["okamoto"]["Xfrac3d"],(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
+ax.scatter(gal["patchy_II"]["Xfrac3d"],(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
 
 ax.set_yscale("log")
 ax.set_xscale("log")
