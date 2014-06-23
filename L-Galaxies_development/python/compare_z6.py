@@ -125,7 +125,7 @@ z=[]
 x=[]
 y=[]
 for i in range(len(gal["patchy_II"]["Xfrac3d"])):
-    if(gal["patchy_II"]["Xfrac3d"] >= 0.5):
+    if(gal["patchy_II"]["Xfrac3d"][i] >= 0.5):
         x.append(numpy.log10(gal["patchy_II"]["HaloM_Crit200"][i]*1.e10))
         y.append(numpy.log10((gal["patchy_II"]["BulgeMass"][i]+gal["patchy_II"]["DiskMass"][i])*1.e10))
         
