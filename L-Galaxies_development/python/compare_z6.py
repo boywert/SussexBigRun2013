@@ -114,7 +114,6 @@ ax.scatter(gal["okamoto"]["Xfrac3d"],(gal["okamoto"]["BulgeMass"]+gal["okamoto"]
 ax.scatter(gal["patchy_II"]["Xfrac3d"],(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
 
 ax.set_yscale("log")
-ax.set_xscale("log")
 # for i in range(len(gal["okamoto"]["Xfrac3d"])):
 #     print gal["okamoto"]["Xfrac3d"][i]
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
