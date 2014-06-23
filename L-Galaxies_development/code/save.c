@@ -512,7 +512,9 @@ void prepare_galaxy_for_output(int n, struct GALAXY *g, struct GALAXY_OUTPUT *o)
 	  o->MagICL[j] = lum_to_mag(g->ICLLum[j][n]);
 #endif
     }
- 
+#if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
+  o->Xfrac3d = g->Xfrac3d;
+#endif
 
 #endif //OUTPUT_REST_MAGS
 #ifdef OUTPUT_OBS_MAGS
