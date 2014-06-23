@@ -12,7 +12,7 @@ filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 file_prefix = "SA_z8.06"
 firstfile = 1
-lastfile = 1
+lastfile = 10
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patchy_II"]
@@ -114,7 +114,7 @@ ax.scatter(gal["okamoto"]["Xfrac3d"],gal["okamoto"]["DiskMass"],s=2,color='red',
 ax.scatter(gal["patchy_II"]["Xfrac3d"],gal["patchy_II"]["DiskMass"],s=2,color='green',label='patchy')
 
 ax.set_yscale("log")
-
+ax.set_xscale("log")
 # for i in range(len(gal["okamoto"]["Xfrac3d"])):
 #     print gal["okamoto"]["Xfrac3d"][i]
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
