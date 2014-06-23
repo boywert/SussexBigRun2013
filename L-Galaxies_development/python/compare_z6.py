@@ -10,7 +10,7 @@ filter['HotGas'] = True
 filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
-file_prefix = "SA_z6.00"
+file_prefix = "SA_z8.06"
 firstfile = 1
 lastfile = 1
 
