@@ -116,6 +116,7 @@ x = numpy.log10(gal["okamoto"]["HaloM_Crit200"]*1.e10)
 y = numpy.log10((gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*1.e10)
 
 ax.scatter(x, y, c=z, s=2, cmap=pylab.cm.cool, edgecolors='None')
+ax.colorbar()
 # ax.scatter(x,y,s=2)
 # ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
 # ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
