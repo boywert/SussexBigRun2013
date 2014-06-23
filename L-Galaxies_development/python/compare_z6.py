@@ -14,7 +14,7 @@ filter['Xfrac3d'] = True
 filter['HaloM_Crit200'] = True
 file_prefix = "SA_z8.06"
 firstfile = 1
-lastfile = 10
+lastfile = 1
 
 config = {}
 model_names = ["okamoto","noreionization","patchy_I","patchy_II"]
