@@ -120,7 +120,7 @@ for i in range(len(gal["okamoto"]["Xfrac3d"])):
         x.append(numpy.log10(gal["okamoto"]["HaloM_Crit200"][i]*1.e10))
         y.append(numpy.log10((gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*1.e10))
         
-ax.scatter(x, y, s=4, color='red')
+ax.scatter(x, y, s=1, color='red')
 z=[]
 x=[]
 y=[]
@@ -129,7 +129,7 @@ for i in range(len(gal["patchy_II"]["Xfrac3d"])):
         x.append(numpy.log10(gal["patchy_II"]["HaloM_Crit200"][i]*1.e10))
         y.append(numpy.log10((gal["patchy_II"]["BulgeMass"][i]+gal["patchy_II"]["DiskMass"][i])*1.e10))
         
-ax.scatter(x, y, s=4, color='green')
+ax.scatter(x, y, s=1, color='green')
 # ax.scatter(x,y,s=2)
 # ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
 # ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
