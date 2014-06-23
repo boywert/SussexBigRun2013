@@ -116,7 +116,7 @@ z=[]
 x=[]
 y=[]
 for i in range(len(gal["okamoto"]["Xfrac3d"])):
-    if(gal["okamoto"]["Xfrac3d"] >= 0.5):
+    if(gal["okamoto"]["Xfrac3d"][i] >= 0.5):
         x.append(numpy.log10(gal["okamoto"]["HaloM_Crit200"][i]*1.e10))
         y.append(numpy.log10((gal["okamoto"]["BulgeMass"][i]+gal["okamoto"]["DiskMass"][i])*1.e10))
         
