@@ -10,6 +10,7 @@ filter['HotGas'] = True
 filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
+filter['HaloM_Crit200'] = True
 file_prefix = "SA_z8.06"
 firstfile = 1
 lastfile = 10
@@ -110,8 +111,11 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 fig = pylab.figure()
 ax = fig.add_subplot(111)
 
-x = gal["okamoto"]["Xfrac3d"]
-y = numpy.log10(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])
+z = gal["okamoto"]["Xfrac3d"]
+x = numpy.log10(gal["okamoto"]["HaloM_Crit200"]*1.e10)
+y = numpy.log10((gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*1.e10)
+
+scatter(x, y, c=z, s=2, cmap=pylab.cm.cool, edgecolors='None')
 ax.scatter(x,y,s=2)
 # ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
 # ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
