@@ -1,6 +1,7 @@
 from mass_fn import *
 import pylab
 import sys
+import matplotlib.pyplot as plt
 
 filter = LGalaxyStruct.properties_used
 filter['Sfr'] = True
@@ -108,7 +109,7 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 # pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 
-fig = pylab.figure()
+fig = plt.figure()
 ax = fig.add_subplot(111)
 
 z = gal["okamoto"]["Xfrac3d"]
@@ -116,7 +117,7 @@ x = numpy.log10(gal["okamoto"]["HaloM_Crit200"]*1.e10)
 y = numpy.log10((gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*1.e10)
 
 ax.scatter(x, y, c=z, s=2, cmap=pylab.cm.cool, edgecolors='None')
-pylab.colorbar()
+plt.colorbar()
 # ax.scatter(x,y,s=2)
 # ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
 # ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
