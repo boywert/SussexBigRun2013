@@ -107,21 +107,23 @@ pylab.savefig('reion_coldgas_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inch
 # pylab.savefig('reion_bh_'+str(ff)+'-'+str(lf)+'.pdf',bbox_inches='tight')
 
 
-fig = pylab.figure()
-ax = fig.add_subplot(111)
+# fig = pylab.figure()
+# ax = fig.add_subplot(111)
 
-ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
-ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
+# ax.scatter(range(len(gal["okamoto"]["DiskMass"])),(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10,s=2,color='red',label='oka')
+# ax.scatter(range(len(gal["patchy_II"]["DiskMass"])),(gal["patchy_II"]["BulgeMass"]+gal["patchy_II"]["DiskMass"])*10.e10,s=2,color='green',label='patchy')
 
-ax.set_yscale("log")
-# for i in range(len(gal["okamoto"]["Xfrac3d"])):
-#     print gal["okamoto"]["Xfrac3d"][i]
+# ax.set_yscale("log")
+f = open("test","w+")
+for i in range(len(gal["okamoto"]["Xfrac3d"])):
+    f.write("%f %f\n" % (gal["okamoto"]["Xfrac3d"][i],(gal["okamoto"]["BulgeMass"]+gal["okamoto"]["DiskMass"])*10.e10))
+f.close()
 #leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
-#leg.get_frame().set_linewidth(0)
-ax.set_ylabel(r"SFR ($M_\odot/yr$)")
-ax.set_xlabel(r"$\log(M/M_\odot h)$")
+# #leg.get_frame().set_linewidth(0)
+# ax.set_ylabel(r"SFR ($M_\odot/yr$)")
+# ax.set_xlabel(r"$\log(M/M_\odot h)$")
 
-fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
-# fig.show()
-pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
+# fig.suptitle("SFR z = 6 file "+str(firstfile)+"-"+str(lastfile))
+# # fig.show()
+# pylab.savefig('reion_sfr_'+str(firstfile)+'-'+str(lastfile)+'.pdf',bbox_inches='tight')
 
