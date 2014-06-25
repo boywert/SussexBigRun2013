@@ -2,6 +2,49 @@ import LGalaxyStruct
 import numpy
 import os
 
+struct_lgalinput = numpy.dtype([
+('Descendant',numpy.int32,1),
+('FirstProgenitor',numpy.int32,1),
+('NextProgenitor',numpy.int32,1),
+('FirstHaloInFOFgroup',numpy.int32,1),
+('NextHaloInFOFgroup',numpy.int32,1),
+('Len',numpy.int32,3),
+('M_Mean200',numpy.float32,3),
+('M_Crit200',numpy.float32,1),
+('M_TopHat',numpy.float32,1),
+('Pos',numpy.float32,3),
+('Vel',numpy.float32,3),
+('VelDisp',numpy.float32,1),
+('Vmax',numpy.float32,1),
+('Spin',numpy.float32,1),
+('MostBoundID',numpy.int64,1),
+('SnapNum',numpy.int32,1),
+('FileNr',numpy.int32,1),
+('SubhaloIndex',numpy.int32,1),
+('SubHalfMass',numpy.int32,1)
+])
+
+def read_lgalinput(folder,file_prefix,firstfile,lastfile):
+    nHalos = 0
+    nTrees = 0
+    ngalstree = numpy.array([],dtype=numpy.int32)
+    output_trees = numpy.array([],dtype=struct_lgalinput)
+    for ifile in range(firstfile,lastfile+1):
+        filename = folder+'/'+file_prefix+"/trees_"+"%d"%(ifile)
+        f = open(filename,"rb")
+        this_nHalos = numpy.fromfile(f,numpy.int32,1)[0]
+        this_nTrees = numpy.fromfile(f,numpy.int32,1)[0]
+        this_ngalstree = numpy.fromfile(f,numpy.int32,this_nTrees)
+        this_trees = numpy.fromfile(f,struct_lgalinput,this_nHalos)
+        nHalos += this_nHalos
+        nTrees += this_nTrees
+        ngalstree = numpy.append(ngalstree,this_ngalstree)
+        output_trees = numpy.append(output_trees,this_trees)
+
+    return (nHalos,nTrees,ngalstree,output_trees)
+
+
+
 # This function return (nTrees,nHalos,nTreeHalos,Galaxy)
 # The input are (folder,file_prefix,firstfile,lastfile [,filter_arr])
 def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct.properties_used):
@@ -14,7 +57,7 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
 
     output_Galaxy = numpy.array([],dtype=filter_dtype)
     for ifile in range(firstfile,lastfile+1):
-        filename = folder+file_prefix+"galtree_"+"%d"%(ifile)
+        filename = folder+'/'+file_prefix+"/galtree_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
         one = dummy[0]
@@ -52,7 +95,7 @@ def readsnap_lgal(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
     filter_dtype = numpy.dtype(filter_tuple)
     output_Galaxy = numpy.array([],dtype=filter_dtype)
     for ifile in range(firstfile,lastfile+1):
-        filename = folder+file_prefix+"_"+"%d"%(ifile)
+        filename = folder+'/'+file_prefix+"_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
         this_nTrees =  dummy[0]
