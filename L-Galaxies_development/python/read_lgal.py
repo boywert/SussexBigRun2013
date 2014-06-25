@@ -24,13 +24,13 @@ struct_lgalinput = numpy.dtype([
 ('SubHalfMass',numpy.int32,1)
 ])
 
-def read_lgalinput(folder,file_prefix,firstfile,lastfile):
+def read_lgalinput(folder,firstfile,lastfile,lastsnap):
     nHalos = 0
     nTrees = 0
     ngalstree = numpy.array([],dtype=numpy.int32)
     output_trees = numpy.array([],dtype=struct_lgalinput)
     for ifile in range(firstfile,lastfile+1):
-        filename = folder+'/'+file_prefix+"/trees_"+"%d"%(ifile)
+        filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
         f = open(filename,"rb")
         this_nHalos = numpy.fromfile(f,numpy.int32,1)[0]
         this_nTrees = numpy.fromfile(f,numpy.int32,1)[0]
