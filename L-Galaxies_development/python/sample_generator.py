@@ -22,7 +22,8 @@ for j in range(nTrees):
     nh = ngalstree[j]
     for i in range(nh):
         if(output_trees[count_halo]['FirstHaloInFOFgroup'] == i):
-            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,output_trees[count_halo]["FileNr"],j,i,2.))
+            output_trees[count_halo]['FileNr']
+            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,output_trees[count_halo]['FileNr'],j,i,2.))
 
 #(count_halo,output_trees[count_halo]['FileNr'],j,i,output_trees[count_halo]['M_Crit200']))
             print output_trees[count_halo]
