@@ -17,4 +17,12 @@ cursor.execute('''
                       mass REAL)
 ''')
 
+count_halo = 0
+for nh in ngalstree:
+    for i in range(nh):
+        if(output_trees[count_halo]['FirstHaloInFOFgroup'] == i):
+            print output_trees[count_halo]
+        count_halo += 1
+
+
 db.close()
