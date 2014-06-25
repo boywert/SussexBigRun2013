@@ -10,14 +10,14 @@ def uv_l_z8():
     nbins=14
     hubble_h = 0.7
     
-    model2_folder = "/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/"
-    nore_folder = "/mnt/lustre/scratch/cs390/47Mpc/outputs/patchy_reionization_II/"
-    snaplist_file = "/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
-    observe_folder="/mnt/lustre/scratch/cs390/codes/SussexBigRun2013/observed_UVL/"
+    model2_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_fullre/"
+    nore_folder = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/outputs_nore/"
+    snaplist_file = "/mnt/lustre/scratch/cs390/AHF_halos/cubepm_130315_6_1728_47Mpc_ext2/treedata/zlist.txt"
+    observe_folder="/mnt/lustre/scratch/cs390/codes/cubepm_130315_6_1728_47Mpc_ext2/observed_UVL/"
 
 
     firstfile = 0
-    lastfile = 127
+    lastfile = 215
     f = open(snaplist_file)
     lines = f.readlines()
     f.close()
@@ -80,15 +80,6 @@ def uv_l_z8():
     fig.suptitle("GFUV z~8")
     pylab.savefig('uv_l_z8.pdf',bbox_inches='tight')
     pylab.show()
-
-
-
-
-
-uv_l_z8()
-
-
-
 
 
 def galaxy_stellar_massftn():

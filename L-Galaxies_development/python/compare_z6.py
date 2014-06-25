@@ -12,6 +12,7 @@ filter['ColdGas'] = True
 filter['BlackholeMass'] = True
 filter['Xfrac3d'] = True
 filter['HaloM_Crit200'] = True
+filter['Mag'] = True
 file_prefix = "SA_z6.00"
 firstfile = 0
 lastfile = 127
