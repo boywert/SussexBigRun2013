@@ -23,7 +23,7 @@ for j in range(nTrees):
     for i in range(nh):
         if(output_trees[count_halo]['FirstHaloInFOFgroup'] == i):
             filenr = output_trees[count_halo]['FileNr']
-            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,0,j,i,2.))
+            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,int(filenr),j,i,2.))
 
 #(count_halo,output_trees[count_halo]['FileNr'],j,i,output_trees[count_halo]['M_Crit200']))
             print output_trees[count_halo]
