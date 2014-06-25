@@ -32,8 +32,8 @@ def read_lgalinput(folder,firstfile,lastfile,lastsnap):
     for ifile in range(firstfile,lastfile+1):
         filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
         f = open(filename,"rb")
-        this_nHalos = numpy.fromfile(f,numpy.int32,1)[0]
         this_nTrees = numpy.fromfile(f,numpy.int32,1)[0]
+        this_nHalos = numpy.fromfile(f,numpy.int32,1)[0]
         this_ngalstree = numpy.fromfile(f,numpy.int32,this_nTrees)
         this_trees = numpy.fromfile(f,struct_lgalinput,this_nHalos)
         nHalos += this_nHalos
