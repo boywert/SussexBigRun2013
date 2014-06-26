@@ -9,9 +9,6 @@ lastsnap = 61
 Mgadget2Msun = 1.e10
 select_num = 20
 
-# set up indices
-firsthalointree = numpy.cumsum(ngalstree)-ngalstree
-lasthalointree = numpy.cumsum(ngalstree)
 
 # use sqlite in memory
 db = sqlite3.connect(':memory:')
@@ -34,11 +31,15 @@ for ifile in range(firstfile,lastfile+1):
     f.close()
 print ntreesfile
 
+global firsttreeinfile
+firsttreeinfile = numpy.cumsum(ntreesfile) - ntreesfile
+
 # read tree input
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 
-global firsttreeinfile
-firsttreeinfile = numpy.cumsum(ntreesfile) - ntreesfile
+# set up indices
+firsthalointree = numpy.cumsum(ngalstree)-ngalstree
+lasthalointree = numpy.cumsum(ngalstree)
 
 # insert data to database
 count_halo = 0
