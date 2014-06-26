@@ -77,10 +77,13 @@ for i in range(nSteps):
             this_tree_index = data[0]-firsthalointree[treenr]
             treecrawler(this_tree_index,this_tree)
 db.close()
-print listsample
 
 f = []
 for i in range(lastsnap+1):
     f.append(open("sample.%03d"%(i),"w"))
+
+for i in range(lastsnap+1):
+    prinf len(listsample[i])
+
 for i in range(lastsnap+1):
     f[i].close()
