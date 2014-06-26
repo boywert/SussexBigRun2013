@@ -92,7 +92,7 @@ for i in range(lastsnap+1):
         print "doing snap",i,"step",j
         low_m = min_mass + j*step_mass
         high_m = min_mass + (j+1)*step_mass
-        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(low_m,high_m,i))
+        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
         nhalosbin[j,i] = len(cursor.fetchall())
 
 
