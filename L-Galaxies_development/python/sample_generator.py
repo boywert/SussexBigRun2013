@@ -96,7 +96,8 @@ for i in range(nSteps):
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
             this_tree_index = data[0]-firsthalointree[treenr]
-            treecrawler(this_tree_index,this_tree)
+            treecrawler(this_tree_index,this_tree,treenr)
+
 db.close()
 
 f = []
