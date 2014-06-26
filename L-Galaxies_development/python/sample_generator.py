@@ -70,7 +70,6 @@ for i in range(nSteps):
     all_rows = cursor.fetchall()
     
     if len(all_rows) >= select_num:
-        print len(all_rows)
         for data in all_rows[0:20]:
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
