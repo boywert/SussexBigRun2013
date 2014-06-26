@@ -28,8 +28,8 @@ for j in range(nTrees):
 
 
 
-cursor.execute('''SELECT * FROM tree''')
+cursor.execute('''SELECT * FROM tree SORT BY RANDOM() LIMIT 20''')
 all_rows = cursor.fetchall()
-print all_rows
+
 
 db.close()
