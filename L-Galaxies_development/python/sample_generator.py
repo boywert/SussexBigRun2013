@@ -27,7 +27,7 @@ ntreesfile = numpy.array([],dtype=numpy.int32)
 for ifile in range(firstfile,lastfile+1):
     filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
     f = open(filename,"rb")
-    ntreesfile = numpy.append(ntreesfile,numpy.fromfile(f,numpy.int32,1)[0])
+    ntreesfile = numpy.append(ntreesfile,numpy.fromfile(f,numpy.int32,1))
     f.close()
 print ntreesfile
 
