@@ -61,7 +61,8 @@ min_mass = 10.0
 max_mass = 18.0
 step_mass = 0.25
 nSteps = int((max_mass-min_mass)/step_mass)
-
+nhalosbin = numpy.zeros((nStep,lastsnap+1))
+selectednhalosbin = numpy.zeros((nStep,lastsnap+1))
 # open files
 
 global listsample
@@ -86,6 +87,13 @@ def treecrawler(index,this_tree,treenr):
     listindex[snap].append(index)
     listtree[snap].append(treenr-firsttreeinfile[this_tree[index]['FileNr']])
 
+for i in range(lastsnap+1):
+    for j in range(nSteps):
+        low_m = min_mass + i*step_mass
+        high_m = min_mass + (i+1)*step_mass
+        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(low_m,high_m,i))
+        nhalosbin[j,i] = len(cursor.fetchall())
+
 
 for i in range(nSteps):
     low_m = min_mass + i*step_mass
@@ -99,8 +107,11 @@ for i in range(nSteps):
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
             this_tree_index = data[0]-firsthalointree[treenr]
             treecrawler(this_tree_index,this_tree,treenr)
+        
 
 db.close()
+
+print nhalosbin
 
 f = []
 for i in range(lastsnap+1):
@@ -109,6 +120,8 @@ for i in range(lastsnap+1):
 for i in range(lastsnap+1):
     print len(listsample[i])
     for j in range(len(listsample[i])):
-        print listindex[i][j],listtree[i][j],listsample[i][j]["FileNr"]
+#        print listindex[i][j],listtree[i][j],listsample[i][j]["FileNr"]
+
+
 for i in range(lastsnap+1):
     f[i].close()
