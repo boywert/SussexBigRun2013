@@ -49,5 +49,7 @@ for i in range(nSteps):
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
             this_tree_index = data[0]-firsthalointree[treenr]
-            print "\t",this_tree_index
+            while this_tree_index > -1:
+                print "\t",this_tree_index
+                this_tree_index = this_tree[this_tree_index]['FirstProgenitor']
 db.close()
