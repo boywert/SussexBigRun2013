@@ -9,6 +9,8 @@ lastsnap = 61
 Mgadget2Msun = 1.e10
 select_num = 20
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
+firsthalointree = numpy.cumsum(ngalstree)
+print firsthalointree
 db = sqlite3.connect(':memory:')
 cursor = db.cursor()
 cursor.execute('''CREATE TABLE tree (
