@@ -28,11 +28,16 @@ for j in range(nTrees):
             cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,int(output_trees[count_halo]['FileNr']),j,i,float(mass)))
         count_halo += 1
 
+min_mass = 10.0
+max_mass = 18.0
+step_mass = 0.25
+nSteps = int((max_mass-min_mass)/step_mass)
 
-
-cursor.execute('''SELECT * FROM tree ORDER BY RANDOM() LIMIT 20''')
-all_rows = cursor.fetchall()
-
-for data in all_rows:
-    print data
+for i in range(nSteps):
+    low_m = min_mass + i*step_mass
+    high_m = min_mass + (i+1)*step_mass
+    cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? ORDER BY RANDOM()",(low_m,high_m))
+    all_rows = cursor.fetchall()
+    for data in all_rows:
+        print data
 db.close()
