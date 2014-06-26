@@ -10,6 +10,7 @@ Mgadget2Msun = 1.e10
 select_num = 20
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 firsthalointree = numpy.cumsum(ngalstree)-ngalstree
+lasthalointree = numpy.cumsum(ngalstree)
 print firsthalointree
 db = sqlite3.connect(':memory:')
 cursor = db.cursor()
@@ -46,6 +47,6 @@ for i in range(nSteps):
         print len(all_rows)
         for data in all_rows[0:20]:
             treenr = data[2]
-            this_tree = output_trees[firsthalointree[treenr],ngalstree[treenr]]
+            this_tree = output_trees[firsthalointree[treenr],lasthalointree[treenr]]
             print this_tree
 db.close()
