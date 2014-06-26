@@ -31,5 +31,6 @@ for j in range(nTrees):
 cursor.execute('''SELECT * FROM tree ORDER BY RANDOM() LIMIT 20''')
 all_rows = cursor.fetchall()
 
-
+for data in all_rows:
+    print data
 db.close()
