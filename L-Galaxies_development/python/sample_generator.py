@@ -89,8 +89,8 @@ def treecrawler(index,this_tree,treenr):
 
 for i in range(lastsnap+1):
     for j in range(nSteps):
-        low_m = min_mass + i*step_mass
-        high_m = min_mass + (i+1)*step_mass
+        low_m = min_mass + j*step_mass
+        high_m = min_mass + (j+1)*step_mass
         cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(low_m,high_m,i))
         nhalosbin[j,i] = len(cursor.fetchall())
 
