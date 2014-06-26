@@ -45,5 +45,7 @@ for i in range(nSteps):
     if len(all_rows) >= select_num:
         print len(all_rows)
         for data in all_rows[0:20]:
-            print data
+            treenr = data[2]
+            this_tree = output_trees[firsthalointree[treenr],ngalstree[treenr]]
+            print this_tree
 db.close()
