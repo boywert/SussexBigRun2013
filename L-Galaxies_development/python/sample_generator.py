@@ -31,7 +31,7 @@ for ifile in range(firstfile,lastfile+1):
     filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
     f = open(filename,"rb")
     ntreesfile.append(numpy.fromfile(f,numpy.int32,1)[0])
-
+    f.close()
 
 # read tree input
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
