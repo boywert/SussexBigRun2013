@@ -38,6 +38,7 @@ for i in range(nSteps):
     high_m = min_mass + (i+1)*step_mass
     cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? ORDER BY RANDOM()",(low_m,high_m))
     all_rows = cursor.fetchall()
+    print len(all_rows)
     for data in all_rows[0:20]:
         print data
 db.close()
