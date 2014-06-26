@@ -48,5 +48,6 @@ for i in range(nSteps):
         for data in all_rows[0:20]:
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
-            print this_tree
+            this_tree_index = data[curhalonr]-firsthalointree[treenr]
+            print this_tree_index
 db.close()
