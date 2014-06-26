@@ -7,6 +7,7 @@ firstfile = 0
 lastfile = 0
 lastsnap = 61
 Mgadget2Msun = 1.e10
+select_num = 20
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 db = sqlite3.connect(':memory:')
 cursor = db.cursor()
@@ -39,7 +40,7 @@ for i in range(nSteps):
     cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? ORDER BY RANDOM()",(low_m,high_m))
     all_rows = cursor.fetchall()
     
-    if len(all_rows) >= 0:
+    if len(all_rows) >= select_num:
         print len(all_rows)
         for data in all_rows[0:20]:
             print data
