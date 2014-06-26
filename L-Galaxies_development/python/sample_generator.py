@@ -38,10 +38,14 @@ step_mass = 0.25
 nSteps = int((max_mass-min_mass)/step_mass)
 
 def treecrawler(index,this_tree):
+    print index
     while index > -1:
-        treecrawler(this_tree[index]['NextProgenitor'],this_tree)
-        treecrawler(this_tree[index]['FirstProgenitor'],this_tree)
-        print index
+        index = this_tree[index]['NextProgenitor']
+        treecrawler(index,this_tree)
+    while index > -1:
+        index = this_tree[index]['FirstProgenitor']
+        treecrawler(index,this_tree)
+    
 
 
 for i in range(nSteps):
