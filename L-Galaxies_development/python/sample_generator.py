@@ -46,15 +46,19 @@ nSteps = int((max_mass-min_mass)/step_mass)
 
 # open files
 f = []
+listsample = []
 for i in range(lastsnap+1):
-    f.append(open("sample.%03d"%(i),"w"))
+    listsample.append([])
+
+global listsample
 
 def treecrawler(index,this_tree):
     if this_tree[index]['NextProgenitor'] > -1:
         treecrawler(this_tree[index]['NextProgenitor'],this_tree)
     if this_tree[index]['FirstProgenitor'] > -1:
         treecrawler(this_tree[index]['FirstProgenitor'],this_tree)
-    print this_tree[index]
+    snap = this_tree[index]['SnapNum']
+    listsample[snap].append(this_tree[index])
 
 
 for i in range(nSteps):
@@ -71,6 +75,9 @@ for i in range(nSteps):
             this_tree_index = data[0]-firsthalointree[treenr]
             treecrawler(this_tree_index,this_tree)
 db.close()
+print listsample
 
+for i in range(lastsnap+1):
+    f.append(open("sample.%03d"%(i),"w"))
 for i in range(lastsnap+1):
     f[i].close()
