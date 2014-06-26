@@ -3,13 +3,11 @@ import sqlite3
 import read_lgal
 
 folder = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/"
-firstfile = 0
+firstfile = 0 # must be 0
 lastfile = 0
 lastsnap = 61
 Mgadget2Msun = 1.e10
 select_num = 20
-# read tree input
-(nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 
 # set up indices
 firsthalointree = numpy.cumsum(ngalstree)-ngalstree
@@ -19,6 +17,7 @@ lasthalointree = numpy.cumsum(ngalstree)
 db = sqlite3.connect(':memory:')
 cursor = db.cursor()
 # create a table
+
 cursor.execute('''CREATE TABLE tree (
 curhalonr INTEGER,
 filenr INTEGER,
@@ -26,6 +25,18 @@ treenr INTEGER,
 halonr INTEGER, 
 mass REAL)
 ''')
+
+ntreesfile = []
+for ifile in range(firstfile,lastfile+1):
+    filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
+    f = open(filename,"rb")
+    ntreesfile.append(numpy.fromfile(f,numpy.int32,1)[0])
+global firsttreeinfile
+firsttreeinfile = numpy.cumsum(ntreesfile) - ntreesfile
+
+# read tree input
+(nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
+
 
 # insert data to database
 count_halo = 0
@@ -47,20 +58,26 @@ nSteps = int((max_mass-min_mass)/step_mass)
 # open files
 
 global listsample
-
+global listindex
+global listtree
 listsample = []
+listindex = []
+listtree = []
+
 for i in range(lastsnap+1):
     listsample.append([])
+    listindex.append([])
+    listtree.append([])
 
-
-
-def treecrawler(index,this_tree):
+def treecrawler(index,this_tree,treenr):
     if this_tree[index]['NextProgenitor'] > -1:
-        treecrawler(this_tree[index]['NextProgenitor'],this_tree)
+        treecrawler(this_tree[index]['NextProgenitor'],this_tree,treenr)
     if this_tree[index]['FirstProgenitor'] > -1:
-        treecrawler(this_tree[index]['FirstProgenitor'],this_tree)
+        treecrawler(this_tree[index]['FirstProgenitor'],this_tree,treenr)
     snap = this_tree[index]['SnapNum']
     listsample[snap].append(this_tree[index])
+    listindex[snap].append(index)
+    listtree[snap].append(treenr-firsttreeinfile[this_tree[index]['SnapNum']])
 
 
 for i in range(nSteps):
@@ -83,6 +100,7 @@ for i in range(lastsnap+1):
 
 for i in range(lastsnap+1):
     print len(listsample[i])
-
+    for j in range(len(listsample[i])):
+        print listindex[i][j],listtree[i][j]
 for i in range(lastsnap+1):
     f[i].close()
