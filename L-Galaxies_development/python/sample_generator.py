@@ -37,6 +37,13 @@ max_mass = 18.0
 step_mass = 0.25
 nSteps = int((max_mass-min_mass)/step_mass)
 
+def treecrawler(index,this_tree):
+    while index > -1:
+        treecrawler(this_tree[index]['NextProgenitor'],this_tree)
+        treecrawler(this_tree[index]['FirstProgenitor'],this_tree)
+        print index
+
+
 for i in range(nSteps):
     low_m = min_mass + i*step_mass
     high_m = min_mass + (i+1)*step_mass
@@ -49,7 +56,5 @@ for i in range(nSteps):
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
             this_tree_index = data[0]-firsthalointree[treenr]
-            while this_tree_index > -1:
-                print "\t",this_tree_index
-                this_tree_index = this_tree[this_tree_index]['FirstProgenitor']
+            treecrawler(this_tree_index,this_tree)
 db.close()
