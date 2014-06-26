@@ -47,7 +47,7 @@ nSteps = int((max_mass-min_mass)/step_mass)
 # open files
 f = []
 for i in range(lastsnap+1):
-    f.append(open("sample.%03d"%(i)))
+    f.append(open("sample.%03d"%(i),"w"))
 
 def treecrawler(index,this_tree):
     if this_tree[index]['NextProgenitor'] > -1:
