@@ -54,7 +54,7 @@ def treecrawler(index,this_tree):
         treecrawler(this_tree[index]['NextProgenitor'],this_tree)
     if this_tree[index]['FirstProgenitor'] > -1:
         treecrawler(this_tree[index]['FirstProgenitor'],this_tree)
-    print index
+    print this_tree[index]
 
 
 for i in range(nSteps):
