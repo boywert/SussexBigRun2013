@@ -61,8 +61,8 @@ min_mass = 10.0
 max_mass = 18.0
 step_mass = 0.25
 nSteps = int((max_mass-min_mass)/step_mass)
-nhalosbin = numpy.zeros((nSteps,lastsnap+1))
-selectednhalosbin = numpy.zeros((nSteps,lastsnap+1))
+nhalosbin = numpy.zeros((nSteps,lastsnap+1),dtype=numpy.int32)
+selectednhalosbin = numpy.zeros((nSteps,lastsnap+1),dtype=numpy.int32)
 # open files
 
 global listsample
