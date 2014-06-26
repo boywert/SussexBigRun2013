@@ -108,6 +108,6 @@ for i in range(lastsnap+1):
 for i in range(lastsnap+1):
     print len(listsample[i])
     for j in range(len(listsample[i])):
-        print listindex[i][j],listtree[i][j]
+        print listindex[i][j],listtree[i][j],listsample[i][j]["FileNr"]
 for i in range(lastsnap+1):
     f[i].close()
