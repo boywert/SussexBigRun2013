@@ -27,4 +27,9 @@ for j in range(nTrees):
         count_halo += 1
 
 
+
+cursor.execute('''SELECT * FROM tree''')
+all_rows = cursor.fetchall()
+print all_rows
+
 db.close()
