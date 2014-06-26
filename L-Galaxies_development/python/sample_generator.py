@@ -76,6 +76,7 @@ for i in range(lastsnap+1):
     listtree.append([])
 
 def treecrawler(index,this_tree,treenr):
+    print index
     if this_tree[index]['NextProgenitor'] > -1:
         treecrawler(this_tree[index]['NextProgenitor'],this_tree,treenr)
     if this_tree[index]['FirstProgenitor'] > -1:
