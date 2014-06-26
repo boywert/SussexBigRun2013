@@ -47,6 +47,6 @@ for i in range(nSteps):
         print len(all_rows)
         for data in all_rows[0:20]:
             treenr = data[2]
-            this_tree = output_trees[firsthalointree[treenr],lasthalointree[treenr]]
+            this_tree = output_trees[firsthalointree[treenr:lasthalointree[treenr]]
             print this_tree
 db.close()
