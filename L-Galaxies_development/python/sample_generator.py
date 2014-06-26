@@ -90,7 +90,7 @@ def treecrawler(index,this_tree,treenr):
 for i in range(nSteps):
     low_m = min_mass + i*step_mass
     high_m = min_mass + (i+1)*step_mass
-    cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(lastsnap,low_m,high_m))
+    cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(low_m,high_m,lastsnap))
     all_rows = cursor.fetchall()
     
     if len(all_rows) >= select_num:
