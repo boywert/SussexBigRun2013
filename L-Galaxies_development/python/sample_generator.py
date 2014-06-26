@@ -53,7 +53,7 @@ for j in range(nTrees):
             filenr = output_trees[count_halo]['FileNr']
             mass = numpy.log10(output_trees[count_halo]['M_Crit200']*Mgadget2Msun)
             snapnum = output_trees[count_halo]['SnapNum']
-            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(count_halo,int(output_trees[count_halo]['FileNr']),j,i,int(snapnum),float(mass)))
+            cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?,?)",(count_halo,int(output_trees[count_halo]['FileNr']),j,i,int(snapnum),float(mass)))
         count_halo += 1
 
 
