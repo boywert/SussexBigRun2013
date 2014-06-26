@@ -26,7 +26,7 @@ count_halo = 0
 for j in range(nTrees):
     nh = ngalstree[j]
     for i in range(nh):
-        if(output_trees[count_halo]['SnapNum'] == lastsnap):
+        if(output_trees[count_halo]['SnapNum'] == lastsnap) & (output_trees[count_halo]['FirstHaloInFOFgroup'] == i):
             filenr = output_trees[count_halo]['FileNr']
             mass = numpy.log10(output_trees[count_halo]['M_Crit200']*Mgadget2Msun)
             cursor.execute("INSERT INTO tree(curhalonr,filenr,treenr,halonr,mass) VALUES (?,?,?,?,?)",(count_halo,int(output_trees[count_halo]['FileNr']),j,i,float(mass)))
@@ -49,5 +49,5 @@ for i in range(nSteps):
             treenr = data[2]
             this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
             this_tree_index = data[0]-firsthalointree[treenr]
-            print this_tree_index
+            print "\t",this_tree_index
 db.close()
