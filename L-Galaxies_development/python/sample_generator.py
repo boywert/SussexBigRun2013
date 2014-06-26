@@ -28,7 +28,7 @@ for j in range(nTrees):
 
 
 
-cursor.execute('''SELECT * FROM tree SORT BY RANDOM() LIMIT 20''')
+cursor.execute('''SELECT * FROM tree ORDER BY RAND() LIMIT 20''')
 all_rows = cursor.fetchall()
 
 
