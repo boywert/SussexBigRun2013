@@ -45,12 +45,14 @@ step_mass = 0.25
 nSteps = int((max_mass-min_mass)/step_mass)
 
 # open files
-f = []
+
+global listsample
+
 listsample = []
 for i in range(lastsnap+1):
     listsample.append([])
 
-global listsample
+
 
 def treecrawler(index,this_tree):
     if this_tree[index]['NextProgenitor'] > -1:
@@ -77,6 +79,7 @@ for i in range(nSteps):
 db.close()
 print listsample
 
+f = []
 for i in range(lastsnap+1):
     f.append(open("sample.%03d"%(i),"w"))
 for i in range(lastsnap+1):
