@@ -34,7 +34,6 @@ for ifile in range(firstfile,lastfile+1):
 global firsttreeinfile
 firsttreeinfile = numpy.cumsum(ntreesfile) - ntreesfile
 
-print firsttreeinfile
 
 # read tree input
 (nHalos,nTrees,ngalstree,output_trees) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
@@ -42,6 +41,8 @@ print firsttreeinfile
 # set up indices
 firsthalointree = numpy.cumsum(ngalstree)-ngalstree
 lasthalointree = numpy.cumsum(ngalstree)
+
+print firsthalointree
 
 # insert data to database
 count_halo = 0
