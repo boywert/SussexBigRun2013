@@ -83,7 +83,7 @@ for i in range(lastsnap+1):
     f.append(open("sample.%03d"%(i),"w"))
 
 for i in range(lastsnap+1):
-    prinf len(listsample[i])
+    print len(listsample[i])
 
 for i in range(lastsnap+1):
     f[i].close()
