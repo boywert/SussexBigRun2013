@@ -42,7 +42,6 @@ firsttreeinfile = numpy.cumsum(ntreesfile) - ntreesfile
 firsthalointree = numpy.cumsum(ngalstree)-ngalstree
 lasthalointree = numpy.cumsum(ngalstree)
 
-print firsthalointree
 
 # insert data to database
 count_halo = 0
@@ -84,7 +83,7 @@ def treecrawler(index,this_tree,treenr):
     snap = this_tree[index]['SnapNum']
     listsample[snap].append(this_tree[index])
     listindex[snap].append(index)
-    listtree[snap].append(treenr-firsttreeinfile[this_tree[index]['SnapNum']])
+    listtree[snap].append(treenr-firsttreeinfile[this_tree[index]['FileNr']])
 
 
 for i in range(nSteps):
