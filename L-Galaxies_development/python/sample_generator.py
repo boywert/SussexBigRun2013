@@ -131,7 +131,7 @@ for i in range(lastsnap+1):
                 cond.append(string)
             cond_str = " AND ".join(cond)
             query_str = "SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND %s ORDER BY RANDOM() LIMIT %d"%(cond_str,rq_num)
-            #print query_str
+            print query_str
             cursor.execute(query_str,(low_m,high_m,i))
             result_add = cursor.fetchall()
             for add_data in result_add:
