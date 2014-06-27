@@ -145,7 +145,7 @@ for i in reversed(range(lastsnap+1)):
             this_Nselect = len(result_selected)
             print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
     # get total halos in snap (selected)
-    cursor.execute("SELECT * FROM selected WHERE snapnum = ?",(int(i)))
+    cursor.execute("SELECT * FROM selected WHERE snapnum = %d"%(i))
     total_nhalos = len(cursor.fetchall())
     f = open("sample_%d%03d"%(sample_prefix,i),"w")
     f.write("%d\n",total_nhalos)
