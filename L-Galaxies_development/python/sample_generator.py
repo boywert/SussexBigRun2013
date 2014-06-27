@@ -94,7 +94,7 @@ def treecrawler(index,this_tree,treenr):
         treecrawler(this_tree[index]['FirstProgenitor'],this_tree,treenr)
     snap = this_tree[index]['SnapNum']
     
-    cursor.execute("INSERT INTO tree(filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(output_trees[index]['FileNr']),int(treenr),int(index),int(snap),float(mass)))
+    cursor.execute("INSERT INTO selected (filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(output_trees[index]['FileNr']),int(treenr),int(index),int(snap),float(mass)))
     db.commit()
 
 
