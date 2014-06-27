@@ -8,7 +8,7 @@ lastfile = 0
 lastsnap = 61
 Mgadget2Msun = 1.e10
 select_num = 20
-
+sample_prefix = 100
 
 # use sqlite in memory
 global db
@@ -144,6 +144,25 @@ for i in reversed(range(lastsnap+1)):
             result_selected = cursor.fetchall()
             this_Nselect = len(result_selected)
             print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
+    # get total halos in snap (selected)
+    cursor.execute("SELECT * FROM selected WHERE snapnum = ?",(i))
+    total_nhalos = len(cursor.fetchall())
+    f = open("sample_%d%03d"%(sample_prefix,i),"w")
+    f.write("%d\n",total_nhalos)
+    for j in range(nSteps):
+        low_m = min_mass + j*step_mass
+        high_m = min_mass + (j+1)*step_mass
+        cursor.execute("SELECT * FROM selected WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
+        result_selected = cursor.fetchall()
+        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
+        result_tree = cursor.fetchall()
+        this_Nselect = float(len(result_selected))
+        this_Nhalos = float(len(result_tree))
+        weight = this_Nhalos/this_Nselect
+        for data in result_selected:
+            u_id = data[0]*1000000000000+data[1]*1000000+data[2]
+            f.write("%ld\t%d\t%d\t%f",(u_id,int(data[1]),int(data[0],float(weight))))
+    f.close()
 db.close()
 
 
