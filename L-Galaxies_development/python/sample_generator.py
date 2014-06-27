@@ -122,6 +122,7 @@ for i in range(lastsnap+1):
         result_tree = cursor.fetchall()
         this_Nselect = len(result_selected)
         this_Nhalos = len(result_tree)
+        print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
         if this_Nselect < min(this_Nhalos,select_num):
             cond = []
             for data in result_selected:
