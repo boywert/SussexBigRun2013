@@ -93,8 +93,9 @@ def treecrawler(index,this_tree,treenr):
     if this_tree[index]['FirstProgenitor'] > -1:
         treecrawler(this_tree[index]['FirstProgenitor'],this_tree,treenr)
     snap = this_tree[index]['SnapNum']
-    
-    cursor.execute("INSERT INTO selected (filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(output_trees[index]['FileNr']),int(treenr),int(index),int(snap),float(mass)))
+    filenr = this_tree[index]['FileNr']
+    mass = numpy.log10(this_tree[index]['M_Crit200']*Mgadget2Msun)
+    cursor.execute("INSERT INTO selected (filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(filenr),int(treenr),int(index),int(snap),float(mass)))
     db.commit()
 
 
