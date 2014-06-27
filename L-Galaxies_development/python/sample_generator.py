@@ -112,7 +112,7 @@ for i in range(nSteps):
         treecrawler(this_tree_index,this_tree,treenr)
         
 
-for i in range(lastsnap+1):
+for i in reversed(range(lastsnap+1)):
     for j in range(nSteps):
         low_m = min_mass + j*step_mass
         high_m = min_mass + (j+1)*step_mass
