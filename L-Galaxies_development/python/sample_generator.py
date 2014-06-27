@@ -24,6 +24,14 @@ snapnum INTEGER,
 mass REAL)
 ''')
 
+cursor.execute('''CREATE TABLE selected (
+filenr INTEGER,
+treenr INTEGER,
+halonr INTEGER, 
+snapnum INTEGER,
+mass REAL)
+''')
+
 ntreesfile = numpy.zeros(lastfile+1-firstfile,dtype=numpy.int32)
 for ifile in range(firstfile,lastfile+1):
     filename = folder+"/trees_%03d.%d"%(lastsnap,ifile)
@@ -83,17 +91,10 @@ def treecrawler(index,this_tree,treenr):
     if this_tree[index]['FirstProgenitor'] > -1:
         treecrawler(this_tree[index]['FirstProgenitor'],this_tree,treenr)
     snap = this_tree[index]['SnapNum']
-    listsample[snap].append(this_tree[index])
-    listindex[snap].append(index)
-    listtree[snap].append(treenr-firsttreeinfile[this_tree[index]['FileNr']])
+    
+    cursor.execute("INSERT INTO tree(filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(output_trees[index]['FileNr']),int(treenr),int(index),int(snap),float(mass)))
+    cursor.commit()
 
-for i in range(lastsnap+1):
-    for j in range(nSteps):
-        low_m = min_mass + j*step_mass
-        high_m = min_mass + (j+1)*step_mass
-        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
-        nhalosbin[j,i] = len(cursor.fetchall())
-        print "doing snap",i,"step",j,':',nhalosbin[j,i]
 
 for i in range(nSteps):
     low_m = min_mass + i*step_mass
@@ -109,19 +110,17 @@ for i in range(nSteps):
             treecrawler(this_tree_index,this_tree,treenr)
         
 
+for i in range(lastsnap+1):
+    for j in range(nSteps):
+        low_m = min_mass + j*step_mass
+        high_m = min_mass + (j+1)*step_mass
+        cursor.execute("SELECT * FROM selected WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
+        result = cursor.fetchall()
+        this_Nselect = len(result)
+        print "Snap",i,"step",j
+        print result
+
+
 db.close()
 
-print nhalosbin
 
-f = []
-for i in range(lastsnap+1):
-    f.append(open("sample.%03d"%(i),"w"))
-
-for i in range(lastsnap+1):
-    print len(listsample[i])
-    # for j in range(len(listsample[i])):
-#        print listindex[i][j],listtree[i][j],listsample[i][j]["FileNr"]
-
-
-for i in range(lastsnap+1):
-    f[i].close()
