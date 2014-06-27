@@ -124,12 +124,13 @@ for i in range(lastsnap+1):
         this_Nhalos = len(result_tree)
         print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
         if this_Nselect < min(this_Nhalos,select_num):
+            rq_num = min(this_Nhalos,select_num)-this_Nselect
             cond = []
             for data in result_selected:
                 string = "(filenr != %d OR treenr != %d OR halonr != %d OR snapnum != %d)"%(data[0],data[1],data[2],data[3])
                 cond.append(string)
             cond_str = " AND ".join(cond)
-            query_str = "SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND %s"%(cond_str)
+            query_str = "SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND %s ORDER BY RANDOM() LIMIT %d"%(cond_str,rq_num)
             #print query_str
             cursor.execute(query_str,(low_m,high_m,i))
             result_add = cursor.fetchall()
