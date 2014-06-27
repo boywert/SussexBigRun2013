@@ -162,7 +162,7 @@ for i in reversed(range(lastsnap+1)):
             weight = this_Nhalos/this_Nselect
             for data in result_selected:
                 u_id = data[0]*1000000000000L+data[1]*1000000L+data[2]
-                f.write("%ld\t%d\t%d\t%f"%(int(u_id),int(data[1]),int(data[0],float(weight))))
+                f.write("%ld\t%d\t%d\t%f"%(int(u_id),int(data[1]),int(data[0]),float(weight)))
     f.close()
 db.close()
 
