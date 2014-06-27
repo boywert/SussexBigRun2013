@@ -9,7 +9,7 @@ lastsnap = 61
 Mgadget2Msun = 1.e10
 select_num = 20
 sample_prefix = 100
-
+samplefile_prefix ="cut_optimalsample_allz_nh"
 # use sqlite in memory
 global db
 global cursor
@@ -147,7 +147,7 @@ for i in reversed(range(lastsnap+1)):
     # get total halos in snap (selected)
     cursor.execute("SELECT * FROM selected WHERE snapnum = %d"%(i))
     total_nhalos = len(cursor.fetchall())
-    f = open("sample_%d%03d"%(sample_prefix,i),"w")
+    f = open("%s_%d%03d"%(samplefile_prefix,sample_prefix,i),"w")
     f.write("%d\n"%total_nhalos)
     for j in range(nSteps):
         low_m = min_mass + j*step_mass
