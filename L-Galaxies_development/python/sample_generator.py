@@ -129,7 +129,9 @@ for i in range(lastsnap+1):
                 string = "(filenr != %d OR treenr != %d OR halonr != %d OR snapnum != %d)"%(data[0],data[1],data[2],data[3])
                 cond.append(string)
             cond_str = " AND ".join(cond)
-            cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND ?",(low_m,high_m,i,cond_str))
+            query_str = "SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND %s"%(cond_str)
+            print query_str
+            cursor.execute(query_str,(low_m,high_m,i))
             result_add = cursor.fetchall()
             print result_add
         # print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
