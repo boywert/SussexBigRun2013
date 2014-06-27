@@ -11,6 +11,8 @@ select_num = 20
 
 
 # use sqlite in memory
+global db
+global cursor
 db = sqlite3.connect(':memory:')
 cursor = db.cursor()
 # create a table
@@ -93,7 +95,7 @@ def treecrawler(index,this_tree,treenr):
     snap = this_tree[index]['SnapNum']
     
     cursor.execute("INSERT INTO tree(filenr,treenr,halonr,snapnum,mass) VALUES (?,?,?,?,?)",(int(output_trees[index]['FileNr']),int(treenr),int(index),int(snap),float(mass)))
-    cursor.commit()
+    db.commit()
 
 
 for i in range(nSteps):
