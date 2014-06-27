@@ -118,10 +118,13 @@ for i in range(lastsnap+1):
         low_m = min_mass + j*step_mass
         high_m = min_mass + (j+1)*step_mass
         cursor.execute("SELECT * FROM selected WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
-        result = cursor.fetchall()
-        this_Nselect = len(result)
-        print "Snap",i,"step",j
-        print result
+        result_selected = cursor.fetchall()
+        cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
+        result_tree = cursor.fetchall()
+        this_Nselect = len(result_selected)
+        this_Nhalos = len(result_tree)
+        print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
+        
 
 
 db.close()
