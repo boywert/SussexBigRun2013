@@ -125,7 +125,7 @@ for i in range(lastsnap+1):
         if this_Nselect < min(this_Nhalos,select_num):
             cond = []
             for data in result_selected:
-                string = "(filenr != %d OR treenr != %d OR halonr != %d OR snapnum != d)"%(data[0],data[1],data[2],data[3])
+                string = "(filenr != %d OR treenr != %d OR halonr != %d OR snapnum != %d)"%(data[0],data[1],data[2],data[3])
                 cond.append(string)
             cond_str = " AND ".join(cond)
             cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND ?",(low_m,high_m,i,cond_str))
