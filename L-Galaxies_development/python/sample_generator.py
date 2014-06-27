@@ -130,14 +130,18 @@ for i in range(lastsnap+1):
                 cond.append(string)
             cond_str = " AND ".join(cond)
             query_str = "SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? AND %s"%(cond_str)
-            print query_str
             cursor.execute(query_str,(low_m,high_m,i))
             result_add = cursor.fetchall()
-            print result_add
-        # print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
-        
-
-
+            for add_data in result_add:
+                treenr = data[2]
+                this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
+                this_tree_index = data[0]-firsthalointree[treenr]
+                treecrawler(this_tree_index,this_tree,treenr)
+            print "add some more halos"
+            cursor.execute("SELECT * FROM selected WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
+            result_selected = cursor.fetchall()
+            this_Nselect = len(result_selected)
+            print "Snap",i,"step",j,":",this_Nselect,this_Nhalos
 db.close()
 
 
