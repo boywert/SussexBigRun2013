@@ -104,13 +104,12 @@ for i in range(nSteps):
     high_m = min_mass + (i+1)*step_mass
     cursor.execute("SELECT * FROM tree WHERE mass BETWEEN ? AND ? AND snapnum = ? ORDER BY RANDOM()",(low_m,high_m,lastsnap))
     all_rows = cursor.fetchall()
-    
-    if len(all_rows) >= select_num:
-        for data in all_rows[0:20]:
-            treenr = data[2]
-            this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
-            this_tree_index = data[0]-firsthalointree[treenr]
-            treecrawler(this_tree_index,this_tree,treenr)
+
+    for data in all_rows[0:20]:
+        treenr = data[2]
+        this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
+        this_tree_index = data[0]-firsthalointree[treenr]
+        treecrawler(this_tree_index,this_tree,treenr)
         
 
 for i in range(lastsnap+1):
