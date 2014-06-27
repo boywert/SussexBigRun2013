@@ -133,9 +133,9 @@ for i in range(lastsnap+1):
             cursor.execute(query_str,(low_m,high_m,i))
             result_add = cursor.fetchall()
             for add_data in result_add:
-                treenr = data[2]
+                treenr = add_data[2]
                 this_tree = output_trees[firsthalointree[treenr]:lasthalointree[treenr]]
-                this_tree_index = data[0]-firsthalointree[treenr]
+                this_tree_index = add_data[0]-firsthalointree[treenr]
                 treecrawler(this_tree_index,this_tree,treenr)
             print "add some more halos"
             cursor.execute("SELECT * FROM selected WHERE mass BETWEEN ? AND ? AND snapnum = ?",(low_m,high_m,i))
