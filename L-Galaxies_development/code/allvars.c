@@ -34,7 +34,7 @@ int NGalTree, MaxGalTree;
 int *HaloGalHeap;
 int IndexStored;
 
-char SpecPhotDir[512];
+char SpecPhotDir[1024];
 char PhotPrefix[50];
 char SpecPhotIMF[50];
 char McFile[512];

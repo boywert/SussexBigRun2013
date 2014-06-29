@@ -949,7 +949,7 @@ extern int LastDarkMatterSnapShot_MRII;
 #endif
 
 
-extern char SpecPhotDir[512];
+extern char SpecPhotDir[1024];
 extern char PhotPrefix[50];
 extern char SpecPhotIMF[50];
 extern char McFile[512];
