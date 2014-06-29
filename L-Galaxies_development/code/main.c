@@ -81,7 +81,6 @@ int main(int argc, char **argv)
 
   /*Reads the parameter file, given as an argument at run time. */
   read_parameter_file(argv[1]);
-  printf("%s\n",SpecPhotDir);
 
 #ifdef MR_PLUS_MRII
   //Start with MR files and later change to MRII
@@ -157,7 +156,7 @@ int main(int argc, char **argv)
       load_tree_table(filenr);
 
       /* Read in mesh dimensions */
-
+      printf("%s\n",SpecPhotDir);
 
 #ifdef MCMC
 #ifdef PARALLEL
