@@ -184,7 +184,7 @@ void setup_Spec_LumTables_onthefly(void)
 	FILE *File_PhotTables[NMAG];
 
 	printf("\n\nComputing PhotTables on the fly...\n\n");
-
+	printf("%s\n",SpecPhotDir)
 	read_vega_spectra(LambdaVega, FluxVega);
 #ifndef FULL_SPECTRA
 	read_filters(LambdaFilter, FluxFilter);
