@@ -185,7 +185,7 @@ void create_sfh_bins()
   int snap, step, sfh_ibin, i, j, sfh_Nbins[SFH_NBIN];
   int ibin_max=0;
   double sfh_t[SFH_NBIN];
-
+  printf("start init specphot = %s\n",SpecPhotDir);
   for(snap = 0; snap < MAXSNAPS; snap++) {
 	  for(step=0;step < STEPS;step++) {
 		  for(j=0;j < SFH_NBIN;j++) {
@@ -306,7 +306,7 @@ void create_sfh_bins()
   if(ThisTask==0)
 #endif
   printf("Max number of SFH bins used = %d\n",ibin_max+1);
-  printf("start init specphot = %s\n",SpecPhotDir);
+
 }
 
 void sfh_update_bins(int p, int snap, int step, double time) {
