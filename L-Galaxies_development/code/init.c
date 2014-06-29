@@ -95,6 +95,7 @@ void init(void)
 {
   struct rlimit rlim;
 
+  printf("specphot = %s\n",SpecPhotDir);
   getrlimit(RLIMIT_CORE, &rlim);
   rlim.rlim_cur = RLIM_INFINITY;
   setrlimit(RLIMIT_CORE, &rlim);
@@ -156,7 +157,6 @@ void init(void)
   for(i=0; i<RNUM; i++) radius[i]= pow(1.5,i-1)/1000;
 
   read_cooling_functions();
-  printf("specphot = %s\n",SpecPhotDir);
 //CREATE ARRAYS OF SFH TIME STRUCTURE:
 #ifdef  STAR_FORMATION_HISTORY
   create_sfh_bins();
