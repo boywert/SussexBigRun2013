@@ -39,10 +39,9 @@ void setup_RedshiftTab()
 void read_vega_spectra(double *LambdaVega, double *FluxVega)
 {
   int i;
-  char buf[1000];
+  char buf[2048];
   FILE *fa;
-  printf("%s\n",SpecPhotDir);
-  sprintf(buf, "%s/FullSEDs/VEGA_A0V_KUR_BB.SED",SpecPhotDir );
+  sprintf(buf, "%s/FullSEDs/VEGA_A0V_KUR_BB.SED",SpecPhotDir);
   if((fa=fopen(buf,"r"))==NULL)
     {
   		char sbuf[1000];
