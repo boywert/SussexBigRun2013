@@ -104,6 +104,7 @@ int main(int argc, char **argv)
   //for dust_model
   mu_seed = -150;
 #endif
+  printf("specphot = %s\n",SpecPhotDir);
   init();
 
 #ifdef STAR_FORMATION_HISTORY
