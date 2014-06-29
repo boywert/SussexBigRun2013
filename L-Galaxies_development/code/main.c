@@ -104,7 +104,7 @@ int main(int argc, char **argv)
   //for dust_model
   mu_seed = -150;
 #endif
-
+  printf("%s\n",SpecPhotDir);
   init();
 
 #ifdef STAR_FORMATION_HISTORY
@@ -156,7 +156,6 @@ int main(int argc, char **argv)
       load_tree_table(filenr);
 
       /* Read in mesh dimensions */
-      printf("%s\n",SpecPhotDir);
 
 #ifdef MCMC
 #ifdef PARALLEL
