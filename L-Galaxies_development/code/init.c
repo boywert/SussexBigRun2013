@@ -95,7 +95,7 @@ void init(void)
 {
   struct rlimit rlim;
 
-  printf("start init specphot = %s\n",SpecPhotDir);
+  
   getrlimit(RLIMIT_CORE, &rlim);
   rlim.rlim_cur = RLIM_INFINITY;
   setrlimit(RLIMIT_CORE, &rlim);
@@ -109,7 +109,7 @@ void init(void)
   ScaleFactor = pow(2, Hashbits) / BoxSize;
 #endif
 
-
+  printf("start init specphot = %s\n",SpecPhotDir);
 /*#ifdef FEEDBACK_COUPLED_WITH_MASS_RETURN
   EnergySN*=1./RecycleFraction;
   EnergySNcode = EnergySN / UnitEnergy_in_cgs * Hubble_h;
