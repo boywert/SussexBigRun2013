@@ -142,7 +142,7 @@ void init(void)
 #ifdef H2FORMATION
   read_sfrz();
 #endif
-  printf("start init specphot = %s\n",SpecPhotDir);
+
   if(ReionizationOn == 2 || ReionizationOn == 3)  
     read_reionization();
 
@@ -157,6 +157,7 @@ void init(void)
 
   read_cooling_functions();
 //CREATE ARRAYS OF SFH TIME STRUCTURE:
+  printf("start init specphot = %s\n",SpecPhotDir);
 #ifdef  STAR_FORMATION_HISTORY
   create_sfh_bins();
 #endif
