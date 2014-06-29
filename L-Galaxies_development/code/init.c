@@ -95,7 +95,7 @@ void init(void)
 {
   struct rlimit rlim;
 
-  printf("specphot = %s\n",SpecPhotDir);
+  printf("start init specphot = %s\n",SpecPhotDir);
   getrlimit(RLIMIT_CORE, &rlim);
   rlim.rlim_cur = RLIM_INFINITY;
   setrlimit(RLIMIT_CORE, &rlim);
