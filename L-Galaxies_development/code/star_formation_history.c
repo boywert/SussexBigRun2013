@@ -185,7 +185,7 @@ void create_sfh_bins()
   int snap, step, sfh_ibin, i, j, sfh_Nbins[SFH_NBIN];
   int ibin_max=0;
   double sfh_t[SFH_NBIN];
-  printf("start init specphot = %s\n",SpecPhotDir);
+
   for(snap = 0; snap < MAXSNAPS; snap++) {
 	  for(step=0;step < STEPS;step++) {
 		  for(j=0;j < SFH_NBIN;j++) {
@@ -262,7 +262,7 @@ void create_sfh_bins()
       			i=i-n_merge;
       		}
       	}
-	
+  printf("start init specphot = %s\n",SpecPhotDir);	
       	/* At this point, if flag_merged_bins is set then
       	 * we have to merge SFH_NMERGE bins into SFH_NMERGE-1. */
       	if(flag_merged_bins) {
