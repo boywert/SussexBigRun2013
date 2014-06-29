@@ -109,7 +109,6 @@ void init(void)
   ScaleFactor = pow(2, Hashbits) / BoxSize;
 #endif
 
-  printf("start init specphot = %s\n",SpecPhotDir);
 /*#ifdef FEEDBACK_COUPLED_WITH_MASS_RETURN
   EnergySN*=1./RecycleFraction;
   EnergySNcode = EnergySN / UnitEnergy_in_cgs * Hubble_h;
@@ -143,7 +142,7 @@ void init(void)
 #ifdef H2FORMATION
   read_sfrz();
 #endif
-
+  printf("start init specphot = %s\n",SpecPhotDir);
   if(ReionizationOn == 2 || ReionizationOn == 3)  
     read_reionization();
 
