@@ -157,10 +157,10 @@ void init(void)
 
   read_cooling_functions();
 //CREATE ARRAYS OF SFH TIME STRUCTURE:
-  printf("start init specphot = %s\n",SpecPhotDir);
 #ifdef  STAR_FORMATION_HISTORY
   create_sfh_bins();
 #endif
+  printf("start init specphot = %s\n",SpecPhotDir);
   printf("specphot = %s\n",SpecPhotDir);
 #ifndef MR_PLUS_MRII //If this option (to run with MCMC) is on, the tables are read later
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
