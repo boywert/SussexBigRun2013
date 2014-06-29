@@ -306,7 +306,7 @@ void create_sfh_bins()
   if(ThisTask==0)
 #endif
   printf("Max number of SFH bins used = %d\n",ibin_max+1);
-
+  printf("start init specphot = %s\n",SpecPhotDir);
 }
 
 void sfh_update_bins(int p, int snap, int step, double time) {

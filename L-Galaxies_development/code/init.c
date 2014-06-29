@@ -160,7 +160,6 @@ void init(void)
 #ifdef  STAR_FORMATION_HISTORY
   create_sfh_bins();
 #endif
-  printf("start init specphot = %s\n",SpecPhotDir);
   printf("specphot = %s\n",SpecPhotDir);
 #ifndef MR_PLUS_MRII //If this option (to run with MCMC) is on, the tables are read later
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
