@@ -215,7 +215,7 @@ void create_sfh_bins()
       int flag_merged_bins; // Boolean used to check whether have merged bins
       int dt_merge; // Size of bins that we are checking for merging
       int n_merge; // Number of bins of this size
-      printf("\tstart step 2 specphot = %s\n",SpecPhotDir);
+     
       time = previoustime - (step + 1.0) * (deltaT / STEPS);
       ibin=sfh_ibin;
  
@@ -239,6 +239,7 @@ void create_sfh_bins()
       /* Now merge bins where we have SFH_NMERGE bins of the same size.
        * Need to do this iteratively. */
       flag_merged_bins=1;
+      printf("\tbefore while pecphot = %s\n",SpecPhotDir);
       while(flag_merged_bins) {
       	flag_merged_bins=0;
       	dt_merge=sfh_Nbins[0];
