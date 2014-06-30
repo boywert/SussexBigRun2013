@@ -208,7 +208,7 @@ void create_sfh_bins()
     newtime = NumToTime(snap+1);
     deltaT = previoustime - newtime;
 
-
+    printf("start snap specphot = %s\n",SpecPhotDir);
     for(step=0;step<STEPS;step++) {
       int ibin;
       int flag_merged_bins; // Boolean used to check whether have merged bins
@@ -217,7 +217,7 @@ void create_sfh_bins()
 
       time = previoustime - (step + 1.0) * (deltaT / STEPS);
       ibin=sfh_ibin;
-
+ 
       //printf("sna=%d step=%d step time=%f time low=%f\n",
       //		snap,step,(previoustime - (step + 0.5) * (deltaT / STEPS))*UnitTime_in_years/Hubble_h/1.e9,
       //		(time)*UnitTime_in_years/Hubble_h/1.e9);
@@ -238,7 +238,6 @@ void create_sfh_bins()
       /* Now merge bins where we have SFH_NMERGE bins of the same size.
        * Need to do this iteratively. */
       flag_merged_bins=1;
-      printf("start init specphot = %s\n",SpecPhotDir);
       while(flag_merged_bins) {
       	flag_merged_bins=0;
       	dt_merge=sfh_Nbins[0];
@@ -263,7 +262,6 @@ void create_sfh_bins()
       			i=i-n_merge;
       		}
       	}
-	/* printf("start init specphot = %s\n",SpecPhotDir); */	
       	/* At this point, if flag_merged_bins is set then
       	 * we have to merge SFH_NMERGE bins into SFH_NMERGE-1. */
       	if(flag_merged_bins) {
@@ -299,7 +297,7 @@ void create_sfh_bins()
 
 
     }//end loop on steps
-
+    printf("finish snap specphot = %s\n",SpecPhotDir);
   }//end loop on snaps
 
 
