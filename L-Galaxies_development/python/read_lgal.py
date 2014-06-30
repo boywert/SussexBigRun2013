@@ -57,7 +57,7 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
 
     output_Galaxy = numpy.array([],dtype=filter_dtype)
     for ifile in range(firstfile,lastfile+1):
-        filename = folder+'/'+file_prefix+"/galtree_"+"%d"%(ifile)
+        filename = folder+'/'+file_prefix+"galtree_"+"%d"%(ifile)
         f = open(filename,"rb")
         dummy = numpy.fromfile(f,numpy.int32,1)
         one = dummy[0]
