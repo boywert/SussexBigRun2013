@@ -291,11 +291,13 @@ void create_sfh_bins()
 	 printf("\t beforecheck for j=%d specphot = %s\n",j,SpecPhotDir);
       	if(j==0)
 	  {
+	    printf("\t\tbefore set SFH_dt for j=%d specphot = %s\n",j,SpecPhotDir);
 	    SFH_dt[snap][step][j]=NumToTime(0)-sfh_t[j];//Time width of the bin (code units)
 	    printf("\t\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
 	  }
       	else
 	  {
+	    printf("\t\tbefore set SFH_dt for j=%d specphot = %s\n",j,SpecPhotDir);
 	    SFH_dt[snap][step][j]=sfh_t[j-1]-sfh_t[j];//Time width of the bin (code units)
 	    printf("\t\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
 	  }
