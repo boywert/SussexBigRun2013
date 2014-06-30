@@ -241,6 +241,7 @@ void create_sfh_bins()
       flag_merged_bins=1;
       printf("\tbefore while pecphot = %s\n",SpecPhotDir);
       while(flag_merged_bins) {
+	printf("\tstart while flag_merge specphot = %s\n",SpecPhotDir);
       	flag_merged_bins=0;
       	dt_merge=sfh_Nbins[0];
       	i=0;
@@ -279,6 +280,7 @@ void create_sfh_bins()
       		sfh_t[i]=0.;
       		ibin=i-1;
       	}
+	printf("\tfinish while flag_merge specphot = %s\n",SpecPhotDir);
       } // End loop over bin merging
 
       sfh_ibin=ibin;
