@@ -288,15 +288,16 @@ void create_sfh_bins()
 	printf("\tstart inside for j=%d specphot = %s\n",j,SpecPhotDir);
       	SFH_t[snap][step][j]=sfh_t[j]; //Time to present at the low-z edge of the bin (code units)
       	SFH_Nbins[snap][step][j]=sfh_Nbins[j];//Number of bins merged in each bin (only useful for the merging algorithm)
+	 printf("\t beforecheck for j=%d specphot = %s\n",j,SpecPhotDir);
       	if(j==0)
 	  {
 	    SFH_dt[snap][step][j]=NumToTime(0)-sfh_t[j];//Time width of the bin (code units)
-	    printf("\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
+	    printf("\t\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
 	  }
       	else
 	  {
 	    SFH_dt[snap][step][j]=sfh_t[j-1]-sfh_t[j];//Time width of the bin (code units)
-	    printf("\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
+	    printf("\t\tcheck for j=%d specphot = %s\n",j,SpecPhotDir);
 	  }
 	
       	//printf("snap=%d step=%d bin=%d time=%f time_low=%f\n",
