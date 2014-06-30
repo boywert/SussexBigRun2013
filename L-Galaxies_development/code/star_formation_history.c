@@ -282,7 +282,7 @@ void create_sfh_bins()
       } // End loop over bin merging
 
       sfh_ibin=ibin;
-      printf("\tbefore start for j specphot = %s\n",SpecPhotDir);
+      printf("READY snap = %d step = %d\n",snap,step);
       for(j=0;j<=sfh_ibin;j++)
       {
 	printf("\tstart inside for j=%d specphot = %s\n",j,SpecPhotDir);
