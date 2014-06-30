@@ -239,9 +239,8 @@ void create_sfh_bins()
       /* Now merge bins where we have SFH_NMERGE bins of the same size.
        * Need to do this iteratively. */
       flag_merged_bins=1;
-      printf("\tbefore while pecphot = %s\n",SpecPhotDir);
+
       while(flag_merged_bins) {
-	printf("\tstart while flag_merge specphot = %s\n",SpecPhotDir);
       	flag_merged_bins=0;
       	dt_merge=sfh_Nbins[0];
       	i=0;
@@ -280,7 +279,6 @@ void create_sfh_bins()
       		sfh_t[i]=0.;
       		ibin=i-1;
       	}
-	printf("\tfinish while flag_merge specphot = %s\n",SpecPhotDir);
       } // End loop over bin merging
 
       sfh_ibin=ibin;
@@ -301,9 +299,7 @@ void create_sfh_bins()
       }	
       SFH_ibin[snap][step]=sfh_ibin; //Last active bin
 
-      printf("\tfinish step specphot = %s\n",SpecPhotDir);
     }//end loop on steps
-    printf("finish snap specphot = %s\n",SpecPhotDir);
   }//end loop on snaps
 
 
