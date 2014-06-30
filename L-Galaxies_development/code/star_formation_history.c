@@ -297,7 +297,7 @@ void create_sfh_bins()
       	//printf("snap=%d step=%d bin=%d time=%f time_low=%f\n",
       	//		snap,step,j,(SFH_t[snap][step][j]+SFH_dt[snap][step][j]/2.)*UnitTime_in_years/Hubble_h/1.e9,
       	//		(SFH_t[snap][step][j])*UnitTime_in_years/Hubble_h/1.e9);
-	printf("\tend inside for j=%d specphot = %s\n",d,SpecPhotDir);
+	printf("\tend inside for j=%d specphot = %s\n",j,SpecPhotDir);
       }	
       SFH_ibin[snap][step]=sfh_ibin; //Last active bin
 
