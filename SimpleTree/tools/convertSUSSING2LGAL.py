@@ -60,6 +60,12 @@ def readAHFascii():
         #print stat.st_size
         if(stat.st_size > 384):
             data = numpy.loadtxt(filename)
+            shape = data.shape
+            if (len(shape) == 1) & (shape[0] > 1):
+                data_tmp = []
+                data_tmp.append(data)
+                data = data_tmp
+
             for halo in data:
                 hid = long(halo[0])
                 #print hid
