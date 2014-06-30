@@ -284,9 +284,10 @@ void create_sfh_bins()
       } // End loop over bin merging
 
       sfh_ibin=ibin;
-      printf("\tstart for j specphot = %s\n",SpecPhotDir);
+      printf("\tbefore start for j specphot = %s\n",SpecPhotDir);
       for(j=0;j<=sfh_ibin;j++)
       {
+	printf("\tstart inside for j specphot = %s\n",SpecPhotDir);
       	SFH_t[snap][step][j]=sfh_t[j]; //Time to present at the low-z edge of the bin (code units)
       	SFH_Nbins[snap][step][j]=sfh_Nbins[j];//Number of bins merged in each bin (only useful for the merging algorithm)
       	if(j==0)
@@ -296,6 +297,7 @@ void create_sfh_bins()
       	//printf("snap=%d step=%d bin=%d time=%f time_low=%f\n",
       	//		snap,step,j,(SFH_t[snap][step][j]+SFH_dt[snap][step][j]/2.)*UnitTime_in_years/Hubble_h/1.e9,
       	//		(SFH_t[snap][step][j])*UnitTime_in_years/Hubble_h/1.e9);
+	printf("\tend inside for j specphot = %s\n",SpecPhotDir);
       }	
       SFH_ibin[snap][step]=sfh_ibin; //Last active bin
 
