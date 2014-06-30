@@ -186,6 +186,11 @@ void create_sfh_bins()
   int ibin_max=0;
   double sfh_t[SFH_NBIN];
 
+  int ibin;
+  int flag_merged_bins; // Boolean used to check whether have merged bins
+  int dt_merge; // Size of bins that we are checking for merging
+  int n_merge; // Number of bins of this size
+
   for(snap = 0; snap < MAXSNAPS; snap++) {
 	  for(step=0;step < STEPS;step++) {
 		  for(j=0;j < SFH_NBIN;j++) {
@@ -211,10 +216,6 @@ void create_sfh_bins()
     printf("start snap specphot = %s\n",SpecPhotDir);
     for(step=0;step<STEPS;step++) {
       printf("\tstart step 1 specphot = %s\n",SpecPhotDir);
-      int ibin;
-      int flag_merged_bins; // Boolean used to check whether have merged bins
-      int dt_merge; // Size of bins that we are checking for merging
-      int n_merge; // Number of bins of this size
      
       time = previoustime - (step + 1.0) * (deltaT / STEPS);
       ibin=sfh_ibin;
