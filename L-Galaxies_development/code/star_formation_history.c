@@ -238,6 +238,7 @@ void create_sfh_bins()
       /* Now merge bins where we have SFH_NMERGE bins of the same size.
        * Need to do this iteratively. */
       flag_merged_bins=1;
+      printf("start init specphot = %s\n",SpecPhotDir);
       while(flag_merged_bins) {
       	flag_merged_bins=0;
       	dt_merge=sfh_Nbins[0];
@@ -262,7 +263,7 @@ void create_sfh_bins()
       			i=i-n_merge;
       		}
       	}
-  printf("start init specphot = %s\n",SpecPhotDir);	
+	/* printf("start init specphot = %s\n",SpecPhotDir); */	
       	/* At this point, if flag_merged_bins is set then
       	 * we have to merge SFH_NMERGE bins into SFH_NMERGE-1. */
       	if(flag_merged_bins) {
