@@ -284,7 +284,7 @@ void create_sfh_bins()
       } // End loop over bin merging
 
       sfh_ibin=ibin;
-
+      printf("\tstart for j specphot = %s\n",SpecPhotDir);
       for(j=0;j<=sfh_ibin;j++)
       {
       	SFH_t[snap][step][j]=sfh_t[j]; //Time to present at the low-z edge of the bin (code units)
