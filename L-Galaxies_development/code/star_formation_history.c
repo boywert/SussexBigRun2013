@@ -186,11 +186,6 @@ void create_sfh_bins()
   int ibin_max=0;
   double sfh_t[SFH_NBIN];
 
-  int ibin;
-  int flag_merged_bins; // Boolean used to check whether have merged bins
-  int dt_merge; // Size of bins that we are checking for merging
-  int n_merge; // Number of bins of this size
-
   for(snap = 0; snap < MAXSNAPS; snap++) {
 	  for(step=0;step < STEPS;step++) {
 		  for(j=0;j < SFH_NBIN;j++) {
@@ -213,9 +208,13 @@ void create_sfh_bins()
     newtime = NumToTime(snap+1);
     deltaT = previoustime - newtime;
 
-    printf("start snap specphot = %s\n",SpecPhotDir);
+    printf("start snap %d specphot = %s\n",snap,SpecPhotDir);
     for(step=0;step<STEPS;step++) {
-      printf("\tstart step 1 specphot = %s\n",SpecPhotDir);
+      printf("\tstart step %d specphot = %s\n",step,SpecPhotDir);
+      int ibin;
+      int flag_merged_bins; // Boolean used to check whether have merged bins
+      int dt_merge; // Size of bins that we are checking for merging
+      int n_merge; // Number of bins of this size
      
       time = previoustime - (step + 1.0) * (deltaT / STEPS);
       ibin=sfh_ibin;
@@ -288,7 +287,7 @@ void create_sfh_bins()
       printf("\tbefore start for j specphot = %s\n",SpecPhotDir);
       for(j=0;j<=sfh_ibin;j++)
       {
-	printf("\tstart inside for j specphot = %s\n",SpecPhotDir);
+	printf("\tstart inside for j=%d specphot = %s\n",j,SpecPhotDir);
       	SFH_t[snap][step][j]=sfh_t[j]; //Time to present at the low-z edge of the bin (code units)
       	SFH_Nbins[snap][step][j]=sfh_Nbins[j];//Number of bins merged in each bin (only useful for the merging algorithm)
       	if(j==0)
@@ -298,7 +297,7 @@ void create_sfh_bins()
       	//printf("snap=%d step=%d bin=%d time=%f time_low=%f\n",
       	//		snap,step,j,(SFH_t[snap][step][j]+SFH_dt[snap][step][j]/2.)*UnitTime_in_years/Hubble_h/1.e9,
       	//		(SFH_t[snap][step][j])*UnitTime_in_years/Hubble_h/1.e9);
-	printf("\tend inside for j specphot = %s\n",SpecPhotDir);
+	printf("\tend inside for j=%d specphot = %s\n",d,SpecPhotDir);
       }	
       SFH_ibin[snap][step]=sfh_ibin; //Last active bin
 
