@@ -164,6 +164,7 @@ def readSussingtree(SUSSINGtree,halocat):
                         print prevhalo,"=>",progid
                     prevhalo = progid
                     count -= 1
+    os.exit()
 
 def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["TreeNr"] = treenr
