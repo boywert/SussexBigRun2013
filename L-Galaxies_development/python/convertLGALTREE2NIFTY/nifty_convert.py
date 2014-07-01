@@ -51,7 +51,7 @@ def read_galaxies():
     filter['MetalsDiskMass'] = True
     filter['MassWeightAge'] = True
     filter["FirstProgGal"] = True
-    filter["NextProgGal"] = True
+
 
     file_prefix = "SA_"    
     (nGals,gal) = read_lgal.read_lgaltree(folder,file_prefix,firstfile,lastfile,filter)
@@ -62,10 +62,10 @@ def read_galaxies():
         haloid = galaxy["HaloID"]
         Type = galaxy["Type"]
         
-        print galaxy["NextProgGal"]
         if(Type != 2):
             lasthaloid = haloid
         else:
+            print galaxy
             last_main_prog = idgal+1
             while (gal[last_main_prog]["Type"] == 2):
                 last_main_prog = last_main_prog+1
