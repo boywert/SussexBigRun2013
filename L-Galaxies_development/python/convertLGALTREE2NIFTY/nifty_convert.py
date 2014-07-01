@@ -1,8 +1,13 @@
 import pylab
 import numpy
+import sys
+sys.path.insert(0, "../")
 import read_lgal
 import LGalaxyStruct
 import os
+
+
+
 AHFdir = config.AHFdir
 AHFprefix = config.AHFprefix
 SUSSINGtree = config.SUSSINGtree
