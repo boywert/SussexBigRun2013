@@ -157,11 +157,11 @@ def readSussingtree(SUSSINGtree,halocat):
                     if(nprog==count):
                         halocopy[haloid]["FirstProgenitor"] = progid
                         halocopy[progid]["Descendant"] = haloid
-                        print haloid,"=>",progid
+                        # print haloid,"=>",progid
                     else:
                         halocopy[prevhalo]["NextProgenitor"] = progid
                         halocopy[progid]["Descendant"] = haloid
-                        print prevhalo,"=>",progid
+                        # print prevhalo,"=>",progid
                     prevhalo = progid
                     count -= 1
     os.exit()
