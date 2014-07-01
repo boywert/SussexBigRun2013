@@ -65,7 +65,6 @@ def read_galaxies():
         if(Type != 2):
             lasthaloid = haloid
         else:
-            print galaxy
             last_main_prog = idgal+1
             while (gal[last_main_prog]["Type"] == 2):
                 last_main_prog = last_main_prog+1
