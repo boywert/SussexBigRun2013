@@ -615,7 +615,6 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 		  /* this deals with the central galaxies of subhalos */
 		  if(Gal[ngal].Type == 0 || Gal[ngal].Type == 1)
 		    {
-		      printf("Type = %d\n",Gal[ngal].Type);
 			  if(prog == first_occupied)
 			    {
 #ifdef HALOPROPERTIES
@@ -656,6 +655,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 			    }
 			  else //type 2 galaxies
 			    {
+			      printf("Type = %d\n",Gal[ngal].Type);
 				  update_type_2(ngal, halonr, prog, mostmassive);
 			    }
 		    }
