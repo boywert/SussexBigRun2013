@@ -475,7 +475,7 @@ void construct_galaxies(int filenr, int treenr, int halonr)
 
       /*Evolve the Galaxies -> SAM! */
       evolve_galaxies(Halo[halonr].FirstHaloInFOFgroup, ngal, treenr, cenngal);
-
+      if(Gal[ngal].Type == 2) printf("GalID = %d, Type = 2\n",ngal);
       for (p =0;p<ngal;p++)
 	    mass_checks("Construct_galaxies #1",p);
     }
@@ -656,7 +656,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 			  else //type 2 galaxies
 			    {
 				  update_type_2(ngal, halonr, prog, mostmassive);
-				  printf("GalID = %ld, Type = %d\n",(long long)ngal,Gal[ngal].Type);
+				  // printf("GalID = %ld, Type = %d\n",(long long)ngal,Gal[ngal].Type);
 			    }
 		    }
 
@@ -693,13 +693,15 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
    * and its merging clock is switched on, its satelites (type 2's)
    * will preferably merge onto this type 1 rather than the type 0 */
   for(i = ngalstart, centralgal = -1; i < ngal; i++)
-	  if(Gal[i].Type == 0 || Gal[i].Type == 1)
+    {
+      if(Gal[i].Type == 0 || Gal[i].Type == 1)
 	    {
 		  if(centralgal != -1)
 			  terminate("Subhalo hosts more than one Type 0/1\n");
 
 		  centralgal = i;
 	    }
+    }
 
   for(i = ngalstart; i < ngal; i++)
     {
