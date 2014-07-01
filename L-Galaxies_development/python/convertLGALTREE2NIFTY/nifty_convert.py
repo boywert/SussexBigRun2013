@@ -5,7 +5,7 @@ sys.path.insert(0, "../")
 import read_lgal
 import LGalaxyStruct
 import os
-
+import config
 
 
 AHFdir = config.AHFdir
