@@ -166,7 +166,6 @@ def readSussingtree(SUSSINGtree,halocat):
                         # print prevhalo,"=>",progid
                     prevhalo = progid
                     count -= 1
-    os.exit()
 
 def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["TreeNr"] = treenr
@@ -348,9 +347,10 @@ def outputtrees(halocat2,fileout,fileout2):
             print "There are dupplicated entries"
             print "Exit"
             exit()
-        print "tree",tree,"total halos",len(fulltree[tree])
+        # print "tree",tree,"total halos",len(fulltree[tree])
         for hid in fulltree[tree]:
             halo = halocat[hid]
+            print halo
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
