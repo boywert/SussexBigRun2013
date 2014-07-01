@@ -170,9 +170,11 @@ def treecrowler(hid,halocat,treenr,fulltree):
     halocat[hid]["HaloNr"] = len(fulltree[treenr])
     fulltree[treenr].append(hid)
     progid = halocat[hid]["FirstProgenitor"]
+    print progid
     if progid > -1:
         (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
     nextprog = halocat[hid]["NextProgenitor"]
+    print nextprog
     if nextprog > -1:
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
