@@ -129,6 +129,7 @@ void save_galaxy_tree_finalize(int filenr, int tree)
   for(i = 0; i < NGalTree; i++)
     {
       p = GalTree[i].FirstProgGal;
+      printf("p = %ld\n",p);
       while(p >= 0)
 	{
 	  GalTree[p].DescendantGal = i;
