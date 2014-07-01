@@ -177,8 +177,8 @@ def treecrowler(hid,halocat,treenr,fulltree):
     if progid > -1:
         (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
     nextprog = halocat[hid]["NextProgenitor"]
-    print "nextprog",nextprog
-    time.sleep(1)
+    # print "nextprog",nextprog
+    # time.sleep(1)
     if nextprog > -1:
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
@@ -348,6 +348,7 @@ def outputtrees(halocat2,fileout,fileout2):
             print "There are dupplicated entries"
             print "Exit"
             exit()
+        print "tree",tree,"total halos",len(fulltree[tree])
         for hid in fulltree[tree]:
             halo = halocat[hid]
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
