@@ -123,6 +123,15 @@ void load_tree_table(int filenr)
   Halo_Data = mymalloc("Halo_Data", sizeof(struct halo_data) * totNHalos);
   myfseek(tree_file, sizeof(int) * (2 + Ntrees), SEEK_SET);
   myfread(Halo_Data, totNHalos, sizeof(struct halo_data), tree_file);
+#ifdef BOYDDEBUG
+  for(j=0;j<totNHalos;j++)
+    {
+      printf("ID:%d\n",j);
+      printf("\t FirstProgenitor: %d\n",Halo_Data[j].FirstProgenitor);
+      printf("\t NextProgenitor: %d\n",Halo_Data[j].NextProgenitor);
+      sleep(1);
+    }
+#endif
 #ifdef PARALLEL
   printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
 #endif

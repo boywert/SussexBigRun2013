@@ -132,7 +132,8 @@ def readSussingtree(SUSSINGtree,halocat):
     count = 0;
     for (i,item) in enumerate(line):
         if(i == 2):
-            totalhalo = long(item)
+            ngals_read = item.split()
+            totalhalo = long(ngals_read[0])
             print "tree",totalhalo,"halocat",len(halocat)
         if(i >= 3):
             col = item.split()
