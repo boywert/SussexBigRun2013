@@ -1,0 +1,6 @@
+AHFdir = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/AHF/"
+AHFprefix = "62.5_dm"
+SUSSINGtree = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/MergerTree+AHF.txt"
+SNAPfile = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/snapidzred.txt"
+FileOut = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/trees_061.0"
+FileOut2 = "/mnt/lustre/scratch/cs390/nIFTy/62.5_dm/treedata/tree_dbids_061.0"
