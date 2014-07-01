@@ -475,7 +475,7 @@ void construct_galaxies(int filenr, int treenr, int halonr)
 
       /*Evolve the Galaxies -> SAM! */
       evolve_galaxies(Halo[halonr].FirstHaloInFOFgroup, ngal, treenr, cenngal);
-      if(Gal[ngal].Type == 2) printf("GalID = %d, Type = 2\n",ngal);
+      printf("GalID = %d, Type = %d\n",ngal,Gal[ngal].Type);
       for (p =0;p<ngal;p++)
 	    mass_checks("Construct_galaxies #1",p);
     }
