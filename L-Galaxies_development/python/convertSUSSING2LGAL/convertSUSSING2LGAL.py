@@ -4,6 +4,8 @@ import math
 import struct
 import copy
 import convert_config
+import time
+
 global SNAPfile
 global AHFdir
 global AHFprefix
@@ -176,7 +178,7 @@ def treecrowler(hid,halocat,treenr,fulltree):
         (halocat,fulltree) = treecrowler(progid,halocat,treenr,fulltree)
     nextprog = halocat[hid]["NextProgenitor"]
     print "nextprog",nextprog
-    sleep(1)
+    time.sleep(1)
     if nextprog > -1:
         (halocat,fulltree) = treecrowler(nextprog,halocat,treenr,fulltree)
     return (halocat,fulltree)
