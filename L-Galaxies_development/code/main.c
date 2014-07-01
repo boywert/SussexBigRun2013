@@ -655,8 +655,8 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 			    }
 			  else //type 2 galaxies
 			    {
-			      printf("Type = %d\n",Gal[ngal].Type);
 				  update_type_2(ngal, halonr, prog, mostmassive);
+				  printf("GalID = %ld, Type = %d\n",Gal[ngal].GalID,Gal[ngal].Type);
 			    }
 		    }
 
