@@ -153,7 +153,6 @@ void save_galaxy_tree_finalize(int filenr, int tree)
 
       if(GalTree[i].NextProgGal >= 0)
 	GalTree[i].NextProgGal = GalTree[GalTree[i].NextProgGal].GalID;
-      printf("p = %ld\n",GalTree[i].NextProgGal);
       if(GalTree[i].DescendantGal >= 0)
 	GalTree[i].DescendantGal = GalTree[GalTree[i].DescendantGal].GalID;
 
