@@ -350,7 +350,8 @@ def outputtrees(halocat2,fileout,fileout2):
         # print "tree",tree,"total halos",len(fulltree[tree])
         for hid in fulltree[tree]:
             halo = halocat[hid]
-            print halo
+            if(halo["NextProgenitor"] != -1):
+                print halo
             buffer = struct.pack("i",int(maptree[halo["Descendant"]]))
             fp.write(buffer)
             buffer = struct.pack("i",int(maptree[halo["FirstProgenitor"]]))
