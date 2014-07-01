@@ -126,10 +126,13 @@ void load_tree_table(int filenr)
 #ifdef BOYDDEBUG
   for(j=0;j<totNHalos;j++)
     {
-      printf("ID:%d\n",j);
-      printf("\t FirstProgenitor: %d\n",Halo_Data[j].FirstProgenitor);
-      printf("\t NextProgenitor: %d\n",Halo_Data[j].NextProgenitor);
-      sleep(1);
+      if(Halo_Data[j].NextProgenitor != -1)
+	{
+	  printf("ID:%d\n",j);
+	  printf("\t FirstProgenitor: %d\n",Halo_Data[j].FirstProgenitor);
+	  printf("\t NextProgenitor: %d\n",Halo_Data[j].NextProgenitor);
+	  sleep(1);
+	}
     }
 #endif
 #ifdef PARALLEL
