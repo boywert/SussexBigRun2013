@@ -1,0 +1,121 @@
+%------------------------------------------
+%----- SA model output files --------------
+%------------------------------------------
+
+FileNameGalaxies      SA_test
+FileWithOutputSnaps   ./input/desired_outputsnapsMRII.txt
+
+PhotDir               ./PhotTables/
+%PhotPrefix            DataRelease_Set
+PhotPrefix            SDSS
+CoolFunctionsDir      ./CoolFunctions/
+FileNrDir              ./input/filenr.txt ;only files in filenr.txt is dealed with
+
+FirstFile           50
+LastFile	    50
+
+%-------------------------------------------------
+%----- Simulation input/output files  ------------
+%-------------------------------------------------
+OutputDir              /afs/mpa/data/guoqi/Mill2/finalversion/MRII/output/new1/SA/tree/par/001/
+ 
+SimulationDir	      /afs/mpa/project/sim/Millennium2/BigRun/modified_trees/
+FilesPerSnapshot      512
+%Hashbits              8         ; needed for Peano hilbert key output with the GALAXYTREE option
+%BoxSize               100.0      ; needed for Peano hilbert key output with the GALAXYTREE option
+
+FileWithSnapList      ./input/MRII_z.txt
+LastSnapShotNr        67
+
+%------------------------------------------
+%----- Code options -----------------------
+%------------------------------------------
+
+%% Basic recipe options %%
+
+StarBurstsInMajorMergersOn      1	;consume all gas in burst when merger mass_ratio > ThreshMerger
+BulgeFormationInMinorMergersOn  1	;build bulge through major AND minor mergers
+EjectionOn                      1	;for StarFormationRecipe=0 - eject reheated gas if on, otherwise to hot
+MetallicityOption               1	;metallicity dep. luminosities (1) or constant solar metallicity (0) or observed luminosities (2)
+CoolingCutoff			0	;artificial suppression of cooling when Vvir > CoolingVelocityCutOff
+
+
+%% Advanced recipe options %%
+
+TrackDiskInstability		1	;allow bulges to form when the stellar disks become unstable
+DiskRadiusMethod        	2	;if on use halo spin parameter to get disk scale radius
+ReionizationOn          	1	;simple reionization recipe
+StarBurstRecipe         	1	;starbursts in major AND minor mergers
+AGNrecipeOn             	1	;track black hole and central AGN heating of cooling gas
+ReIncorporationRecipe           2       ;choice of the time scale of reincorporation 
+StarFormationRecipe		2	;choice of star formation prescriptions
+SatelliteRecipe                 1       ;choice of stripping of satellite galaxies,so there can be cooling on type 1 galaxies.
+FeedbackRecipe          	2	;choice of feedback prescriptions
+
+%------------------------------------------
+%----- Parameters of physical model -------
+%------------------------------------------
+
+	%% Common to both basic and advanced recipies %%
+
+ReIncorporationFactor           0.30		;fraction of ejected mass reincorporated per dynamical time to hot
+Yield                           0.03		;fraction of SF mass produced as metals
+RecycleFraction                 0.43       ;0.43 fraction of SF mass instantaneously recycled back to cold
+FracZtoHot                      0.0		;fraction of metals produced directly to hot component
+
+
+%% Basic Recipe Parameters %%
+
+SfrAlpha                        0.5	;three parameter Kennicutt-type SF recipe (StarFormationRecipe=0)
+SfrLawPivotVelocity             300.0
+SfrLawSlope                     0.0
+FeedbackEpsilon                 0.05		;efficiency of feedback (FeedbackRecipe=0)
+CoolingVelocityCutOff           350.0		;cooling doesn't occur when Vvir gt this (CoolingCutoff=1)
+
+
+%% Advanced Recipe Parameters %%
+
+SfrEfficiency                   0.015			;efficiency of SF (StarFormationRecipe=1) 0.03 Ori/ SN/ and SN2/ and 0.01 in SFR/
+FeedbackReheatingEpsilon        4.5		;mass of cold gas reheated due to SF (see Martin 1999) 
+FeedbackEjectionEfficiency      0.2            ;0.35 for Croton. 
+AgnEfficiency            	1.0e-6		;7.5e-6 AGN passive accretion and cooling flow reheating - in Msun/yr for MW-type galaxy (AGNrecipeOn=1)
+BlackHoleGrowthRate            	0.03		;fraction of cold gas added to the BH during mergers (AGNrecipeOn=1)
+ReheatPreVelocity               70.             ;nomalization of SN feedback
+ReheatSlope                      3.5		             ;slop of the dependence of  SN feedback on Vvir 
+EjectPreVelocity                70.             ; normalization of total SN 
+EjectSlope                       5.5            ; slopr of total SN
+SNinReheat                      0.0             ;the distribution of SN feedback between reheating and ejection.
+
+
+
+%% Shouldn't need to change these %%
+
+ThreshMajorMerger               0.3		;major merger when mass ratio gt this
+EnergySN     			1.0e51
+EtaSN       			8.0e-3
+Reionization_z0	                8.0		;these parameter choices give the best fit to Genedin (2000)
+Reionization_zr	                7.0		;using the analytic fit of Kravtsov et al. 2004 (ReionizationOn=1) previously 7.0 in Ori/ ,SN/,SN2/,SFR/, 6.0 in reionization/
+
+
+
+%------------------------------------------
+%----- Cosmological paramters and more ----
+%------------------------------------------
+
+Omega        0.25 
+OmegaLambda  0.75
+BaryonFrac   0.17
+Hubble_h     0.73
+
+PartMass     0.000688526
+
+UnitLength_in_cm                   3.08568e+24		;WATCH OUT: Mpc/h
+UnitMass_in_g                      1.989e+43		;WATCH OUT: 10^10Msun
+UnitVelocity_in_cm_per_s           100000		;WATCH OUT: km/s
+
+
+
+
+
+
+

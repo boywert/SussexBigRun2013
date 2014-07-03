@@ -1,0 +1,23 @@
+%------------------------------------------
+%----- SA model output files --------------
+%------------------------------------------
+
+FileNameGalaxies      SA
+
+
+%-------------------------------------------------
+%----- Simulation input/output files  ------------
+%-------------------------------------------------
+SimulationDir_MR	      /galformod/data/Millennium/modified_trees
+SimulationDir_MRII	      /galformod/data/Millennium2/BigRun/modified_trees/
+
+OutputDir             /galformod/scratch/bmh20/Workspace/MergerTrees/MergerTrees_0/treedata/
+
+LastSnapShotNr        63
+
+
+
+
+
+
+
