@@ -76,7 +76,7 @@ def readAHFascii():
                 halocat[hid]["UID"] = long(halo[0])
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
-                halocat[hid]["Rvir"] = halo[11]
+                halocat[hid]["Rvir"] = halo[11]*kpc2Mpc
                 halocat[hid]["Len"] = halo[4]
                 halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
