@@ -67,9 +67,7 @@ def readAHFascii():
                 data_tmp = []
                 data_tmp.append(data)
                 data = data_tmp
-            else:
-                print data
-            libtime.sleep(2)
+
             for halo in data:
                 hid = long(halo[0])
                 #print hid
@@ -106,7 +104,6 @@ def readAHFascii():
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
-                print halocat[hid]["ID"],halocat[hid]["HostHalo"]
                 
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
@@ -441,6 +438,10 @@ def outputtrees(halocat2,fileout,fileout2):
             fp2.write(buffer)
             
     fp2.close()  
+
+
+#;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 halo = readAHFascii()
 ahf = readSussingtree(SUSSINGtree,halo)
