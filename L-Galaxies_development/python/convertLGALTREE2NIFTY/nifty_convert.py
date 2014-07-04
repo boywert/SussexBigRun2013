@@ -127,7 +127,6 @@ for timeid in range(len(timesnap)):
             data = data_tmp
 
         for halo in data:
-            print halo
             hid = long(halo[0])
             if hid in halomap:
                 print >> fp,  hid, len(halomap[hid])
