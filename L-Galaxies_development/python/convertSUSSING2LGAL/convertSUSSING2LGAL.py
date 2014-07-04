@@ -4,7 +4,7 @@ import math
 import struct
 import copy
 import convert_config
-import time
+import time as libtime
 
 global SNAPfile
 global AHFdir
@@ -105,7 +105,7 @@ def readAHFascii():
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
                 print halocat[hid]
-                time.sleep(1)
+                libtime.sleep(1)
                 
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
