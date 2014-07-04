@@ -67,7 +67,8 @@ def readAHFascii():
                 data_tmp = []
                 data_tmp.append(data)
                 data = data_tmp
-
+            else:
+                print data
             for halo in data:
                 hid = long(halo[0])
                 #print hid
