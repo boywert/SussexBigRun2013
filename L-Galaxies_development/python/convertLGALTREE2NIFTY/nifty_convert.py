@@ -6,6 +6,7 @@ import read_lgal
 import LGalaxyStruct
 import os
 import config
+import time
 
 
 AHFdir = config.AHFdir
