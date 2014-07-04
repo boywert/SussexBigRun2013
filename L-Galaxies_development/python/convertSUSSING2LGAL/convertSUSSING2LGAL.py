@@ -73,7 +73,7 @@ def readAHFascii():
                 #print hid
                 halocat[hid] = {}
                 halocat[hid]["Redshift"] = time[2];
-                halocat[hid]["UID"] = halo[0]
+                halocat[hid]["UID"] = long(halo[0])
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
                 halocat[hid]["Rvir"] = halo[11]
@@ -104,8 +104,7 @@ def readAHFascii():
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
-                print halocat[hid]
-                libtime.sleep(1)
+                print halocat[hid]["ID"],halocat[hid]["HostHalo"]
                 
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
