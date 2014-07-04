@@ -104,6 +104,8 @@ def readAHFascii():
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
+                print halocat[hid]
+                sleep(1)
                 
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
