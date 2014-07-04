@@ -76,6 +76,7 @@ def readAHFascii():
                 halocat[hid]["UID"] = halo[0]
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
+                halocat[hid]["Rvir"] = halo[11]
                 halocat[hid]["Len"] = halo[4]
                 halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
@@ -83,10 +84,12 @@ def readAHFascii():
                 halocat[hid]["VelDisp"] = halo[18]
                 # use Peebles lambdaE definition to find angular momentum
                 #halocat[hid]["Ep"] = halo[38]
+
                 #halocat[hid]["Ek"] = halo[39]
                 total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
                 #halocat[hid]["LambdaE"] = halo[20]
-                J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
+                # J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
+                J = halo[19]*halocat[hid]["Mvir"]*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
                 #halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
                 halocat[hid]["FirstProgenitor"] = -1
