@@ -79,6 +79,8 @@ def read_lgaltree(folder,file_prefix,firstfile,lastfile,filter_arr=LGalaxyStruct
        
       
         f.close()
+
+    print output_Galaxy["Type"]
     return (nHalos,output_Galaxy)
 
 
