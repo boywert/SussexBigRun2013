@@ -84,9 +84,9 @@ def readAHFascii():
                 halocat[hid]["VelDisp"] = halo[18]
                 # use Peebles lambdaE definition to find angular momentum
                 #halocat[hid]["Ep"] = halo[38]
-
+                
                 #halocat[hid]["Ek"] = halo[39]
-                total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
+                # total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
                 #halocat[hid]["LambdaE"] = halo[20]
                 # J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
                 J = halo[19]*halocat[hid]["Mvir"]*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
@@ -104,7 +104,7 @@ def readAHFascii():
                 halocat[hid]["HaloNr"] = -1
                 halocat[hid]["TreeNr"] = -1
                 halocat[hid]["movetonew"] = -1
-                
+                print halocat[hid]['Spin']
     print "Make host-sub structures ..."
     for haloc in halocat.iterkeys():
         #print haloc
