@@ -90,9 +90,7 @@ def readAHFascii():
                 # 
                 
                 if(spin_model == 99): # Boyd's stupid model
-                    lambda_bullock = -0.1/2.3*numpy.log10(halocat[hid]["VelDisp"]) + 0.1
-                    if(halocat[hid]["VelDisp"] == 0.0):
-                        lambda_bullock = 0.02
+                    lambda_bullock = 0.02
 
                 
                 # use Peebles lambdaE definition to find angular momentum
