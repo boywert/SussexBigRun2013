@@ -89,7 +89,7 @@ def readAHFascii():
                 # total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
                 #halocat[hid]["LambdaE"] = halo[20]
                 # J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
-                J = halo[19]*halocat[hid]["Mvir"]*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
+                J = halo[19]*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
                 #halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
                 halocat[hid]["FirstProgenitor"] = -1
