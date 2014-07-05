@@ -17,6 +17,8 @@ global kpc2Mpc
 global Msun2Gadget
 global kg2Msun
 global NFILES
+global spin_model
+
 
 NFILES = 8
 G = 6.67384e-11 # m^3/(kgs^2)
@@ -36,6 +38,7 @@ SUSSINGtree = convert_config.SUSSINGtree
 SNAPfile = convert_config.SNAPfile
 FileOut = convert_config.FileOut
 FileOut2 = convert_config.FileOut2
+spin_model = convert_config.spin_model
 
 def readAHFascii():
     halocat = {}
@@ -82,6 +85,13 @@ def readAHFascii():
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
                 halocat[hid]["Vmax"] = halo[16]
                 halocat[hid]["VelDisp"] = halo[18]
+                lambda_bullock = halo[19]
+                # 
+                # 
+                if(spin_model == 99): # Boyd's stupid model
+                    lambda_bullock = -0.1/2.3*numpy.log10(halocat[hid]["VelDisp"]) + 0.1
+
+                
                 # use Peebles lambdaE definition to find angular momentum
                 #halocat[hid]["Ep"] = halo[38]
                 
@@ -89,7 +99,8 @@ def readAHFascii():
                 # total_energy = math.fabs((halo[38] + halo[39])*Msun2Gadget)
                 #halocat[hid]["LambdaE"] = halo[20]
                 # J = halo[20]*G*halocat[hid]["Mvir"]**(3./2.)/total_energy**(0.5)
-                J = halo[19]*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
+                J = lambda_bullock*numpy.sqrt(2.0*G*halocat[hid]["Mvir"]*halocat[hid]["Rvir"])
+                
                 #halocat[hid]["TotalEnergy"] = total_energy
                 halocat[hid]["Spin"] = (halo[21]*J,halo[22]*J,halo[23]*J)
                 halocat[hid]["FirstProgenitor"] = -1
