@@ -10,7 +10,7 @@ PhotPrefix          M05_Chabrier ; M05_Chabrier ; M05_Chabrier ;BC03_Chabrier ;C
 
 SpecPhotIMF           Chabrier ; Salpeter ; Kroupa 
 CoolFunctionsDir      /home/cpes/astr/petert/research/SAM/CoolFunctions/
-FileWithFilterNames  ./input/Filter_nifty.txt
+FileWithFilterNames  ./input/Filter_Names.txt
 McFile				  ./input/Mc.txt
 
 FirstFile     0
