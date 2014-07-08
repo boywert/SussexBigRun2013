@@ -1,6 +1,8 @@
-5
-u_band_trans.dat 0.3551 us
+6
+GALEX_NUV.txt 0.21916 GNUV 
+c_johnson_B.dat 0.435 B
+c_johnson_V.dat 0.55 V
 g_band_trans.dat 0.4686 gs
 r_band_trans.dat 0.6165 rs
-i_band_trans.dat 0.7481 is
-z_band_trans.dat 0.8931 zs
+c_johnson_K.dat 2.22 K
+
