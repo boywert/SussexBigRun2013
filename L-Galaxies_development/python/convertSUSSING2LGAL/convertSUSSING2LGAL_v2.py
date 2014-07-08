@@ -91,7 +91,7 @@ def readAHFascii():
                 if(halo[46] < 1.0e34):
                     halocat[hid]["M_TopHat"] =  halo[46]*Msun2Gadget
                 else:
-                    halocat[hid]["M_200Crit"] = 0.
+                    halocat[hid]["M_TopHat"] = 0.
                     
                 halocat[hid]["Len"] = halo[4]
                 halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
