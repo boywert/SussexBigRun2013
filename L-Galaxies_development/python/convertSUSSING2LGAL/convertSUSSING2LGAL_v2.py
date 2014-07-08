@@ -80,15 +80,15 @@ def readAHFascii():
                 halocat[hid]["ID"] = hid
                 halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
                 halocat[hid]["Rvir"] = halo[11]*kpc2Mpc
-                if(halo[] < 1.0e34):
+                if(halo[44] < 1.0e34):
                     halocat[hid]["M_200Mean"] = halo[44]*Msun2Gadget
                 else:
                     halocat[hid]["M_200Mean"] = 0.
-                if(halo[] < 1.0e34):
+                if(halo[45] < 1.0e34):
                     halocat[hid]["M_200Crit"] = halo[45]*Msun2Gadget
                 else:
                     halocat[hid]["M_200Crit"] = 0.
-                if(halo[] < 1.0e34):
+                if(halo[46] < 1.0e34):
                     halocat[hid]["M_TopHat"] =  halo[46]*Msun2Gadget
                 else:
                     halocat[hid]["M_200Crit"] = 0.
