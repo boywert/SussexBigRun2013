@@ -179,7 +179,7 @@ for timeid in range(len(timesnap)):
                     MZejected = galaxy["MetalsEjectedMass"]*Gadget2Msun
                     MZ_outflow = -1
                     MZgas_disk = galaxy["MetalsColdGas"]*Gadget2Msun
-                    MZga_spheroid = -1
+                    MZgas_spheroid = -1
                     MZstars_disk  = galaxy["MetalsDiskMass"]*Gadget2Msun
                     MZstars_spheroid = galaxy["MetalsBulgeMass"]*Gadget2Msun
                     MZ_bh = -1
