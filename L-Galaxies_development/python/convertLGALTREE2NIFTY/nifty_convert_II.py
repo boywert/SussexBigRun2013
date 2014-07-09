@@ -162,7 +162,7 @@ for timeid in range(len(timesnap)):
 			Z_stars = 0.0
                     T_stars = galaxy["MassWeightAge"]
                     SFR = galaxy["Sfr"]
-                    SFRbulge = galaxy["Sfrbulge"]
+                    SFRbulge = galaxy["SfrBulge"]
                     Mhot_halo = Mhot
                     Mcold_halo = -1
                     Mejected = galaxy["EjectedMass"]*Gadget2Msun
