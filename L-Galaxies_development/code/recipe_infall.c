@@ -68,7 +68,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     {
       if(Gal[centralgal].Xfrac3d > 0.5)
 	{
-	  if(Gal[Centralgal].HaloM_Crit200 < 0.01*Hubble_h)
+	  if(Gal[centralgal].HaloM_Crit200 < 0.01*Hubble_h)
 	    reionization_modifier = 0.;
 	  else
 	    reionization_modifier = 1.;
@@ -83,7 +83,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     {
       if(Gal[centralgal].Xfrac3d > 0.5)
 	{
-	  if(Gal[Centralgal].HaloM_Crit200 < 0.1*Hubble_h)
+	  if(Gal[centralgal].HaloM_Crit200 < 0.1*Hubble_h)
 	    reionization_modifier = 0.;
 	  else
 	    reionization_modifier = 1.;
