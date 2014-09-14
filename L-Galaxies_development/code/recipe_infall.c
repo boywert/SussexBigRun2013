@@ -20,7 +20,6 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 {
   int i;
   double halomass;
-  const double offsef_m = 0.1*Hubble_h; // M = 1.e9 Msun 
   double tot_mass, reionization_modifier, infallingMass;
   double infall1,infall2;
   double dis;
@@ -67,15 +66,24 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   else if(ReionizationOn == 3)
     {
-     reionization_modifier = (1.0-Gal[centralgal].Xfrac3d) 
-	+ Gal[centralgal].Xfrac3d*do_reionization(Gal[centralgal].Mvir, Zcurr);
-     // printf("xfrac:%f, re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
+      if(Gal[centralgal].Xfrac3d > 0.5)
+	{
+	  if(Gal[Centralgal].HaloM_Crit200 < 0.01*Hubble_h)
+	    reionization_modifier = 0.;
+	  else
+	    reionization_modifier = 1.;
+	}
+      else
+	{
+	  reionization_modifier = 1.0;
+	}
+      // printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
     }
   else if(ReionizationOn == 4)
     {
       if(Gal[centralgal].Xfrac3d > 0.5)
 	{
-	  if(Gal[Centralgal].HaloM_Crit200 < offsef_m)
+	  if(Gal[Centralgal].HaloM_Crit200 < 0.1*Hubble_h)
 	    reionization_modifier = 0.;
 	  else
 	    reionization_modifier = 1.;
