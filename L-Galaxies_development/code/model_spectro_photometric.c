@@ -354,7 +354,7 @@ void setup_Spec_NPhotTables_onthefly(void)
       read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
       //2nd Loop on redshift
       for(snap=0;snap<(LastDarkMatterSnapShot+1);snap++)
-`      {
+      {
 	  redshift=RedshiftTab[(LastDarkMatterSnapShot+1)-snap-1];
 	  //3rd loop on Age
 	  for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
