@@ -849,6 +849,9 @@ struct GALAXY			/* Galaxy data */
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
 
+#ifdef REIONIZEPHOTON
+  float ReionizePhot;
+#endif
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   float Xfrac3d;
 #endif
