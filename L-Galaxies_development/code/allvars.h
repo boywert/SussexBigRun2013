@@ -88,6 +88,13 @@
 #define NOUT MAXSNAPS
 #endif
 
+// Make the last index of magnitude to be for reionization UV photons
+#ifdef REIONIZEPHOTON
+#define PLUSNMAG (NMAG+1)
+#undef NMAG
+#define NMAG PLUSNMAG
+#UNDEF PLUSNMAG
+#endif
 
 #ifdef STAR_FORMATION_HISTORY
 //#define SFH_NMERGE 2
@@ -1174,6 +1181,11 @@ extern float SSP_logAgeTab[SSP_NAGES];
 //table containing redshift (different from the one in the code when scaling to future times)
 extern float RedshiftTab[MAXSNAPS];
 extern float LumTables[NMAG][SSP_NMETALLICITES][MAXSNAPS][SSP_NAGES];
+
+#ifdef REIONIZEPHOTON
+extern float NPhotTables[SSP_NMETALLICITES][MAXSNAPS][SSP_NAGES];
+#endif
+
 extern float FilterLambda[NMAG];	//wavelength of each filter - needed for extinction
 
 #ifdef SPEC_PHOTABLES_ON_THE_FLY

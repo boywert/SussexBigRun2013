@@ -74,11 +74,25 @@ void read_filters(double LambdaFilter[NMAG][MAX_NLambdaFilter], double FluxFilte
     }
 
   fscanf(fa,"%d" ,&NFilters);
+#ifdef REIONIZEPHOTON
+  NFilters++;
+#endif
   if (NFilters != NMAG) {printf("NFilters not equal to  NMAG, line %d of read_filters.c!!! ",__LINE__);exit(0);}
 
   for(bandn=0;bandn<NMAG;bandn++)
   {
-
+#ifdef REIONIZEPHOTON
+    if(bandn == NMAG-1)
+      {
+	NLambdaFilter[bandn] = 500;
+	for(j=0;j<NLambdaFilter[bandn];j++)
+	  {
+	    LambdaFilter[bandn][j] = 911.6/(NLambdaFilter[bandn]-1);
+	    FluxFilter[bandn][j] = 1.0;
+	  }
+	break;
+      }
+#endif
   	fscanf(fa,"%s %f %s" ,FilterFile, &FilterLambda[bandn],FilterName);
   	sprintf(buf2, "%s/Filters/%s",SpecPhotDir,FilterFile);
 
