@@ -405,7 +405,8 @@ void setup_Spec_NPhotTables_onthefly(void)
 		  FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
 		  for(i=0;i<Grid_Length;i++)
 		    {
-		      FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/PLANCK/(C/LambdaFilter_SingleFilter[i]);
+		      FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/LambdaFilter_SingleFilter[i]);
+		      printf("Flux %d = %lf\n",i,FluxInputSSPConv[i]);
 		    }
 
 		
@@ -424,7 +425,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 		}
 	      else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
 		nTotals = 0.;
-	      printf("%lf\n",nTotals);
+	      printf(ntotal = "%lf\n",nTotals);
 	      NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
 	      free(lgrid);
 
