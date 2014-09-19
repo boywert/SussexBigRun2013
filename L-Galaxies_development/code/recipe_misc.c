@@ -418,7 +418,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
   double f1, f2, fmet1, fmet2, LuminosityToAdd, dLuminosityToAdd;
   double X1, age;
   double tbc;
-
+  double PhotonsToAdd;
   //TODO define elsewhere and maybe make the 10. an input parameter?
   /* Time bellow which the luminosities are corrected for extinction due to
    * molecular birth clouds.  */
@@ -451,15 +451,22 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
         {
     	  //interpolation between the points found by find_interpolated_lum
     	  LuminosityToAdd = X1 * (fmet1 * (f1 * LumTables[j][metindex][0][tabindex] +
-    			                           f2 * LumTables[j][metindex][0][tabindex + 1]) +
-    			                  fmet2 * (f1 * LumTables[j][metindex + 1][0][tabindex] +
-					                       f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
+					   f2 * LumTables[j][metindex][0][tabindex + 1]) +
+				  fmet2 * (f1 * LumTables[j][metindex + 1][0][tabindex] +
+					   f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
     	  Gal[p].Lum[j][outputbin] += LuminosityToAdd;
 
     	  /*luminosity used for extinction due to young birth clouds */
     	  if(age <= tbc)
 	        Gal[p].YLum[j][outputbin] += LuminosityToAdd;
         }
+#ifdef REIONIZEPHOTON
+      PhotonsToAdd = X1 * (fmet1 * (f1 * NPhotTables[metindex][0][tabindex] +
+				    f2 * LumTables[metindex][0][tabindex + 1]) +
+			   fmet2 * (f1 * LumTables[metindex + 1][0][tabindex] +
+				    f2 * LumTables[metindex + 1][0][tabindex + 1]));
+      Gal[p].ReionizePhot += PhotonsToAdd;
+#endif // REIONIZEPHOTON
 
     }
 #endif //OUTPUT_REST_MAGS
