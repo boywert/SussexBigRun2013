@@ -89,12 +89,12 @@
 #endif
 
 // Make the last index of magnitude to be for reionization UV photons
-#ifdef REIONIZEPHOTON
-#define PLUSNMAG (NMAG+1)
-#undef NMAG
-#define NMAG PLUSNMAG
-#undef PLUSNMAG
-#endif
+/* #ifdef REIONIZEPHOTON */
+/* #define PLUSNMAG (NMAG+1) */
+/* #undef NMAG */
+/* #define NMAG PLUSNMAG */
+/* #undef PLUSNMAG */
+/* #endif */
 
 #ifdef STAR_FORMATION_HISTORY
 //#define SFH_NMERGE 2
