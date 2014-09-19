@@ -12,6 +12,10 @@
 #include "proto.h"
 
 
+#ifdef REIONIZEPHOTON
+void setup_Spec_NPhotTables_onthefly()
+#endif
+
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
 /**@brief Reads in the look up tables from Stellar Population Synthesis Models.
  *
@@ -317,7 +321,9 @@ void setup_Spec_LumTables_onthefly(void)
 
     }  //end loop on metallicities
   printf("\nPhotTables Computed.\n\n");
-
+#ifdef REIONIZEPHOTON
+  setup_Spec_NPhotTables_onthefly();
+#endif
 }
 
 #ifdef REIONIZEPHOTON
@@ -325,7 +331,6 @@ void setup_Spec_NPhotTables_onthefly()
 {
   double AbsMAG;
   //FILTERS
-  double LambdaFilter[NMAG][MAX_NLambdaFilter], FluxFilter[NMAG][MAX_NLambdaFilter];
   double *FluxFilterOnGrid, FluxFilterInt;
   //InputSSP spectra
   double LambdaInputSSP[SSP_NAGES][SSP_NLambda], FluxInputSSP[SSP_NAGES][SSP_NLambda];
@@ -340,100 +345,102 @@ void setup_Spec_NPhotTables_onthefly()
   //Loops in the code
   int MetalLoop, AgeLoop, snap, band, i;
   FILE *File_PhotTables[NMAG];
+  double this_LambdaFilter[MAX_NLambdaFilter];
+  double this_FluxFilter[MAX_NLambdaFilter];
+  int this_NLambdaFilter = 500;
 
-  printf("\n\nComputing NPhotTables on the fly...\n\n");
-  read_vega_spectra(LambdaVega, FluxVega);
-#ifndef FULL_SPECTRA
-  read_filters(LambdaFilter, FluxFilter);
-#endif
-  setup_RedshiftTab();
-  read_MetalTab();
 
   //1st loop on the mettalicity files
   for (MetalLoop=0;MetalLoop<SSP_NMETALLICITES;MetalLoop++)
     {
-      printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
+  printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
 
-      //READ FULL INPUT SPECTRA into units of erg.s^-1.Hz^-1
-      read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
+  //READ FULL INPUT SPECTRA into units of erg.s^-1.Hz^-1
+  read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
 
-      //2nd Loop on redshift
-      for(snap=0;snap<(LastDarkMatterSnapShot+1);snap++)
-	{
-	  redshift=RedshiftTab[(LastDarkMatterSnapShot+1)-snap-1];
+  //2nd Loop on redshift
+  for(snap=0;snap<(LastDarkMatterSnapShot+1);snap++)
+    {
+  redshift=RedshiftTab[(LastDarkMatterSnapShot+1)-snap-1];
 
-	  //3rd loop on Age
-	  for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
-	    {
-	      //4th loop on Bands
-	      //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
-	      for(band=NMAG-1;band<NMAG;band++)
-		{
-		  //ALLOCATE GRID - size of filter, binning of the spectra
-		  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
+  //3rd loop on Age
+  for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
+    {
+  //4th loop on Bands
+  //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
 
-		  double *lgrid=create_grid(LambdaFilter[band][0], LambdaFilter[band][NLambdaFilter[band]-1], AgeLoop, redshift,
-					    LambdaInputSSP, &Min_Wave_Grid, &Max_Wave_Grid, &Grid_Length);
+  //ALLOCATE GRID - size of filter, binning of the spectra
+  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
 
-		  if(Grid_Length>0)
-		    {
+  for(i=0;i<this_NLambdaFilter;i++)
+    {
+  this_LambdaFilter[i] = 911.6/(this_NLambdaFilter+1)*i;
+  this_FluxFilter[i] = 1.0;
+}
+  for(i=this_NLambdaFilter;i<MAX_NLambdaFilter;i++)
+		    
+    double *lgrid=create_grid(this_LambdaFilter[0], this_LambdaFilter[this_NLambdaFilter-1], AgeLoop, redshift,
+    LambdaInputSSP, &Min_Wave_Grid, &Max_Wave_Grid, &Grid_Length);
 
-		      for(i=0;i<Grid_Length;i++)
-			lgrid[i]=(1+redshift)*LambdaInputSSP[AgeLoop][Min_Wave_Grid+i];
+  if(Grid_Length>0)
+    {
+
+  for(i=0;i<Grid_Length;i++)
+    lgrid[i]=(1+redshift)*LambdaInputSSP[AgeLoop][Min_Wave_Grid+i];
 
 
-		      /*SSP - multiply by (1+z) to go from rest to observed SSP flux*/
-		      FluxInputSSPOnGrid = malloc(sizeof(double) * Grid_Length);
-		      for (i=0;i<Grid_Length;i++)
-			{
-			  FluxInputSSPOnGrid[i]=(1.+redshift)*FluxInputSSP[AgeLoop][Min_Wave_Grid+i];
-			}
+  /*SSP - multiply by (1+z) to go from rest to observed SSP flux*/
+  FluxInputSSPOnGrid = malloc(sizeof(double) * Grid_Length);
+  for (i=0;i<Grid_Length;i++)
+    {
+  FluxInputSSPOnGrid[i]=(1.+redshift)*FluxInputSSP[AgeLoop][Min_Wave_Grid+i];
+}
 	
-		      //FILTERS - interpolate on integral grid
-		      for(i=0;i<NLambdaFilter[band];i++)
-			{
-			  LambdaFilter_SingleFilter[i]=LambdaFilter[band][i];
-			  FluxFilter_SingleFilter[i]=FluxFilter[band][i];
-			}
-		      FluxFilterOnGrid = malloc(sizeof(double) * Grid_Length);
-		      interpolate(lgrid, Grid_Length, LambdaFilter_SingleFilter, NLambdaFilter[band], FluxFilter_SingleFilter, FluxFilterOnGrid) ;
+  //FILTERS - interpolate on integral grid
+  for(i=0;i<this_NLambdaFilter;i++)
+    {
+  LambdaFilter_SingleFilter[i]=this_LambdaFilter[i];
+  FluxFilter_SingleFilter[i]=this_FluxFilter[i];
+}
+  FluxFilterOnGrid = malloc(sizeof(double) * Grid_Length);
+  interpolate(lgrid, Grid_Length, LambdaFilter_SingleFilter, this_NLambdaFilter, FluxFilter_SingleFilter, FluxFilterOnGrid) ;
 
 
-		      /* spectrum and filters are now defined on same grid
-		       * CONVOLUTION: direct (configuration) space
-		       * simply multiply filter*spectrum it's a convolution in Fourier space */
-		      FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
-		      for(i=0;i<Grid_Length;i++)
-			{
-			  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/PLANCK/(C/LambdaFilter_SingleFilter[i]);
-			}
+  /* spectrum and filters are now defined on same grid
+   * CONVOLUTION: direct (configuration) space
+   * simply multiply filter*spectrum it's a convolution in Fourier space */
+  FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
+  for(i=0;i<Grid_Length;i++)
+    {
+  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/PLANCK/(C/LambdaFilter_SingleFilter[i]);
+}
 
 		
-		      //INTEGRATE/
-		      FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
+  //INTEGRATE/
+  FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
 		
-		      //Absolute Observed Frame Magnitudes
-		      if (FluxInputSSPInt == 0. || FluxFilterInt == 0.)
-			nTotals = 0.;
-		      else
-			nTotals = FluxInputSSPInt;
+  //Absolute Observed Frame Magnitudes
+  if (FluxInputSSPInt == 0. || FluxFilterInt == 0.)
+    nTotals = 0.;
+  else
+    nTotals = FluxInputSSPInt;
 		     
-		      free(FluxInputSSPOnGrid);
-		      free(FluxInputSSPConv);
-		      free(FluxFilterOnGrid);
-		    }
-		  else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
-		    nTotals = 0.;
+  free(FluxInputSSPOnGrid);
+  free(FluxInputSSPConv);
+  free(FluxFilterOnGrid);
+}
+  else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
+    nTotals = 0.;
 
-		  NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
-		  free(lgrid);
+  NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
+  free(lgrid);
 
-		} // end age loop
-	    }//end snap loop
-	}//end Band loop
+} // end age loop
+}//end snap loop
 
 
-    }  //end loop on metallicities
+
+}  //end loop on metallicities
   printf("\n NPhotTables Computed.\n\n");
 }
 #endif //REIONIZEPHOTON
@@ -443,11 +450,11 @@ void setup_Spec_NPhotTables_onthefly()
 
 
 #define NJUMPTAB 1000
-int jumptab[NJUMPTAB];
-double jumpfac;
+ int jumptab[NJUMPTAB];
+ double jumpfac;
 
-void init_jump_index(void)
-{
+ void init_jump_index(void)
+ {
   double age;
   int i, idx;
 
@@ -455,27 +462,27 @@ void init_jump_index(void)
 
   for(i = 0; i < NJUMPTAB; i++)
     {
-      age = SSP_logAgeTab[1] + i / jumpfac;
-      idx = 1;
-      while(SSP_logAgeTab[idx + 1] < age)
-	idx++;
-      jumptab[i] = idx;
-    }
+  age = SSP_logAgeTab[1] + i / jumpfac;
+  idx = 1;
+  while(SSP_logAgeTab[idx + 1] < age)
+    idx++;
+  jumptab[i] = idx;
+}
 }
 
 
-int get_jump_index(double age)
-{
+ int get_jump_index(double age)
+ {
   return jumptab[(int) ((age - SSP_logAgeTab[1]) * jumpfac)];
 }
 
 
 
-/**@brief Used by add_to_luminosities() to interpolates into
- *        the age and metallicity in the SSP tables.*/
-void find_interpolated_lum(double timenow, double timetarget, double metallicity, int *metindex,
-			   int *tabindex, double *f1, double *f2, double *fmet1, double *fmet2)
-{
+ /**@brief Used by add_to_luminosities() to interpolates into
+  *        the age and metallicity in the SSP tables.*/
+ void find_interpolated_lum(double timenow, double timetarget, double metallicity, int *metindex,
+    int *tabindex, double *f1, double *f2, double *fmet1, double *fmet2)
+ {
   int k, i, idx;
   double age, frac;
   double ft1, ft2, fm1, fm2;
@@ -484,66 +491,66 @@ void find_interpolated_lum(double timenow, double timetarget, double metallicity
 
   if(age > 0)
     {
-      age = log10(age);
+  age = log10(age);
 
-      if(age > SSP_logAgeTab[SSP_NAGES - 1])	/* beyond table, take latest entry */
-	{
-	  k = SSP_NAGES - 2;
-	  ft1 = 0;
-	  ft2 = 1;
-	}
-      else if(age < SSP_logAgeTab[1])	/* age younger than 1st enty, take 1st entry */
-	{
-	  k = 0;
-	  ft1 = 0;
-	  ft2 = 1;
-	}
-      else
-	{
-	  /*
-	    idx = 1;
-	  */
-	  idx = get_jump_index(age);
-	  while(SSP_logAgeTab[idx + 1] < age)
-	    idx++;
-	  k = idx;
-	  frac = (age - SSP_logAgeTab[idx]) / (SSP_logAgeTab[idx + 1] - SSP_logAgeTab[idx]);
-	  ft1 = 1 - frac;
-	  ft2 = frac;
-	}
-    }
+  if(age > SSP_logAgeTab[SSP_NAGES - 1])	/* beyond table, take latest entry */
+    {
+  k = SSP_NAGES - 2;
+  ft1 = 0;
+  ft2 = 1;
+}
+  else if(age < SSP_logAgeTab[1])	/* age younger than 1st enty, take 1st entry */
+    {
+  k = 0;
+  ft1 = 0;
+  ft2 = 1;
+}
+  else
+    {
+  /*
+    idx = 1;
+  */
+  idx = get_jump_index(age);
+  while(SSP_logAgeTab[idx + 1] < age)
+    idx++;
+  k = idx;
+  frac = (age - SSP_logAgeTab[idx]) / (SSP_logAgeTab[idx + 1] - SSP_logAgeTab[idx]);
+  ft1 = 1 - frac;
+  ft2 = frac;
+}
+}
   else				/* this lies in the past */
     {
-      k = 0;
-      ft1 = 0;
-      ft2 = 0;
-    }
+  k = 0;
+  ft1 = 0;
+  ft2 = 0;
+}
 
   /* Now interpolate also for the metallicity */
   metallicity = log10(metallicity);
 
   if(metallicity > SSP_logMetalTab[SSP_NMETALLICITES - 1])	/* beyond table, take latest entry */
     {
-      i = SSP_NMETALLICITES - 2;
-      fm1 = 0;
-      fm2 = 1;
-    }
+  i = SSP_NMETALLICITES - 2;
+  fm1 = 0;
+  fm2 = 1;
+}
   else if(metallicity < SSP_logMetalTab[0])	/* mettallicity smaller 1st enty, take 1st entry */
     {
-      i = 0;
-      fm1 = 1;
-      fm2 = 0;
-    }
+  i = 0;
+  fm1 = 1;
+  fm2 = 0;
+}
   else
     {
-      idx = 0;
-      while(SSP_logMetalTab[idx + 1] < metallicity)
-	idx++;
-      i = idx;
-      frac = (metallicity - SSP_logMetalTab[idx]) / (SSP_logMetalTab[idx + 1] - SSP_logMetalTab[idx]);
-      fm1 = 1 - frac;
-      fm2 = frac;
-    }
+  idx = 0;
+  while(SSP_logMetalTab[idx + 1] < metallicity)
+    idx++;
+  i = idx;
+  frac = (metallicity - SSP_logMetalTab[idx]) / (SSP_logMetalTab[idx + 1] - SSP_logMetalTab[idx]);
+  fm1 = 1 - frac;
+  fm2 = frac;
+}
 
 
   *metindex = i;
@@ -553,7 +560,7 @@ void find_interpolated_lum(double timenow, double timetarget, double metallicity
   *f2 = ft2;
   *fmet1 = fm1;
   *fmet2 = fm2;
-}
+ }
 
 #endif // COMPUTE_SPECPHOT_PROPERTIES
 
