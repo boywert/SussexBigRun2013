@@ -414,10 +414,8 @@ void setup_Spec_NPhotTables_onthefly(void)
 		  FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
 		
 		  //Absolute Observed Frame Magnitudes
-		  if (FluxInputSSPInt == 0. || FluxFilterInt == 0.)
-		    nTotals = 0.;
-		  else
-		    nTotals = FluxInputSSPInt;
+		  
+		  nTotals = FluxInputSSPInt;
 		     
 		  free(FluxInputSSPOnGrid);
 		  free(FluxInputSSPConv);
