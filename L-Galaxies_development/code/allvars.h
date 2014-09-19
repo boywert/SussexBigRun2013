@@ -93,7 +93,7 @@
 #define PLUSNMAG (NMAG+1)
 #undef NMAG
 #define NMAG PLUSNMAG
-#UNDEF PLUSNMAG
+#undef PLUSNMAG
 #endif
 
 #ifdef STAR_FORMATION_HISTORY
