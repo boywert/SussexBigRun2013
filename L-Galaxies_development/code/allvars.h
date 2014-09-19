@@ -90,7 +90,7 @@
 
 // Make the last index of magnitude to be for reionization UV photons
 #ifdef REIONIZEPHOTON
-#define NMAG (NMAG+1)
+#define NMAG NMAG+1
 // #undef NMAG
 // #define NMAG PLUSNMAG
 // #undef PLUSNMAG
