@@ -370,9 +370,10 @@ void setup_Spec_NPhotTables_onthefly(void)
 		  this_LambdaFilter[i] = 911.6/(this_NLambdaFilter+1)*i;
 		  this_FluxFilter[i] = 1.0;
 		}
-	      for(i=this_NLambdaFilter;i<MAX_NLambdaFilter;i++)
+
+		
 		    
-		double *lgrid=create_grid(this_LambdaFilter[0], this_LambdaFilter[this_NLambdaFilter-1], AgeLoop, redshift,
+	      double *lgrid=create_grid(this_LambdaFilter[0], this_LambdaFilter[this_NLambdaFilter-1], AgeLoop, redshift,
 					  LambdaInputSSP, &Min_Wave_Grid, &Max_Wave_Grid, &Grid_Length);
 
 	      if(Grid_Length>0)
