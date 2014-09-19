@@ -13,7 +13,7 @@
 
 
 #ifdef REIONIZEPHOTON
-void setup_Spec_NPhotTables_onthefly()
+void setup_Spec_NPhotTables_onthefly();
 #endif
 
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
@@ -168,7 +168,6 @@ void setup_LumTables_precomputed(char SimName[])
  * the file with filter names and wave_lengths "FileWithFilterNames" and the
  * filter curves in SpecPhotDir/Filters/ */
 #ifdef SPEC_PHOTABLES_ON_THE_FLY
-
 
 void setup_Spec_LumTables_onthefly(void)
 {
@@ -329,7 +328,6 @@ void setup_Spec_LumTables_onthefly(void)
 #ifdef REIONIZEPHOTON
 void setup_Spec_NPhotTables_onthefly()
 {
-  double AbsMAG;
   //FILTERS
   double *FluxFilterOnGrid, FluxFilterInt;
   //InputSSP spectra
