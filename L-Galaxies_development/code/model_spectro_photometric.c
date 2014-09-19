@@ -378,7 +378,6 @@ void setup_Spec_NPhotTables_onthefly(void)
 
 	      if(Grid_Length>0)
 		{
-
 		  for(i=0;i<Grid_Length;i++)
 		    lgrid[i]=(1+redshift)*LambdaInputSSP[AgeLoop][Min_Wave_Grid+i];
 
@@ -423,7 +422,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 		}
 	      else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
 		nTotals = 0.;
-	      printf("ntotal = %lf\n",nTotals);
+	      printf("redshift =%f ntotal = %lf\n",redshift,nTotals);
 	      NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
 	      free(lgrid);
 
