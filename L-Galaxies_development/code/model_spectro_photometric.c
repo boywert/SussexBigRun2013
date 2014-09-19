@@ -367,7 +367,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 
 	      for(i=0;i<this_NLambdaFilter;i++)
 		{
-		  this_LambdaFilter[i] = 911.6/(this_NLambdaFilter+1)*i;
+		  this_LambdaFilter[i] = (911.6-90.)/(this_NLambdaFilter+1)*i+90.;
 		  this_FluxFilter[i] = 1.0;
 		}
 
@@ -405,7 +405,6 @@ void setup_Spec_NPhotTables_onthefly(void)
 		  for(i=0;i<Grid_Length;i++)
 		    {
 		      FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/LambdaFilter_SingleFilter[i]);
-		      printf("Flux %d = %lf\n",i,FluxInputSSPConv[i]);
 		    }
 
 		
