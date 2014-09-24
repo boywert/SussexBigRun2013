@@ -422,9 +422,9 @@ void setup_Spec_NPhotTables_onthefly(void)
 	  else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
 	    {
 	      // printf("gridlength = 0\n");
-	      nTotals = 0.;
+	      nTotals = 0.0;
 	    }
-	  printf("redshift =%f ntotal = %lf\n",redshift,nTotals);
+	  printf("ntotal = %g\n",nTotals);
 	  NPhotTables[MetalLoop][AgeLoop] = nTotals;
 	  free(lgrid);
 	  
