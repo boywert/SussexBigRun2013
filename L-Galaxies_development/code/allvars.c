@@ -251,7 +251,7 @@ float FilterLambda[NMAG];	//wavelength of each filter
 #ifdef SPEC_PHOTABLES_ON_THE_FLY
 int NLambdaFilter[NMAG];
 #ifdef REIONIZEPHOTON
-float NPhotTables[SSP_NMETALLICITES][MAXSNAPS][SSP_NAGES];
+float NPhotTables[SSP_NMETALLICITES][SSP_NAGES];
 #endif
 #endif
 
