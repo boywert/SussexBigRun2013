@@ -466,11 +466,11 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 	        Gal[p].YLum[j][outputbin] += LuminosityToAdd;
         }
 #ifdef REIONIZEPHOTON
-      PhotonsToAdd = X1 * (fmet1 * (f1 * NPhotTables[metindex][0][tabindex] +
-				    f2 * NPhotTables[metindex][0][tabindex + 1]) +
-			   fmet2 * (f1 * NPhotTables[metindex + 1][0][tabindex] +
-				    f2 * NPhotTables[metindex + 1][0][tabindex + 1]));
-      printf("X1:%lf  L:%lf  H:%lf\n",X1,NPhotTables[metindex][0][tabindex],NPhotTables[metindex][0][tabindex + 1]);
+      PhotonsToAdd = X1 * (fmet1 * (f1 * NPhotTables[metindex][tabindex] +
+				    f2 * NPhotTables[metindex][tabindex + 1]) +
+			   fmet2 * (f1 * NPhotTables[metindex + 1][tabindex] +
+				    f2 * NPhotTables[metindex + 1][tabindex + 1]));
+      printf("X1:%lf  L:%lf  H:%lf\n",X1,NPhotTables[metindex][tabindex],NPhotTables[metindex][tabindex + 1]);
       printf("output:%d ori:%lf add:%lf\n",outputbin,Gal[p].ReionizePhot[outputbin],PhotonsToAdd);
       Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
 #endif // REIONIZEPHOTON

@@ -352,85 +352,83 @@ void setup_Spec_NPhotTables_onthefly(void)
       //READ FULL INPUT SPECTRA into units of erg.s^-1.Hz^-1
       read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
       //2nd Loop on redshift
-      for(snap=0;snap<(LastDarkMatterSnapShot+1);snap++)
+      snap = 0;
+      redshift=0.0;
+      printf("z=%f\n",redshift);
+      //3rd loop on Age
+      for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
 	{
-	  redshift=RedshiftTab[(LastDarkMatterSnapShot+1)-snap-1];
-	  printf("z=%f\n",redshift);
-	  //3rd loop on Age
-	  for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
+	  //4th loop on Bands
+	  //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
+	  
+	  //ALLOCATE GRID - size of filter, binning of the spectra
+	  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
+	  
+	  for(i=0;i<this_NLambdaFilter;i++)
 	    {
-	      //4th loop on Bands
-	      //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
-
-	      //ALLOCATE GRID - size of filter, binning of the spectra
-	      int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
-
-	      for(i=0;i<this_NLambdaFilter;i++)
-		{
-		  this_LambdaFilter[i] = (911.6)/(this_NLambdaFilter)*(i+1);
-		  this_FluxFilter[i] = 1.0;
-		  // printf("lambda = %lf\n",this_LambdaFilter[i]);
-		}
+	      this_LambdaFilter[i] = (911.6)/(this_NLambdaFilter)*(i+1);
+	      this_FluxFilter[i] = 1.0;
+	      // printf("lambda = %lf\n",this_LambdaFilter[i]);
+	    }
 
 		
 		    
-	      double *lgrid=create_grid(this_LambdaFilter[0], this_LambdaFilter[this_NLambdaFilter-1], AgeLoop, redshift,
-					LambdaInputSSP, &Min_Wave_Grid, &Max_Wave_Grid, &Grid_Length);
+	  double *lgrid=create_grid(this_LambdaFilter[0], this_LambdaFilter[this_NLambdaFilter-1], AgeLoop, redshift,
+				    LambdaInputSSP, &Min_Wave_Grid, &Max_Wave_Grid, &Grid_Length);
 
-	      if(Grid_Length>0)
+	  if(Grid_Length>0)
+	    {
+	      for(i=0;i<Grid_Length;i++)
+		lgrid[i]=(1+redshift)*LambdaInputSSP[AgeLoop][Min_Wave_Grid+i];
+	      
+
+	      /*SSP - multiply by (1+z) to go from rest to observed SSP flux*/
+	      FluxInputSSPOnGrid = malloc(sizeof(double) * Grid_Length);
+	      for (i=0;i<Grid_Length;i++)
 		{
-		  for(i=0;i<Grid_Length;i++)
-		    lgrid[i]=(1+redshift)*LambdaInputSSP[AgeLoop][Min_Wave_Grid+i];
-
-
-		  /*SSP - multiply by (1+z) to go from rest to observed SSP flux*/
-		  FluxInputSSPOnGrid = malloc(sizeof(double) * Grid_Length);
-		  for (i=0;i<Grid_Length;i++)
-		    {
-		      FluxInputSSPOnGrid[i]=(1.+redshift)*FluxInputSSP[AgeLoop][Min_Wave_Grid+i];
-		    }
-		  //FILTERS - interpolate on integral grid
-		  for(i=0;i<this_NLambdaFilter;i++)
-		    {
-		      LambdaFilter_SingleFilter[i]=this_LambdaFilter[i];
-		      FluxFilter_SingleFilter[i]=this_FluxFilter[i];
-		    }
-		  FluxFilterOnGrid = malloc(sizeof(double) * Grid_Length);
-		  interpolate(lgrid, Grid_Length, LambdaFilter_SingleFilter, this_NLambdaFilter, FluxFilter_SingleFilter, FluxFilterOnGrid) ;
-
-
-		  /* spectrum and filters are now defined on same grid
-		   * CONVOLUTION: direct (configuration) space
-		   * simply multiply filter*spectrum it's a convolution in Fourier space */
-		  FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
-		  for(i=0;i<Grid_Length;i++)
-		    {
-		      FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/(LambdaFilter_SingleFilter[i]*1e7));
-		    }
-
-		
-		  //INTEGRATE/
-		  FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
-		
-		  //Absolute Observed Frame Magnitudes
-		  
-		  nTotals = FluxInputSSPInt;
-		     
-		  free(FluxInputSSPOnGrid);
-		  free(FluxInputSSPConv);
-		  free(FluxFilterOnGrid);
+		  FluxInputSSPOnGrid[i]=(1.+redshift)*FluxInputSSP[AgeLoop][Min_Wave_Grid+i];
 		}
-	      else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
+	      //FILTERS - interpolate on integral grid
+	      for(i=0;i<this_NLambdaFilter;i++)
 		{
-		  // printf("gridlength = 0\n");
-		  nTotals = 0.;
+		  LambdaFilter_SingleFilter[i]=this_LambdaFilter[i];
+		  FluxFilter_SingleFilter[i]=this_FluxFilter[i];
 		}
-	      if (nTotals > 0) printf("redshift =%f ntotal = %lf\n",redshift,nTotals);
-	      NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
-	      free(lgrid);
-
-	    } // end age loop
-	}//end snap loop
+	      FluxFilterOnGrid = malloc(sizeof(double) * Grid_Length);
+	      interpolate(lgrid, Grid_Length, LambdaFilter_SingleFilter, this_NLambdaFilter, FluxFilter_SingleFilter, FluxFilterOnGrid) ;
+	      
+	      
+	      /* spectrum and filters are now defined on same grid
+	       * CONVOLUTION: direct (configuration) space
+	       * simply multiply filter*spectrum it's a convolution in Fourier space */
+	      FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
+	      for(i=0;i<Grid_Length;i++)
+		{
+		  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/(LambdaFilter_SingleFilter[i]*1e7));
+		}
+	      
+	      
+	      //INTEGRATE/
+	      FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
+	      
+	      //Absolute Observed Frame Magnitudes
+	      
+	      nTotals = FluxInputSSPInt;
+	      
+	      free(FluxInputSSPOnGrid);
+	      free(FluxInputSSPConv);
+	      free(FluxFilterOnGrid);
+	    }
+	  else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
+	    {
+	      // printf("gridlength = 0\n");
+	      nTotals = 0.;
+	    }
+	  if (nTotals > 0) printf("redshift =%f ntotal = %lf\n",redshift,nTotals);
+	  NPhotTables[MetalLoop][AgeLoop] = nTotals;
+	  free(lgrid);
+	  
+	} // end age loop
     }  //end loop on metallicities
   printf("\n NPhotTables Computed.\n\n");
 }
