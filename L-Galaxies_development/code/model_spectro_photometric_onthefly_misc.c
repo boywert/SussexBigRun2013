@@ -129,7 +129,8 @@ double* create_grid (double WaveMin, double WaveMax,int AgeLoop, double redshift
 		                      int *Min_Wave_Grid, int *Max_Wave_Grid, int *Grid_Length)
 {
   double x0, x1, h;
-  int i, min, max;
+  int i;
+  double min, max;
   double *grid;
 
   min=min(WaveMin, WaveMax);
