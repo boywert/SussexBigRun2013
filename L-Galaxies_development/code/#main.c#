@@ -607,6 +607,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 		  Gal[ngal].Xfrac3d = Xfrac[halonr];		
 #endif
 
+
 		  // To fail this check means that we copy in a failed galaxy
 		  mass_checks("Middle of join_galaxies_of_progenitors",ngal);
 

@@ -325,11 +325,14 @@ for(j=0;j<RNUM;j++) Gal[p].Sfrr[j][outputbin]=0;
 #ifndef  POST_PROCESS_MAGS
 
 
-#ifdef OUTPUT_REST_MAGS
-  for(outputbin = 0; outputbin < NOUT; outputbin++) {
 #ifdef REIONIZEPHOTON
+  for(outputbin = 0; outputbin < NOUT; outputbin++)
     Gal[p].ReionizePhot[outputbin] = 0.0;
 #endif // REIONIZEPHOTON
+
+
+#ifdef OUTPUT_REST_MAGS
+  for(outputbin = 0; outputbin < NOUT; outputbin++) {
     for(j = 0; j < NMAG; j++) {
       Gal[p].Lum[j][outputbin]         = 0.0;
       Gal[p].YLum[j][outputbin]        = 0.0;
