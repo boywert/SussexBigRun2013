@@ -404,7 +404,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 	      FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
 	      for(i=0;i<Grid_Length;i++)
 		{
-		  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/(lgrid[i]*1e7));
+		  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(double)PLANCK/((double)C/(lgrid[i]*1e7));
 		}
 	      
 	      
