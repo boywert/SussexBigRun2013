@@ -430,7 +430,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 	  free(lgrid);
 	  
 	} // end age loop
-      exit(0);
+      
     }  //end loop on metallicities
   printf("\n NPhotTables Computed.\n\n");
 }
