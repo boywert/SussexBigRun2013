@@ -463,11 +463,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 				  fmet2 * (f1 * LumTables[j][metindex + 1][0][tabindex] +
 					   f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
     	  Gal[p].Lum[j][outputbin] += LuminosityToAdd;
-	  /* if(X1 > 0.00001) */
-	  /*   { */
-	  /*     printf("Lum: X1:%g  L:%g  H:%g\n",X1,LumTables[j][metindex][0][tabindex] ,LumTables[j][metindex][0][tabindex+1]); */
-	  /*     printf("Lum: output:%d ori:%g add:%g\n",outputbin,Gal[p].Lum[j][outputbin],LuminosityToAdd); */
-	  /*   }	   */
+
     	  /*luminosity used for extinction due to young birth clouds */
     	  if(age <= tbc)
 	    Gal[p].YLum[j][outputbin] += LuminosityToAdd;
@@ -482,7 +478,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
       Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
       if(X1 > 0.00001)
 	{
-	  printf("metal:%g time:%g metindex = %d tabindex = %d\n",metallicity,mstars,metindex,tabindex);
+	  printf("metal:%g time:%g metindex = %d tabindex = %d\n",metallicity,age,metindex,tabindex);
 	  printf("Nphot: X1:%g  L:%g  H:%g\n",X1,NPhotTables[metindex][tabindex],NPhotTables[metindex][tabindex + 1]);
 	  printf("Nphot: ori:%g add:%g\n",Gal[p].ReionizePhot[outputbin],PhotonsToAdd);
 	}
