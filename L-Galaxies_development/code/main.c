@@ -685,6 +685,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 	  if(Halo[halonr].FirstHaloInFOFgroup == halonr)
 	    {
 		  init_galaxy(ngal, halonr);
+		  printf("create p=%d phot:%g\n",ngal,Gal[ngal].ReionizePhot[NOUT]);
 		  ngal++;
 	    }
     }
