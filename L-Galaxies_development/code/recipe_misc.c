@@ -474,8 +474,8 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 				    f2 * NPhotTables[metindex][tabindex + 1]) +
 			   fmet2 * (f1 * NPhotTables[metindex + 1][tabindex] +
 				    f2 * NPhotTables[metindex + 1][tabindex + 1]));
-
-      Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
+      if (age >= 0.)
+	Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
       if(X1 > 0.00001)
 	{
 	  printf("metal:%g time:%g metindex = %d tabindex = %d\n",metallicity,age,metindex,tabindex);
