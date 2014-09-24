@@ -361,13 +361,16 @@ void setup_Spec_NPhotTables_onthefly(void)
 	  	  
 	  //ALLOCATE GRID - size of filter, binning of the spectra
 	  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
-	  
-	  for(i=0;i<this_NLambdaFilter;i++)
+	  this_LambdaFilter[0] = 0.0;
+	  this_FluxFilter[0] = 0.0;
+	  for(i=1;i<this_NLambdaFilter-1;i++)
 	    {
 	      this_LambdaFilter[i] = (911.6)/(this_NLambdaFilter-1)*(i);
 	      this_FluxFilter[i] = 1.0;
 	      // printf("lambda = %lf\n",this_LambdaFilter[i]);
 	    }
+	  this_LambdaFilter[this_NLambdaFilter-1] = (911.6)/(float)(this_NLambdaFilter-1)*(float)(this_NLambdaFilter);
+	  this_FluxFilter[this_NLambdaFilter-1] = 0.0;	  
 
 		
 		    
