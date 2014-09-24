@@ -476,7 +476,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 			   fmet2 * (f1 * NPhotTables[metindex + 1][tabindex] +
 				    f2 * NPhotTables[metindex + 1][tabindex + 1]));
       
-      if(i=0;i<SSP_NAGES;i++)
+      for(i=0;i<SSP_NAGES;i++)
 	{
 	  printf("n=%d nphot=%g\n",i,NPhotTables[metindex][i]);
 	}
