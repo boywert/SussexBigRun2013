@@ -475,11 +475,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 				    f2 * NPhotTables[metindex][tabindex + 1]) +
 			   fmet2 * (f1 * NPhotTables[metindex + 1][tabindex] +
 				    f2 * NPhotTables[metindex + 1][tabindex + 1]));
-      
-      for(i=0;i<SSP_NAGES;i++)
-	{
-	  printf("n=%d nphot=%g\n",i,NPhotTables[metindex][i]);
-	}
+
       if (age >= 0.)
 	{
 	  Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
