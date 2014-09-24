@@ -358,7 +358,6 @@ void setup_Spec_NPhotTables_onthefly(void)
       //3rd loop on Age
       for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
 	{
-	  	  
 	  //ALLOCATE GRID - size of filter, binning of the spectra
 	  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
 	  this_LambdaFilter[0] = 0.0;
@@ -405,7 +404,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 	      FluxInputSSPConv = malloc(sizeof(double) * Grid_Length);
 	      for(i=0;i<Grid_Length;i++)
 		{
-		  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/(LambdaFilter_SingleFilter[i]*1e7));
+		  FluxInputSSPConv[i]=FluxInputSSPOnGrid[i]*FluxFilterOnGrid[i]/(float)PLANCK/((float)C/(lgrid[i]*1e7));
 		}
 	      
 	      
