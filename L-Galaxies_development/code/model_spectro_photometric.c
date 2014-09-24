@@ -368,6 +368,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 		{
 		  this_LambdaFilter[i] = (911.6)/(this_NLambdaFilter)*(i+1);
 		  this_FluxFilter[i] = 1.0;
+		  printf("lambda = %lf\n",this_LambdaFilter[i])
 		}
 
 		
