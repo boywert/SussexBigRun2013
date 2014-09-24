@@ -323,11 +323,6 @@ for(j=0;j<RNUM;j++) Gal[p].Sfrr[j][outputbin]=0;
   for(outputbin = 0; outputbin < NOUT; outputbin++)
   	Gal[p].MassWeightAge[outputbin] = 0.0;
 #ifndef  POST_PROCESS_MAGS
-
-#ifdef REIONIZEPHOTON
-  Gal[p].ReionizePhot = 0.0;
-#endif // REIONIZEPHOTON
-
 #ifdef OUTPUT_REST_MAGS
   for(outputbin = 0; outputbin < NOUT; outputbin++) {
     for(j = 0; j < NMAG; j++) {
