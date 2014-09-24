@@ -317,12 +317,12 @@ void setup_Spec_LumTables_onthefly(void)
 	    }//end snap loop
 	}//end Band loop
 
-
-    }  //end loop on metallicities
-  printf("\nPhotTables Computed.\n\n");
 #ifdef REIONIZEPHOTON
-  setup_Spec_NPhotTables_onthefly();
+      setup_Spec_NPhotTables_onthefly();
 #endif
+    }  //end loop on metallicities
+    printf("\nPhotTables Computed.\n\n");
+
 }
 
 #ifdef REIONIZEPHOTON
