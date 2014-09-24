@@ -358,9 +358,7 @@ void setup_Spec_NPhotTables_onthefly(void)
       //3rd loop on Age
       for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
 	{
-	  //4th loop on Bands
-	  //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
-	  
+	  	  
 	  //ALLOCATE GRID - size of filter, binning of the spectra
 	  int Min_Wave_Grid=0, Max_Wave_Grid=0, Grid_Length=0;
 	  
@@ -410,10 +408,11 @@ void setup_Spec_NPhotTables_onthefly(void)
 	      
 	      //INTEGRATE/
 	      FluxInputSSPInt=integrate(FluxInputSSPConv, Grid_Length);
-	      
-	      //Absolute Observed Frame Magnitudes
-	      
-	      nTotals = FluxInputSSPInt;
+	      FluxFilterInt=integrate(FluxFilterOnGrid, Grid_Length);
+	      if(FluxFilterInt == 0.0 || FluxInputSSPInt == 0.0)
+		nTotals = 0.0;
+	      else
+		nTotals = FluxInputSSPInt;
 	      
 	      free(FluxInputSSPOnGrid);
 	      free(FluxInputSSPConv);
