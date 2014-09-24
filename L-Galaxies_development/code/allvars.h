@@ -560,7 +560,6 @@ struct GALAXY_OUTPUT
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
 #ifdef REIONIZEPHOTON
-  double ReionizePhot[NOUT];
   float NPhotReion;
 #endif
 
