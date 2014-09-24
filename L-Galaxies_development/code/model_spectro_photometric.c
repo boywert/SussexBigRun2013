@@ -212,6 +212,7 @@ void setup_Spec_LumTables_onthefly(void)
 	  //3rd loop on Age
 	  for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
 	    {
+	      printf("Age:%d\n",AgeLoop);
 	      //4th loop on Bands
 	      //IF FULL_SPECTRA defined a band correspond to a wavelength on the SSP spectra
 	      for(band=0;band<NMAG;band++)
