@@ -134,7 +134,7 @@ double* create_grid (double WaveMin, double WaveMax,int AgeLoop, double redshift
 
   min=min(WaveMin, WaveMax);
   max=max(WaveMin, WaveMax);
-
+  printf("create grid %lf/%lf\n",min,max);
   *Grid_Length=0;
 
   //get minimum of grid
