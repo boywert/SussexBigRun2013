@@ -513,7 +513,7 @@ void prepare_galaxy_for_output(int n, struct GALAXY *g, struct GALAXY_OUTPUT *o)
 #endif
     }
 #ifdef REIONIZEPHOTON
-  printf("phot = %lg\n",g->ReionizePhot[n]);
+  // printf("phot = %lg\n",g->ReionizePhot[n]);
   o->NPhotReion = log10(g->ReionizePhot[n]);
 #endif
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)

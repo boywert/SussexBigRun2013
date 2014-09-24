@@ -481,7 +481,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 	  /* Gal[p].ReionizePhot[outputbin] += PhotonsToAdd; /\*  *\/ */
 	  /* printf("metal:%g time:%g metindex = %d tabindex = %d\n",metallicity,age,metindex,tabindex); */
 	  /* printf("Nphot: X1:%g  L:%g  H:%g\n",X1,NPhotTables[metindex][tabindex],NPhotTables[metindex][tabindex+1]); */
-	  /* printf("Nphot: ori:%g add:%g\n",Gal[p].ReionizePhot[outputbin],PhotonsToAdd); */
+	   printf("Nphot: ori:%g add:%g\n",Gal[p].ReionizePhot[outputbin],PhotonsToAdd); 
 
 	/* } */
 #endif // REIONIZEPHOTON
