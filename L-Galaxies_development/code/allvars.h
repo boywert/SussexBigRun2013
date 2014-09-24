@@ -560,7 +560,8 @@ struct GALAXY_OUTPUT
   struct elements EjectedMass_elements;
 #endif //INDIVIDUAL_ELEMENTS
 #ifdef REIONIZEPHOTON
-  float ReionizePhot;
+  double ReionizePhot[NOUT];
+  float NPhotReion;
 #endif
 
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
@@ -850,7 +851,7 @@ struct GALAXY			/* Galaxy data */
 #endif //INDIVIDUAL_ELEMENTS
 
 #ifdef REIONIZEPHOTON
-  float ReionizePhot;
+  double ReionizePhot[NOUT];
 #endif
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   float Xfrac3d;

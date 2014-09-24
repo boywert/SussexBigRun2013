@@ -324,12 +324,12 @@ for(j=0;j<RNUM;j++) Gal[p].Sfrr[j][outputbin]=0;
   	Gal[p].MassWeightAge[outputbin] = 0.0;
 #ifndef  POST_PROCESS_MAGS
 
-#ifdef REIONIZEPHOTON
-  Gal[p].ReionizePhot = 0.0;
-#endif // REIONIZEPHOTON
 
 #ifdef OUTPUT_REST_MAGS
   for(outputbin = 0; outputbin < NOUT; outputbin++) {
+#ifdef REIONIZEPHOTON
+    Gal[p].ReionizePhot[outputbin] = 0.0;
+#endif // REIONIZEPHOTON
     for(j = 0; j < NMAG; j++) {
       Gal[p].Lum[j][outputbin]         = 0.0;
       Gal[p].YLum[j][outputbin]        = 0.0;
@@ -471,7 +471,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 			   fmet2 * (f1 * NPhotTables[metindex + 1][0][tabindex] +
 				    f2 * NPhotTables[metindex + 1][0][tabindex + 1]));
       printf("ori:%lf add:%lf\n",Gal[p].ReionizePhot,PhotonsToAdd);
-      Gal[p].ReionizePhot += PhotonsToAdd;
+      Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
 #endif // REIONIZEPHOTON
 
     }

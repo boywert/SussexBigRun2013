@@ -644,11 +644,14 @@ void add_galaxies_together(int t, int p)
   	 Gal[t].MassWeightAge[outputbin] += Gal[p].MassWeightAge[outputbin];
 
 #ifndef  POST_PROCESS_MAGS
+
 /* Add the luminosities of the satellite and central galaxy */
 #ifdef OUTPUT_REST_MAGS
   for(outputbin = 0; outputbin < NOUT; outputbin++)
     {
-
+#ifdef REIONIZEPHOTON
+      Gal[t].ReionizePhot[outputbin] += Gal[p].ReionizePhot[outputbin];
+#endif
     for(j = 0; j < NMAG; j++) {
       Gal[t].Lum[j][outputbin] += Gal[p].Lum[j][outputbin];
       Gal[t].YLum[j][outputbin] += Gal[p].YLum[j][outputbin];
