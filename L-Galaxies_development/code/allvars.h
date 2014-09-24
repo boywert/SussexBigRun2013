@@ -1183,7 +1183,7 @@ extern float RedshiftTab[MAXSNAPS];
 extern float LumTables[NMAG][SSP_NMETALLICITES][MAXSNAPS][SSP_NAGES];
 
 #ifdef REIONIZEPHOTON
-extern float NPhotTables[SSP_NMETALLICITES][SSP_NAGES];
+extern double NPhotTables[SSP_NMETALLICITES][SSP_NAGES];
 #endif
 
 extern float FilterLambda[NMAG];	//wavelength of each filter - needed for extinction
