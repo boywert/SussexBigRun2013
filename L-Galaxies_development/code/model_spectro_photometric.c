@@ -344,7 +344,7 @@ void setup_Spec_NPhotTables_onthefly(void)
   int MetalLoop, AgeLoop, snap, band, i;
   double this_LambdaFilter[MAX_NLambdaFilter];
   double this_FluxFilter[MAX_NLambdaFilter];
-  int this_NLambdaFilter = 500;
+  int this_NLambdaFilter = 50;
 
   //1st loop on the mettalicity files
   for (MetalLoop=0;MetalLoop<SSP_NMETALLICITES;MetalLoop++)
@@ -368,7 +368,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 
 	      for(i=0;i<this_NLambdaFilter;i++)
 		{
-		  this_LambdaFilter[i] = (911.6-90.)/(this_NLambdaFilter+1)*i+90.;
+		  this_LambdaFilter[i] = (911.6)/(this_NLambdaFilter)*(i+1);
 		  this_FluxFilter[i] = 1.0;
 		}
 
@@ -421,7 +421,10 @@ void setup_Spec_NPhotTables_onthefly(void)
 		  free(FluxFilterOnGrid);
 		}
 	      else //if Grid_Length=0 (filter outside the spectra, can happen for observed frame)
-		nTotals = 0.;
+		{
+		  printf("gridlength = 0\n");
+		  nTotals = 0.;
+		}
 	      if (nTotals > 0) printf("redshift =%f ntotal = %lf\n",redshift,nTotals);
 	      NPhotTables[MetalLoop][snap][AgeLoop] = nTotals;
 	      free(lgrid);
