@@ -422,6 +422,7 @@ for(j=0;j<RNUM;j++) Gal[p].Sfrr[j][outputbin]=0;
 #ifndef  POST_PROCESS_MAGS
 void add_to_luminosities(int p, double mstars, double time, double metallicity)
 {
+  int i;
   int outputbin, metindex, tabindex, j;
   double f1, f2, fmet1, fmet2, LuminosityToAdd, dLuminosityToAdd;
   double X1, age;
@@ -474,12 +475,16 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 				    f2 * NPhotTables[metindex][tabindex + 1]) +
 			   fmet2 * (f1 * NPhotTables[metindex + 1][tabindex] +
 				    f2 * NPhotTables[metindex + 1][tabindex + 1]));
+      
+      if(i=0;i<SSP_NAGES;i++)
+	{
+	  printf("n=%d nphot=%g\n",i,NPhotTables[metindex][i]);
+	}
       if (age >= 0.)
 	{
 	  Gal[p].ReionizePhot[outputbin] += PhotonsToAdd;
-
 	  printf("metal:%g time:%g metindex = %d tabindex = %d\n",metallicity,age,metindex,tabindex);
-	  printf("Nphot: X1:%g  L:%g  H:%g\n",X1,NPhotTables[metindex][tabindex],NPhotTables[metindex][tabindex + 1]);
+	  printf("Nphot: X1:%g  L:%g  H:%g\n",X1,NPhotTables[metindex][tabindex],NPhotTables[metindex][tabindex+1]);
 	  printf("Nphot: ori:%g add:%g\n",Gal[p].ReionizePhot[outputbin],PhotonsToAdd);
 
 	}
