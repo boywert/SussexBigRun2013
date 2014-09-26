@@ -227,11 +227,11 @@ void load_tree_table(int filenr)
 void free_tree_table(void)
 {
 #ifdef PRELOAD_TREES
-#ifdef LOADIDS
-  myfree(HaloIDs_Data);
-#endif
 #ifdef READXFRAC
   myfree(Xfrac_Data);
+#endif
+#ifdef LOADIDS
+  myfree(HaloIDs_Data);
 #endif
   myfree(Halo_Data);
 #endif
