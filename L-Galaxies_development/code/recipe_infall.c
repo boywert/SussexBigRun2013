@@ -96,7 +96,19 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     }
   else if(ReionizationOn == 5)
     {
-      reionization_modifier = 0.;
+      if(Gal[centralgal].Xfrac3d > 0.5)
+	{
+	  if(Gal[centralgal].HaloM_Crit200 < 0.01*Hubble_h)
+	    reionization_modifier = 0.;
+	  else if(Gal[centralgal].HaloM_Crit200 >= 0.01*Hubble_h && Gal[centralgal].HaloM_Crit200 <= 0.1*Hubble_h)
+	    reionization_modifier = log10(Gal[centralgal].HaloM_Crit200/(0.01*Hubble_h));
+	  else
+	    reionization_modifier = 1.;
+	}
+      else
+	{
+	  reionization_modifier = 1.0;
+	}
     }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
