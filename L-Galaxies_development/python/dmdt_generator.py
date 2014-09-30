@@ -7,7 +7,10 @@ import sys
 folder = "/mnt/lustre/scratch/cs390/47Mpc/treedata/"
 snap = "/mnt/lustre/scratch/cs390/47Mpc/snap.txt"
 
-this_thread = 127
+if(len(sys.argv) < 2):
+    os.exit()
+
+this_thread = sys.argv[1]
 
 firstfile = this_thread
 lastfile = this_thread
@@ -71,7 +74,6 @@ for itree in range(nTrees):
                     dm = mass_cur
                     dt = age_cur- age_list[this_treedata[igal]['SnapNum']-1]
                 
-                print dt
                 f[snap].write("%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt))
 
 
