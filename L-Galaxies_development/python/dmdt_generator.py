@@ -27,7 +27,7 @@ for z in redshift_list:
     f.append(open(output_folder+'/'+str(this_thread),"w+"))
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
     print age_list[i]
-    i += 0
+    i += 1
 
 
 
