@@ -16,7 +16,10 @@ age_list = []
 for z in redshift_list:
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
 
-
+struct_dmdt = numpy.dtype([
+    ('Mass',numpy.float32,1),
+    ('dmdt',numpy.float32,1)
+])
 
 
 (nHalos,nTrees,ngalstree,treedata) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
@@ -49,7 +52,7 @@ for itree in range(nTrees):
                 dm = mass_cur - mass_prog  #Msun
                 dt = age_cur-age_prog  #Gyr
 
-                print dm/dt
+                print "%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt)
 
 
 #print treedata
