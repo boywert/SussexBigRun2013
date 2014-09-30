@@ -60,13 +60,17 @@ for itree in range(nTrees):
                 #     print nexthalo,ngalstree[itree],'/',len(this_treedata)
                 #    TotalLen += this_treedata[nexthalo]['Len']
                 #    nexthalo = this_treedata[nexthalo]['NextHaloInFOFgroup'] 
-               
+                
                 # print float(this_treedata[igal]['Len'])/TotalLen
-                mass_prog = this_treedata[this_treedata[igal]['FirstProgenitor']]['Len']*mpart
-                age_prog = age_list[this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum']]
-
-                dm = mass_cur - mass_prog  #Msun
-                dt = (age_cur-age_prog)  #Myr
+                if(this_treedata[igal]['FirstProgenitor'] > -1):
+                    mass_prog = this_treedata[this_treedata[igal]['FirstProgenitor']]['Len']*mpart
+                    age_prog = age_list[this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum']]
+                    dm = mass_cur - mass_prog  #Msun
+                    dt = (age_cur-age_prog)  #Myr
+                else:
+                    dm = mass_cur
+                    dt = age_cur- age_list[this_treedata[igal]['SnapNum']-1]
+                
                 print this_treedata[igal]['SnapNum'],this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum'],age_cur,age_prog,dt
                 f[snap].write("%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt))
 
