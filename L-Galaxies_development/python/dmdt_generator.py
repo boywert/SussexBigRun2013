@@ -23,7 +23,7 @@ for z in redshift_list:
     z_str="%.3f"%(z)
     folder = "/mnt/lustre/scratch/cs390/47Mpc/dmdt_new/"+z_str
     os.system("mkdir -p "+folder)
-    f.append(open(folder+'/'+str(this_thread)))
+    f.append(open(folder+'/'+str(this_thread),"w+"))
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
 
 
