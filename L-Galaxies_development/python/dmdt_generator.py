@@ -26,6 +26,7 @@ for z in redshift_list:
     os.system("mkdir -p "+output_folder)
     f.append(open(output_folder+'/'+str(this_thread),"w+"))
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage']*1000.) #Myr
+    print cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)
     i += 1
 
 
