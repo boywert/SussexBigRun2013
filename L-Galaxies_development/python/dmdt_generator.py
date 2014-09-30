@@ -14,9 +14,8 @@ firsthalointree = numpy.cumsum(ngalstree) - numpy.ones(nTrees)*ngalstree[0]
 #    firsthalo = int(firsthalo)
 #    print treedata[firsthalo]
 
-for snap in range(lastsnap):
-    for itree in range(nTrees):
-        this_treedata = treedata[firsthalointree[itree]:firsthalointree[itree]+ngalstree[itree]]
-        print ngalstree[itree], this_treedata
+for itree in range(nTrees):
+    this_treedata = treedata[firsthalointree[itree]:firsthalointree[itree]+ngalstree[itree]]
+    print ngalstree[itree], len(this_treedata)
 
 #print treedata
