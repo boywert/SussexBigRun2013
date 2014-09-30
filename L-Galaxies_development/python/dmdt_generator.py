@@ -66,7 +66,7 @@ for itree in range(nTrees):
 
                 dm = mass_cur - mass_prog  #Msun
                 dt = (age_cur-age_prog)  #Myr
-                print this_treedata[igal]['SnapNum'],this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum'],dt
+                print this_treedata[igal]['SnapNum'],this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum'],age_cur,age_prog,dt
                 f[snap].write("%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt))
 
 
