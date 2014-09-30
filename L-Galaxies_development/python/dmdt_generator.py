@@ -25,8 +25,7 @@ for z in redshift_list:
     output_folder = "/mnt/lustre/scratch/cs390/47Mpc/dmdt_new/"+z_str
     os.system("mkdir -p "+output_folder)
     f.append(open(output_folder+'/'+str(this_thread),"w+"))
-    age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
-    print age_list[i]
+    age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage']*1000.) #Myr
     i += 1
 
 
@@ -66,7 +65,7 @@ for itree in range(nTrees):
                 age_prog = age_list[this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum']]
 
                 dm = mass_cur - mass_prog  #Msun
-                dt = (age_cur-age_prog)*1000.  #Myr
+                dt = (age_cur-age_prog)  #Myr
                 print dt
                 f[snap].write("%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt))
 
