@@ -8,13 +8,14 @@ lastsnap = 75
 
 (nHalos,nTrees,ngalstree,treedata) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 
-firsthalointree = numpy.cumsum(ngalstree) - numpy.ones(nTrees)*ngalstree[0]
 lasthalointree = numpy.cumsum(ngalstree)
+firsthalointree = lasthalointree-ngalstree 
+
 #for firsthalo in firsthalointree:
 #    firsthalo = int(firsthalo)
 #    print treedata[firsthalo]
 for itree in range(nTrees):
-    this_treedata = numpy.array(treedata[firsthalointree[itree]:max(lasthalointree[itree],nHalos-1)],dtype=read_lgal.struct_lgalinput)
+    this_treedata = numpy.array(treedata[firsthalointree[itree]:lasthalointree[itree]],dtype=read_lgal.struct_lgalinput)
     for snap in range(lastsnap+1):
         for igal in range(ngalstree[itree]):
             if(this_treedata[igal]['FirstHaloInFOFgroup']== igal) & (this_treedata[igal]['SnapNum'] == snap):
