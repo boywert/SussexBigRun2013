@@ -18,6 +18,6 @@ for snap in range(lastsnap+1):
         this_treedata = numpy.array(treedata[firsthalointree[itree]:firsthalointree[itree]+ngalstree[itree]],dtype=read_lgal.struct_lgalinput)
         for igal in range(ngalstree[itree]):
             if(this_treedata[igal]['FirstHaloInFOFgroup']== igal) & (this_treedata[igal]['SnapNum'] == snap):
-            `print this_treedata[igal]
+                print this_treedata[igal]
 
 #print treedata
