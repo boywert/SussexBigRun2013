@@ -22,6 +22,7 @@ for itree in range(nTrees):
                 nexthalo = this_treedata[igal]['NextHaloInFOFgroup'] 
                 while nexthalo > -1:
                     TotalLen += this_treedata[nexthalo]['Len']
+                    nexthalo = this_treedata[nexthalo]['NextHaloInFOFgroup'] 
                 print TotalLen
 
 #print treedata
