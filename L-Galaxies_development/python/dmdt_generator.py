@@ -23,6 +23,6 @@ for itree in range(nTrees):
                 while nexthalo > -1:
                     TotalLen += this_treedata[nexthalo]['Len']
                     nexthalo = this_treedata[nexthalo]['NextHaloInFOFgroup'] 
-                print TotalLen
+                print float(this_treedata[igal]['Len'])/TotalLen
 
 #print treedata
