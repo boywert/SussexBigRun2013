@@ -50,7 +50,7 @@ for itree in range(nTrees):
                 age_prog = age_list[this_treedata[this_treedata[igal]['FirstProgenitor']]['SnapNum']]
 
                 dm = mass_cur - mass_prog  #Msun
-                dt = age_cur-age_prog  #Gyr
+                dt = (age_cur-age_prog)*1000.  #Myr
 
                 print "%g  %g  %g  %g  %g\n"%(this_treedata[igal]['Pos'][0],this_treedata[igal]['Pos'][1],this_treedata[igal]['Pos'][2],mass_cur,dm/dt)
 
