@@ -14,7 +14,7 @@ firsthalointree = numpy.cumsum(ngalstree) - numpy.ones(nTrees)*ngalstree[0]
 #    firsthalo = int(firsthalo)
 #    print treedata[firsthalo]
 for itree in range(nTrees):
-    this_treedata = numpy.array(treedata[firsthalointree[itree]:firsthalointree[itree]+ngalstree[0],dtype=read_lgal.struct_lgalinput)
+    this_treedata = numpy.array(treedata[firsthalointree[itree]:firsthalointree[itree]+ngalstree[0]],dtype=read_lgal.struct_lgalinput)
     for snap in range(lastsnap+1):
         for igal in range(ngalstree[itree]):
             if(this_treedata[igal]['FirstHaloInFOFgroup']== igal) & (this_treedata[igal]['SnapNum'] == snap):
