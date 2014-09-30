@@ -18,6 +18,10 @@ for itree in range(nTrees):
     for snap in range(lastsnap+1):
         for igal in range(ngalstree[itree]):
             if(this_treedata[igal]['FirstHaloInFOFgroup']== igal) & (this_treedata[igal]['SnapNum'] == snap):
-                print this_treedata[igal]
+                TotalLen = this_treedata[igal]['Len']
+                nexthalo = this_treedata[igal]['NextHaloInFOFgroup'] 
+                while nexthalo > -1:
+                    TotalLen += this_treedata[nexthalo]['Len']
+                print TotalLen
 
 #print treedata
