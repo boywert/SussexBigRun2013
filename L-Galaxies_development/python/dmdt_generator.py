@@ -11,5 +11,6 @@ lastsnap = 75
 firsthalointree = numpy.cumsum(ngalstree) - numpy.ones(nTrees)*ngalstree[0]
 
 for firsthalo in firsthalointree:
-    print firsthalo
+    firsthalo = int(firsthalo)
+    print treedata[firsthalo]
 print treedata
