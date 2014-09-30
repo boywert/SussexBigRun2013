@@ -4,6 +4,11 @@ import read_lgal
 
 folder = "/mnt/lustre/scratch/cs390/47Mpc/treedata/"
 snap = "/mnt/lustre/scratch/cs390/47Mpc/snap.txt"
+firstfile = 127
+lastfile = 127
+lastsnap = 75
+h = 0.7
+mpart = 0.000150777086098*1.e10/h  #Msun 
 
 a = numpy.loadtxt(snap)
 redshift_list = 1./a - 1.
@@ -12,11 +17,7 @@ for z in redshift_list:
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
 
 
-firstfile = 127
-lastfile = 127
-lastsnap = 75
-h = 0.7
-mpart = 0.000150777086098*1.e10/h  #Msun 
+
 
 (nHalos,nTrees,ngalstree,treedata) = read_lgal.read_lgalinput(folder,firstfile,lastfile,lastsnap)
 
