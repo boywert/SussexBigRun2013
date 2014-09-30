@@ -19,12 +19,15 @@ a = numpy.loadtxt(snap)
 redshift_list = 1./a - 1.
 age_list = []
 f = []
+i = 0
 for z in redshift_list:
     z_str="%.3f"%(z)
     output_folder = "/mnt/lustre/scratch/cs390/47Mpc/dmdt_new/"+z_str
     os.system("mkdir -p "+output_folder)
     f.append(open(output_folder+'/'+str(this_thread),"w+"))
     age_list.append(cosmocalc.cosmocalc(z, H0=h*100., WM=0.27, WV=0.73)['zage'])
+    print age_list[i]
+    i += 0
 
 
 
