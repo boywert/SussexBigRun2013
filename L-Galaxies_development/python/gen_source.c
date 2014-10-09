@@ -94,7 +94,7 @@ int main(int argc, char **argv)
       fwrite(&grid,sizeof(int),1,fp);
       fwrite(&grid,sizeof(int),1,fp);
       for(i=0;i<grid*grid*grid;i++) {
-	write_buff = (float)Sfr(i);
+	write_buff = (float)Sfr[i];
 	fwrite(&write_buff,sizeof(int),1,fp);
       }
       fclose(fp);
