@@ -44,7 +44,7 @@ int main(int argc, char **argv)
   printf("argc:%d argv 0:%s 1:%\n",argc,argv[0],argv[1]);
   exit(1);
   if(argc == 1)
-    sscanf(argv[0])
+    sscanf(argv[0]);
 
   G *= (m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
