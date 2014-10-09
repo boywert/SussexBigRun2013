@@ -26,11 +26,12 @@ int main()
     i++;
   }
   nSnaps = i;
+
   printf("Total snapshot : %d\n",nSnaps);
   for(j=0;j<nSnaps;j++) {
     for (i=firstfile;i<=lastfile;i++) {
       sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
-      printf(filename,"Reading %s\n",filename);
+      printf("Reading %s\n",filename);
     }
   }
   return 0;
