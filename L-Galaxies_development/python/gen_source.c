@@ -41,7 +41,7 @@ int main(int argc, char **argv)
   float pi = 4.0*atan(1.0);
   float rho_crit_0;
   float gridmass_c; //to convert msun to gridmass
-  printf("argc:%d argv 0:%s 1:%\n",argc,argv[0],argv[1]);
+  printf("argc:%d argv 0:%s 1:%s\n",argc,argv[0],argv[1]);
   exit(1);
   if(argc == 1)
     sscanf(argv[0],"%d",&selected_snap);
