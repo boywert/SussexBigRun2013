@@ -20,8 +20,8 @@ int main()
   int nSnaps;
   fp = fopen(zlistfile,"r");
   i=0;
-  while (fscanf(fp, "%s", zlist_string[ii]) != EOF) {
-    printf("%s%s_\n",basename,zlist_string[ii]);
+  while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
+    printf("%s%s_\n",basename,zlist_string[i]);
     i++;
   }
   nSnaps = i;
