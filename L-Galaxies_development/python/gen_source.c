@@ -43,6 +43,7 @@ int main(int argc, char **argv)
   double gridmass_c; //to convert msun to gridmass
   if(argc == 2)
     sscanf(argv[0],"%d",&selected_snap);
+  printf("argc = %d , argv[0] = %s, argv[1] = %s",argc,argv[0],argv[1]);
 
   G = G*(m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (Msun/h)/(Mpc/h)^3
