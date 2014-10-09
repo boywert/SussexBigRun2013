@@ -52,7 +52,6 @@ int main(int argc, char **argv)
   printf("total cell = %g\n",total_cell);
   gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_cell; // /(double)h; // Msun
   printf("G = %g, gridmass = %lf\n",G,gridmass);
-  exit(0);
   gridmass_c = 1./gridmass;
   fp = fopen(zlistfile,"r");
   i=0;
