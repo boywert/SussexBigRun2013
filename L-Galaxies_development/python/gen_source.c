@@ -43,9 +43,10 @@ int main(int argc, char **argv)
   double gridmass_c; //to convert msun to gridmass
   if(argc == 2)
     sscanf(argv[0],"%d",&selected_snap);
-  printf("G = %g, gridmass = %g\n",G,gridmass);
+
   G = G*(m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
-  rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
+  rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (Msun/h)/(Mpc/h)^3
+  printf("rho_crit_0 = %g\n",rho_crit_0);
   gridmass = omegam*rho_crit_0*(boxsize*boxsize*boxsize)/(cubep3m_cell*cubep3m_cell*cubep3m_cell)/h; // Msun
   printf("G = %g, gridmass = %g\n",G,gridmass);
   exit(0);
