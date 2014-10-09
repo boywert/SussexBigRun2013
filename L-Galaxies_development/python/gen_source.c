@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   printf("rho_crit_0 = %g\n",rho_crit_0);
   total_cell = (double)cubep3m_cell*(double)cubep3m_cell*(double)cubep3m_cell;
   printf("total cell = %g\n",total_cell);
-  gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_cell/(double)h; // Msun
+  gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_cell; // /(double)h; // Msun
   printf("G = %g, gridmass = %g\n",G,gridmass);
   exit(0);
   gridmass_c = 1./gridmass;
