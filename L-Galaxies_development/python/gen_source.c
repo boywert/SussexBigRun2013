@@ -27,7 +27,7 @@ int main(int argc, char **argv)
   int dummy,*dummyarray;
   int i,j,k;
   int nSnaps,selected_snap;
-  float gridmass;
+  double gridmass;
 
   const float Mpc2m = 3.08567758e22;
   float m2Mpc = 1./Mpc2m;
@@ -39,8 +39,8 @@ int main(int argc, char **argv)
   float h = 0.7;
   float H0 = 100.0;        // km/s / (Mpc/h)
   float pi = 4.0*atan(1.0);
-  float rho_crit_0;
-  float gridmass_c; //to convert msun to gridmass
+  double rho_crit_0;
+  double gridmass_c; //to convert msun to gridmass
   if(argc == 2)
     sscanf(argv[0],"%d",&selected_snap);
   printf("G = %g, gridmass = %g\n",G,gridmass);
