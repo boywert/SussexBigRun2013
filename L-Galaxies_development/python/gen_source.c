@@ -7,6 +7,7 @@
 int main(int argc, char **argv)
 {
   struct LGalaxy *lgal;
+  float write_buff;
   FILE *fp;
   double *Sfr;
   int cubep3m_p = 1728;
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
   char *basename = "/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/SA_z";
   char *outputfolder = "/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/sources/";
   char *zlistfile = "/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt";
+  char outputname[2048];
   char zlist_string[100][1024];
   char filename[2048];
   char buff[1000];
@@ -44,6 +46,8 @@ int main(int argc, char **argv)
   if(argc == 2)
     sscanf(argv[1],"%d",&selected_snap);
   printf("argc = %d , argv[0] = %s, argv[1] = %s\n",argc,argv[0],argv[1]);
+  sprintf(buff,"mkdir -p %s",outputfolder);
+  system(buff);
 
   G = G*(m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (Msun/h)/(Mpc/h)^3
@@ -79,17 +83,22 @@ int main(int argc, char **argv)
 	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
 	for(k=0;k<nGals;k++) {
 	  cell = (int)(lgal[k].Pos[0]/gridsize) + (int)(lgal[k].Pos[1]/gridsize)*grid + (int)(lgal[k].Pos[2]/gridsize)*grid*grid;
-	  if(cell < 306)
-	    printf("Pos %f:%f:%f cell = %d Srf =%f\n", lgal[k].Pos[0], lgal[k].Pos[0], lgal[k].Pos[0],cell,lgal[k].Sfr);
-	  Sfr[cell] += lgal[k].Sfr*gridmass_c;
+	  Sfr[cell] += (double)(lgal[k].Sfr*gridmass_c);
 	}
 	free(lgal);
 	fclose(fp);
       }
-      for(i=0;i<100;i++){
-	printf("%d %lf\n",i,Sfr[i]); 
+      sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j]);
+      fp = fopen(outputname,"rb");
+      fwrite(&grid,sizeof(int),1,fp);
+      fwrite(&grid,sizeof(int),1,fp);
+      fwrite(&grid,sizeof(int),1,fp);
+      for(i=0;i<grid*grid*grid;i++) {
+	write_buff = (float)Sfr(i);
+	fwrite(&write_buff,sizeof(int),1,fp);
       }
-      free(Sfr);
+      fclose(fp);
+      free(Sfr);	    
     }
   }
   return 0;
