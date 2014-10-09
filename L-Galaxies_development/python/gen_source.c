@@ -29,12 +29,12 @@ int main(int argc, char **argv)
   int nSnaps,selected_snap;
   float gridmass;
 
-  float Mpc2m = 3.08567758e22;
+  const float Mpc2m = 3.08567758e22;
   float m2Mpc = 1./Mpc2m;
-  float Msun2kg = 1.98855e30;
+  const float Msun2kg = 1.98855e30;
   float kg2Msun = 1./Msun2kg;
-  float m2km = 0.001;
-  float omegam = 0.27;
+  const float m2km = 0.001;
+  const float omegam = 0.27;
   float G = 6.674e-11;   // SI
   float h = 0.7;
   float H0 = 100.0;        // km/s / (Mpc/h)
@@ -43,11 +43,11 @@ int main(int argc, char **argv)
   float gridmass_c; //to convert msun to gridmass
   if(argc == 2)
     sscanf(argv[0],"%d",&selected_snap);
-  printf("G = %f, gridmass = %f\n",G,gridmass);
-  G *= (m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
+  printf("G = %g, gridmass = %g\n",G,gridmass);
+  G = G*(m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
   gridmass = omegam*rho_crit_0*(boxsize*boxsize*boxsize)/(cubep3m_cell*cubep3m_cell*cubep3m_cell)/h; // Msun
-  printf("G = %f, gridmass = %f\n",G,gridmass);
+  printf("G = %g, gridmass = %g\n",G,gridmass);
   exit(0);
   gridmass_c = 1./gridmass;
   fp = fopen(zlistfile,"r");
