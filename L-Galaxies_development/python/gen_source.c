@@ -8,7 +8,8 @@ int main()
 {
   struct LGalaxy *tree;
   FILE *fp;
-  int firstfile, lastfile;
+  int firstfile = 0;
+  int lastfile = 127;
   char *basename = "/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/SA_z";
   char *zlistfile = "/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt";
   char zlist_string[100][1024];
@@ -18,6 +19,7 @@ int main()
   int dummy,*dummyarray;
   int i,j;
   int nSnaps;
+  
   fp = fopen(zlistfile,"r");
   i=0;
   while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
