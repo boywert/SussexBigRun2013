@@ -50,8 +50,8 @@ int main(int argc, char **argv)
   total_p = (double)cubep3m_p* (double)cubep3m_p* (double)cubep3m_p;
   total_cell = (double)cubep3m_cell*(double)cubep3m_cell*(double)cubep3m_cell;
   printf("total cell = %g\n",total_cell);
-  gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_p; // /(double)h; // Msun
-  printf("G = %g, gridmass = %g\n",G,gridmass);
+  gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_cell; // /(double)h; // Msun
+  printf("G = %g, gridmass = %lf\n",G,gridmass);
   exit(0);
   gridmass_c = 1./gridmass;
   fp = fopen(zlistfile,"r");
