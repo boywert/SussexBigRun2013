@@ -89,13 +89,13 @@ int main(int argc, char **argv)
 	fclose(fp);
       }
       sprintf(outputname,"%s/%s.dat",outputfolder,zlist_string[j]);
-      fp = fopen(outputname,"rb");
+      fp = fopen(outputname,"wb+");
       fwrite(&grid,sizeof(int),1,fp);
       fwrite(&grid,sizeof(int),1,fp);
       fwrite(&grid,sizeof(int),1,fp);
       for(i=0;i<grid*grid*grid;i++) {
 	write_buff = (float)Sfr[i];
-	fwrite(&write_buff,sizeof(int),1,fp);
+	fwrite(&write_buff,sizeof(float),1,fp);
       }
       fclose(fp);
       free(Sfr);	    
