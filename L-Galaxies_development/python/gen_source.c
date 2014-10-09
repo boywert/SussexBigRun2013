@@ -54,6 +54,7 @@ int main(int argc, char **argv)
   gridmass = (double)omegam*(double)rho_crit_0*(double)(boxsize*boxsize*boxsize)/total_cell; // /(double)h; // Msun
   printf("G = %g, gridmass = %lf\n",G,gridmass);
   gridmass_c = 1./gridmass;
+  printf("gridmass_c = %lg\n",gridmass_c);
   fp = fopen(zlistfile,"r");
   i=0;
   while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
@@ -78,6 +79,7 @@ int main(int argc, char **argv)
 	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
 	for(k=0;k<nGals;k++) {
 	  cell = lgal[k].Pos[0]/gridsize + lgal[k].Pos[1]/gridsize*grid + lgal[k].Pos[2]/gridsize*grid*grid;
+	  printf("cell = %d Srf =%f\n",cell,lgal[k].Sfr);
 	  Sfr[cell] += lgal[k].Sfr*gridmass_c;
 	}
 	free(lgal);
