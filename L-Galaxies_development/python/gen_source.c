@@ -41,14 +41,14 @@ int main(int argc, char **argv)
   float pi = 4.0*atan(1.0);
   float rho_crit_0;
   float gridmass_c; //to convert msun to gridmass
-  printf("argc:%d argv 0:%s 1:%s\n",argc,argv[0],argv[1]);
-  exit(1);
-  if(argc == 1)
+  if(argc == 2)
     sscanf(argv[0],"%d",&selected_snap);
 
   G *= (m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
   gridmass = omegam*rho_crit_0*(boxsize*boxsize*boxsize)/(cubep3m_cell*cubep3m_cell*cubep3m_cell)/h; // Msun
+  printf("gridmass = %f\n",gridmass);
+  exit(0);
   gridmass_c = 1./gridmass;
   fp = fopen(zlistfile,"r");
   i=0;
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
   fclose(fp);
   printf("Total snapshot : %d\n",nSnaps);
   for(j=0;j<nSnaps;j++) {
-    if(argc == 0)
+    if(argc == 1)
       selected_snap = j;
     if(j == selected_snap) {
       Sfr = calloc(grid*grid*grid,sizeof(double));
