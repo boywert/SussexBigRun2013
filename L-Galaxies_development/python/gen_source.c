@@ -48,7 +48,7 @@ int main()
 	cell = lgal[k].Pos[0]/gridsize + lgal[k].Pos[1]/gridsize*grid + lgal[k].Pos[2]/gridsize*grid*grid;
 	Sfr[cell] += lgal[k].Sfr;
       }
-      free(lgal)
+      free(lgal);
     }
     free(Sfr);
   }
