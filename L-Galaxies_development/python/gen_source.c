@@ -39,8 +39,8 @@ int main()
       sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
       printf("Reading %s\n",filename);
       fp = fopen(filename,"rb");
-      fread(dummy, sizeof(int), 1, fp);
-      fread(nGals, sizeof(int),1, fp);
+      fread(&dummy, sizeof(int), 1, fp);
+      fread(&nGals, sizeof(int),1, fp);
       lgal = malloc(sizeof(struct LGalaxy)*nGals);
       fseek(fp, dummy*sizeof(int), SEEK_CUR); // skip nGalsperTree
       fread(lgal,sizeof(struct LGalaxy),nGals,fp);
