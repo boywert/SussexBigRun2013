@@ -16,20 +16,21 @@ int main()
   char buff[1000];
   int nGals;
   int dummy,*dummyarray;
-  int i;
+  int i,j;
   int nSnaps;
   fp = fopen(zlistfile,"r");
   i=0;
   while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
-    printf("%s%s_\n",basename,zlist_string[i]);
+    // printf("%s%s_\n",basename,zlist_string[i]);
     i++;
   }
   nSnaps = i;
-  
-
-  for (i=firstfile;i<=lastfile;i++) {
-    sprintf(filename,"s");
+  printf("Total snapshot : %d\n",nSnaps);
+  for(j=0;j<nSnaps;j++) {
+    for (i=firstfile;i<=lastfile;i++) {
+      sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
+      printf(filename,"Reading %s\n",filename);
+    }
   }
-  
   return 0;
 }
