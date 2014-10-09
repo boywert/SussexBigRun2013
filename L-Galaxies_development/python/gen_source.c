@@ -4,7 +4,7 @@
 #include "L-Galaxies.h"
 
 
-int main()
+int main(int argc, char **argv)
 {
   struct LGalaxy *lgal;
   FILE *fp;
@@ -26,7 +26,7 @@ int main()
   int nGals;
   int dummy,*dummyarray;
   int i,j,k;
-  int nSnaps;
+  int nSnaps,selected_snap;
   float gridmass;
 
   float Mpc2m = 3.08567758e22;
@@ -40,9 +40,12 @@ int main()
   float H0 = 100.0;        // km/s / (Mpc/h)
   float pi = 4.0*atan(1.0);
   float rho_crit_0;
-  
-  float gridmass_c; //to convert msun to gridmass 
-  
+  float gridmass_c; //to convert msun to gridmass
+  printf("argc:%d argv 0:%s 1:%\n",argc,argv[0],argv[1]);
+  exit(1);
+  if(argc == 1)
+    sscanf(argv[0])
+
   G *= (m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
   gridmass = omegam*rho_crit_0*(boxsize*boxsize*boxsize)/(cubep3m_cell*cubep3m_cell*cubep3m_cell)/h; // Msun
@@ -55,28 +58,32 @@ int main()
   nSnaps = i;
   fclose(fp);
   printf("Total snapshot : %d\n",nSnaps);
-  for(j=0;j<nSnaps;j++) {			
-    Sfr = calloc(grid*grid*grid,sizeof(double));
-    for (i=firstfile;i<=lastfile;i++) {
-      sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
-      printf("Reading %s\n",filename);
-      fp = fopen(filename,"rb");
-      fread(&dummy, sizeof(int), 1, fp);
-      fread(&nGals, sizeof(int),1, fp);
-      lgal = malloc(sizeof(struct LGalaxy)*nGals);
-      fseek(fp, dummy*sizeof(int), SEEK_CUR); // skip nGalsperTree
-      fread(lgal,sizeof(struct LGalaxy),nGals,fp);
-      for(k=0;k<nGals;k++) {
-	cell = lgal[k].Pos[0]/gridsize + lgal[k].Pos[1]/gridsize*grid + lgal[k].Pos[2]/gridsize*grid*grid;
-	Sfr[cell] += lgal[k].Sfr*gridmass_c;
+  for(j=0;j<nSnaps;j++) {
+    if(argc == 0)
+      selected_snap = j;
+    if(j == selected_snap) {
+      Sfr = calloc(grid*grid*grid,sizeof(double));
+      for (i=firstfile;i<=lastfile;i++) {
+	sprintf(filename, "%s%s_%d",basename,zlist_string[j],i);
+	printf("Reading %s\n",filename);
+	fp = fopen(filename,"rb");
+	fread(&dummy, sizeof(int), 1, fp);
+	fread(&nGals, sizeof(int),1, fp);
+	lgal = malloc(sizeof(struct LGalaxy)*nGals);
+	fseek(fp, dummy*sizeof(int), SEEK_CUR); // skip nGalsperTree
+	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
+	for(k=0;k<nGals;k++) {
+	  cell = lgal[k].Pos[0]/gridsize + lgal[k].Pos[1]/gridsize*grid + lgal[k].Pos[2]/gridsize*grid*grid;
+	  Sfr[cell] += lgal[k].Sfr*gridmass_c;
+	}
+	free(lgal);
+	fclose(fp);
       }
-      free(lgal);
-      fclose(fp);
+      for(i=0;i<100;i++){
+	printf("%d %lf\n",i,Sfr[i]); 
+      }
+      free(Sfr);
     }
-    for(i=0;i<100;i++){
-      printf("%d %lf\n",i,Sfr[i]); 
-    }
-    free(Sfr);
   }
   return 0;
 }
