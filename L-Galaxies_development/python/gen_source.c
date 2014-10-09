@@ -46,7 +46,7 @@ int main()
   G *= (m2km*m2km) * (m2Mpc) / (kg2Msun); //  (Mpc/h) (km/s)^2 / (Msun/h)
   rho_crit_0 = 3.* (H0*H0)/ (8.*pi*G); //  # (1e10 Msun/h)/(Mpc/h)^3
   gridmass = omegam*rho_crit_0*(boxsize*boxsize*boxsize)/(cubep3m_cell*cubep3m_cell*cubep3m_cell)/h; // Msun
-  gridmass_c = 1./gridmass
+  gridmass_c = 1./gridmass;
   fp = fopen(zlistfile,"r");
   i=0;
   while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
