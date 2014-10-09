@@ -79,7 +79,8 @@ int main(int argc, char **argv)
 	fread(lgal,sizeof(struct LGalaxy),nGals,fp);
 	for(k=0;k<nGals;k++) {
 	  cell = lgal[k].Pos[0]/gridsize + lgal[k].Pos[1]/gridsize*grid + lgal[k].Pos[2]/gridsize*grid*grid;
-	  printf("Pos %f:%f:%f cell = %d Srf =%f\n", lgal[k].Pos[0], lgal[k].Pos[0], lgal[k].Pos[0],cell,lgal[k].Sfr);
+	  if(cell == 0)
+	    printf("Pos %f:%f:%f cell = %d Srf =%f\n", lgal[k].Pos[0], lgal[k].Pos[0], lgal[k].Pos[0],cell,lgal[k].Sfr);
 	  Sfr[cell] += lgal[k].Sfr*gridmass_c;
 	}
 	free(lgal);
