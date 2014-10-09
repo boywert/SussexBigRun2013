@@ -23,7 +23,6 @@ int main()
   fp = fopen(zlistfile,"r");
   i=0;
   while (fscanf(fp, "%s", zlist_string[i]) != EOF) {
-    // printf("%s%s_\n",basename,zlist_string[i]);
     i++;
   }
   nSnaps = i;
