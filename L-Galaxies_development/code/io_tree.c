@@ -6,7 +6,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#ifdef PARALLEL
 #include <mpi.h>
+#endif
 #include "allvars.h"
 #include "proto.h"
 
@@ -174,45 +176,38 @@ void load_tree_table(int filenr)
   MPI_Barrier(MPI_COMM_WORLD);
   sleep(3*ThisTask);
 #endif
-  for(i=0;i<MAXSNAPS;i++)
-    {
-      if(ThisTask==0)printf("allocate\n");
-      xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
-      status = read_xfrac(i,xfrac);
-      if(status == 1)	    
-	{
-	  if(ThisTask==0)printf("finish reading\n");
-	  status_prev = 1;
-	  for(j=0;j<totNHalos;j++)
-	    {
-	      if(Halo_Data[j].SnapNum == i)
-		{
-		  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
-		    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
-		    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-		  Xfrac_Data[j] = xfrac[cell]; 
-		  // printf("xfrac: %lf\n",Xfrac_Data[j]);
-		}
-	    }
+  for(i=0;i<ListOutputSnaps[NOUT];i++) {
+    if(ThisTask==0)printf("allocate\n");
+    xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+    status = read_xfrac(i,xfrac);
+    if(status == 1)  {
+      if(ThisTask==0)printf("finish reading\n");
+      status_prev = 1;
+      for(j=0;j<totNHalos;j++) {
+	if(Halo_Data[j].SnapNum == i)  {
+	  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
+	    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
+	    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
+	  Xfrac_Data[j] = xfrac[cell]; 
+	  // printf("xfrac: %lf\n",Xfrac_Data[j]);
 	}
-      else
-	{
-	  for(j=0;j<totNHalos;j++)
-	    {
-	      if(Halo_Data[j].SnapNum == i)
-		{
-		  if(status_prev == 0)
-		    Xfrac_Data[j] = 0.;
-		  else
-		    Xfrac_Data[j] = 1.;
-		  // printf("xfrac: %lf\n",Xfrac_Data[j]);
-		}
-	    }
-	}
-      if(ThisTask==0)printf("free\n");
-      myfree(xfrac);
-      if(ThisTask==0)printf("finish\n");
+      }
     }
+    else {
+      for(j=0;j<totNHalos;j++) {
+	if(Halo_Data[j].SnapNum == i)  {
+	  if(status_prev == 0)
+	    Xfrac_Data[j] = 0.;
+	  else
+	    Xfrac_Data[j] = 1.;
+	  // printf("xfrac: %lf\n",Xfrac_Data[j]);
+	}
+      }
+    }
+    if(ThisTask==0)printf("free\n");
+    myfree(xfrac);
+    if(ThisTask==0)printf("finish\n");
+  }
 #endif
 
 }

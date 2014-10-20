@@ -359,6 +359,14 @@ void read_zlist_original_cosm(void)
 #endif
 }
 
+#ifdef READXFRAC
+/** 
+ * compare 2 integers for qsort 
+ */
+int intcmp (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+#endif
 
 /**@brief Reads in the list of output snapshots from
  *        file /input/desired_output_snaps.txt*/
@@ -415,6 +423,11 @@ void read_output_snaps(void)
   for(i = 0; i < NOUT; i++)
     ListOutputSnaps[i] = i;
   LastSnapShotNr=LastDarkMatterSnapShot;
+#endif
+
+  /* Sort */
+#ifdef READXFRAC
+  qsort(ListOutputSnaps, NOUT, sizeof(int), intcmp);
 #endif
 }
 
