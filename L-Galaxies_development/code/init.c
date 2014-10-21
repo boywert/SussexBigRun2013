@@ -160,7 +160,7 @@ void init(void)
 #ifdef  STAR_FORMATION_HISTORY
   create_sfh_bins();
 #endif
-  printf("specphot = %s\n",SpecPhotDir);
+  if(ThisTask == 0) printf("specphot = %s\n",SpecPhotDir);
 #ifndef MR_PLUS_MRII //If this option (to run with MCMC) is on, the tables are read later
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
 //read in photometric tables
@@ -602,7 +602,7 @@ void read_sfrz(void)
   if(!(fd = fopen("./SFR_Z.dat","r")))
     terminate("file not found.\n");
     
-  printf("rho_len %d, zlen %d \n", RHO_LEN, Z_LEN);
+  if(ThisTask == 0)printf("rho_len %d, zlen %d \n", RHO_LEN, Z_LEN);
   for(p = 0; p < RHO_LEN; p++)
     {
       fscanf(fd, "%f", &Rho[p]);

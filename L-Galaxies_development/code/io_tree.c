@@ -164,7 +164,7 @@ void load_tree_table(int filenr)
   //for(i=0;i<totNHalos;i++)
   //	printf("id=%lld\n",HaloIDs_Data[i].FirstHaloInFOFgroup);
 #ifdef PARALLEL
-  printf("\nTask %d done loading tree_dbids_%d\n", ThisTask, filenr);
+  if(ThisTask == 0) printf("\nTask %d done loading tree_dbids_%d\n", ThisTask, filenr);
 #endif
 #endif
 #endif
