@@ -86,7 +86,11 @@ int read_xfrac(int snapnr, double* xfrac)
 	  terminate(sbuf);
 	}
       fread(&dummy, 1, sizeof(int),fp);
+#ifdef DP_XFRAC
       fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(double),fp);
+#else
+      fread(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], sizeof(float),fp);
+#endif
       fread(&dummy, 1, sizeof(int),fp);
 
       fclose(fp);

@@ -426,7 +426,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 	      nTotals = 0.0;
 	    }
 	  NPhotTables[MetalLoop][AgeLoop] = nTotals;
-	  printf("n=%d  ntotal = %g\n",AgeLoop,NPhotTables[MetalLoop][AgeLoop]);
+	  // printf("n=%d  ntotal = %g\n",AgeLoop,NPhotTables[MetalLoop][AgeLoop]);
 	  
 	  free(lgrid);
 	  

@@ -174,12 +174,21 @@ void load_tree_table(int filenr)
   status_prev=0;
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
-  sleep(3*ThisTask);
 #endif
   for(i=0;i<ListOutputSnaps[NOUT];i++) {
-    if(ThisTask==0)printf("allocate\n");
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
-    status = read_xfrac(i,xfrac);
+    if(ThisTask == 0) 
+      status = read_xfrac(i,xfrac);
+#ifdef PARALLEL
+    MPI_Barrier(MPI_COMM_WORLD);
+#ifdef DP_XFRAC
+    MPI_Bcast(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+#else
+    MPI_Bcast(xfrac, XfracMesh[0]*XfracMesh[1]*XfracMesh[2], MPI_FLOAT, 0, MPI_COMM_WORLD);
+#endif
+    MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+#endif
     if(status == 1)  {
       if(ThisTask==0)printf("finish reading\n");
       status_prev = 1;
