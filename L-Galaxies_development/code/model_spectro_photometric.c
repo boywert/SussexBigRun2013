@@ -320,7 +320,7 @@ void setup_Spec_LumTables_onthefly(void)
 
     }  //end loop on metallicities
 
-  printf("\nPhotTables Computed.\n\n");
+  if(ThisTask == 0) printf("\nPhotTables Computed.\n\n");
 #ifdef REIONIZEPHOTON
   setup_Spec_NPhotTables_onthefly();
 #endif
