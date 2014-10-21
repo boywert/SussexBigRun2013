@@ -199,7 +199,7 @@ void setup_Spec_LumTables_onthefly(void)
   //1st loop on the mettalicity files
   for (MetalLoop=0;MetalLoop<SSP_NMETALLICITES;MetalLoop++)
     {
-      printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
+      if(ThisTask == 0) printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
 
       //READ FULL INPUT SPECTRA into units of erg.s^-1.Hz^-1
       read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
@@ -348,13 +348,13 @@ void setup_Spec_NPhotTables_onthefly(void)
   //1st loop on the mettalicity files
   for (MetalLoop=0;MetalLoop<SSP_NMETALLICITES;MetalLoop++)
     {
-      printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
+      if(ThisTask == 0) printf("Doing Metallicity File %d of %d\n",MetalLoop+1, SSP_NMETALLICITES);
       //READ FULL INPUT SPECTRA into units of erg.s^-1.Hz^-1
       read_InputSSP_spectra(LambdaInputSSP, FluxInputSSP, MetalLoop);
       //2nd Loop on redshift
       snap = 0;
       redshift=0.0;
-      printf("z=%f\n",redshift);
+      // printf("z=%f\n",redshift);
       //3rd loop on Age
       for(AgeLoop=0;AgeLoop<SSP_NAGES;AgeLoop++)
 	{
@@ -433,7 +433,7 @@ void setup_Spec_NPhotTables_onthefly(void)
 	} // end age loop
       
     }  //end loop on metallicities
-  printf("\n NPhotTables Computed.\n\n");
+  if(ThisTask == 0) printf("\n NPhotTables Computed.\n\n");
 }
   
   
