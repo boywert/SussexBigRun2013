@@ -29,12 +29,17 @@ void get_xfrac_mesh()
 	{
 	  char sbuf[1000];
 	  printf("can't open file `%s'\n", buf);
-	  terminate(sbuf);
+	  // terminate(sbuf);
+	  XfracMesh[0] = 306;
+	  XfracMesh[1] = 306;
+	  XfracMesh[2] = 306;
 	}
-      fread(&dummy, 1, sizeof(int),fp);
-      myfread(XfracMesh, 3, sizeof(int),fp);
-      fread(&dummy, 1, sizeof(int),fp);
-      fclose(fp);
+      else {
+	fread(&dummy, 1, sizeof(int),fp);
+	myfread(XfracMesh, 3, sizeof(int),fp);
+	fread(&dummy, 1, sizeof(int),fp);
+	fclose(fp);
+      }
 #ifdef PARALLEL
     }
   MPI_Barrier(MPI_COMM_WORLD);
@@ -57,7 +62,7 @@ int read_xfrac(int snapnr, double* xfrac)
   int i,j,k,il,cell;
   int dummy,mesh[3];
   int status;
-
+  
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data: Snap = %d\n",snapnr);
