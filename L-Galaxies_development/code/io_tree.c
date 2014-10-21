@@ -138,7 +138,7 @@ void load_tree_table(int filenr)
   /*   } */
 #endif
 #ifdef PARALLEL
-  printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
+  if(ThisTask == 0) printf("\nTask %d done loading trees_%d\n", ThisTask, filenr);
 #endif
 
 #ifdef LOADIDS
