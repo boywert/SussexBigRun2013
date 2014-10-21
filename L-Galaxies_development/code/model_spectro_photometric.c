@@ -188,7 +188,7 @@ void setup_Spec_LumTables_onthefly(void)
   int MetalLoop, AgeLoop, snap, band, i;
   FILE *File_PhotTables[NMAG];
 
-  printf("\n\nComputing PhotTables on the fly...\n\n");
+  if(ThisTask == 0)printf("\n\nComputing PhotTables on the fly...\n\n");
   read_vega_spectra(LambdaVega, FluxVega);
 #ifndef FULL_SPECTRA
   read_filters(LambdaFilter, FluxFilter);
