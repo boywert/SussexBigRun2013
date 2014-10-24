@@ -25,6 +25,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   double dis;
   int cell;
   double mu,m_p;
+  m1  = 0.01*Hubble_h;
+  m2 = 0.1*Hubble_h;
   mu = 0.59;
   m_p = 1.67262178e-24; // grams
   // printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
@@ -98,12 +100,12 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     {
       if(Gal[centralgal].Xfrac3d > 0.5)
 	{
-	  if(Gal[centralgal].HaloM_Crit200 < 0.01*Hubble_h)
+	  if(Gal[centralgal].HaloM_Crit200 < m1)
 	    reionization_modifier = 0.;
-	  else if(Gal[centralgal].HaloM_Crit200 >= 0.01*Hubble_h && Gal[centralgal].HaloM_Crit200 <= 0.1*Hubble_h)
-	    reionization_modifier = log10(Gal[centralgal].HaloM_Crit200/(0.01*Hubble_h));
+	  else if(Gal[centralgal].HaloM_Crit200 >= m1 && Gal[centralgal].HaloM_Crit200 <= m2)
+	    reionization_modifier = log10(Gal[centralgal].HaloM_Crit200/m1)/log10(m2/m1);
 	  else
-	    reionization_modifier = 1.;
+	    reionization_modifier = 1.0;
 	}
       else
 	{
