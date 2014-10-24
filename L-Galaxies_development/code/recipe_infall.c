@@ -25,8 +25,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
   double dis;
   int cell;
   double mu,m_p;
-  m1  = 0.01*Hubble_h;
-  m2 = 0.1*Hubble_h;
+  float m1  = 0.01*Hubble_h;
+  float m2 = 0.1*Hubble_h;
   mu = 0.59;
   m_p = 1.67262178e-24; // grams
   // printf("calculate infall ReionizationOn = %d\n",ReionizationOn);
