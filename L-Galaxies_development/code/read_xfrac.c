@@ -65,10 +65,8 @@ int read_xfrac(int snapnr, double* xfrac)
   
   if(ThisTask == 0)
     {
-      printf("Reading Xfrac data: Snap = %d\n",snapnr);
+      printf("Reading Xfrac data: Snap = %d, readshift = %f\n",snapnr,ZZ[il]);
     }
-  il = snapnr;
-
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
 
