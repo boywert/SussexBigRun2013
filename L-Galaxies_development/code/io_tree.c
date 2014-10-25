@@ -178,7 +178,8 @@ void load_tree_table(int filenr)
 #endif
   
   for(i=0;i<ListOutputSnaps[NOUT-1];i++) {
-    printf("i = %d, z = %f\n",i,ZZ[i]);
+    if(ThisTask == 0)
+      printf("i = %d, z = %f\n",i,ZZ[i]);
 #ifdef DP_XFRAC
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
 #else
