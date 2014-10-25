@@ -100,16 +100,15 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     if(Gal[centralgal].Xfrac3d > 0.5){
       if(Gal[centralgal].HaloM_Crit200 < m1)
 	reionization_modifier = 0.;
-      else if(Gal[centralgal].HaloM_Crit200 >= m1 && Gal[centralgal].HaloM_Crit200 <= m2) {
+      else if(Gal[centralgal].HaloM_Crit200 >= m1 && Gal[centralgal].HaloM_Crit200 <= m2)
 	reionization_modifier = log10(Gal[centralgal].HaloM_Crit200/m1)/log10(m2/m1);
-	printf("M = %f, fraction = %f\n",Gal[centralgal].HaloM_Crit200,reionization_modifier);
-      }
       else
 	reionization_modifier = 1.0;
     }
     else{
       reionization_modifier = 1.0;
     }
+    printf("xfrac = %f,  M = %f, fraction = %f\n",Gal[centralgal].Xfrac3d,Gal[centralgal].HaloM_Crit200,reionization_modifier);
   }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
