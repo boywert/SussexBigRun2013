@@ -209,7 +209,8 @@ void load_tree_table(int filenr)
 	  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
 	    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-	  Xfrac_Data[j] = xfrac[cell]; 
+	  Xfrac_Data[j] = xfrac[cell];
+	  printf("cell:%d xfrac: %f\n",cell,xfrac[cell]);
 	  printf("%d xfrac: %lf\n",j,Xfrac_Data[j]);
 	}
       }
