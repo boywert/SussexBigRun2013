@@ -108,7 +108,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     else{
       reionization_modifier = 1.0;
     }
-    // printf("xfrac = %f,  M = %f, fraction = %f\n",Gal[centralgal].Xfrac3d,Gal[centralgal].HaloM_Crit200,reionization_modifier);
+     printf("xfrac = %f,  M = %f, fraction = %f\n",Gal[centralgal].Xfrac3d,Gal[centralgal].HaloM_Crit200,reionization_modifier);
   }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) 
