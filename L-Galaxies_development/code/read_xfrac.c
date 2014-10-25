@@ -76,6 +76,7 @@ int read_xfrac(int snapnr, double* xfrac)
     {
       char sbuf[1000];
       printf("can't open file `%s': SKIP\n", buf);
+      exit(1);
       status = 0;
     }
   else
