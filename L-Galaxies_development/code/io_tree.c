@@ -170,15 +170,20 @@ void load_tree_table(int filenr)
 #endif
 
 #ifdef READXFRAC
-  Xfrac_Data = mymalloc("Xfrac_Data", sizeof(double) * totNHalos);
+  Xfrac_Data = mymalloc("Xfrac_Data", sizeof(float) * totNHalos);
+  memset(Xfrac_Data, 0.0, sizeof(float) * totNHalos);
   status_prev=0;
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-
+  
   for(i=0;i<ListOutputSnaps[NOUT-1];i++) {
     printf("i = %d, z = %f\n",i,ZZ[i]);
+#ifdef DP_XFRAC
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+#else
+    xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(float));
+#endif
     if(ThisTask == 0) {
       status = read_xfrac(i,xfrac);
     }
@@ -217,7 +222,7 @@ void load_tree_table(int filenr)
       }
     }
     if(ThisTask==0)printf("free\n");
-    free(xfrac);
+    myfree(xfrac);
     if(ThisTask==0)printf("finish\n");
   }
 #endif 
