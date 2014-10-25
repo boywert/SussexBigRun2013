@@ -176,7 +176,10 @@ void load_tree_table(int filenr)
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
 #endif
-  
+  if(ThisTask == 0){
+    for(i=0;i<NOUT;i++)
+      printf("ListOutputSnaps[%d] = %d\n",i,ListOutputSnaps[i]);
+  }
   for(i=0;i<ListOutputSnaps[NOUT-1];i++) {
     if(ThisTask == 0)
       printf("i = %d, z = %f\n",i,ZZ[i]);
