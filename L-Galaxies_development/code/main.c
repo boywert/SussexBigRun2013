@@ -522,7 +522,6 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 		  while(prog >= 0)
 		    {
 			  int currentgal;
-
 			  for(i = 0, currentgal = HaloAux[prog].FirstGalaxy; i < HaloAux[prog].NGalaxies; i++)
 			    {
 				  if(HaloGal[currentgal].Type == 0 || HaloGal[currentgal].Type == 1)
@@ -604,7 +603,8 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #endif
 #ifdef READXFRAC
 
-		  Gal[ngal].Xfrac3d = Xfrac[halonr];		
+		  Gal[ngal].Xfrac3d = Xfrac[halonr];
+		  printf("%d xfrac:%f\n",ngal,Gal[ngal].Xfrac3d);
 #endif
 
 
