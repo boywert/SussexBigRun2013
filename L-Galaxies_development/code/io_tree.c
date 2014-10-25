@@ -177,7 +177,7 @@ void load_tree_table(int filenr)
 #endif
 
   for(i=0;i<ListOutputSnaps[NOUT-1];i++) {
-    printf("i = %d, z = %d\n",i,ZZ[i]);
+    printf("i = %d, z = %f\n",i,ZZ[i]);
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
     if(ThisTask == 0) {
       status = read_xfrac(i,xfrac);
