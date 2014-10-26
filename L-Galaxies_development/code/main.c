@@ -148,9 +148,6 @@ int main(int argc, char **argv)
 #ifdef READXFRAC
       get_xfrac_mesh();
 #endif 
-#ifdef PARALLEL
-      printf("\nTask[%d] reading FILE Nr %d\n\n", ThisTask, filenr);
-#endif
 
       load_tree_table(filenr);
 
