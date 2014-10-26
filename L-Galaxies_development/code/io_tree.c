@@ -61,7 +61,12 @@ void load_tree_table(int filenr)
   char buf[1000];
 #ifdef READXFRAC
   int cell,status,status_prev;
+  double meanxfrac;
+#ifdef DP_XFRAC
   double *xfrac;
+#else
+  float *xfrac;
+#endif
 #endif
   SnapShotInFileName=LastDarkMatterSnapShot;
 
@@ -185,8 +190,10 @@ void load_tree_table(int filenr)
       printf("i = %d, z = %f\n",i,ZZ[i]);
 #ifdef DP_XFRAC
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(double));
+    memset(xfrac, 0.0, sizeof(double)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 #else
     xfrac = mymalloc("Xfrac_Read",XfracMesh[0]*XfracMesh[1]*XfracMesh[2]*sizeof(float));
+    memset(xfrac, 0.0, sizeof(float)*XfracMesh[0]*XfracMesh[1]*XfracMesh[2]);
 #endif
     if(ThisTask == 0) {
       status = read_xfrac(i,xfrac);
@@ -201,6 +208,12 @@ void load_tree_table(int filenr)
     MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
+    meanxfrac = 0.;
+    for(j=0;j<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];j++)
+      meanxfrac += xfrac[j];
+
+    meanxfrac /= 1.*XfracMesh[0]*XfracMesh[1]*XfracMesh[2];
+    printf("Mean xfrac = %lg\n",meanxfrac);
     if(status == 1)  {
       if(ThisTask==0)printf("finish reading\n");
       status_prev = 1;
