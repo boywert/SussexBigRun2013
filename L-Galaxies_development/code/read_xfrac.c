@@ -71,7 +71,7 @@ int read_xfrac(int snapnr, float* xfrac)
     {
       printf("Reading Xfrac data: Snap = %d, redshift = %f\n",snapnr,ZZ[snapnr]);
     }
-  redshift = ZZ[il];
+  redshift = ZZ[snapnr];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
   printf("Filename: %s\n",buf);
   if((fp = fopen(buf,"r")) == NULL)
