@@ -208,25 +208,15 @@ void load_tree_table(int filenr)
     MPI_Bcast(&status, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
-    meanxfrac = 0.;
-    for(j=0;j<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];j++)
-      meanxfrac += xfrac[j];
 
-    meanxfrac /= 1.*XfracMesh[0]*XfracMesh[1]*XfracMesh[2];
-    printf("Mean xfrac = %lg\n",meanxfrac);
     if(status == 1)  {
-      if(ThisTask==0)printf("finish reading\n");
       status_prev = 1;
       for(j=0;j<totNHalos;j++) {
 	if(Halo_Data[j].SnapNum == i)  {
 	  cell = (int) (Halo_Data[j].Pos[0]/(BoxSize/XfracMesh[0]))
 	    + (int) (Halo_Data[j].Pos[1]/(BoxSize/XfracMesh[1]))*XfracMesh[0]
 	    + (int) (Halo_Data[j].Pos[2]/(BoxSize/XfracMesh[2]))*XfracMesh[0]*XfracMesh[1];
-	  Xfrac_Data[j] = xfrac[cell];
-	  if(xfrac[cell] > 0.){
-	    printf("cell:%d xfrac: %f\n",cell,xfrac[cell]);
-	    printf("%d xfrac: %lf\n",j,Xfrac_Data[j]);
-	  }					
+	  Xfrac_Data[j] = xfrac[cell];				
 	}
       }
     }
@@ -241,9 +231,7 @@ void load_tree_table(int filenr)
 	}
       }
     }
-    if(ThisTask==0)printf("free\n");
     myfree(xfrac);
-    if(ThisTask==0)printf("finish\n");
   }
 #endif 
 
