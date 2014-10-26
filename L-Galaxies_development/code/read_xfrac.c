@@ -73,7 +73,7 @@ int read_xfrac(int snapnr, float* xfrac)
     }
   redshift = ZZ[il];
   sprintf(buf, "%s/xfrac3d_%2.3f.bin", XfracDir, redshift);
-
+  printf("Filename: %s\n",buf);
   if((fp = fopen(buf,"r")) == NULL)
     {
       char sbuf[1000];
