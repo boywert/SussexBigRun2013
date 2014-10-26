@@ -66,7 +66,7 @@ int read_xfrac(int snapnr, float* xfrac)
   int i,j,k,il,cell;
   int dummy,mesh[3];
   int status;
-  
+  double mean = 0.0;
   if(ThisTask == 0)
     {
       printf("Reading Xfrac data: Snap = %d, redshift = %f\n",snapnr,ZZ[snapnr]);
@@ -105,7 +105,10 @@ int read_xfrac(int snapnr, float* xfrac)
       status = 1;
     }
 
-
+  for(i=0;i<XfracMesh[0]*XfracMesh[1]*XfracMesh[2];i++)
+    mean += xfrac[i];
+  mean /= 1.*XfracMesh[0]*XfracMesh[1]*XfracMesh[2];
+  printf("mean = %lg\n",mean);
   return status;
 }
 
