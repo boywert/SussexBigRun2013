@@ -54,7 +54,11 @@ void get_xfrac_mesh()
     @brief Read in inonization fraction from C2Ray  
     return 0 if not found, 1 if success
 */
+#ifdef DP_XFRAC
 int read_xfrac(int snapnr, double* xfrac)
+#else
+int read_xfrac(int snapnr, float* xfrac)
+#endif
 {
   FILE* fp;
   char buf[1024],sbuf[1024];
