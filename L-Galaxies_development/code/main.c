@@ -603,8 +603,7 @@ int join_galaxies_of_progenitors(int halonr, int ngalstart)
 #endif
 #ifdef READXFRAC
 
-		  Gal[ngal].Xfrac3d = Xfrac[halonr];
-		  printf("%d xfrac:%f\n",ngal,Gal[ngal].Xfrac3d);
+		  Gal[ngal].Xfrac3d = Xfrac[halonr];		
 #endif
 
 
