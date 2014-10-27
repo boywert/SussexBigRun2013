@@ -195,7 +195,7 @@ int main(int argc, char **argv)
 #endif
 
 #ifdef PARALLEL
-  MPI_Barrier();  
+  MPI_Barrier(MPI_COMM_WORLD);  
   MPI_Finalize();
 #endif
   return 0;
