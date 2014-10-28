@@ -63,10 +63,11 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
    * There are two options. In both cases reionization has the effect of reducing 
    * the fraction of baryons that collapse into dark matter halos, reducing the
    * amount of infalling gas. */
-  if(ReionizationOn == 0)
+  if(ReionizationOn == 0) {
     reionization_modifier = 1.0;
-  if(ReionizationOn == 10)
-    reionization_modifier = 0.0;
+    infallingMass = reionization_modifier *BaryonFrac * Gal[centralgal].Mvir - tot_mass;
+  }
+
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   else if(ReionizationOn == 3)
     {
@@ -81,6 +82,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	{
 	  reionization_modifier = 1.0;
 	}
+      infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir - tot_mass);
       // printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
     }
   else if(ReionizationOn == 4)
@@ -97,6 +99,7 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
 	  reionization_modifier = 1.0;
 	}
       // printf("re_modifier:%f\n",Gal[centralgal].Xfrac3d,reionization_modifier);
+      infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir - tot_mass);
     }
   else if(ReionizationOn == 5){
     if(Gal[centralgal].Xfrac3d > 0.5){
@@ -110,13 +113,14 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     else{
       reionization_modifier = 1.0;
     }
-    // printf("xfrac = %f,  M = %f, fraction = %f\n",Gal[centralgal].Xfrac3d,Gal[centralgal].HaloM_Crit200,reionization_modifier);
+    infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir - tot_mass);
   }
 #endif
-  else if(ReionizationOn == 1 || ReionizationOn == 2) 
+  else if(ReionizationOn == 1 || ReionizationOn == 2) {
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
-
-  infallingMass = reionization_modifier * BaryonFrac * Gal[centralgal].Mvir - tot_mass;
+    infallingMass = reionization_modifier * BaryonFrac * Gal[centralgal].Mvir - tot_mass;
+  }
+ 
 
   // printf("infall = %g\n",infallingMass);
   //double new_fb;
