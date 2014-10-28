@@ -65,6 +65,8 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
    * amount of infalling gas. */
   if(ReionizationOn == 0)
     reionization_modifier = 1.0;
+  if(ReionizationOn == 10)
+    reionization_modifier = 0.0;
 #if defined(READXFRAC) || defined(WITHRADIATIVETRANSFER)
   else if(ReionizationOn == 3)
     {
