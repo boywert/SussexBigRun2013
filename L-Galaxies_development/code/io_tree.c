@@ -176,7 +176,7 @@ void load_tree_table(int filenr)
 
 #ifdef READXFRAC
   Xfrac_Data = mymalloc("Xfrac_Data", sizeof(float) * totNHalos);
-  memset(Xfrac_Data, 0.0, sizeof(float) * totNHalos);
+  memset(Xfrac_Data, 10.0, sizeof(float) * totNHalos);
   status_prev=0;
 #ifdef PARALLEL
   MPI_Barrier(MPI_COMM_WORLD);
