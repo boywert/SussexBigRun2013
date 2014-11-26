@@ -119,6 +119,24 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     }
     infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir - tot_mass);
   }
+  else if(ReionizationOn == 6){
+    if(Gal[centralgal].Xfrac3d > 0.5){
+      if(Gal[centralgal].HaloM_Crit200 < m1)
+	reionization_modifier = 0.;
+      else if(Gal[centralgal].HaloM_Crit200 >= m1 && Gal[centralgal].HaloM_Crit200 <= m2)
+	reionization_modifier = log10(Gal[centralgal].HaloM_Crit200/m1)/log10(m2/m1);
+      else
+	reionization_modifier = 1.0;
+    }
+    else{
+      reionization_modifier = 1.0;
+    }
+    if(reionization_modifier < 0. || reionization_modifier > 1.0) {
+      printf("reionization_modifier = %f\nexit\n",reionization_modifier);
+      exit(1);
+    }
+    infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir) - tot_mass;
+  }
 #endif
   else if(ReionizationOn == 1 || ReionizationOn == 2) {
     reionization_modifier = do_reionization(Gal[centralgal].Mvir, Zcurr);
