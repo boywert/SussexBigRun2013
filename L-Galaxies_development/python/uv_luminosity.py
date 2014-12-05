@@ -3,13 +3,15 @@ import numpy
 import read_lgal
 import LGalaxyStruct
 
-def uv_l_z8():
-    boxsize = 47.0
-    max_mag=-16.
-    min_mag = -23.
-    nbins=14
-    hubble_h = 0.7
+
+boxsize = 47.0
+max_mag=-16.
+min_mag = -23.
+nbins=14
+hubble_h = 0.7
     
+def uv_l_z8():
+
     model2_folder = "/mnt/lustre/scratch/cs390/47Mpc/outputs/okamoto/"
     nore_folder = "/mnt/lustre/scratch/cs390/47Mpc/outputs/no_reionization/"
     snaplist_file = "/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
