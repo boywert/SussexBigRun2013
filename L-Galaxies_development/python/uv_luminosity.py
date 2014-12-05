@@ -62,7 +62,7 @@ def uv_l_z8():
     ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="Mag(Okamoto)")
     #ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="MagDust(No Reionisation)")
     ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--',label="Mag(No Reionisation)")
-    ax = add_obs_uv_z6("/Users/boywert/git/SussexBigRun2013/observed_UVL",ax)
+    ax = add_obs_uv_z6(observe_folder,ax)
     ax.set_yscale("log")
     
     leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
