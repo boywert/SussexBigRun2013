@@ -113,10 +113,6 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     else{
       reionization_modifier = 1.0;
     }
-    if(reionization_modifier < 0. || reionization_modifier > 1.0) {
-      printf("reionization_modifier = %f\nexit\n",reionization_modifier);
-      exit(1);
-    }
     infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir - tot_mass);
   }
   else if(ReionizationOn == 6){
@@ -130,10 +126,6 @@ double infall_recipe(int centralgal, int ngal, double Zcurr)
     }
     else{
       reionization_modifier = 1.0;
-    }
-    if(reionization_modifier < 0. || reionization_modifier > 1.0) {
-      printf("reionization_modifier = %f\nexit\n",reionization_modifier);
-      exit(1);
     }
     infallingMass = reionization_modifier * (BaryonFrac * Gal[centralgal].Mvir) - tot_mass;
   }
