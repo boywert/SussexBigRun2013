@@ -17,6 +17,10 @@ def uv_l_z8():
     snaplist_file = "/mnt/lustre/scratch/cs390/47Mpc/snap_z.txt"
     observe_folder="/mnt/lustre/scratch/cs390/codes/47Mpc/observed_UVL/"
 
+    pylab.rc('text', usetex=True)
+    fig = pylab.figure()
+    ax = fig.add_subplot(111)
+    ax = add_obs_uv_z6(observe_folder,ax)
 
     firstfile = 0
     lastfile = 127
@@ -57,14 +61,10 @@ def uv_l_z8():
     lgal_hist_total_nr_y = lgal_hist_total_nr[0]/ boxsize**3. / (lgal_hist_metal_nr_x[1]-lgal_hist_metal_nr_x[0])
 
 
-    pylab.rc('text', usetex=True)
-    fig = pylab.figure()
-    ax = fig.add_subplot(111)
     #ax.plot(lgal_hist_metal_x,lgal_hist_metal_y,'r-',label="MagDust(Okamoto)")
     ax.plot(lgal_hist_metal_x,lgal_hist_total_y,'b-',label="Mag(Okamoto)")
     #ax.plot(lgal_hist_metal_nr_x,lgal_hist_metal_nr_y,'r--',label="MagDust(No Reionisation)")
     ax.plot(lgal_hist_metal_nr_x,lgal_hist_total_nr_y,'b--',label="Mag(No Reionisation)")
-    ax = add_obs_uv_z6(observe_folder,ax)
     ax.set_yscale("log")
     
     leg = ax.legend(loc='best', handlelength = 10,ncol=1, fancybox=True, prop={'size':10})
