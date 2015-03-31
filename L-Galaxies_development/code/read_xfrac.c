@@ -30,9 +30,9 @@ void get_xfrac_mesh()
 	  char sbuf[1000];
 	  printf("can't open file `%s'\n", buf);
 	  // terminate(sbuf);
-	  XfracMesh[0] = 306;
-	  XfracMesh[1] = 306;
-	  XfracMesh[2] = 306;
+	  XfracMesh[0] = XfracNGrids;
+	  XfracMesh[1] = XfracNGrids;
+	  XfracMesh[2] = XfracNGrids;
 	}
       else {
 	fread(&dummy, 1, sizeof(int),fp);
