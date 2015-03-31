@@ -57,7 +57,7 @@ void read_parameter_file(char *fname)
   strcpy(tag[nt], "XfracDir");
   addr[nt] = XfracDir;
   id[nt++] = STRING;
-  strcpy(tag[nt], "XfracNgrids");
+  strcpy(tag[nt], "XfracNGrids");
   addr[nt] = &XfracNgrids;
   id[nt++] = INT;
 #endif

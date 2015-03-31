@@ -1262,6 +1262,7 @@ extern float *Xfrac;
 #endif
 extern int XfracDataDone[MAXSNAPS];;
 extern int XfracMesh[3];
+extern int XfracNGrids;
 extern char XfracDir[1024];
 #endif
 

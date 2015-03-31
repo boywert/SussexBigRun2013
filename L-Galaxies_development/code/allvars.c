@@ -312,6 +312,7 @@ float *Xfrac;
 int XfracDataDone[MAXSNAPS];
 char XfracDir[1024];
 int XfracMesh[3];
+int XfracNGrids;
 #endif
 
 
