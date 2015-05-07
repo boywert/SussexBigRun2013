@@ -449,7 +449,8 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
     {
       find_interpolated_lum(time, NumToTime(ListOutputSnaps[outputbin]), metallicity,
 			    &metindex, &tabindex, &f1, &f2, &fmet1, &fmet2);
-      printf("metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",metindex,tabindex,fmet1,fmet2);
+      
+      printf("metallicity = %f metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",metallicity, metindex,tabindex,fmet1,fmet2);
       if(MetallicityOption == 0)
 	    metindex = 4;		// reset met index to use only solar metallicity
 
