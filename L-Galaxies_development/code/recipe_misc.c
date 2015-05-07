@@ -449,7 +449,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
     {
       find_interpolated_lum(time, NumToTime(ListOutputSnaps[outputbin]), metallicity,
 			    &metindex, &tabindex, &f1, &f2, &fmet1, &fmet2);
-      printf("metindex = %d tabindex = %d\n",metindex,tabindex);
+      printf("metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",metindex,tabindex,fmet1,fmet2);
       if(MetallicityOption == 0)
 	    metindex = 4;		// reset met index to use only solar metallicity
 
@@ -463,6 +463,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 					   f2 * LumTables[j][metindex][0][tabindex + 1]) +
 				  fmet2 * (f1 * LumTables[j][metindex + 1][0][tabindex] +
 					   f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
+	  if(j == 5) printf("LumToAdd = %f\n",LuminosityToAdd);
     	  Gal[p].Lum[j][outputbin] += LuminosityToAdd;
 
     	  /*luminosity used for extinction due to young birth clouds */
