@@ -66,6 +66,7 @@ void setup_LumTables_precomputed(char SimName[])
   for(MetalLoop=0;MetalLoop<SSP_NMETALLICITES;MetalLoop++)
     {
       fscanf(fa, "%f", &SSP_logMetalTab[MetalLoop]);
+      printf("Metal[%d] = %f\n",MetalLoop,SSP_logAgeTab[MetalLoop]);
       SSP_logMetalTab[MetalLoop]=log10(SSP_logMetalTab[MetalLoop]);
     }
   fclose(fa);
