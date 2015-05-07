@@ -141,6 +141,7 @@ void read_MetalTab()
   for(i=0;i<SSP_NMETALLICITES;i++)
   {
 		fscanf(fa, "%f", &SSP_logMetalTab[i]);
+		printf("Metal[%d] = %f\n",MetalLoop,SSP_logAgeTab[MetalLoop]);
 		SSP_logMetalTab[i]=log10(SSP_logMetalTab[i]);
   }
 
