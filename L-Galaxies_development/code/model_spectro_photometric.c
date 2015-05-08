@@ -187,7 +187,7 @@ void setup_Spec_LumTables_onthefly(void)
   //Loops in the code
   int MetalLoop, AgeLoop, snap, band, i;
   FILE *File_PhotTables[NMAG];
-
+  int ii,jj;
   if(ThisTask == 0)printf("\n\nComputing PhotTables on the fly...\n\n");
   read_vega_spectra(LambdaVega, FluxVega);
 #ifndef FULL_SPECTRA
@@ -319,8 +319,8 @@ void setup_Spec_LumTables_onthefly(void)
 	}//end Band loop
 
     }  //end loop on metallicities
-  for(int ii=0; ii<SSP_NMETALLICITES; ii++)
-    for(int jj=0; jj<SSP_NAGES; jj++)
+  for(ii=0; ii<SSP_NMETALLICITES; ii++)
+    for(jj=0; jj<SSP_NAGES; jj++)
       printf("metal %d: Age %d %f\n",ii,jj,LumTables[5][ii][0][jj]);
   if(ThisTask == 0) printf("\nPhotTables Computed.\n\n");
 #ifdef REIONIZEPHOTON
