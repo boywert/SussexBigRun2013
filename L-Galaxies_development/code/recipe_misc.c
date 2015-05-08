@@ -447,6 +447,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 #ifdef OUTPUT_REST_MAGS
   for(outputbin = 0; outputbin < NOUT; outputbin++)
     {
+      printf("time = %g timenow = %g\n", time,  NumToTime(ListOutputSnaps[outputbin]));
       find_interpolated_lum(time, NumToTime(ListOutputSnaps[outputbin]), metallicity,
 			    &metindex, &tabindex, &f1, &f2, &fmet1, &fmet2);
       
