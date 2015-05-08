@@ -456,7 +456,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 	    metindex = 4;		// reset met index to use only solar metallicity
 
       age = time - NumToTime(ListOutputSnaps[outputbin]);
-      printf("X1 = %g mstars = %g age = %g metallicity = %g metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,mstars,age,metallicity, metindex,tabindex,fmet1,fmet2);
+      printf("X1 = %g mstars = %g age = %g metallicity = %g metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,mstars,log10(age),metallicity, metindex,tabindex,fmet1,fmet2);
       /* For rest-frame, there is no K-correction on magnitudes,
        * hence the 0 in LumTables[j][metindex][0][tabindex] */
       for(j = 0; j < NMAG; j++)

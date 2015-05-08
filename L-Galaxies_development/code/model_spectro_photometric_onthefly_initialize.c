@@ -192,11 +192,13 @@ void read_InputSSP_spectra(double LambdaInputSSP[SSP_NAGES][SSP_NLambda], double
   		FluxInputSSP[ageloop][i]=1e11*FluxInputSSP[ageloop][i]
   		                          *LambdaInputSSP[ageloop][i]*LambdaInputSSP[ageloop][i]/(C*1e8);
   	}
-  	if(MetalLoop==0) //only read age table once
+  	if(MetalLoop==0) { //only read age table once
   		if(age>0.)
   			SSP_logAgeTab[ageloop]=log10(age / 1.0e6 / UnitTime_in_Megayears * Hubble_h);
   		else
   			SSP_logAgeTab[ageloop]=0.;
+		printf("ageloop = %d age = %g\n",ageloop,SSP_logAgeTab);
+	}
   }
 
   fclose(fa);
