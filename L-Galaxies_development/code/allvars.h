@@ -778,7 +778,7 @@ struct GALAXY			/* Galaxy data */
 #ifdef COMPUTE_SPECPHOT_PROPERTIES
 #ifndef POST_PROCESS_MAGS
 #ifdef OUTPUT_REST_MAGS
-  float Lum[NMAG][NOUT];
+  double Lum[NMAG][NOUT];
   float YLum[NMAG][NOUT];
   float LumBulge[NMAG][NOUT];
   float YLumBulge[NMAG][NOUT];
