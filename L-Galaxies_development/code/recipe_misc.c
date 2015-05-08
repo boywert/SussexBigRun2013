@@ -431,7 +431,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
   //TODO define elsewhere and maybe make the 10. an input parameter?
   /* Time bellow which the luminosities are corrected for extinction due to
    * molecular birth clouds.  */
-   tbc = 10.0 / UnitTime_in_Megayears * Hubble_h;
+  tbc = 10.0 / UnitTime_in_Megayears * Hubble_h;
 
 
   /* mstars converted from 1.e10Msun/h to 1.e11 Msun */
@@ -450,7 +450,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
       find_interpolated_lum(time, NumToTime(ListOutputSnaps[outputbin]), metallicity,
 			    &metindex, &tabindex, &f1, &f2, &fmet1, &fmet2);
       
-      printf("X1 = %f metallicity = %f metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,metallicity, metindex,tabindex,fmet1,fmet2);
+      printf("X1 = %g mstars = %g metallicity = %g metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,mstars,metallicity, metindex,tabindex,fmet1,fmet2);
       if(MetallicityOption == 0)
 	    metindex = 4;		// reset met index to use only solar metallicity
 
@@ -464,7 +464,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 					   f2 * LumTables[j][metindex][0][tabindex + 1]) +
 				  fmet2 * (f1 * LumTables[j][metindex + 1][0][tabindex] +
 					   f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
-	  if(j == 5) printf("LumToAdd = %f\n",LuminosityToAdd);
+	  if(j == 5) printf("LumToAdd = %g\n",LuminosityToAdd);
     	  Gal[p].Lum[j][outputbin] += LuminosityToAdd;
 
     	  /*luminosity used for extinction due to young birth clouds */
