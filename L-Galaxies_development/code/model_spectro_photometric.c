@@ -319,7 +319,9 @@ void setup_Spec_LumTables_onthefly(void)
 	}//end Band loop
 
     }  //end loop on metallicities
-
+  for(int ii=0; ii<SSP_NMETALLICITES; ii++)
+    for(int jj=0; jj<SSP_NAGES; jj++)
+      printf("metal %d: Age %d %f\n",ii,jj,LumTables[5][ii][0][jj]);
   if(ThisTask == 0) printf("\nPhotTables Computed.\n\n");
 #ifdef REIONIZEPHOTON
   setup_Spec_NPhotTables_onthefly();
