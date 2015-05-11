@@ -447,7 +447,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 #ifdef OUTPUT_REST_MAGS
   for(outputbin = 0; outputbin < NOUT; outputbin++)
     {
-      printf("time = %g timenow = %g\n", time,  NumToTime(ListOutputSnaps[outputbin]));
+      // printf("time = %g timenow = %g\n", time,  NumToTime(ListOutputSnaps[outputbin]));
       find_interpolated_lum(time, NumToTime(ListOutputSnaps[outputbin]), metallicity,
 			    &metindex, &tabindex, &f1, &f2, &fmet1, &fmet2);
       
@@ -456,7 +456,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 	    metindex = 4;		// reset met index to use only solar metallicity
 
       age = time - NumToTime(ListOutputSnaps[outputbin]);
-      printf("X1 = %g mstars = %g age = %g metallicity = %g metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,mstars,log10(age),metallicity, metindex,tabindex,fmet1,fmet2);
+      // printf("X1 = %g mstars = %g age = %g metallicity = %g metindex = %d tabindex = %d fmet1 = %f fmet2 =%f\n",X1,mstars,log10(age),metallicity, metindex,tabindex,fmet1,fmet2);
       /* For rest-frame, there is no K-correction on magnitudes,
        * hence the 0 in LumTables[j][metindex][0][tabindex] */
       for(j = 0; j < NMAG; j++)
@@ -468,7 +468,7 @@ void add_to_luminosities(int p, double mstars, double time, double metallicity)
 					   f2 * LumTables[j][metindex + 1][0][tabindex + 1]));
 	  // if(j == 5) printf("LumToAdd = %g\n",LuminosityToAdd);
     	  Gal[p].Lum[j][outputbin] += LuminosityToAdd;
-	  if(j == 5) printf("LumToAdd = %g Lum = %lg Mag = %lg\n",LuminosityToAdd,Gal[p].Lum[j][outputbin],lum_to_mag(Gal[p].Lum[j][outputbin]));
+	  // if(j == 5) printf("LumToAdd = %g Lum = %lg Mag = %lg\n",LuminosityToAdd,Gal[p].Lum[j][outputbin],lum_to_mag(Gal[p].Lum[j][outputbin]));
     	  /*luminosity used for extinction due to young birth clouds */
     	  if(age <= tbc)
 	    Gal[p].YLum[j][outputbin] += LuminosityToAdd;
