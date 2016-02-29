@@ -22,6 +22,7 @@
  *        Join Galaxies of progenitors, Evolve Galaxies and check
  *        Makefile options.
  * */
+
 int main(int argc, char **argv) {
   int treenr, i, j, k, ll;
   int index;

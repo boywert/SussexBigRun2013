@@ -779,8 +779,9 @@ void get_TotNumPart(void)
       exit(1);
 #endif
     }
-  TotNumPart =
-    header.npartTotal[1] + (((long long) header.npartTotalHighWord[1]) << (long long) 32);
+  TotNumPart = 0;
+  for(i=0;i<6;i++)
+    TotNumPart += header.npartTotal[i] + (((long long) header.npartTotalHighWord[i]) << (long long) 32);
   long_to_str(bufA, TotNumPart);
   printf("TotNumPart=%s\n", bufA);
 
