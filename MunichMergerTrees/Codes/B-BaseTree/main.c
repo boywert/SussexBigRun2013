@@ -740,7 +740,7 @@ void get_TotNumPart(void)
   FILE *fd;
   char buf[1000], bufA[100];
   int blksize1, blksize2;
-
+  int i;
   if(SnapFormat != 3)
     {
       /* Binary snapshot */
