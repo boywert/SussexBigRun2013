@@ -405,14 +405,14 @@ void determine_descendants(struct halo_catalogue *catA, struct halo_catalogue *c
 		    ncand++;
 		  }
 	      }
-	    else
-	      {
-		char buf[100];
+	    /* else */
+	    /*   { */
+	    /* 	char buf[100]; */
 
-		long_to_str(buf, id);
-		printf("bummer! i=%d  id=%s TotumPart=%d\n", i, buf, (int)TotNumPart);
-		exit(4);
-	      }
+	    /* 	long_to_str(buf, id); */
+	    /* 	printf("bummer! i=%d  id=%s TotumPart=%d\n", i, buf, (int)TotNumPart); */
+	    /* 	exit(4); */
+	    /*   } */
 	  }
 
 	qsort(candlist, ncand, sizeof(struct cand_data), sort_candlist);
@@ -534,15 +534,15 @@ void prepare_index_list(struct halo_catalogue *cat)
 
 	  if(id >= 0 && id < TotNumPart)
 	    cat->IdToHalo[id] = i;
-	  else
-	    {
-	      char buf[100];
+	  /* else */
+	  /*   { */
+	  /*     char buf[100]; */
 
-	      long_to_str(buf, id);
+	  /*     long_to_str(buf, id); */
 
-	      printf("bummer! i=%d j=%d id=%s id=%d TotNumPart=%d)\n", i, j, buf, (int)id, (int)TotNumPart);
-	      exit(1);
-	    }
+	  /*     printf("bummer! i=%d j=%d id=%s id=%d TotNumPart=%d)\n", i, j, buf, (int)id, (int)TotNumPart); */
+	  /*     exit(1); */
+	  /*   } */
 	}
     }
 }
