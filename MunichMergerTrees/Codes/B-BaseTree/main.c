@@ -551,11 +551,10 @@ void prepare_index_list(struct halo_catalogue *cat)
 
 void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
 {
-  int i, ngroups, nids, nFiles, nsubhalos, subcount, offset;
+  int i, ngroups, nids, nFiles, nsubhalos, subcount;
   MyIDType idcount;
   char buf[1000];
-  FILE *fd;
-  unsigned int j, *tmp;
+  unsigned int j;
 
   nFiles = 1;
   subcount = 0;
