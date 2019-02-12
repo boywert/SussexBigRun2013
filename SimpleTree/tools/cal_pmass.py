@@ -12,11 +12,11 @@ Msun2Gadget = 1e-10
 G = G * (m2km**2.) * (m2Mpc) / (kg2Msun * Msun2Gadget) # (Mpc/h) (km/s)^2 / (1e10Msun/h)
 print G
 #info
-boxsize = 244.0    # Mpc/h
-npart =  4000    # per dim
-omegam = 0.27
+boxsize = 100.0    # Mpc/h
+npart =  3072    # per dim
+omegam = 0.318  #4320_335
 omegab = 0.046
-hubble_h = 0.7
+hubble_h = 0.671
 pi = pylab.pi
 
 rho_crit_0 = 3.* H0**2 / (8.*pi*G)  # (1e10 Msun/h)/(Mpc/h)^3
@@ -24,5 +24,5 @@ rho_crit_0 = 3.* H0**2 / (8.*pi*G)  # (1e10 Msun/h)/(Mpc/h)^3
 pmass = omegam*rho_crit_0*boxsize**3./npart**3.
 print "grid mass = ",pmass/8*1e10/hubble_h,"Msun"
 print "rho_crit = ",rho_crit_0
-print "pmass = ", 20*pmass
+print "pmass = ", pmass
 print "total H atoms", 1.e10*omegab*rho_crit_0*boxsize**3.*Msun2kg/h_mass/hubble_h
