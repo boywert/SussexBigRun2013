@@ -712,9 +712,10 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     //my_fread(&cat->IdList[idcount], sizeof(MyIDType), nids, fd);
     //fclose(fd);
     
-    ret = H5Gclose(sr)
+    ret = H5Gclose(sr);
 
     idcount += nids;
+    ret = H5Fclose(fd);
   }
 
   long_to_str(buf, cat->TotNids);
