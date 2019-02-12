@@ -565,7 +565,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, i);
     hid_t   fd, hd, attr, sr, id, dset;
     herr_t  ret; 
-    fd = H5Fopen(buf, H5F_ACC_RDONLY, H5P_DEFAULT);
+    fd = H5Fopen(buf, H5F_ACC_RDONLY);
     if(fd
        < 0) {
       printf("can't open file `%s'\n", buf);
@@ -583,42 +583,42 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     // Read header
     hd = H5Gopen (fd, "/Header");
       
-    attr = H5Aopen(hd, "Ngroups_ThisFile", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Ngroups_ThisFile");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &ngroups);
     ret = H5Aclose(attr);
     //my_fread(&ngroups, sizeof(int), 1, fd);
     // printf("ngroup = %d\n",ngroups);
 
-    attr = H5Aopen(hd, "Ngroups_Total", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Ngroups_Total");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNgroups);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNgroups, sizeof(int), 1, fd);
     // printf("TotNgroup = %d\n",cat.TotNgroups);
 
-    attr = H5Aopen(hd, "Nids_ThisFile", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Nids_ThisFile");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nids);
     ret = H5Aclose(attr);
     //my_fread(&nids, sizeof(int), 1, fd);
     //printf("nids = %d\n",nids);
 
-    attr = H5Aopen(hd, "Nids_Total", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Nids_Total");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNids);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
     //printf("TotNids = %d\n",cat.TotNids);
 
-    attr = H5Aopen(hd, "NumFiles", H5P_DEFAULT);
+    attr = H5Aopen(hd, "NumFiles");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
     ret = H5Aclose(attr);    
     //my_fread(&nFiles, sizeof(int), 1, fd);
 
-    attr = H5Aopen(hd, "Nsubgroups_ThisFile", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Nsubgroups_ThisFile");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nsubhalos);
     ret = H5Aclose(attr);      
     //my_fread(&nsubhalos, sizeof(int), 1, fd);
     //printf("nsubhalos = %d\n",nsubhalos);
 
-    attr = H5Aopen(hd, "Nsubgroups_Total", H5P_DEFAULT);
+    attr = H5Aopen(hd, "Nsubgroups_Total");
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNsubhalos);
     ret = H5Aclose(attr);     
     //my_fread(&cat->TotNsubhalos, sizeof(int), 1, fd);
@@ -657,7 +657,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupFirstsub *\/ */
 
     sr = H5Gopen (fd, "/Subhalo");
-    dset = H5Dopen (sr, "SubhaloLen", H5P_DEFAULT);
+    dset = H5Dopen (sr, "SubhaloLen");
     ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
     ret = H5Dclose(dset);
     //my_fread(&cat->SubLen[subcount], sizeof(int), nsubhalos, fd);
@@ -673,7 +673,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     /* myfree(tmp); */
     //myfree(buf);
       
-    dset = H5Dopen (sr, "SubhaloParent", H5P_DEFAULT);
+    dset = H5Dopen (sr, "SubhaloParent");
     ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubParentHalo[subcount]);
     ret = H5Dclose(dset);
     
@@ -705,8 +705,8 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     // I don't think we need this - Boyd
     //my_fread(&offset, sizeof(int), 1, fd);
 
-    id = H5Gopen (fd, "/IDs", H5P_DEFAULT);
-    dset = H5Dopen (id, "ID", H5P_DEFAULT);
+    id = H5Gopen (fd, "/IDs");
+    dset = H5Dopen (id, "ID");
     ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
     ret = H5Dclose(dset);
 
