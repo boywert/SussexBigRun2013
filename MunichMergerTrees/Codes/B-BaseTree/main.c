@@ -563,7 +563,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
 
   for(i = 0; i < nFiles; i++) {
     sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, i);
-    hid_t   fd, hd, attr, sr;
+    hid_t   fd, hd, attr, sr, id;
     herr_t  ret; 
     fd = H5Fopen(buff, H5F_ACC_RDONLY, H5P_DEFAULT);
     if(fd < 0) {
@@ -704,15 +704,15 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     // I don't think we need this - Boyd
     //my_fread(&offset, sizeof(int), 1, fd);
 
-    sr = H5Gopen (fd, "/IDs", H5P_DEFAULT);
+    id = H5Gopen (fd, "/IDs", H5P_DEFAULT);
     dset = H5Dopen (id, "ID", H5P_DEFAULT);
-    ret = = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
+    ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
     ret = H5Dclose(dset);
 
     //my_fread(&cat->IdList[idcount], sizeof(MyIDType), nids, fd);
     //fclose(fd);
     
-    ret = H5Gclose(sr);
+    ret = H5Gclose(id);
 
     idcount += nids;
     ret = H5Fclose(fd);
