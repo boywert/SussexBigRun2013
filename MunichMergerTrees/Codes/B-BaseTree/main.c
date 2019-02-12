@@ -624,7 +624,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     //my_fread(&cat->TotNsubhalos, sizeof(int), 1, fd);
     //printf("TotNsubhalos = %d\n",cat.TotNsubhalos);
 
-    ret = H5Gclose(hr);
+    ret = H5Gclose(hd);
       
     if(i == 0)
       {
