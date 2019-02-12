@@ -563,10 +563,11 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
 
   for(i = 0; i < nFiles; i++) {
     sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, i);
-    hid_t   fd, hd, attr, sr, id;
+    hid_t   fd, hd, attr, sr, id, dset;
     herr_t  ret; 
     fd = H5Fopen(buf, H5F_ACC_RDONLY, H5P_DEFAULT);
-    if(fd < 0) {
+    if(fd
+       < 0) {
       printf("can't open file `%s'\n", buf);
       exit(1);
     }	
