@@ -549,7 +549,7 @@ void prepare_index_list(struct halo_catalogue *cat)
 
 
 
-void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
+void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
 {
   int i, ngroups, nids, nFiles, nsubhalos, subcount;
   MyIDType idcount;
