@@ -581,7 +581,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     if(i == 1)
       printf("...to...\n");
     // Read header
-    hd = H5Gopen (fd, "/Header", H5P_DEFAULT);
+    hd = H5Gopen (fd, "/Header");
       
     attr = H5Aopen(hd, "Ngroups_ThisFile", H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &ngroups);
@@ -656,7 +656,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupNsubs *\/ */
     /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupFirstsub *\/ */
 
-    sr = H5Gopen (fd, "/Subhalo", H5P_DEFAULT);
+    sr = H5Gopen (fd, "/Subhalo");
     dset = H5Dopen (sr, "SubhaloLen", H5P_DEFAULT);
     ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
     ret = H5Dclose(dset);
