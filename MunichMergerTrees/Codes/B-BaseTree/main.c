@@ -565,7 +565,7 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, i);
     hid_t   fd, hd, attr, sr, id, dset;
     herr_t  ret; 
-    fd = H5Fopen(buf, H5F_ACC_RDONLY);
+    fd = H5Fopen(buf, H5F_ACC_RDONLY,  H5P_DEFAULT);
     if(fd
        < 0) {
       printf("can't open file `%s'\n", buf);
@@ -583,42 +583,42 @@ void load_subhalo_catalogue_hdf5(int num, struct halo_catalogue *cat)
     // Read header
     hd = H5Gopen (fd, "/Header");
       
-    attr = H5Aopen(hd, "Ngroups_ThisFile");
+    attr = H5Aopen(hd, "Ngroups_ThisFile",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &ngroups);
     ret = H5Aclose(attr);
     //my_fread(&ngroups, sizeof(int), 1, fd);
     // printf("ngroup = %d\n",ngroups);
 
-    attr = H5Aopen(hd, "Ngroups_Total");
+    attr = H5Aopen(hd, "Ngroups_Total",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNgroups);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNgroups, sizeof(int), 1, fd);
     // printf("TotNgroup = %d\n",cat.TotNgroups);
 
-    attr = H5Aopen(hd, "Nids_ThisFile");
+    attr = H5Aopen(hd, "Nids_ThisFile",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nids);
     ret = H5Aclose(attr);
     //my_fread(&nids, sizeof(int), 1, fd);
     //printf("nids = %d\n",nids);
 
-    attr = H5Aopen(hd, "Nids_Total");
+    attr = H5Aopen(hd, "Nids_Total",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNids);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
     //printf("TotNids = %d\n",cat.TotNids);
 
-    attr = H5Aopen(hd, "NumFiles");
+    attr = H5Aopen(hd, "NumFiles",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
     ret = H5Aclose(attr);    
     //my_fread(&nFiles, sizeof(int), 1, fd);
 
-    attr = H5Aopen(hd, "Nsubgroups_ThisFile");
+    attr = H5Aopen(hd, "Nsubgroups_ThisFile",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nsubhalos);
     ret = H5Aclose(attr);      
     //my_fread(&nsubhalos, sizeof(int), 1, fd);
     //printf("nsubhalos = %d\n",nsubhalos);
 
-    attr = H5Aopen(hd, "Nsubgroups_Total");
+    attr = H5Aopen(hd, "Nsubgroups_Total",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNsubhalos);
     ret = H5Aclose(attr);     
     //my_fread(&cat->TotNsubhalos, sizeof(int), 1, fd);
