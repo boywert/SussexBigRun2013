@@ -600,7 +600,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     //printf("nids = %d\n",nids);
 
     attr = H5Aopen(hd, "Nids_Total",  H5P_DEFAULT);
-    ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNids);
+    ret  = H5Aread(attr, H5T_NATIVE_LLONG, &cat->TotNids);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
     printf("TotNids = %d\n",cat.TotNids);
