@@ -487,12 +487,12 @@ void load_subhalo_catalogue(int num)
       //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_TopHat200 */
 
 #ifdef FLAG_GROUP_VELDISP
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_Mean200 */
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_Crit200 */
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_TopHat200 */
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_Mean200 */
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_Crit200 */
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_TopHat200 */
 #endif
-      fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupContaminationCount */
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  GroupContaminationMass */
+      //fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupContaminationCount */
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  GroupContaminationMass */
 
 
 
