@@ -603,7 +603,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     ret  = H5Aread(attr, H5T_NATIVE_LLONG, &cat->TotNids);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
-    printf("TotNids = %d\n",cat->TotNids);
+    //printf("TotNids = %d\n",cat->TotNids);
 
     attr = H5Aopen(hd, "NumFiles",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
@@ -659,7 +659,6 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
       ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
       ret = H5Dclose(dset);
       //my_fread(&cat->SubLen[subcount], sizeof(int), nsubhalos, fd);
-
       
       /* I believe we don't need this in HDF5 - Boyd */
       /* tmp = mymalloc(sizeof(int) * nsubhalos); */
