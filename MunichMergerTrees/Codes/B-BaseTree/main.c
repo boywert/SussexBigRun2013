@@ -565,8 +565,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     hid_t   fd, hd, attr, sr, id, dset;
     herr_t  ret; 
     fd = H5Fopen(buf, H5F_ACC_RDONLY,  H5P_DEFAULT);
-    if(fd
-       < 0) {
+    if(fd < 0) {
       printf("can't open file `%s'\n", buf);
       exit(1);
     }	
@@ -604,7 +603,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     ret  = H5Aread(attr, H5T_NATIVE_INT, &cat->TotNids);
     ret = H5Aclose(attr);
     //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
-    //printf("TotNids = %d\n",cat.TotNids);
+    printf("TotNids = %d\n",cat.TotNids);
 
     attr = H5Aopen(hd, "NumFiles",  H5P_DEFAULT);
     ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
