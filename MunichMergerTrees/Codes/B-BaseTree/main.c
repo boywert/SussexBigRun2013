@@ -653,35 +653,35 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupContaminationMass *\/ */
     /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupNsubs *\/ */
     /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupFirstsub *\/ */
-
-    sr = H5Gopen (fd, "/Subhalo");
-    dset = H5Dopen (sr, "SubhaloLen");
-    ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
-    ret = H5Dclose(dset);
-    //my_fread(&cat->SubLen[subcount], sizeof(int), nsubhalos, fd);
+    if(nsubhalos > 0) {
+      sr = H5Gopen (fd, "/Subhalo");
+      dset = H5Dopen (sr, "SubhaloLen");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&cat->SubLen[subcount], sizeof(int), nsubhalos, fd);
 
       
-    /* I believe we don't need this in HDF5 - Boyd */
-    /* tmp = mymalloc(sizeof(int) * nsubhalos); */
+      /* I believe we don't need this in HDF5 - Boyd */
+      /* tmp = mymalloc(sizeof(int) * nsubhalos); */
       
-    /* my_fread(tmp, sizeof(int), nsubhalos, fd); */
-    for(j = 0; j < nsubhalos; j++)
-      cat->SubOffset[subcount + j] = 0;	/* copy it to 64 bit if needed */
+      /* my_fread(tmp, sizeof(int), nsubhalos, fd); */
+      for(j = 0; j < nsubhalos; j++)
+	cat->SubOffset[subcount + j] = 0;	/* copy it to 64 bit if needed */
 
-    /* myfree(tmp); */
-    //myfree(buf);
+      /* myfree(tmp); */
+      //myfree(buf);
       
-    dset = H5Dopen (sr, "SubhaloParent");
-    ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubParentHalo[subcount]);
-    ret = H5Dclose(dset);
+      dset = H5Dopen (sr, "SubhaloParent");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubParentHalo[subcount]);
+      ret = H5Dclose(dset);
     
-    ret = H5Gclose(sr);
-    //my_fread(&cat->SubParentHalo[subcount], sizeof(int), nsubhalos, fd);
+      ret = H5Gclose(sr);
+      //my_fread(&cat->SubParentHalo[subcount], sizeof(int), nsubhalos, fd);
 
-    //fclose(fd);
+      //fclose(fd);
 
-    subcount += nsubhalos;
-
+      subcount += nsubhalos;
+    }
   
     /* sprintf(buf, "%s/groups_%03d/subhalo_ids_%03d.%d", OutputDir, num, num, i); */
     /* if(!(fd = fopen(buf, "r"))) */
@@ -702,18 +702,19 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
 
     // I don't think we need this - Boyd
     //my_fread(&offset, sizeof(int), 1, fd);
+    if(nids > 0) {
+      id = H5Gopen (fd, "/IDs");
+      dset = H5Dopen (id, "ID");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
+      ret = H5Dclose(dset);
 
-    id = H5Gopen (fd, "/IDs");
-    dset = H5Dopen (id, "ID");
-    ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
-    ret = H5Dclose(dset);
-
-    //my_fread(&cat->IdList[idcount], sizeof(MyIDType), nids, fd);
-    //fclose(fd);
+      //my_fread(&cat->IdList[idcount], sizeof(MyIDType), nids, fd);
+      //fclose(fd);
     
-    ret = H5Gclose(id);
+      ret = H5Gclose(id);
 
-    idcount += nids;
+      idcount += nids;
+    }
     ret = H5Fclose(fd);
   }
 
