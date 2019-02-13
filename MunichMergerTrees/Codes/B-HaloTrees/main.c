@@ -314,7 +314,7 @@ void count_halos(void)
       nFiles = 1;
 
       sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, 0);
-      hid_t   fd, hd;
+      hid_t   fd, hd, attr;
       herr_t  ret; 
       fd = H5Fopen(buf, H5F_ACC_RDONLY,  H5P_DEFAULT);
       if(fd < 0) {
