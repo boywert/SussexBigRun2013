@@ -300,15 +300,12 @@ void generate_trees(void)
 
 
 
-
-
-
 void count_halos(void)
 {
   int num, ngroups, nids, nFiles, nsubhalos;
   long long totNids;
   char buf[1000];
-  FILE *fd;
+  //FILE *fd;
 
   TotHalos = 0;
 
@@ -316,23 +313,71 @@ void count_halos(void)
     {
       nFiles = 1;
 
-      sprintf(buf, "%s/groups_%03d/subhalo_tab_%03d.%d", OutputDir, num, num, 0);
-      if(!(fd = fopen(buf, "r")))
-	{
-	  printf("can't open file `%s'\n", buf);
-	  exit(1);
-	}
+      sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, 0);
+      hid_t   fd, hd;
+      herr_t  ret; 
+      fd = H5Fopen(buf, H5F_ACC_RDONLY,  H5P_DEFAULT);
+      if(fd < 0) {
+	printf("can't open file `%s'\n", buf);
+	exit(1);
+      }
+      hd = H5Gopen (fd, "/Header");
+      
+      attr = H5Aopen(hd, "Ngroups_ThisFile",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &ngroups);
+      ret = H5Aclose(attr);
+      //my_fread(&ngroups, sizeof(int), 1, fd);
+      // printf("ngroup = %d\n",ngroups);
 
-      my_fread(&ngroups, sizeof(int), 1, fd);
-      my_fread(&Cats[num].TotNgroups, sizeof(int), 1, fd);
-      my_fread(&nids, sizeof(int), 1, fd);
-      my_fread(&totNids, sizeof(long long), 1, fd);
-      my_fread(&nFiles, sizeof(int), 1, fd);
-      my_fread(&nsubhalos, sizeof(int), 1, fd);
-      my_fread(&Cats[num].TotNsubhalos, sizeof(int), 1, fd);
+      attr = H5Aopen(hd, "Ngroups_Total",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &Cats[num].TotNgroups);
+      ret = H5Aclose(attr);
+      //my_fread(&cat->TotNgroups, sizeof(int), 1, fd);
+      // printf("TotNgroup = %d\n",cat.TotNgroups);
 
-      fclose(fd);
+      attr = H5Aopen(hd, "Nids_ThisFile",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &nids);
+      ret = H5Aclose(attr);
+      //my_fread(&nids, sizeof(int), 1, fd);
+      //printf("nids = %d\n",nids);
 
+      attr = H5Aopen(hd, "Nids_Total",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_LLONG,  &totNids);
+      ret = H5Aclose(attr);
+      //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
+      //printf("TotNids = %d\n",cat->TotNids);
+
+      attr = H5Aopen(hd, "NumFiles",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
+      ret = H5Aclose(attr);    
+      //my_fread(&nFiles, sizeof(int), 1, fd);
+
+      attr = H5Aopen(hd, "Nsubgroups_ThisFile",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &nsubhalos);
+      ret = H5Aclose(attr);      
+      //my_fread(&nsubhalos, sizeof(int), 1, fd);
+      //printf("nsubhalos = %d\n",nsubhalos);
+
+      attr = H5Aopen(hd, "Nsubgroups_Total",  H5P_DEFAULT);
+      ret  = H5Aread(attr, H5T_NATIVE_INT, &Cats[num].TotNsubhalos);
+      ret = H5Aclose(attr);     
+      //my_fread(&cat->TotNsubhalos, sizeof(int), 1, fd);
+      //printf("TotNsubhalos = %d\n",cat.TotNsubhalos);
+
+      ret = H5Gclose(hd);
+      ret = H5Fclose(fd);
+
+      
+      //my_fread(&ngroups, sizeof(int), 1, fd);
+      //my_fread(&Cats[num].TotNgroups, sizeof(int), 1, fd);
+      //my_fread(&nids, sizeof(int), 1, fd);
+      //my_fread(&totNids, sizeof(long long), 1, fd);
+      //my_fread(&nFiles, sizeof(int), 1, fd);
+      //my_fread(&nsubhalos, sizeof(int), 1, fd);
+      //my_fread(&Cats[num].TotNsubhalos, sizeof(int), 1, fd);
+
+      //fclose(fd);
+      
       TotHalos += Cats[num].TotNsubhalos;
     }
 
