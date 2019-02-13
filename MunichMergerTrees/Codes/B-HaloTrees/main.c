@@ -62,7 +62,7 @@ struct halo_aux_data
 int CountUsed, CountSumUsed;
 
 void walk_it(int i, int flag)
-s{
+{
   int p;
 
   HaloAux[i].UsedFlag = 1;
