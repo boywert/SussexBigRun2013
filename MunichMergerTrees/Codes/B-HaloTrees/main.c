@@ -13,6 +13,10 @@
 #include "allvars.h"
 #include "proto.h"
 
+#ifdef HAVE_HDF5
+#include <hdf5.h>
+#endif
+
 
 struct halo_data
 {
@@ -58,7 +62,7 @@ struct halo_aux_data
 int CountUsed, CountSumUsed;
 
 void walk_it(int i, int flag)
-{
+s{
   int p;
 
   HaloAux[i].UsedFlag = 1;
@@ -387,39 +391,100 @@ void load_subhalo_catalogue(int num)
 
   nFiles = 1;
 
-  for(filenr = 0; filenr < nFiles; filenr++)
-    {
-      sprintf(buf, "%s/groups_%03d/subhalo_tab_%03d.%d", OutputDir, num, num, filenr);
-      if(!(fd = fopen(buf, "r")))
-	{
-	  printf("can't open file `%s'\n", buf);
-	  exit(1);
-	}
-      long long totNids;
+  for(filenr = 0; filenr < nFiles; filenr++) {
+    sprintf(buf, "%s/groups_%03d/fof_subhalo_tab_%03d.%d.hdf5", OutputDir, num, num, filenr);
+    hid_t   fd, hd, attr, sr, gr, id, dset;
+    herr_t  ret;
+    fd = H5Fopen(buf, H5F_ACC_RDONLY,  H5P_DEFAULT);
+    if(fd < 0) {
+      printf("can't open file `%s'\n", buf);
+      exit(1);
+    }
+    /* if(!(fd = fopen(buf, "r"))) */
+    /* 	{ */
+    /* 	  printf("can't open file `%s'\n", buf); */
+    /* 	  exit(1); */
+    /* 	} */
+      
+    long long totNids;
 
-      my_fread(&ngroups, sizeof(int), 1, fd);
-      my_fread(&Cats[num].TotNgroups, sizeof(int), 1, fd);
-      my_fread(&nids, sizeof(int), 1, fd);
-      my_fread(&totNids, sizeof(long long), 1, fd);
-      my_fread(&nFiles, sizeof(int), 1, fd);
-      my_fread(&nsubhalos, sizeof(int), 1, fd);
-      my_fread(&Cats[num].TotNsubhalos, sizeof(int), 1, fd);
+    // Read header
+    hd = H5Gopen (fd, "/Header");
+      
+    attr = H5Aopen(hd, "Ngroups_ThisFile",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &ngroups);
+    ret = H5Aclose(attr);
+    //my_fread(&ngroups, sizeof(int), 1, fd);
+    // printf("ngroup = %d\n",ngroups);
+
+    attr = H5Aopen(hd, "Ngroups_Total",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &Cats[num].TotNgroups);
+    ret = H5Aclose(attr);
+    //my_fread(&cat->TotNgroups, sizeof(int), 1, fd);
+    // printf("TotNgroup = %d\n",cat.TotNgroups);
+
+    attr = H5Aopen(hd, "Nids_ThisFile",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &nids);
+    ret = H5Aclose(attr);
+    //my_fread(&nids, sizeof(int), 1, fd);
+    //printf("nids = %d\n",nids);
+
+    attr = H5Aopen(hd, "Nids_Total",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_LLONG, &totNids);
+    ret = H5Aclose(attr);
+    //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
+    //printf("TotNids = %d\n",cat->TotNids);
+
+    attr = H5Aopen(hd, "NumFiles",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &nFiles);
+    ret = H5Aclose(attr);    
+    //my_fread(&nFiles, sizeof(int), 1, fd);
+
+    attr = H5Aopen(hd, "Nsubgroups_ThisFile",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &nsubhalos);
+    ret = H5Aclose(attr);      
+    //my_fread(&nsubhalos, sizeof(int), 1, fd);
+    //printf("nsubhalos = %d\n",nsubhalos);
+
+    attr = H5Aopen(hd, "Nsubgroups_Total",  H5P_DEFAULT);
+    ret  = H5Aread(attr, H5T_NATIVE_INT, &Cats[num].TotNsubhalos);
+    ret = H5Aclose(attr); 
+    /* my_fread(&ngroups, sizeof(int), 1, fd); */
+    /* my_fread(&Cats[num].TotNgroups, sizeof(int), 1, fd); */
+    /* my_fread(&nids, sizeof(int), 1, fd); */
+    /* my_fread(&totNids, sizeof(long long), 1, fd); */
+    /* my_fread(&nFiles, sizeof(int), 1, fd); */
+    /* my_fread(&nsubhalos, sizeof(int), 1, fd); */
+    /* my_fread(&Cats[num].TotNsubhalos, sizeof(int), 1, fd); */
 
 
 
-      fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupLen  */
-      fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupOffset  */
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  GroupMass  */
-      fseek(fd, 3 * sizeof(float) * ngroups, SEEK_CUR);	/* skip  GroupPos */
+    /* fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupLen  *\/ */
+    /* fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupOffset  *\/ */
+    /* fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupMass  *\/ */
+    /* fseek(fd, 3 * sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupPos *\/ */
 
-      my_fread(&halo_M_Mean200[groupcount], sizeof(float), ngroups, fd);
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_Mean200 */
 
-      my_fread(&halo_M_Crit200[groupcount], sizeof(float), ngroups, fd);
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_Crit200 */
+    if(ngroups > 0) {
+      gr = H5Gopen (fd, "/Group");
+      dset = H5Dopen (gr, "Group_M_Mean200");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &halo_M_Mean200[groupcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&halo_M_Mean200[groupcount], sizeof(float), ngroups, fd);
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_Mean200 */
 
-      my_fread(&halo_M_TopHat[groupcount], sizeof(float), ngroups, fd);
-      fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_TopHat200 */
+      dset = H5Dopen (gr, "Group_M_Crit200");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &halo_M_Crit200[groupcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&halo_M_Crit200[groupcount], sizeof(float), ngroups, fd);
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_Crit200 */
+      dset = H5Dopen (gr, "Group_M_TopHat200");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &halo_M_TopHat[groupcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&halo_M_TopHat[groupcount], sizeof(float), ngroups, fd);
+
+
+      //fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_R_TopHat200 */
 
 #ifdef FLAG_GROUP_VELDISP
       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/* skip  Group_VelDisp_Mean200 */
@@ -431,53 +496,87 @@ void load_subhalo_catalogue(int num)
 
 
 
+      dset = H5Dopen (gr, "GroupNsubs");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &nsubPerHalo[groupcount]);
+      ret = H5Dclose(dset);	
+      //my_fread(&nsubPerHalo[groupcount], sizeof(int), ngroups, fd);
 
-      my_fread(&nsubPerHalo[groupcount], sizeof(int), ngroups, fd);
-
-      fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupFirstsub */
-
-      my_fread(&subLen[subcount], sizeof(int), nsubhalos, fd);
-
-
-      fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  SubOffset */
-      fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  SubParenthalo */
-
-      fseek(fd, sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloMass */
-
-      my_fread(&subpos[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
-      my_fread(&subvel[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
-
-      fseek(fd, 3 * sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloCM */
-
-      my_fread(&subspin[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
-      my_fread(&subveldisp[subcount], sizeof(float), nsubhalos, fd);
-      my_fread(&subvmax[subcount], sizeof(float), nsubhalos, fd);
-
-      fseek(fd, sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloVmaxRad */
-      my_fread(&subhalfmass[subcount], sizeof(float), nsubhalos, fd);
+      //fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/* skip  GroupFirstsub */
+      ret = H5Gclose(gr);
+    }
+    if(nsubhalos > 0) {
+	
+      sr = H5Gopen (fd, "/Subhalo");
+      dset = H5Dopen (sr, "SubhaloLen");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subLen[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subLen[subcount], sizeof(int), nsubhalos, fd);
 
 
-      my_fread(&subMostBoundID[subcount], sizeof(MyIDType), nsubhalos, fd);
+      //fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  SubOffset */
+      //fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  SubParenthalo */
 
-      fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  GrNr */
+      //fseek(fd, sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloMass */
+      dset = H5Dopen (sr, "SubhaloPos");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subpos[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subpos[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
+
+      dset = H5Dopen (sr, "SubhaloVel");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subvel[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subvel[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
+
+      //fseek(fd, 3 * sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloCM */
+
+      dset = H5Dopen (sr, "SubhaloSpin");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subspin[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subspin[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
+
+      dset = H5Dopen (sr, "SubhaloVelDisp");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subveldisp[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subveldisp[subcount], sizeof(float), nsubhalos, fd);
+
+
+      dset = H5Dopen (sr, "SubhaloVmax");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subvmax[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subvmax[subcount], sizeof(float), nsubhalos, fd);
+
+      //fseek(fd, sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloVmaxRad */
+
+      dset = H5Dopen (sr, "SubhaloHalfmassRad");
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subhalfmass[subcount]);
+      ret = H5Dclose(dset);
+      //my_fread(&subhalfmass[subcount], sizeof(float), nsubhalos, fd);
+
+      dset = H5Dopen (sr, "SubhaloIDMostbound");
+      ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subMostBoundID[subcount]);
+      ret = H5Dclose(dset);	
+      //my_fread(&subMostBoundID[subcount], sizeof(MyIDType), nsubhalos, fd);
+	
+      //fseek(fd, sizeof(int) * nsubhalos, SEEK_CUR);	/* skip  GrNr */
 
 #ifdef SAVE_MASS_TAB
+      printf("SAVE_MASS_TAB cannot be use - too lazy - Boyd\n");
+      exit(1);
       my_fread(&submasstab[6 * subcount], 6 * sizeof(float), nsubhalos, fd);
 #endif
-      fclose(fd);
-
-
-      for(subgr = 0; subgr < nsubhalos; subgr++)
-	filenrOfHalo[subcount + subgr] = filenr;
-
-      for(subgr = 0; subgr < nsubhalos; subgr++)
-	subhaloindex[subcount + subgr] = subgr;
-
-      subcount += nsubhalos;
-      groupcount += ngroups;
+      //fclose(fd);
+      ret = H5Gclose(sr);	  
     }
-
-
+    for(subgr = 0; subgr < nsubhalos; subgr++)
+      filenrOfHalo[subcount + subgr] = filenr;
+      
+    for(subgr = 0; subgr < nsubhalos; subgr++)
+      subhaloindex[subcount + subgr] = subgr;
+  
+    ret = H5Fclose(fd);
+    subcount += nsubhalos;
+    groupcount += ngroups;
+  }
   if(num < LastSnapShotNr)
     {
       sprintf(buf, "%s/treedata/sub_desc_%03d", OutputDir, num);
