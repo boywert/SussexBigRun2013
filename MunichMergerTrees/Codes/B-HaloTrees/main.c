@@ -563,12 +563,12 @@ void load_subhalo_catalogue(int num)
 
       //fseek(fd, sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloMass */
       dset = H5Dopen (sr, "SubhaloPos");
-      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subpos[subcount]);
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subpos[3*subcount]);
       ret = H5Dclose(dset);
       //my_fread(&subpos[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
 
       dset = H5Dopen (sr, "SubhaloVel");
-      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subvel[subcount]);
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subvel[3*subcount]);
       ret = H5Dclose(dset);
       //my_fread(&subvel[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
 
@@ -686,6 +686,7 @@ void load_subhalo_catalogue(int num)
 	  for(i = 0; i < 3; i++)
 	    {
 	      Halo[nh].Pos[i] = subpos[3 * sc + i];
+	      //printf("pos = %f\n", Halo[nh].Pos[i]);
 	      Halo[nh].Vel[i] = subvel[3 * sc + i];
 	      Halo[nh].Spin[i] = subspin[3 * sc + i];
 	    }
