@@ -575,7 +575,7 @@ void load_subhalo_catalogue(int num)
       //fseek(fd, 3 * sizeof(float) * nsubhalos, SEEK_CUR);	/* skip  SubhaloCM */
 
       dset = H5Dopen (sr, "SubhaloSpin");
-      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subspin[subcount]);
+      ret = H5Dread (dset, H5T_NATIVE_FLOAT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &subspin[3*subcount]);
       ret = H5Dclose(dset);
       //my_fread(&subspin[3 * subcount], 3 * sizeof(float), nsubhalos, fd);
 
