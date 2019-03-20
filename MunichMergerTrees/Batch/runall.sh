@@ -1,18 +1,18 @@
 #!/bin/bash
 
-SimDir="/mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/"
+SimDir="/users/work/boyd/SAM_works/512_20Mpc/"
 SnapDirBase="snapdir_"
-SnapFileBase="62.5_dm"
+SnapFileBase="snap"
 FirstSnapNr=0
-LastSnapNr=61
+LastSnapNr=47
 SnapSkipFac=1
 NumOutputFiles=8
 FirstOutputFile=0
 LastOutputFile=7
-SnapFormat=1
-FilesPerSnapshot=16
-FileWithSnapList="/mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/zlist_MR7.txt"
-BoxSize=62.5
+SnapFormat=3
+FilesPerSnapshot=8
+FileWithSnapList="/users/work/boyd/SAM_works/512_20Mpc/output_list.txt"
+BoxSize=20000.0
 Hashbits=8
 BaseTree_param="B-BaseTree.param"
 
@@ -64,10 +64,10 @@ current_dir=$(pwd)
 cd ../Codes/B-BaseTree/
 make
 cd $current_dir
-for i in {0..61}
-do
-../Codes/B-BaseTree/B-BaseTree ./B-BaseTree.param $( printf '%03d' $i)
-done
+#for i in {0..47}
+#do
+#../Codes/B-BaseTree/B-BaseTree ./B-BaseTree.param $( printf '%03d' $i)
+#done
 
 
 cd ../Codes/B-HaloTrees

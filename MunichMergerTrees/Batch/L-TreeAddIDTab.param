@@ -1,5 +1,5 @@
-SimulationDir /mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/
-LastSnapShotNr 61
+SimulationDir /users/work/boyd/SAM_works/512_20Mpc/
+LastSnapShotNr 47
 FirstFile 0
-LastFile
-FilesPerSnapshot 16
+LastFile 7
+FilesPerSnapshot 8

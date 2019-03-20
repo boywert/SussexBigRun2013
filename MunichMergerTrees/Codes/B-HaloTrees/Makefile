@@ -4,10 +4,10 @@ EXEC   = B-HaloTrees
 OBJS   = main.o mymalloc.o read_parameters.o allvars.o io.o
 
 INCL   = allvars.h  proto.h  Makefile
-
+OPTIONS += -DHAVE_HDF5
 #OPTIONS  += -DLONGIDS
 #OPTIONS  += -DSAVE_MASS_TAB         # writes MassTab of individual species into output
-OPTIONS += -DFLAG_GROUP_VELDISP
+#OPTIONS += -DFLAG_GROUP_VELDISP
 SYSTYPE="tiberius"
 #SYSTYPE="cosma-iv"
 #SYSTYPE="Octor"
@@ -24,6 +24,10 @@ OPTIMIZE =   -O3 -Wall  # optimization and warning flags (default)
 ifeq ($(SYSTYPE),"tiberius")
 CC = gcc
 OPTIMIZE     = #-O3
+OPTIMIZE     = -O3 -Wall
+HDF5_LIBS    = -lhdf5
+HDF5_INCLUDE = -I/users/home/boyd/local/include -DH5_USE_16_API
+HDF5_LDFLAGS  =  -L/users/home/boyd/local/lib  -lhdf5
 endif
 
 
@@ -67,9 +71,9 @@ endif
 
 ###
 
-LIBS   =   -lm -g
+LIBS   =   -lm -g $(HDF5_LIBS) $(HDF5_LDFLAGS)
 
-CFLAGS =   -g $(OPTIONS)  $(OPTIMIZE) 
+CFLAGS =   -g $(OPTIONS)  $(OPTIMIZE) $(HDF5_INCLUDE)
 
 $(EXEC): $(OBJS) 
 	$(CC) $(OPTIMIZE) $(OBJS)  $(LIBS)   -o  $(EXEC)  

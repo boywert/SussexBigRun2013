@@ -8,7 +8,7 @@ INCL   = allvars.h  proto.h  Makefile
 OPTIONS += -DFLAG_GROUP_VELDISP
 #OPTIONS += -DLONGIDS
 #OPTIONS += -DIDS_HAVE_GAPS            
-#OPTIONS += -DHAVE_HDF5 
+OPTIONS += -DHAVE_HDF5 
 #OPTIONS += -DH5_USE_16_API
 #OPTIONS += -DHAVE_NUMPART_HIGHWORD
 #OPTIONS += -DSKIP_BY_WEIGHT           # Do A->C assigning also in case that substructure isassigned to be merged to larger structure in B
@@ -35,10 +35,11 @@ HDF5_INCLUDE = -I/pactusers/cs390/local/include
 
 ifeq ($(SYSTYPE),"tiberius")
 CC = gcc
-OPTIMIZE     = #-O3 -Wall -shared-intel -mcmodel=medium -openmp
-HDF5_LIBS    = #-lhdf5
-HDF5_LDFLAGS = #-L/pactusers/cs390/local/lib
-HDF5_INCLUDE = #-I/pactusers/cs390/local/include
+OPTIMIZE     = -O3 -Wall 
+HDF5_LIBS    = -lhdf5
+HDF5_INCLUDE = -I/users/home/boyd/local/include -DH5_USE_16_API
+HDF5_LDFLAGS  =  -L/users/home/boyd/local/lib  -lhdf5
+#HDF5_INCLUDE = #-I/pactusers/cs390/local/include
 endif
 
 

@@ -1,7 +1,7 @@
-OutputDir             /export/virgo/Boyd/Millgas/62.5_SF_0.2/
-SnapshotFileBase      snapdir_
+OutputDir             /users/work/boyd/SAM_works/512_20Mpc/
+SnapshotFileBase      snap
 FirstSnapShotNr       0
-LastSnapShotNr        61
+LastSnapShotNr        47
 SnapSkipFac           1
 NumberOfOutputFiles   8
 

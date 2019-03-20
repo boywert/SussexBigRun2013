@@ -1,5 +1,5 @@
-OutputDir          /scratch/cs390/SUSSING2013/datasetI/SUBFIND/
-SnapshotFileBase   62.5_dm
+OutputDir          /users/work/boyd/SAM_works/512_20Mpc/
+SnapshotFileBase   snap
 SnapSkipFac        1
-LastSnapShotNr     61
-SnapFormat	1
+LastSnapShotNr     47
+SnapFormat	3

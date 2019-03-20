@@ -1,8 +1,8 @@
-SimulationDir /mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/
-LastSnapShotNr 61
+SimulationDir /users/work/boyd/SAM_works/512_20Mpc/
+LastSnapShotNr 47
 FirstFile 0
 LastFile 7
-FilesPerSnapshot 16
-FileWithSnapList /mnt/lustre/scratch/cs390/SUSSING2013_DATA/raw_subfind/zlist_MR7.txt
-BoxSize 62.5
+FilesPerSnapshot 8
+FileWithSnapList /users/work/boyd/SAM_works/512_20Mpc/output_list.txt
+BoxSize 20000.0
 Hashbits 8
