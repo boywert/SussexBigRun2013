@@ -694,15 +694,17 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
   // create SubOffset - Not provided in HDF5 format
 
   for(i = 0; i <  cat->TotNgroups; i++) {
-    if(this_sub != GroupFirstSub[i]) {
-      printf("first sub %d |  HDF5 first sub %d | group ID %d - exit\n",this_sub,  GroupFirstSub[i], i);
-      exit(1);
-    }
-    cat->SubOffset[this_sub] = GroupOffset[i];
-    this_sub++;
-    for(j = 1; j < GroupNsubs[i]; j++) {
-      cat->SubOffset[this_sub] = cat->SubOffset[this_sub-1] + cat->SubLen[this_sub-1];
+    if(GroupLen[i] > 0) {
+      if(this_sub != GroupFirstSub[i]) {
+	printf("first sub %d |  HDF5 first sub %d | group ID %d - exit\n",this_sub,  GroupFirstSub[i], i);
+	exit(1);
+      }
+      cat->SubOffset[this_sub] = GroupOffset[i];
       this_sub++;
+      for(j = 1; j < GroupNsubs[i]; j++) {
+	cat->SubOffset[this_sub] = cat->SubOffset[this_sub-1] + cat->SubLen[this_sub-1];
+	this_sub++;
+      }
     }
   }
   if(this_sub != cat->TotNsubhalos) {
