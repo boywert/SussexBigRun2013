@@ -557,7 +557,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
   unsigned int j;
   int* GroupLen;
   int* GroupOffset;
-  int* GroupFirstsub;
+  int* GroupFirstSub;
   int* GroupNsubs;
   nFiles = 1;
   subcount = 0;
@@ -634,7 +634,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
 	GroupOffset[0] = 0;
 	GroupLen = mymalloc(sizeof(int) * cat->TotNgroups);
 	GroupNsubs = mymalloc(sizeof(int) * cat->TotNgroups);
-	GroupFirstsub = mymalloc(sizeof(int) * cat->TotNgroups);
+	GroupFirstSub = mymalloc(sizeof(int) * cat->TotNgroups);
 	cat->IdList = mymalloc(sizeof(MyIDType) * cat->TotNids);
 	cat->SubLen = mymalloc(sizeof(int) * cat->TotNsubhalos);
 	cat->SubOffset = mymalloc(sizeof(MyIDType) * cat->TotNsubhalos);
