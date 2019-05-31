@@ -694,7 +694,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
   int this_sub = 0;
   for(i = 0; i <  cat->TotNgroups; i++) {
     if(this_sub != GroupFirstSub[i]) {
-      printf("first sub != HDF5 first sub - exit\n");
+      printf("first sub %d= HDF5 first sub %d - exit\n",this_sub,  GroupFirstSub[i]);
       exit(1);
     }
     cat->SubOffset[this_sub] = GroupOffset[i];
@@ -705,7 +705,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
     }
   }
   if(this_sub != cat->TotNsubhalos) {
-    printf("Nsubs != HDF5 Nsubs - exit\n");
+    printf("Nsubs %d != HDF5 Nsubs %d - exit\n", this_sub, cat->TotNsubhalos);
     exit(1);  
   }
   long_to_str(buf, cat->TotNids);
