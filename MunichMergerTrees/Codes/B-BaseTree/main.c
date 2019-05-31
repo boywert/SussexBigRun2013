@@ -697,10 +697,10 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
       printf("first sub != HDF5 first sub - exit\n");
       exit(1);
     }
-    SubOffset[this_sub] = GroupOffset[i];
+    cat->SubOffset[this_sub] = GroupOffset[i];
     this_sub++;
     for(j = 1; j < GroupNsubs[i]; j++) {
-      SubOffset[this_sub] = SubOffset[this_sub-1] + SubLen[this_sub-1];
+      cat->SubOffset[this_sub] = cat->SubOffset[this_sub-1] + cat->SubLen[this_sub-1];
       this_sub++;
     }
   }
