@@ -677,7 +677,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
       for(j = 0; j < ngroups; j++)
 	if ((groupcount + j) > 0)
 	  GroupOffset[groupcount + j] = GroupOffset[groupcount + j - 1] + GroupLen[groupcount + j - 1];
-      groupcount += ngroup;
+      groupcount += ngroups;
     }
     if(nsubhalos > 0) {
       sr = H5Gopen (fd, "/Subhalo");
