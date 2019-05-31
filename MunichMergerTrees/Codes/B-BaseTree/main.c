@@ -694,7 +694,7 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
   // create SubOffset - Not provided in HDF5 format
 
   for(i = 0; i <  cat->TotNgroups; i++) {
-    if(GroupLen[i] > 0) {
+    if(GroupNsubs[i] > 0) {
       if(this_sub != GroupFirstSub[i]) {
 	printf("first sub %d |  HDF5 first sub %d | group ID %d - exit\n",this_sub,  GroupFirstSub[i], i);
 	exit(1);
