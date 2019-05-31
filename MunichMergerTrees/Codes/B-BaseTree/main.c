@@ -643,25 +643,6 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
 	cat->CountProgenitors = mymalloc(sizeof(int) * cat->TotNsubhalos);
       }
 
-    /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupLen  *\/ */
-    /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupOffset  *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupMass  *\/ */
-    /*       fseek(fd, 3 * sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupPos *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_M_Mean200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_R_Mean200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_M_Crit200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_R_Crit200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_M_TopHat200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_R_TopHat200 *\/ */
-    /* #ifdef FLAG_GROUP_VELDISP */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_VelDisp_Mean200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_VelDisp_Crit200 *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  Group_VelDisp_TopHat200 *\/ */
-    /* #endif */
-    /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupContaminationCount *\/ */
-    /*       fseek(fd, sizeof(float) * ngroups, SEEK_CUR);	/\* skip  GroupContaminationMass *\/ */
-    /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupNsubs *\/ */
-    /*       fseek(fd, sizeof(int) * ngroups, SEEK_CUR);	/\* skip  GroupFirstsub *\/ */
     if(ngroups > 0) {
       gr = H5Gopen (fd, "/Group");
       dset = H5Dopen (gr, "GroupLen");
@@ -684,65 +665,49 @@ void load_subhalo_catalogue(int num, struct halo_catalogue *cat)
       dset = H5Dopen (sr, "SubhaloLen");
       ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubLen[subcount]);
       ret = H5Dclose(dset);
-      //my_fread(&cat->SubLen[subcount], sizeof(int), nsubhalos, fd);
-      
-      /* I believe we don't need this in HDF5 - Boyd */
-      /* tmp = mymalloc(sizeof(int) * nsubhalos); */
-      
-      /* my_fread(tmp, sizeof(int), nsubhalos, fd); */
-      for(j = 0; j < nsubhalos; j++)
-	cat->SubOffset[subcount + j] = 0;	/* copy it to 64 bit if needed */
 
-      /* myfree(tmp); */
-      //myfree(buf);
       
       dset = H5Dopen (sr, "SubhaloParent");
       ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->SubParentHalo[subcount]);
       ret = H5Dclose(dset);
     
       ret = H5Gclose(sr);
-      //my_fread(&cat->SubParentHalo[subcount], sizeof(int), nsubhalos, fd);
-
-      //fclose(fd);
 
       subcount += nsubhalos;
     }
   
-    /* sprintf(buf, "%s/groups_%03d/subhalo_ids_%03d.%d", OutputDir, num, num, i); */
-    /* if(!(fd = fopen(buf, "r"))) */
-    /* 	{ */
-    /* 	  printf("can't open file `%s'\n", buf); */
-    /* 	  exit(1); */
-    /* 	} */
-    /* if(i == 0 || i == nFiles - 1) */
-    /* 	printf("reading '%s'\n", buf); */
-    /* if(i == 1) */
-    /* 	printf("...to...\n"); */
 
-    //my_fread(&ngroups, sizeof(int), 1, fd);
-    //my_fread(&cat->TotNgroups, sizeof(int), 1, fd);
-    //my_fread(&nids, sizeof(int), 1, fd);
-    //my_fread(&cat->TotNids, sizeof(long long), 1, fd);
-    //my_fread(&nFiles, sizeof(int), 1, fd);
-
-    // I don't think we need this - Boyd
-    //my_fread(&offset, sizeof(int), 1, fd);
     if(nids > 0) {
       id = H5Gopen (fd, "/IDs");
+      
       dset = H5Dopen (id, "ID");
       ret = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT, &cat->IdList[idcount]);
       ret = H5Dclose(dset);
-
-      //my_fread(&cat->IdList[idcount], sizeof(MyIDType), nids, fd);
-      //fclose(fd);
-    
+      
       ret = H5Gclose(id);
 
       idcount += nids;
     }
     ret = H5Fclose(fd);
   }
-
+  // create SubOffset - Not provided in HDF5 format
+  int this_sub = 0;
+  for(i = 0; i <  cat->TotNgroups; i++) {
+    if(this_sub != GroupFirstSub[i]) {
+      printf("first sub != HDF5 first sub - exit\n");
+      exit(1);
+    }
+    SubOffset[this_sub] = GroupOffset[i];
+    this_sub++;
+    for(j = 1; j < GroupNsubs[i]; j++) {
+      SubOffset[this_sub] = SubOffset[this_sub-1] + SubLen[this_sub-1];
+      this_sub++;
+    }
+  }
+  if(this_sub != cat->TotNsubhalos) {
+    printf("Nsubs != HDF5 Nsubs - exit\n");
+    exit(1);  
+  }
   long_to_str(buf, cat->TotNids);
   printf("cat->TotNsubhalos = %d\n", cat->TotNsubhalos);
   printf("cat->TotNids = %s\n", buf);
